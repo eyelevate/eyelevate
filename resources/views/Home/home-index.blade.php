@@ -3,7 +3,7 @@
 	
 @stop
 @section('scripts')
-<script src="assets/js/home.js"></script>
+<script src="assets/js/home/home.js"></script>
 @stop
 
 @section('content')

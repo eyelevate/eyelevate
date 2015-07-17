@@ -132,7 +132,7 @@ body {
 /*                      Typography                      */
 /********************************************************/
 a { color:#fff; text-decoration: none; }
-a:hover, a:active { color:#fff; text-decoration: underline; }
+a:hover, a:active { /*color:#fff; text-decoration: underline; */}
 .lead { 
 	font-weight:normal;
 	font-size:1.5em;

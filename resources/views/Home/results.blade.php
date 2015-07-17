@@ -3,26 +3,61 @@
 
 @stop
 @section('scripts')
-<script src="assets/js/results.js"></script>
+<script src="assets/js/home/results.js"></script>
 @stop
 
 @section('content')
-<div class="outer">
+<div class="site-wrapper">
   <div class="container-fluid">
-    <div class="col-md-9 left-box" id="zoom" target="false">
-      <!-- DUMMY DATA START -->
-
     <div  id="tread-title-container">
       <i class="glyphicon glyphicon-menu-left pull-left" id="back-arrow"><span class="back-title">Back</span></i>
-      <h3 class="text-center" id="tread-title">Help My Small Business</h3>
     </div>
-      
+
+    <!-- LEFT BOX START -->
+    <div class="col-md-9" id="left-box" target="false">
+      <div class="container" id="left-box-inner">
+        <div class="" id="preferences-frame">
+          
+        </div>
+        <ul class="" id="preferences">
+          <li class="preferences-li"><a class="preferences-text preferences-text-first">Newest</a></li>
+          <li class="preferences-li"><a class="preferences-text">Active</a></li>
+          <li class="preferences-li"><a class="preferences-text">Unanswered</a></li>
+          <li class="preferences-li"><a class="preferences-text">Featured</a></li>
+        </ul>
+
+        <div id="thread-group">
 
 
 
-      <div class="bs-example" data-example-id="default-media">
-        <!-- TEST 2 -->
-        <div class="media-group">
+          <div class="thread-single">
+            <div class="media">
+              <div class="media-left">
+                <a href="#">
+                  <img class="media-object" data-src="holder.js/64x64" alt="64x64" src="assets/images/blank_male.png" data-holder-rendered="true" style="width: 64px; height: 64px;">
+                </a>
+              </div>
+              <div class="media-body">
+                <div class="media-inner-left">
+                  <h4 class="media-heading">My small business needs help</h4>
+                  <div class="thread-info">Pedram kh . 
+                    <span class="thread-date">1 hours ago</span>
+                  </div> 
+                </br>
+                <div class="label-container">
+                  <span class="label label-default">Business</span>
+                  <span class="label label-default">Social</span>
+                  <span class="label label-default">Politics</span>
+                </div>
+              </div>
+              <div class="media-inner-right">
+                <div class="right-text"><span class="reply-no"><i class="fa fa-eye-slash"></i></span></br><span class="reply-html">0</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        @for ($i = 0; $i < 5; $i++)
+        <div class="thread-single">
           <div class="media">
             <div class="media-left">
               <a href="#">
@@ -30,299 +65,253 @@
               </a>
             </div>
             <div class="media-body">
-              <div class="dialogbox-container">
-                <div class="dialogbox">
-                  <div class="body clearfix">
-                    <!-- HEADING -->
-                    <h4 class="media-heading  clearfix">Pedram kh 1
-                      <span class="dash-separator">—</span>
-                      <span class="heading-date">Wednesday, July 15, 2015, 03:25 PM</span> 
-                      
-
-                      <i class="flags fa fa-flag popbutton" data-placement="top" data-container="body"></i>
-                      <span class="thumb-group ">
-                        <span class="reply-text"><a href="#zoom"  class="reply-text-a">Reply</a></span>
-                        <span class="dot-separator">.</span>
-                        <span class="thumb-set">
-                          <i class="thumbs-icon thumb-up glyphicon glyphicon-thumbs-up"></i>
-                          <span class="thumbs-text">197</span>
-                        </span>
-                        <span class="thumb-set">
-                          <i class="thumbs-icon thumb-down glyphicon glyphicon-thumbs-down"></i>
-                          <span class="thumbs-text ">4</span>
-                        </span>
-                      </span>
-
-
-
-
-
-                    </h4>
-                    <span class="tip tip-left"></span>
-                    <div class="message media-text pull-left " >
-                      Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                    </div>
-                  </div>
-                </div>
-                <!-- REPLY BOX -->
-                <div class="reply-box clearfix">
-
-                  
-                </div>
-
-
+              <div class="media-inner-left">
+                <h4 class="media-heading">My small business needs help</h4>
+                <div class="thread-info">Pedram kh . 
+                  <span class="thread-date">{{$i}} hours ago</span>
+                </div> 
+              </br>
+              <div class="label-container">
+                <span class="label label-default">Business</span>
+                <span class="label label-default">Social</span>
+                <span class="label label-default">Politics</span>
               </div>
-
-              <!-- CHILD MEDIA -->
-              <div class="media-child">
-                <div class="media media-reply">
-                  <div class="media-left">
-                    <a href="#">
-                      <img class="media-object" data-src="holder.js/64x64" alt="64x64" src="assets/images/blank_male.png" data-holder-rendered="true" style="width: 64px; height: 64px;">
-                    </a>
-                  </div>
-                  <div class="media-body">
-                    <div class="dialogbox-container">
-                      <div class="dialogbox">
-                        <div class="body clearfix">
-                          <!-- HEADING -->
-                          <h4 class="media-heading">Pedram kh 
-                            <span class="dash-separator">—</span>
-                            <span class="heading-date">Wednesday, July 15, 2015, 03:25 PM</span> 
-                            <i class="flags fa fa-flag popbutton" data-placement="top" data-container="body"></i>
-                            <span class="thumb-group ">
-                              <span class="thumb-set">
-                                <i class="thumbs-icon thumb-up glyphicon glyphicon-thumbs-up"></i>
-                                <span class="thumbs-text">197</span>
-                              </span>
-                              <span class="thumb-set">
-                                <i class="thumbs-icon thumb-down glyphicon glyphicon-thumbs-down"></i>
-                                <span class="thumbs-text ">4</span>
-                              </span>
-                            </span>
-                          </h4>
-                          <span class="tip tip-left"></span>
-                          <div class="message media-text pull-left " >
-                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                          </div>
-                        </div>
-                      </div>
-                      <!-- REPLY BOX -->
-                      <div class="reply-box"></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="media media-reply">
-                  <div class="media-left">
-                    <a href="#">
-                      <img class="media-object" data-src="holder.js/64x64" alt="64x64" src="assets/images/blank_male.png" data-holder-rendered="true" style="width: 64px; height: 64px;">
-                    </a>
-                  </div>
-                  <div class="media-body">
-                    <div class="dialogbox-container">
-                      <div class="dialogbox">
-                        <div class="body clearfix">
-                          <!-- HEADING -->
-                          <h4 class="media-heading">Pedram kh 
-                            <span class="dash-separator">—</span>
-                            <span class="heading-date">Wednesday, July 15, 2015, 03:25 PM</span> 
-                            <i class="flags fa fa-flag popbutton" data-placement="top" data-container="body"></i>
-                            <span class="thumb-group ">
-                              <span class="thumb-set">
-                                <i class="thumbs-icon thumb-up glyphicon glyphicon-thumbs-up"></i>
-                                <span class="thumbs-text">197</span>
-                              </span>
-                              <span class="thumb-set">
-                                <i class="thumbs-icon thumb-down glyphicon glyphicon-thumbs-down"></i>
-                                <span class="thumbs-text ">4</span>
-                              </span>
-                            </span>
-                          </h4>
-                          <span class="tip tip-left"></span>
-                          <div class="message media-text pull-left " >
-                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                          </div>
-                        </div>
-                      </div>
-
-                      <!-- REPLY BOX -->
-                      <div class="reply-box"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- CHILD MEDIA END -->
             </div>
-            <!-- MEDIA-BODY END -->
-          </div>
-
-          <div class="more-wrapper">
-            <div class="more-container text-center">
-              <span>12 Replies View More</span></br>
-              <i class="fa fa-angle-double-down"></i>
+            <div class="media-inner-right">
+              <div class="right-text"><span class="reply-no"><i class="fa fa-eye"></i></span></br><span class="reply-html">{{$i}}</span></div>
             </div>
-          </div>
-
-        </div>
-
-        <!-- MEDIA GROUP END -->
-
-
-        <!-- TEST 2 -->
-        <div class="media-group">
-          <div class="media">
-            <div class="media-left">
-              <a href="#">
-                <img class="media-object" data-src="holder.js/64x64" alt="64x64" src="assets/images/blank_male.png" data-holder-rendered="true" style="width: 64px; height: 64px;">
-              </a>
-            </div>
-            <div class="media-body">
-              <div class="dialogbox-container">
-                <div class="dialogbox">
-
-                  <div class="body clearfix">
-                    <!-- HEADING -->
-                    <h4 class="media-heading">Pedram kh 
-
-                      <span class="dash-separator">—</span>
-                      <span class="heading-date">Wednesday, July 15, 2015, 03:25 PM</span> 
-                      <i class="flags fa fa-flag popbutton" data-placement="top" data-container="body"></i>
-
-                      <span class="thumb-group ">
-                        <span class="reply-text"><a class="reply-text-a">Reply</a></span>
-                        <span class="dot-separator">.</span>
-                        <span class="thumb-set">
-                          <i class="thumbs-icon thumb-up glyphicon glyphicon-thumbs-up"></i>
-                          <span class="thumbs-text">197</span>
-                        </span>
-                        <span class="thumb-set">
-                          <i class="thumbs-icon thumb-down glyphicon glyphicon-thumbs-down"></i>
-                          <span class="thumbs-text ">4</span>
-                        </span>
-                      </span>
-                    </h4>
-                    <span class="tip tip-left"></span>
-                    <div class="message media-text pull-left " >
-                      Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                    </div>
-                  </div>
-                </div>
-                <!-- REPLY BOX -->
-                <div class="reply-box"></div>
-              </div>
-              <!-- CHILD MEDIA -->
-              <div class="media-child">
-                <div class="media media-reply">
-                  <div class="media-left">
-                    <a href="#">
-                      <img class="media-object" data-src="holder.js/64x64" alt="64x64" src="assets/images/blank_male.png" data-holder-rendered="true" style="width: 64px; height: 64px;">
-                    </a>
-                  </div>
-                  <div class="media-body">
-                    <div class="dialogbox-container">
-                      <div class="dialogbox">
-                        <div class="body clearfix">
-                          <!-- HEADING -->
-                          <h4 class="media-heading">Pedram kh 
-                            <span class="dash-separator">—</span>
-                            <span class="heading-date">Wednesday, July 15, 2015, 03:25 PM</span> 
-                            <i class="flags fa fa-flag popbutton" data-placement="top" data-container="body"></i>
-                            <span class="thumb-group">
-                              <span class="reply-text"><a class="reply-text-a">Reply</a></span>
-                              <span class="dot-separator">.</span>
-                              <span class="thumb-set">
-                                <i class="thumbs-icon thumb-up glyphicon glyphicon-thumbs-up"></i>
-                                <span class="thumbs-text">197</span>
-                              </span>
-                              <span class="thumb-set">
-                                <i class="thumbs-icon thumb-down glyphicon glyphicon-thumbs-down"></i>
-                                <span class="thumbs-text ">4</span>
-                              </span>
-                            </span>
-                          </h4>
-                          <span class="tip tip-left"></span>
-                          <div class="message media-text pull-left " >
-                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                          </div>
-                        </div>
-                      </div>
-                      <!-- REPLY BOX -->
-                      <div class="reply-box"></div>
-                    </div>
-                  </div>
-                </div>
-                <div class="media media-reply">
-                  <div class="media-left">
-                    <a href="#">
-                      <img class="media-object" data-src="holder.js/64x64" alt="64x64" src="assets/images/blank_male.png" data-holder-rendered="true" style="width: 64px; height: 64px;">
-                    </a>
-                  </div>
-                  <div class="media-body">
-                    <div class="dialogbox-container">
-                      <div class="dialogbox">
-                        <div class="body clearfix">
-                          <!-- HEADING -->
-                          <h4 class="media-heading">Pedram kh 
-                            <span class="dash-separator">—</span>
-                            <span class="heading-date">Wednesday, July 15, 2015, 03:25 PM</span> 
-                            <i class="flags fa fa-flag popbutton" data-placement="top" data-container="body"></i>
-                            <span class="thumb-group">
-                              <span class="reply-text"><a class="reply-text-a">Reply</a></span>
-                              <span class="dot-separator">.</span>
-                              <span class="thumb-set">
-                                <i class="thumbs-icon thumb-up glyphicon glyphicon-thumbs-up"></i>
-                                <span class="thumbs-text">197</span>
-                              </span>
-                              <span class="thumb-set">
-                                <i class="thumbs-icon thumb-down glyphicon glyphicon-thumbs-down"></i>
-                                <span class="thumbs-text ">4</span>
-                              </span>
-                            </span>
-                          </h4>
-                          <span class="tip tip-left"></span>
-                          <div class="message media-text pull-left " >
-                            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-                          </div>
-                        </div>
-                      </div>
-                      <!-- REPLY BOX -->
-                      <div class="reply-box"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- CHILD MEDIA END -->
-            </div>
-            <!-- MEDIA-BODY END -->
           </div>
         </div>
-        <!-- MEDIA GROUP END -->
-
-
       </div>
-      <!-- BS FINISHED -->
-      <!-- DUMMY DATA END -->
+      @endfor
+
+
+
     </div>
-
-
   </div>
+
+
+</div>
+<!-- LEFT BOX END -->
+
+
+<!-- RIGHT BOX START -->
+<div class="col-md-3 " id="right-box"> 
+  <div class="" id="right-box-inner">
+    <div class="list-group list-group-container">
+      <a href="#" class="list-group-item active " id="list-search-bar">
+
+        <div class="input-group" >
+          <input type="text" class="form-control" id="list-search-input" placeholder="Search for Categories">
+          <span class="input-group-btn">
+            <button class="btn btn-default " id="list-search-btn" type="button"><i class="glyphicon glyphicon-search">  </i></button>
+          </span>
+        </div><!-- /input-group -->
+
+      </a>
+      <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+      <a href="#" class="list-group-item">Morbi leo risus</a>
+      <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+      <a href="#" class="list-group-item">Vestibulum at eros</a>
+      <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+      <a href="#" class="list-group-item">Morbi leo risus</a>
+      <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+      <a href="#" class="list-group-item">Vestibulum at eros</a>
+      <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+      <a href="#" class="list-group-item">Morbi leo risus</a>
+      <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+      <a href="#" class="list-group-item">Vestibulum at eros</a>
+      <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+      <a href="#" class="list-group-item">Vestibulum at eros</a>
+      <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+      <a href="#" class="list-group-item">Morbi leo risus</a>
+      <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+      <a href="#" class="list-group-item">Vestibulum at eros</a>
+      <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+      <a href="#" class="list-group-item">Morbi leo risus</a>
+      <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+      <a href="#" class="list-group-item">Vestibulum at eros</a>
+      <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+      <a href="#" class="list-group-item">Morbi leo risus</a>
+      <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+      <a href="#" class="list-group-item">Vestibulum at eros</a>
+      <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+      <a href="#" class="list-group-item">Vestibulum at eros</a>
+    </div>
+  </div>
+</div>
+<!-- RIGHT BOX END -->
+</div>
 </div>
 
 <style>
+.site-wrapper{
+  background: rgb(241, 241, 241);
+}
+/*LEFT AND RIGHT WRAPPERS*/
+#left-box{
+  /*border:1px solid red;*/
+  min-height: 650px;
+  padding-top: 75px;
+  padding-bottom: 20px;
+}
+#left-box-inner{
+  width: 100%;
+  height: 100%;
+  min-height: 650px;
 
-#zoom{
- width: 100%;
- -webkit-transition: width 1s;
- -moz-transition: width 1s;
- -o-transition: width 1s;
- transition: width 1s;
+  /* border:1px solid yellow;*/
+  background-color:#fff;
+  box-shadow: 0 1px 2px rgba(0,0,0,.1);
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border-radius: 5px;
+}
+/*background: rgb(241, 241, 241);*/
+#right-box{
+  min-height: 650px;
+  position: fixed;
+  right: 0;
+  padding-top: 75px;
+  padding-bottom: 20px;
+}
+#right-box-inner{
+  width: 100%;
+  height: 650px;
+  min-height: 650px;
+  /* border:1px solid yellow;*/
+  overflow: auto;
+  background-color:#fff;
+  box-shadow: 0 1px 2px rgba(0,0,0,.1);
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border-radius: 5px;
+
+}
+a:hover{
+  color: #61666A;
+  text-decoration: none;
+  cursor: pointer;
+}
+/*LEFT BOX component*/
+#preferences-frame{
+  width: 100%;
+  height: 70px;
+  border-bottom: 2px rgba(199, 200, 203, 0.54) solid;
+
+}
+#preferences{
+  text-align: left;
+  padding: 0;
+  margin: -40px 0 0 0;
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+}
+.preferences-text{
+  color:  rgba(129, 130, 133, 1);
+  margin-left: 25px;
+}
+.preferences-text-first {
+  margin-left: 0;
 }
 
-.left-box{
-  /*border:1px solid red;*/
-  min-height: 700px;
-  padding-left: 0;
-  padding-right: 0;
+.preferences-li{
+  list-style-type: none;
+  margin: 0 30px 0 0;
+  display: inline-block;
+}
+#thread-group{
+  margin: 27px 0 0 0;
+  height: 100%;
+}
+
+.thread-single{
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px rgba(199, 200, 203, 0.54) solid;
+}
+
+.media-heading{
+  color: #3B88BB;
+  font-weight: bold;
+  cursor: pointer;
+}
+.thread-info{
+  color:rgba(111, 111, 111, 1);
+  font-size: 14px;
+}
+.thread-replies{
+  color: gray;
+  font-size: 14px;
+  cursor: pointer;
+  color: rgb(101, 101, 101);
+}
+.media-inner-left{
+  float: left;
+}
+.media-inner-right{
+  float: right;
+  font-size: 30px;
+  font-weight: bold;
+  color: rgb(150, 152, 160);
+  font: xx-large;
+  font-family: monospace;
+  text-align: center;
+  line-height: 1.0;
+}
+.reply-html{
+  font-size: 23px;
+}
+.label-container{
+  display: inline !important;
+  font-size: 17px;
+}
+.thread-date{
+  color:rgba(111, 111, 111, 1);
+}
+
+
+
+
+
+
+
+
+
+/*RIGHT BOX component */
+
+
+
+         
+
+
+
+
+
+
+#list-search-bar{
+  padding: 0;
+  border: 0;
+  background-color: none;
+
+}
+#list-search-input{
+ border-radius:0;
+ border-top-left-radius:4px;
+ height: 50px;
+   border-bottom: 4px rgb(188, 188, 188) solid;
+}
+#list-search-btn{
+ border-radius:0;
+ height: 50px;
+ border-bottom: 4px rgb(188, 188, 188) solid;
+
+}
+
+.list-group-container{
+  width: 100%;
+
 }
 
 body,html{
@@ -338,7 +327,6 @@ body,html{
   margin-bottom: 10px;
   font-size: 27px;
   font: 19px/29px "Gotham Rounded A", "Gotham Rounded B", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  
   color: rgb(75, 75, 75);
 }
 #back-arrow{
@@ -349,21 +337,22 @@ body,html{
   cursor: pointer;
 }
 .back-title{
-font-size: 27px;
+  font-size: 27px;
   color: #8d9aa5;
   padding-left: 3px;
 }
+
 #tread-title-container{
   position: fixed;
   right: 0;
-   top: 0; 
+  top: 0; 
   text-align: center;
   height: 50px;
   z-index: 100;
   margin-top: 0px;
-  background-color: #edeff0;
+  background-color: rgb(241, 241, 241);
   width: 100%;
-  box-shadow: 0px 1px 9px #9D9B9B;
+  box-shadow: 0px 0px 9px #DBDBDB;
   
 }
 #tread-side-title{
@@ -379,20 +368,7 @@ font-size: 27px;
   padding-right: 0;
   padding-left: 0;
 }
-.media-box {
-  background: #fff;
-  padding: 15px 20px 15px 25px;
-  border: 1px solid #ddd;d
-  border-radius: 3px;
-  font-size: 16px;
-  line-height: 1.6;
-  margin-right: -12px;
-  color: rgb(10, 10, 10);
-}
-.outer{
-  background-color: #fff;
 
-}
 .dash-separator{
   color: #807676;
   margin: 0 8px;
@@ -510,32 +486,6 @@ a{
 
 }
 
-/*MEDIA*/
-.media-group{
-  border-top: 1px solid rgb(219, 219, 219);;
-  border-bottom: 1px solid rgb(219, 219, 219);
-  margin-top: 50px;
-  margin-bottom: 25px;
-  padding: 15px;
-  background-color: #edeff0;
-
-}
-.media {
- margin-top: 0; 
-}
-.media-child{
-
-}
-.media-reply{
-  padding-top: 10px;
-}
-
-.right-box{
-  overflow: auto;
-  /*border:1px solid red;*/
-
-}
-
 .message-header{
   font-size: 16px;
   line-height: 1.6;
@@ -563,35 +513,82 @@ textarea{
   margin-right: 10px;
 
 }
-.more-container{
-  color:black;
-  cursor: pointer;
-  position: absolute;
-  left: 45%;
 
-}
 .more-wrapper{
-height: 45px;
-}
+  height: 45px;
 
+}
+.more-text{
+  cursor: pointer;
+}
 
 .thumb-group{
-   float: right;
+ float: right;
+}
+
+
+
+
+@media (max-width: 400px) {
+  .heading-date{
+    display:inline-flex !important;
+    font-size: 0.6em !important;
+  }
+  .media-inner-left{
+    width: 150px;
+  }
+  .label-container{
+    display: table-footer-group !important;
+    margin-left: 0; 
+  }
+  .label{
+    border-radius: 0;
+  }
+}
+@media (max-width: 679px) {
+  #preferences{
+    margin: -70px 0 0 0;
+  }
+  .label-container{
+    display: table-footer-group !important;
+    margin-left: 0; 
+  }
+  .label{
+    border-radius: 0;
+  }
+  .preferences-li{
+    height: 40px;
+    display: block;
+    margin: 0;
+    border-bottom: 1px solid #f0f2f4;
+    padding-top: 8px;
+  }
+  #preferences-frame{
+    border-bottom: none;
+  }
+  .preferences-text{
+    margin-left: 0;
+  }
+  .media-inner-left{
+
+  }
+
 }
 
 @media (max-width: 850px) {
+
   .media-heading{
-display: block;
+    display: block;
   }
   .heading-date{
-  display: block;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  line-height: 1.6;
+    display: block;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    line-height: 1.6;
   }
   .flags{
-  display: block;
-  float:right;
+    display: block;
+    float:right;
   }
   .dash-separator{
     display: none;
@@ -599,8 +596,9 @@ display: block;
   .thumb-group{
     float: left;
   }
-
 }
+}
+
 </style>
 
 

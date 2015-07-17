@@ -11,13 +11,11 @@ results = {
 		});
 
 var popupTemplate='<li class="spam-popup">Report as spam</li>';
-
-$('.popbutton').popover({
-    animation:true, 
-    content:popupTemplate, 
-    html:true
-});
-
+		$('.popbutton').popover({
+		    animation:true, 
+		    content:popupTemplate, 
+		    html:true
+		});
 	},
 	events: function() {
 
@@ -28,10 +26,6 @@ $('.popbutton').popover({
 			$(document).find('.reply-media').remove();
 			
 			var state = parseInt($('#right-arr').attr('state'));
-
-			if (state == 0) {//CLOSE
-				right_box_expende();
-			}
 		    // CREATE REPLY BOX
 		    var reply_html = '<div class="media reply-media">'+
 								'<div class="media-left">'+
@@ -57,19 +51,10 @@ $('.popbutton').popover({
 
 		//HIDE RIGHT BOX
 		$('#right-arr').click(function(){
-			
 			var state = parseInt($('#right-arr').attr('state'));
-
-			if (state == 1) {//OPEN
-				right_box_compress();
-			}
-
-
-
 		});
 		//REPLY CANCEL BTN WAS CLICKED
 		$(document).on('click','.left-btn',function(){
-				right_box_compress();
 				$(this).parents('.dialogbox-container:first').find('.reply-media:first').remove();
 		});
 
@@ -172,11 +157,4 @@ $('.popbutton').popover({
 request = {
 
 };
-function right_box_expende(){
-	$('#right-arr').attr('state','1');
-	$('#zoom').attr('target','true');
-} 
-function right_box_compress(){
-	$('#right-arr').attr('state','0');
-	$('#zoom').attr('target','false');
-}
+
