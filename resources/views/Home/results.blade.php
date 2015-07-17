@@ -17,18 +17,24 @@
     <div class="col-md-9" id="left-box" target="false">
       <div class="container" id="left-box-inner">
         <div class="" id="preferences-frame">
-          
+            <div class="input-group " id="top-search-bar" >
+              <input type="text" class="form-control" id="top-search-input" placeholder="Search for Categories">
+              <span class="input-group-btn">
+                <button class="btn btn-default " id="top-search-btn" type="button"><i class="glyphicon glyphicon-search">  </i></button>
+              </span>
+            </div><!-- /input-group -->
+          </br>
+            <ul class="" id="preferences">
+              <li class="preferences-li"><a class="preferences-text preferences-text-first">Newest</a></li>
+              <li class="preferences-li"><a class="preferences-text">Active</a></li>
+              <li class="preferences-li"><a class="preferences-text">Unanswered</a></li>
+              <li class="preferences-li"><a class="preferences-text">Featured</a></li>
+            </ul>
+
+
         </div>
-        <ul class="" id="preferences">
-          <li class="preferences-li"><a class="preferences-text preferences-text-first">Newest</a></li>
-          <li class="preferences-li"><a class="preferences-text">Active</a></li>
-          <li class="preferences-li"><a class="preferences-text">Unanswered</a></li>
-          <li class="preferences-li"><a class="preferences-text">Featured</a></li>
-        </ul>
 
         <div id="thread-group">
-
-
 
           <div class="thread-single">
             <div class="media">
@@ -203,7 +209,7 @@ a:hover{
 #preferences{
   text-align: left;
   padding: 0;
-  margin: -40px 0 0 0;
+  margin: 4px 0 0 0;
   font-family: inherit;
   font-size: 15px;
   font-weight: 700;
@@ -287,6 +293,25 @@ a:hover{
 
 
 
+#top-search-bar{
+    width: 36%;
+    float: right;
+    top: 15px;
+    display: none;
+}
+#top-search-input{
+ border-radius:0;
+ border-top-left-radius:4px;
+  border-bottom-left-radius:4px;
+ height: 50px;
+}
+#top-search-btn{
+ border-radius:0;
+ height: 50px;
+  border-top-right-radius:4px;
+   border-bottom-right-radius:4px;
+}
+
 
 
 
@@ -294,7 +319,6 @@ a:hover{
   padding: 0;
   border: 0;
   background-color: none;
-
 }
 #list-search-input{
  border-radius:0;
@@ -547,8 +571,13 @@ textarea{
 }
 @media (max-width: 679px) {
   #preferences{
-    margin: -70px 0 0 0;
+     margin: 65px 0 0 0;
   }
+#top-search-bar {
+  width: 100%;
+  float: right;
+    top: 18px;
+}
   .label-container{
     display: table-footer-group !important;
     margin-left: 0; 
@@ -565,6 +594,7 @@ textarea{
   }
   #preferences-frame{
     border-bottom: none;
+      height: 231px;
   }
   .preferences-text{
     margin-left: 0;
@@ -597,7 +627,43 @@ textarea{
     float: left;
   }
 }
+
+@media (max-width: 991px) {
+
+  #top-search-bar{
+    display: inline-table;
+  }
+   #preferences{
+     margin: 65px 0 0 0;
+  }
+#top-search-bar {
+  width: 100%;
+  float: right;
+    top: 18px;
 }
+  .label-container{
+    display: table-footer-group !important;
+    margin-left: 0; 
+  }
+  .label{
+    border-radius: 0;
+  }
+  .preferences-li{
+    height: 40px;
+    display: block;
+    margin: 0;
+    border-bottom: 1px solid #f0f2f4;
+    padding-top: 8px;
+  }
+  #preferences-frame{
+    border-bottom: none;
+      height: 231px;
+  }
+  .preferences-text{
+    margin-left: 0;
+  }
+}
+
 
 </style>
 
