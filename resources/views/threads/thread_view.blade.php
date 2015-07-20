@@ -351,7 +351,6 @@ font-size: 27px;
   background-color: #edeff0;
   width: 100%;
   box-shadow: 0px 1px 9px #9D9B9B;
-  
 }
 #tread-side-title{
   height: 55px;

@@ -15,7 +15,7 @@
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
   <!-- Custom styles -->
-  <link rel="stylesheet" href="packages/Magister3/assets/css/magister.css">
+  <link rel="stylesheet" href="assets/css/master.css">
 
   <!-- Fonts -->
   <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -28,7 +28,21 @@
   <![endif]-->
 </head>
 <body>
+
+<nav class="navbar navbar-default" id="master-navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+
+    </div>
+  </div>
+</nav>
+
+ <div class="container-fluid background-color">
+
 @yield('content')
+
+
+</div>
 
 <!-- Load js libs only when the page is loaded. -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
@@ -42,5 +56,10 @@
 </body>
 </html>
 <style>
-
+.background-color{
+  background-color: rgb(241, 241, 241);
+}
+.navbar{
+    margin-bottom: 0 !important;
+}
 </style>

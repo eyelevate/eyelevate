@@ -62,7 +62,7 @@
             </div>
           </div>
         </div>
-        @for ($i = 0; $i < 5; $i++)
+        @for ($i = 1; $i < 5; $i++)
         <div class="thread-single">
           <div class="media">
             <div class="media-left">
@@ -279,19 +279,7 @@ a:hover{
 
 
 
-
-
-
-
-
-
 /*RIGHT BOX component */
-
-
-
-         
-
-
 
 #top-search-bar{
     width: 36%;

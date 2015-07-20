@@ -14,5 +14,12 @@
 // });
 
 // Route::get('/', 'WelcomeController@getIndex');
+
+//HOME ROUTE
 Route::get('/', 'HomeController@getIndex');
 Route::post('/search','HomeController@postIndex');
+
+
+//REGISTRATION ROUTE
+Route::controller('users', 'UsersController');
+	Route::get('/registration', 'UsersController@getRegistration');
