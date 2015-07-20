@@ -23,3 +23,4 @@ Route::post('/search','HomeController@postIndex');
 //REGISTRATION ROUTE
 Route::controller('users', 'UsersController');
 	Route::get('/registration', 'UsersController@getRegistration');
+	Route::post('/validate', 'UsersController@getValidate');

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+
 
 
 use App\Job;
@@ -10,6 +10,9 @@ use App\User;
 use Input;
 use Validator;
 use Redirect;
+
+use Request;
+use Response;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -50,5 +53,18 @@ class UsersController extends Controller
             ->withInput();
         }
        
+    }
+
+        public function postValidate()
+    {
+        $reg_form = null;
+        parse_str(Input::get('reg_form'), $reg_form);
+        $validation_results = Job::validate_data($reg_form);
+        if(Request::ajax()){
+            return Response::json(array(
+                'status' => 200,
+                'validation_callback' => $validation_results
+            ));
+        }
     }
 }

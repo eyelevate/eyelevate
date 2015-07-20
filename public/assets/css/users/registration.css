@@ -1,0 +1,207 @@
+#main-frame{
+	/*background-color: rgb(241, 241, 241);*/
+	background-color: #fff;
+	min-height: 585px;
+	display: block;
+	margin: 20px auto;
+	float: none;
+	border-radius: 5px;
+	padding-top: 5px;
+	padding-left: 30px;  
+	padding-right: 30px;
+}
+.background-color{
+	background-color: #fff;
+}
+h3{
+	font: 19px/29px "Gotham Rounded A", "Gotham Rounded B", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.form-style{
+	z-index: 2;
+	display: inline;
+	height: 34px;
+	padding: 6px 12px;
+	font-size: 14px;
+	line-height: 1.42857143;
+	color: #555;
+	background-color: #fff;
+	background-image: none;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+	box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+	-webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+	-o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+	transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+#last_name{
+	margin-left: 4.3%;
+}
+#age{
+	margin-left: 4%;
+}
+.form-frame{
+	left: 0;
+	margin: 0 auto;
+	float: none;
+	position: absolute;
+}
+#email{
+	
+}
+.top-margin{
+	margin-top: 15px;
+}
+.input-section{
+	  height: 220px;
+
+}
+#submit-btn{
+	margin-top: 35px;
+}
+#join{
+
+}
+.error-wrapper{
+	width: 100%;
+}
+
+.rows{
+	margin-top: 30px;
+}
+.error-first_name{
+  background-color: #d9534f;
+  /* border: 1px solid green; */
+  position: absolute;
+top: 101px;
+  height: 30px;
+    width: 31.9%;
+  z-index: 0;
+  border-radius: 0 0 5px 5px;
+  color: white;
+  padding-left: 10px;
+  padding-top: 7px;
+}
+.error-last_name{
+  background-color: #d9534f;
+  /* border: 1px solid green; */
+  position: absolute;
+  top: 101px;
+  height: 30px;
+  left: 38.2%;
+  width: 39.9%;
+  z-index: 0;
+  border-radius: 0 0 5px 5px;
+  color: white;
+  padding-left: 10px;
+  padding-top: 7px;
+}
+.error-age{
+  background-color: #d9534f;
+  /* border: 1px solid green; */
+  position: absolute;
+  top: 101px;
+  left: 81.9%;
+  height: 30px;
+  width: 15.9%;
+  z-index: 0;
+  border-radius: 0 0 5px 5px;
+  color: white;
+  padding-left: 10px;
+  padding-top: 7px;
+}
+.error-email{
+background-color: #d9534f;
+  /* border: 1px solid green; */
+  position: absolute;
+  top: 165px;
+  /* left: 81.9%; */
+  height: 30px;
+  width: 95.9%;
+  z-index: 0;
+  border-radius: 0 0 5px 5px;
+  color: white;
+  padding-left: 10px;
+  padding-top: 7px;
+}
+.error-username{
+background-color: #d9534f;
+  /* border: 1px solid green; */
+  position: absolute;
+    top: 341px;
+  /* left: 81.9%; */
+  height: 30px;
+  width: 95.9%;
+  z-index: 0;
+  border-radius: 0 0 5px 5px;
+  color: white;
+  padding-left: 10px;
+  padding-top: 7px;
+}
+.error-password{
+background-color: #d9534f;
+  /* border: 1px solid green; */
+  position: absolute;
+  top: 405px;
+  /* left: 81.9%; */
+  height: 30px;
+  width: 95.9%;
+  z-index: 0;
+  border-radius: 0 0 5px 5px;
+  color: white;
+  padding-left: 10px;
+  padding-top: 7px;
+}
+.error-password-again{
+background-color: #d9534f;
+  /* border: 1px solid green; */
+  position: absolute;
+  top: 469px;
+  /* left: 81.9%; */
+  height: 30px;
+  width: 95.9%;
+  z-index: 0;
+  border-radius: 0 0 5px 5px;
+  color: white;
+  padding-left: 10px;
+  padding-top: 7px;
+}
+
+
+/*MEDIA*/
+@media (max-width: 1148px) {
+	#age{margin-left: 3%;}
+	#last_name {margin-left: 5.3%;}
+}
+@media (max-width: 991px) {
+	.form-frame{width: 100%;}
+	#main-frame {min-height: 625px;}
+	#first_name{width: 100%;}
+	#last_name{width: 100%;margin-left: 0;margin-top: 15px;}
+	#age{width: 100%;margin-top: 15px;}
+	#email{width: 100%;}
+	#company{width: 100%;}
+	#username{width: 100%;}
+	#password{width: 100%;}
+	#password_again{width: 100%;}
+	.input-section {height: 292px;}
+	#age {margin-left: 0;}
+	#submit-btn {margin-top: 0px; margin-top: 35px;width: 100%;
+}
+
+}
+.has-error{
+	border-color: #a94442;
+	-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+	box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+}
+.step3{
+
+}
+.step2{
+	height: 145px !important;
+
+}
+.form-title{
+	margin-bottom: 25px;
+}
