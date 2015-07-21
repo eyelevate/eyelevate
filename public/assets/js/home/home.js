@@ -9,7 +9,6 @@ home = {
 		$.ajaxSetup({
 			headers: { 'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content') }
 		});
-
 		$(window).bind("load", function() {  
 			load_background_video();
 			/**
@@ -30,6 +29,18 @@ home = {
 	},
 	events: function() {
 
+		$('#login').click(function(){
+			$('#myModal').modal('toggle');
+		});
+		$('#logout').click(function(){
+			$('#logout-form').submit();
+		});
+		$(document).find('.login-btn').click(function(){
+			$('#login-form').submit();
+		});
+		$('#forgot').click(function(){
+			window.location = '/password-reset';
+		});
 
 	}
 }

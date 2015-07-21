@@ -62,9 +62,24 @@ h3{
 #join{
 
 }
-.error-wrapper{
-	width: 100%;
+.error-wrapper {
+  width: 100%;
+  position: relative;
 }
+.error-wrapper-fname {
+  width: 33.33333333%;
+  position: relative;
+}
+.error-wrapper-lname {
+  width: 41.66666667%;
+  position: relative;
+}
+.error-wrapper-age {
+  width: 16.66666667%;
+  position: relative;
+}
+
+
 
 .rows{
 	margin-top: 30px;
@@ -73,9 +88,9 @@ h3{
   background-color: #d9534f;
   /* border: 1px solid green; */
   position: absolute;
-top: 101px;
+  top: 27px;
   height: 30px;
-    width: 31.9%;
+  width: 100%;
   z-index: 0;
   border-radius: 0 0 5px 5px;
   color: white;
@@ -86,10 +101,10 @@ top: 101px;
   background-color: #d9534f;
   /* border: 1px solid green; */
   position: absolute;
-  top: 101px;
+  top: 27px;
   height: 30px;
-  left: 38.2%;
-  width: 39.9%;
+left: 90.4%;
+  width: 100%;
   z-index: 0;
   border-radius: 0 0 5px 5px;
   color: white;
@@ -100,10 +115,10 @@ top: 101px;
   background-color: #d9534f;
   /* border: 1px solid green; */
   position: absolute;
-  top: 101px;
-  left: 81.9%;
+  top: 27px;
+left: 499.6%;
   height: 30px;
-  width: 15.9%;
+ width: 100%;
   z-index: 0;
   border-radius: 0 0 5px 5px;
   color: white;
@@ -111,13 +126,13 @@ top: 101px;
   padding-top: 7px;
 }
 .error-email{
-background-color: #d9534f;
+  background-color: #d9534f;
   /* border: 1px solid green; */
   position: absolute;
-  top: 165px;
+  top: 91px;
   /* left: 81.9%; */
   height: 30px;
-  width: 95.9%;
+  width: 100%;
   z-index: 0;
   border-radius: 0 0 5px 5px;
   color: white;
@@ -128,10 +143,10 @@ background-color: #d9534f;
 background-color: #d9534f;
   /* border: 1px solid green; */
   position: absolute;
-    top: 341px;
+      top: 27px;
   /* left: 81.9%; */
   height: 30px;
-  width: 95.9%;
+  width: 100%;
   z-index: 0;
   border-radius: 0 0 5px 5px;
   color: white;
@@ -142,10 +157,10 @@ background-color: #d9534f;
 background-color: #d9534f;
   /* border: 1px solid green; */
   position: absolute;
-  top: 405px;
+  top: 91px;
   /* left: 81.9%; */
   height: 30px;
-  width: 95.9%;
+  width: 100%;
   z-index: 0;
   border-radius: 0 0 5px 5px;
   color: white;
@@ -153,13 +168,13 @@ background-color: #d9534f;
   padding-top: 7px;
 }
 .error-password-again{
-background-color: #d9534f;
+  background-color: #d9534f;
   /* border: 1px solid green; */
   position: absolute;
-  top: 469px;
+  top: 155px;
   /* left: 81.9%; */
   height: 30px;
-  width: 95.9%;
+  width: 100%;
   z-index: 0;
   border-radius: 0 0 5px 5px;
   color: white;
@@ -170,21 +185,36 @@ background-color: #d9534f;
 
 /*MEDIA*/
 @media (max-width: 1148px) {
-	#age{margin-left: 3%;}
-	#last_name {margin-left: 5.3%;}
+/*	#age{margin-left: 3%;}
+	#last_name {margin-left: 5.3%;}*/
 }
 @media (max-width: 991px) {
+  /*ERRORS*/
+  .error-wrapper-fname{width: 100%;}
+  .error-wrapper-lname{width: 100%;}
+  .error-wrapper-age{width: 100%;}
+
+  .error-first_name{left:0;top:-37px;}
+  .error-last_name{left:0;top:-37px;}
+  .error-age{left:0;top:-37px;}
+  .error-email{left:0;top:-37px;}
+  .error-username{left:0;top:-37px;}
+  .error-password{left:0;top:-37px;}
+  .error-password-again{left:0;top:-7px;}
+
+  .top-margin{margin-top: 0;}
+  .rows{margin-top: 0;}
 	.form-frame{width: 100%;}
-	#main-frame {min-height: 625px;}
-	#first_name{width: 100%;}
-	#last_name{width: 100%;margin-left: 0;margin-top: 15px;}
-	#age{width: 100%;margin-top: 15px;}
-	#email{width: 100%;}
+	#main-frame {min-height: 730px}
+	#first_name{width: 100%;margin-bottom: 30px;}
+	#last_name{width: 100%;margin-left: 0;margin-bottom: 30px;}
+	#age{width: 100%;margin-bottom: 30px;}
+	#email{width: 100%;margin-bottom: 30px;}
 	#company{width: 100%;}
-	#username{width: 100%;}
-	#password{width: 100%;}
+	#username{width: 100%;margin-bottom: 30px;}
+	#password{width: 100%;margin-bottom: 30px;}
 	#password_again{width: 100%;}
-	.input-section {height: 292px;}
+	.input-section {height: 365px;}
 	#age {margin-left: 0;}
 	#submit-btn {margin-top: 0px; margin-top: 35px;width: 100%;
 }

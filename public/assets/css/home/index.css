@@ -1,0 +1,81 @@
+/*ICON BAR COLOR*/
+#search-input{
+	width:80%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#myModal {
+  top: 19%;
+  right: 0%;
+  outline: none;
+}
+#myModal .modal-dialog  {width:45%;}
+.modal-header {
+   border-bottom: none; 
+   padding-left: 20px;
+}
+.modal-footer {
+  border-top: none;
+}
+.form-control-login {
+  height: 43px;
+}
+#forgot{
+	color:	rgb(112, 112, 112);
+	float: left;
+	cursor: pointer;
+}
+.modal-footer {
+  margin-top: -20px;
+}
+.login-btn {
+  color: #fff !important;
+  background-color: #428bca !important;
+  border-color: #357ebd !important;
+}
+	.modal {
+	  overflow: hidden;
+	}
+@media (max-width: 767px) {
+	#search-input { 
+			width:100%;
+			margin-left: auto;
+			margin-right: auto;
+	}
+	#myModal .modal-dialog {
+	  width: 88%;
+	  margin: 0 auto;
+	}
+	.modal {
+	  overflow: hidden;
+	}
+	#myModal {
+	  top: 26%;
+	}
+}
+.theme-invert .navbar-toggle .icon-bar {
+	background:MintCream;
+}
+
+.theme-invert .mainmenu .dropdown-menu a {
+	color:MintCream;
+}
+.theme-invert .mainmenu .dropdown-menu a:hover { 
+	color:white;
+	/*TOP DROPDOWN MENU LI BACKGROUND*/
+	background:none;
+	border: 1px solid rgba(206, 210, 255, 0.27)
+}
+/*TOP DROP DOWN BTN BACKGROUND*/
+.theme-invert .navbar-toggle {
+  background: rgba(255, 255, 255, 0.19);
+}
+.dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus {
+color: #262626;
+text-decoration: none;
+background-color: rgba(0, 0, 0, 0.18);
+}
+.burger:hover{
+background-color: rgba(171, 171, 171, 0.43);
+}

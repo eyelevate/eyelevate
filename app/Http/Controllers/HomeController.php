@@ -39,7 +39,6 @@ class HomeController extends Controller
 
         public function postIndex()
     {
-        
         $this->layout = 'layouts.master-layout';
         return view('home.results')
         ->with('layout',$this->layout);

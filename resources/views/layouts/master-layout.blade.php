@@ -8,12 +8,12 @@
 
   <title>Admin</title>
 
-<link rel="shortcut icon" href="assets/images/gt_favicon.png">
+  <link rel="shortcut icon" href="assets/images/gt_favicon.png">
   
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<!-- Font Awesome -->
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
   <!-- Custom styles -->
   <link rel="stylesheet" href="assets/css/master.css">
@@ -28,41 +28,74 @@
   <!--[if lt IE 9]>
     <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-  <![endif]-->
-</head>
-<body>
-
-<nav class="navbar navbar-default" id="master-navigation">
-  <div class="container-fluid">
-    <div class="navbar-header">
-
-    </div>
-  </div>
-</nav>
-
- <div class="container-fluid background-color">
-
-@yield('content')
+    <![endif]-->
+  </head>
+  <body>
 
 
-</div>
 
-<!-- Load js libs only when the page is loaded. -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-<script src="packages/Magister3/assets/js/modernizr.custom.72241.js"></script>
-<!-- Custom template scripts -->
-<script src="packages/Magister3/assets/js/magister.js"></script>
+    <!-- NAVBAR -->
+    <div class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            @if(Auth::user())
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span> 
+                 {!!Auth::user()->username!!}
+                <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                  <li>{!! Html::link('/logout', 'Logout') !!}</li>
+                </ul>
+              </li>
+              @else
+              <li class="dropdown" id="login">
+              <a class="dropdown-toggle" data-toggle="dropdown"> 
+                 <span >Login</span> </a>
+                <ul class="dropdown-menu" role="menu">
+                </ul>
+              </li>
+              @endif
+            </ul>
+          </div><!-- /.nav-collapse -->
+        </div><!-- /.container -->
+      </div><!-- /.navbar -->
 
-@yield('scripts')
 
-</body>
-</html>
-<style>
-.background-color{
-  background-color: rgb(241, 241, 241);
-}
-.navbar{
-    margin-bottom: 0 !important;
-}
-</style>
+
+
+      <div class="container-fluid background-color">
+
+        @yield('content')
+
+
+      </div>
+
+      <!-- Load js libs only when the page is loaded. -->
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+      <!-- Latest compiled and minified JavaScript -->
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+      <script src="packages/Magister3/assets/js/modernizr.custom.72241.js"></script>
+      <!-- Custom template scripts -->
+      <script src="packages/Magister3/assets/js/magister.js"></script>
+
+      @yield('scripts')
+
+    </body>
+    </html>
+    <style>
+    .background-color{
+      background-color: rgb(241, 241, 241);
+    }
+    .navbar{
+      margin-bottom: 0 !important;
+    }
+    </style>

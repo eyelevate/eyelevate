@@ -1,0 +1,1 @@
+<h2>Click here to reset your password: {{ url('password/reset/'.$token) }}</h2>

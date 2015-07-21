@@ -15,11 +15,15 @@
 			<h3 class="form-title">Basic Information</h3>
 			<div class="form-single">
 				<input type="text" class="form-style col-md-4 first_name" name="first_name" placeholder="First name *" id="first_name" aria-describedby="sizing-addon2">
-				<div class="error-first_name hide error"></div>
+				<div class="error-wrapper-fname">
+					<div class="error-first_name hide error"></div>
+				</div>
 			</div>
 			<div class="form-single">
 				<input type="text" class="form-style col-md-5 last_name" name="last_name" id="last_name" placeholder="Last name *" aria-describedby="sizing-addon2">
-				<div class="error-last_name hide error"></div>
+				<div class="error-wrapper-lname">
+					<div class="error-last_name hide error"></div>
+				</div>
 			</div>
 			<div class="form-single">
 				<select class="form-style col-md-2 age" name="age" id="age">
@@ -27,7 +31,9 @@
 					<option value="1">Below 18</option>
 					<option value="2">18 or older</option>
 				</select>
-				<div class="error-age hide error"></div>
+				<div class="error-wrapper-age">
+					<div class="error-age hide error"></div>
+				</div>
 			</div>
 			<input type="text" class="form-style col-md-12 top-margin rows email" name="email" id="email" placeholder="Email *" aria-describedby="sizing-addon2">
 			<div class="error-wrapper">
@@ -41,11 +47,17 @@
 		<div class="input-section step3">
 			<h3 class="form-title">Your New Account Credentials</h3>
 			<input type="text" class="form-style col-md-12 username" name="username" id="username" placeholder="Username *" aria-describedby="sizing-addon2">
-			<div class="error-username hide error"></div>
+			<div class="error-wrapper">
+				<div class="error-username hide error"></div>
+			</div>
 			<input type="password" class="form-style col-md-12 top-margin rows password" name="password" id="password" placeholder="Password" aria-describedby="sizing-addon2">
-			<div class="error-password hide error"></div>
+			<div class="error-wrapper">
+				<div class="error-password hide error"></div>
+			</div>
 			<input type="password" class="form-style col-md-12 top-margin rows password_again"  name="password_again" id="password_again" placeholder="Re-Enter Password" aria-describedby="sizing-addon2">
-			<div class="error-password-again hide error"></div>
+			<div class="error-wrapper">
+				<div class="error-password-again hide error"></div>
+			</div>
 			<a class="btn btn-primary pull-right" id="submit-btn" >Join Us</a>
 		</div>
 		

@@ -4,6 +4,8 @@ namespace App\Http\Middleware;
 use App\Job;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
+use Session;
+use URL;
 
 class Authenticate
 {
@@ -25,6 +27,7 @@ class Authenticate
         $this->auth = $auth;
     }
 
+
     /**
      * Handle an incoming request.
      *
@@ -34,12 +37,14 @@ class Authenticate
      */
     public function handle($request, Closure $next)
     {
+ 
         if ($this->auth->guest()) {
-            if ($request->ajax()) {
-                return response('Unauthorized.', 401);
-            } else {
-                return redirect()->guest('auth/login');
-            }
+            Session::flash('redirect', URL::full()); 
+            // if ($request->ajax()) {
+            //     return response('Unauthorized.', 401);
+            // } else {
+            //     return redirect()->guest('auth/login');
+            // }
         }
 
         return $next($request);

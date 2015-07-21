@@ -76,7 +76,12 @@ var popupTemplate='<li class="spam-popup">Report as spam</li>';
 		
 		});
 		
-		
+		$('#login').click(function(){
+			$('#myModal').modal('toggle');
+		});
+		$(document).find('.login-btn').click(function(){
+			$('#login-form').submit();
+		});
 
 
 		//MORE CLICKED

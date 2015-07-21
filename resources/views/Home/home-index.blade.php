@@ -1,6 +1,6 @@
 @extends($layout)
 @section('stylesheets')
-	
+{!! Html::style('assets/css/home/index.css') !!}
 @stop
 @section('scripts')
 <script src="assets/js/home/home.js"></script>
@@ -18,10 +18,17 @@
 			</button>
 			<!-- <a data-toggle="dropdown" href="#">Dropdown trigger</a> -->
 			<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-				<li><a href="#head" class="active">Hello</a></li>
-				<li><a href="#about">About me</a></li>
-				<li><a href="#themes">Themes</a></li>
-				<li><a href="#contact">Get in touch</a></li>
+				 @if(Auth::user())
+					{!! Form::open(array('action' => 'UsersController@postLogout', 'class'=>'','role'=>"form",'id'=>'logout-form')) !!}
+						<li><a class="active" id="logout">Logout</a></li>
+					{!! Form::close() !!}
+				 @else
+					<li><a class="active" id="login">Login</a></li>
+				 @endif
+
+				<li><a>About Us</a></li>
+				<li><a>Themes</a></li>
+				<li><a>Get in touch</a></li>
 			</ul>
 		</div>
 	</div>
@@ -63,48 +70,34 @@
 	</div>
 </section>
 </div>
-<style>
-/*ICON BAR COLOR*/
-#search-input{
-	width:80%;
-	margin-left: auto;
-	margin-right: auto;
-}
 
-@media (max-width: 767px) {
-	#search-input { 
-			width:100%;
-			margin-left: auto;
-			margin-right: auto;
-	}
-}
-.theme-invert .navbar-toggle .icon-bar {
-	background:MintCream;
-}
 
-.theme-invert .mainmenu .dropdown-menu a {
-	color:MintCream;
-}
-.theme-invert .mainmenu .dropdown-menu a:hover { 
-	color:white;
-	/*TOP DROPDOWN MENU LI BACKGROUND*/
-	background:none;
-	border: 1px solid rgba(206, 210, 255, 0.27)
-}
-/*TOP DROP DOWN BTN BACKGROUND*/
-.theme-invert .navbar-toggle {
-  background: rgba(255, 255, 255, 0.19);
-}
-.dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus {
-  color: #262626;
-  text-decoration: none;
-  background-color: rgba(0, 0, 0, 0.18);
-  }
- .burger:hover{
-  background-color: rgba(171, 171, 171, 0.43);
- }
 
-</style>
-
+<div class="modal fade" id="myModal">
+	{!! Form::open(array('action' => 'UsersController@postLogin', 'class'=>'','role'=>"form",'id'=>'login-form')) !!}
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	        <h4 class="modal-title">Login</h4>
+	      </div>
+	      <div class="modal-body">
+			<div class="form-group">
+				<input type="text" class="form-control form-control-login" name="username" id="username" placeholder="Username" aria-describedby="sizing-addon2">
+			</div>
+			<div class="form-group">
+				<input type="password" class="form-control form-control-login" name="password" id="password" placeholder="Password" aria-describedby="sizing-addon2">			
+			</div>
+	      </div>
+	      <div class="modal-footer clearfix">
+	      	<div id="forgot-wrapper pull-left">
+	        	<a id="forgot"> I forgot my password</a>
+	        </div>
+	        <button type="button" class="btn btn-primary pull-right login-btn">Login</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	{!! Form::close() !!}
+</div><!-- /.modal -->
 
 @stop

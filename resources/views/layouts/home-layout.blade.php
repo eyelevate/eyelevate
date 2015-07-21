@@ -13,12 +13,12 @@
   <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 
   <!-- Custom styles -->
-  <link rel="stylesheet" href="packages/Magister3/assets/css/magister.css">
+ <link rel="stylesheet" href="assets/css/master.css">
 
   <!-- Fonts -->
   <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
   <link href='http://fonts.googleapis.com/css?family=Wire+One' rel='stylesheet' type='text/css'>
-  @yield('styles')
+  @yield('stylesheets')
 
   <!--[if lt IE 9]>
     <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
