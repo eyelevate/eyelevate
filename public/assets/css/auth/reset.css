@@ -1,0 +1,73 @@
+#main-frame{
+	/*background-color: rgb(241, 241, 241);*/
+  background-color: #fff;
+  display: block;
+  margin: 80px auto;
+  float: none;
+  border-radius: 5px;
+  padding-top: 0px;
+  padding-left: 30px;
+  padding-right: 30px;
+  width: 40%;
+    height: 325px;
+}
+.background-color{
+	background-color: #fff;
+}
+h3{
+	font: 19px/29px "Gotham Rounded A", "Gotham Rounded B", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+.form-frame{
+	left: 0;
+	margin: 0 auto;
+	float: none;
+	position: absolute;
+}
+#reset-btn{
+  margin-top: 30px;
+}
+#cancel_btn{
+  margin-top: 30px;
+}
+.email{
+	margin-top: 25px;
+}
+#password_id{
+	margin-top: 25px;
+}
+#password_again_id{
+	margin-top: 25px;
+}
+.background-color{
+	  min-height: 700px;
+}
+@media (max-width: 767px) {
+		#main-frame {
+		  width: 100%;
+
+		}
+		.form-frame {
+		  width: 100%;
+		}
+	}
+
+@media (max-width: 977px) {
+	#main-frame {
+		  height: 345px;
+	}
+}
+@media (max-width: 409px) {
+	#main-frame {
+		height: 345px;
+	}
+	.form-frame {
+	  width: 100%;
+	}
+}
+@media (max-width: 1250px) {
+	#main-frame {
+		height: 355px;
+	}
+}
+
+	    

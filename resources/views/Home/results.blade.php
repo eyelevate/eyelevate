@@ -11,16 +11,20 @@
   <div class="container-fluid">
     <!-- LEFT BOX START -->
     <div class="col-md-9" id="left-box" target="false">
-      <div class="container" id="left-box-inner">
+          <div class="container" id="left-box-inner">
+
         <div class="" id="preferences-frame">
             <div class="input-group " id="top-search-bar" >
               <input type="text" class="form-control" id="top-search-input" placeholder="Search for Categories">
               <span class="input-group-btn">
-                <button class="btn btn-default " id="top-search-btn" type="button"><i class="glyphicon glyphicon-search">  </i></button>
+                <button class="btn btn-default " id="top-search-btn" type="button">
+                  <i class="glyphicon glyphicon-search"> </i>
+                </button>
               </span>
             </div><!-- /input-group -->
           </br>
             <ul class="" id="preferences">
+              <li class="preferences-li"><a class="preferences-text ask-li">Ask a Question</a></li>
               <li class="preferences-li"><a class="preferences-text preferences-text-first">Newest</a></li>
               <li class="preferences-li"><a class="preferences-text">Active</a></li>
               <li class="preferences-li"><a class="preferences-text">Unanswered</a></li>
@@ -82,30 +86,23 @@
         </div>
       </div>
       @endfor
-
-
-
     </div>
   </div>
-
-
 </div>
 <!-- LEFT BOX END -->
-
-
 <!-- RIGHT BOX START -->
 <div class="col-md-3 " id="right-box"> 
+  <a class="btn btn-primary btn-block" id="ask_q_btn">Ask a Question</a>
   <div class="" id="right-box-inner">
+
     <div class="list-group list-group-container">
       <a href="#" class="list-group-item active " id="list-search-bar">
-
         <div class="input-group" >
           <input type="text" class="form-control" id="list-search-input" placeholder="Search for Categories">
           <span class="input-group-btn">
             <button class="btn btn-default " id="list-search-btn" type="button"><i class="glyphicon glyphicon-search">  </i></button>
           </span>
         </div><!-- /input-group -->
-
       </a>
       <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
       <a href="#" class="list-group-item">Morbi leo risus</a>
@@ -168,5 +165,76 @@
       </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
   {!! Form::close() !!}
+</div><!-- /.modal -->
+
+<div class="modal fade" id="ask_modal">
+    <div class="modal-dialog ask-dialog">
+      <div class="modal-content" style="padding: 20px;">
+        <div class="modal-header ask-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Your Question</h4>
+        </div>
+        <div class="modal-body">
+          <!-- STEP 1 -->
+          <div class="step-1 step" step="1" state="active">
+            <div class="left-modal-inner col-sm-8">
+              <textarea placeholder="Title of your question"
+               name="comment[text]" id="comment_text" cols="40"
+                class="ui-autocomplete-input" autocomplete="off" role="textbox"
+               aria-autocomplete="list" aria-haspopup="true"></textarea>
+            </div>
+            <div class="right-modal-inner col-sm-4">
+              <span>Did you search first to make sure your question is unique?</span>
+            </div>
+          </div>
+          <!-- STEP 1 END -->
+
+          <!-- STEP 2 -->
+          <div class="step-2 step hide" step="2">
+            <div class="model-inner-2 col-sm-12">
+              <span class="inner-title">You Asked:</span>
+              <div class="alert alert-success alert-dark-1 alert-top-margin" role="alert">...</div>
+              <hr>
+              <span class="inner-title">Existing Questions:</span>
+              <div class="alert alert-success alert-dark-2 alert-top-margin" role="alert">...</div>
+
+              <hr>
+            </div>
+          </div>
+          <!-- STEP 2 END -->
+
+          <!-- STEP 3 -->
+          <div class="step-3 step hide" step="3">
+            <div class="left-modal-inner-3 col-sm-8">
+              <div class="alert alert-success alert-dark-1 alert-top-margin" role="alert">...</div>
+              <textarea placeholder="Title of your question"
+               name="comment[text]" id="comment_text" cols="40"
+                class="ui-autocomplete-input" autocomplete="off" role="textbox"
+               aria-autocomplete="list" aria-haspopup="true"></textarea>
+            </div>
+            <div class="right-modal-inner-3 col-sm-4">
+              <div class="module secondary-module">
+          <div class="secondary-heading">
+            <h4>Notifications</h4>
+          </div>
+          <ul class="options-list">
+            <li class="options-list-item"> 
+              <input checked="checked" id="notify-me" name="notify-me" type="checkbox" value="1" class="placeholder-processed">
+              <label for="notify-me" class="notify-me">Email me when someone replies to this discussion</label>
+            </li>
+          </ul>
+        </div>
+            </div>
+          </div>
+          <!-- STEP 3 END -->
+
+        </div>
+        <div class="modal-footer clearfix ask-footer">
+          <button type="button" class="btn btn-default pull-left back-btn">Back</button>
+          <button type="button" class="btn btn-primary pull-right next-btn">Next</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+
 </div><!-- /.modal -->
 @stop

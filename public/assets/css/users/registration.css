@@ -3,7 +3,7 @@
 	background-color: #fff;
 	min-height: 585px;
 	display: block;
-	margin: 20px auto;
+	margin: 80px auto;
 	float: none;
 	border-radius: 5px;
 	padding-top: 5px;
@@ -181,7 +181,12 @@ background-color: #d9534f;
   padding-left: 10px;
   padding-top: 7px;
 }
-
+/*MEDIA*/
+@media (max-width: 1023px) {
+  .error-age {
+    font-size: 10px;
+  }
+}
 
 /*MEDIA*/
 @media (max-width: 1148px) {
@@ -196,7 +201,7 @@ background-color: #d9534f;
 
   .error-first_name{left:0;top:-37px;}
   .error-last_name{left:0;top:-37px;}
-  .error-age{left:0;top:-37px;}
+  .error-age{left:0;top:-37px;font-size: 14px;}
   .error-email{left:0;top:-37px;}
   .error-username{left:0;top:-37px;}
   .error-password{left:0;top:-37px;}

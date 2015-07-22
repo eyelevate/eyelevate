@@ -1,5 +1,6 @@
 $(document).ready(function(){
 	results.pageLoad();
+	results.modal_stepy();
 	results.events();
 
 });
@@ -17,7 +18,67 @@ var popupTemplate='<li class="spam-popup">Report as spam</li>';
 		    html:true
 		});
 	},
+	modal_stepy: function(){
+		$('.next-btn').click(function(){
+
+			var _this = $(this).parents('.modal:first').find('.step[state="active"]');
+
+			
+			var current_step = parseInt(_this.attr('step'));
+			if (current_step < 3) {
+				var next_step = current_step + 1;
+				//DEACTIVE THE PREVIOUS STATE AND HIDE IT
+				_this.attr('state',null);
+				_this.addClass('hide');
+				//SHOW AND ACTIVE THE NEXT STEP
+				$('.step-'+next_step).removeClass('hide').attr('state','active');
+			}
+
+			//SETTING THE HEADER TITLE
+			switch(next_step){
+				case 1:
+					$(this).parents('.modal:first').find('.modal-header').html('Your Question');
+				break;
+				case 2:
+					$(this).parents('.modal:first').find('.modal-header').html('<h4>Is your question unique?</h4>');
+				break;
+				case 3:
+					$(this).parents('.modal:first').find('.modal-header').html('<h4>Add question details</h4>');
+				break;
+			}
+		});
+		$('.back-btn').click(function(){
+			var _this = $(this).parents('.modal:first').find('.step[state="active"]');
+			var current_step = parseInt(_this.attr('step'));
+			if (current_step > 1) {
+				var next_step = current_step - 1;
+				//DEACTIVE THE PREVIOUS STATE AND HIDE IT
+				_this.attr('state',null);
+				_this.addClass('hide');
+				//SHOW AND ACTIVE THE NEXT STEP
+				$('.step-'+next_step).removeClass('hide').attr('state','active');
+			}
+			//SETTING THE HEADER TITLE
+			switch(next_step){
+				case 1:
+					$(this).parents('.modal:first').find('.modal-header').html('<h4>Your Question</h4>');
+				break;
+				case 2:
+					$(this).parents('.modal:first').find('.modal-header').html('<h4>Is your question unique?</h4>');
+				break;
+				case 3:
+					$(this).parents('.modal:first').find('.modal-header').html('<h4>Add question details</h4>');
+				break;
+			}
+		});
+
+
+	},
 	events: function() {
+
+		$('#ask_q_btn').click(function(){
+			$('#ask_modal').modal('show');
+		});
 
 		//WANT TO REPLY
 		$('.reply-text').click(function(){
@@ -82,7 +143,9 @@ var popupTemplate='<li class="spam-popup">Report as spam</li>';
 		$(document).find('.login-btn').click(function(){
 			$('#login-form').submit();
 		});
-
+		$('#forgot').click(function(){
+			window.location = '/password-reset';
+		});
 
 		//MORE CLICKED
 		$('.more').click(function(){

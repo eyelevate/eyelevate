@@ -81,6 +81,7 @@ class UsersController extends Controller
             }
         } else {
             //FAILED TO LOGIN
+            return redirect('/');
         }
     }
         public function getLogout()

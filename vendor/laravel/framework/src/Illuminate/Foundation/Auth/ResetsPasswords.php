@@ -1,7 +1,7 @@
 <?php
 
 namespace Illuminate\Foundation\Auth;
-
+use Session;
 use Illuminate\Http\Request;
 use Illuminate\Mail\Message;
 use Illuminate\Support\Facades\Auth;
@@ -38,8 +38,9 @@ trait ResetsPasswords
             case Password::RESET_LINK_SENT:
                 return redirect()->back()->with('status', trans($response));
 
-            case Password::INVALID_USER:
-                return redirect()->back()->withErrors(['email' => trans($response)]);
+            case Password::INVALID_USER:   
+                //USER WAS INVALID
+                return redirect('/');
         }
     }
 
@@ -65,7 +66,11 @@ trait ResetsPasswords
             throw new NotFoundHttpException;
         }
 
-        return view('auth.reset')->with('token', $token);
+        //MODIFIED FOR EYELEVATE
+        $layout = 'layouts.master-layout';
+        return view('auth.reset')
+            ->with('token', $token)
+            ->with('layout',$layout);
     }
 
     /**
@@ -92,7 +97,9 @@ trait ResetsPasswords
 
         switch ($response) {
             case Password::PASSWORD_RESET:
-                return redirect($this->redirectPath());
+                //MODIFIED FOR EYELEVATE
+                Session::flash('reset_success', true); 
+                return redirect('/');
 
             default:
                 return redirect()->back()

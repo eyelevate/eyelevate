@@ -100,4 +100,19 @@
 	{!! Form::close() !!}
 </div><!-- /.modal -->
 
+<div class="modal fade" id="reset_modal">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-body">
+	      	<h4>Your password has been reset successfully.</h4>
+	      	<h5>You are logged on as {{$username}}</h5>
+	      </div>
+	      <div class="modal-footer clearfix">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<input type="hidden" id="reset_success" value="{{ $reset_success }}">
 @stop

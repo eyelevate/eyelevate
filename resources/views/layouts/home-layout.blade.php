@@ -13,7 +13,7 @@
   <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 
   <!-- Custom styles -->
- <link rel="stylesheet" href="assets/css/master.css">
+ <link rel="stylesheet" href="assets/css/home.css">
 
   <!-- Fonts -->
   <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -38,7 +38,7 @@
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 <script src="packages/Magister3/assets/js/modernizr.custom.72241.js"></script>
 <!-- Custom template scripts -->
-<script src="packages/Magister3/assets/js/magister.js"></script>
+<!-- <script src="packages/Magister3/assets/js/magister.js"></script> -->
 
 @yield('scripts')
 

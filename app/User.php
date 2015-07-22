@@ -19,6 +19,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     protected $table = 'users';
 
+    public static $rules_password_reset = array(
+        'email'=>'required|email|unique:users',
+        'password'=>'required|between:6,25|',
+        'password_confirmation'=>'required|between:6,25'
+    );
+
     /**
      * The attributes that are mass assignable.
      *

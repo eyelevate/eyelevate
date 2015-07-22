@@ -82,6 +82,7 @@ class PasswordBroker implements PasswordBrokerContract
 
         if (is_null($user)) {
             return PasswordBrokerContract::INVALID_USER;
+
         }
 
         // Once we have the reset token, we are ready to send the message out to this

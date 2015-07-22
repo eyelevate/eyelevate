@@ -26,6 +26,9 @@ home = {
 		    // });
 		  });
 		}); 
+		if ($('#reset_success').val() == true) {
+			$('#reset_modal').modal('show');
+		};
 	},
 	events: function() {
 
