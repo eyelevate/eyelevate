@@ -2,84 +2,50 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Job;
+use App\Search;
+use App\User;
+use Input;
+use Validator;
+use Redirect;
+use Hash;
+use Request;
+use Response;
+use Auth;
+use Session;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+
 class ThreadsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function index()
-    {
-        //
+    public function __construct() {
+
+        // $this->layout = "layouts.test";
+
+        //FIRST TEMPLATE
+        // $this->layout = "layouts.master";
+
+        // // SECOND TEMPLATE
+        // $this->layout = "layouts.master2";
+
+        // // THIRD TEMPLATE
+        $this->layout = 'layouts.master-layout';
+   
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
+    public function postSearchQuery()
     {
-        //
-    }
+        if(Request::ajax()){
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @return Response
-     */
-    public function store()
-    {
-        //
-    }
+            $search_query = Input::get('search_text');
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        //
-    }
+            $search_results = Search::search_function($search_query);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function update($id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
+            return Response::json(array(
+                'status' => 200
+            ));
+        }
     }
 }

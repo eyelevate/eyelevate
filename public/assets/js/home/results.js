@@ -22,28 +22,51 @@ var popupTemplate='<li class="spam-popup">Report as spam</li>';
 		$('.next-btn').click(function(){
 
 			var _this = $(this).parents('.modal:first').find('.step[state="active"]');
-
-			
 			var current_step = parseInt(_this.attr('step'));
-			if (current_step < 3) {
-				var next_step = current_step + 1;
-				//DEACTIVE THE PREVIOUS STATE AND HIDE IT
-				_this.attr('state',null);
-				_this.addClass('hide');
-				//SHOW AND ACTIVE THE NEXT STEP
-				$('.step-'+next_step).removeClass('hide').attr('state','active');
-			}
+			if (current_step < 4) {
+				if (current_step == 1) {
+					var search_text = $('#comment_text').val();
+					//CHECK IF THE SEARCH AREA WAS NOT EMPTY
+					if (!$.isBlank(search_text)) {
 
+						var next_step = current_step + 1;
+						//DEACTIVE THE PREVIOUS STATE AND HIDE IT
+						_this.attr('state',null);
+						_this.addClass('hide');
+						//SHOW AND ACTIVE THE NEXT STEP
+						$('.step-'+next_step).removeClass('hide').attr('state','active');
+
+						//ADD THE QUERY TO NEXT STEP
+						$('#you-asked').html(search_text);
+
+						//SEND SEARCH REQUEST TO PHP 
+						request.search_query(search_text);
+
+					};
+
+				} else {
+					var next_step = current_step + 1;
+					//DEACTIVE THE PREVIOUS STATE AND HIDE IT
+					_this.attr('state',null);
+					_this.addClass('hide');
+					//SHOW AND ACTIVE THE NEXT STEP
+					$('.step-'+next_step).removeClass('hide').attr('state','active');
+				}
+
+			}
 			//SETTING THE HEADER TITLE
 			switch(next_step){
-				case 1:
-					$(this).parents('.modal:first').find('.modal-header').html('Your Question');
-				break;
 				case 2:
-					$(this).parents('.modal:first').find('.modal-header').html('<h4>Is your question unique?</h4>');
+					$(this).parents('.modal:first').find('.modal-title').html('<h4>Is your question unique?</h4>');
+					$('.back-btn').removeClass('hide');
 				break;
 				case 3:
-					$(this).parents('.modal:first').find('.modal-header').html('<h4>Add question details</h4>');
+					$(this).parents('.modal:first').find('.modal-title').html('<h4>Add question details</h4>');
+					$('.back-btn').removeClass('hide');
+				break;
+				case 4:
+					$(this).parents('.modal:first').find('.modal-title').html('<h4>Pick Categories</h4>');
+					$('.back-btn').removeClass('hide');
 				break;
 			}
 		});
@@ -61,13 +84,17 @@ var popupTemplate='<li class="spam-popup">Report as spam</li>';
 			//SETTING THE HEADER TITLE
 			switch(next_step){
 				case 1:
-					$(this).parents('.modal:first').find('.modal-header').html('<h4>Your Question</h4>');
+					$(this).parents('.modal:first').find('.modal-title').html('<h4>Your Question</h4>');
+					$('.back-btn').addClass('hide');
 				break;
 				case 2:
-					$(this).parents('.modal:first').find('.modal-header').html('<h4>Is your question unique?</h4>');
+					$(this).parents('.modal:first').find('.modal-title').html('<h4>Is your question unique?</h4>');
 				break;
 				case 3:
-					$(this).parents('.modal:first').find('.modal-header').html('<h4>Add question details</h4>');
+					$(this).parents('.modal:first').find('.modal-title').html('<h4>Add question details</h4>');
+				break;
+				case 4:
+					$(this).parents('.modal:first').find('.modal-title').html('<h4>Pick Categories</h4>');
 				break;
 			}
 		});
@@ -76,9 +103,23 @@ var popupTemplate='<li class="spam-popup">Report as spam</li>';
 	},
 	events: function() {
 
-		$('#ask_q_btn').click(function(){
+		$( ".custom-dropdown__select" ).change(function() {
+			var this_val = $(this).find('option:selected').val();
+			var this_text = $(this).find('option:selected').text();
+			add_new_category(this_val,this_text);
+
+		});
+
+		$('.ask_q_btn').click(function(){
 			$('#ask_modal').modal('show');
 		});
+
+
+		$(document).find('.remove-label').click(function(){
+			$(this).parents('.label:first').remove();
+		});
+
+
 
 		//WANT TO REPLY
 		$('.reply-text').click(function(){
@@ -186,8 +227,6 @@ var popupTemplate='<li class="spam-popup">Report as spam</li>';
 	// });
 		//FLAG WAS CLICKED
 		$('.flags').click(function(){
-			
-
 			//MOUSE OVER POPUP MESSAGE
 		    $(document).find( ".popover" ).mouseout(function() {
 		    	var i = false;
@@ -213,16 +252,48 @@ var popupTemplate='<li class="spam-popup">Report as spam</li>';
 			  		$('.popbutton').popover('hide') ;
 			  	};
 			}, 3000);
-
 		});
-
-
-		
-
-
 	}
 }
 request = {
+	search_query: function(search_text) {
+	var token = $('meta[name=csrf-token]').attr('content');
+	$.post(
+		'/threads/search-query',
+		{
+			"_token": token,
+			"search_text":search_text
+		},
+		function(result){
+			var status = result.status;
+			// var call_back = result.validation_callback;
+			// view_errors(call_back);
+			switch(status) {
+				case 200: // Approved
+				break;
 
+				default:
+				break;
+			}
+		}
+		);
+	}
 };
+function add_new_category(val , text){
+	var html =  '<span class="tag label label-primary">'+
+                '<span>'+text+'</span>'+
+                '<a><i class="remove-label glyphicon glyphicon-remove-sign glyphicon-white"></i></a>'+
+                '<input name="categories" type="hidden" value="'+val+'" text="'+text+'">'+
+                '</span>';
+    $('#h3-wrapper').append(html);
+    $(document).find('.remove-label').click(function(){
+		$(this).parents('.label:first').remove();
+	});
+}
 
+
+(function($){
+  $.isBlank = function(obj){
+    return(!obj || $.trim(obj) === "");
+  };
+})(jQuery);

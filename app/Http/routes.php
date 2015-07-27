@@ -15,6 +15,9 @@
 
 // Route::get('/', 'WelcomeController@getIndex');
 
+
+
+
 //HOME ROUTE
 Route::get('/', 'HomeController@getIndex');
 // Route::post('/search','HomeController@postIndex');
@@ -31,7 +34,9 @@ Route::controller('users', 'UsersController');
 Route::controller('reminders', 'RemindersController');
 	Route::get('/password-reset', 'RemindersController@getForgot');
 
-
+//THREAD ROUTE 
+Route::controller('threads', 'ThreadsController');
+	Route::post('/threads/search-query', 'ThreadsController@postSearchQuery');
 
 Route::controller('password', 'Auth\PasswordController');
 // Password reset link request routes...
