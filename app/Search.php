@@ -16,10 +16,13 @@ class Search extends Model
    				$tier_1_result_id = $similar_query->id;
 
    				$results_1 = Thread::find($tier_1_result_id);
-   				$final_product_tear1 = [];
-   				$final_product_tear1["id"]=$results_1->id;
-   				$final_product_tear1["title"]=$results_1->title;
-   				$final_product_tear1["description"]=$results_1->description;
+   				$final_product_tier1 = [];
+   				$final_product_tier1[$results_1->id]["id"]=$results_1->id;
+   				$final_product_tier1[$results_1->id]["title"]=$results_1->title;
+   				$final_product_tier1[$results_1->id]["description"]=implode(' ', array_slice(explode(' ', $results_1->description), 0, 20));
+				if (str_word_count($results_1->description) > 20) {
+					$final_product_tier1[$results_1->id]["description"] .='...';
+				}
    			}
    			//1ST TIER OF SEARCH END --|
 
@@ -71,11 +74,17 @@ class Search extends Model
 			}
 			//SORT RESULTS
 			arsort($counted_results,SORT_NUMERIC);
-			//ARRAY SLICE AND PRESERVE KEY
-			$end_results = array_slice($counted_results, 0, 2,true);
+			//TIER 1 SEARCH HAS RESULTS KEEP 1 
+			if(isset($final_product_tier1)){
+				//ARRAY SLICE AND PRESERVE KEY
+				$end_results = array_slice($counted_results, 0, 1,true);
+			} else {
+				//ARRAY SLICE AND PRESERVE KEY
+				$end_results = array_slice($counted_results, 0, 2,true);
+			}
 			//EMPTY ARRAY
 			$final_product_array = [];
-			$final_product = [];
+
 			//RETRIEVE RESULTS
 			$arr_count = 0;
 			foreach ($end_results as $endkey => $endvalue) {
@@ -84,20 +93,29 @@ class Search extends Model
 			}
 			$fp_count = 0;
 			foreach ($final_product_array as $fpkey => $fpvalue) {
-				$final_product[$fpkey]['id'] = $final_product_array[$fpkey]->id;
-				$final_product[$fpkey]['title'] = $final_product_array[$fpkey]->title;
-				$final_product[$fpkey]['description'] = $final_product_array[$fpkey]->description;
+				$final_product[$final_product_array[$fpkey]->id]['id'] = $final_product_array[$fpkey]->id;
+				$final_product[$final_product_array[$fpkey]->id]['title'] = $final_product_array[$fpkey]->title;
+
+
+				$final_product[$final_product_array[$fpkey]->id]['description'] = implode(' ', array_slice(explode(' ', $final_product_array[$fpkey]->description), 0, 20));
+				if (str_word_count($final_product_array[$fpkey]->description) > 20) {
+					$final_product[$final_product_array[$fpkey]->id]['description'] .='...';
+				}
+
+				
 				// Job::dump($final_product_array[$fpkey]->description);
 				$fp_count++;
 			}
    		}
 
-   		$merge = array_merge($final_product,$final_product_tier1);
-
+   		//TIER 1 SEARCH HAS RESULTS, COMBINE THE ARRAYS
+   		$merge = null;
    		if (isset($final_product_tier1)) {
-   			# code...
+   			$merge = array_replace($final_product,$final_product_tier1);
+   		} elseif(isset($final_product)){
+   			$merge = $final_product;
    		}
-   		Job::dump($merge);
-		return false;
+
+		return $merge;
 	}
 }

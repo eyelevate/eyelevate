@@ -11,6 +11,7 @@ use Hash;
 use Request;
 use Response;
 use Auth;
+use URL;
 use Session;
 
 use App\Http\Requests;
@@ -77,6 +78,7 @@ class UsersController extends Controller
             if(isset($redirect)) {
                return Redirect::to(Session::get('redirect'));
             } else {
+                //SESION DOESN'T EXIST
                 return Redirect::to('/');
             }
         } else {
@@ -106,6 +108,20 @@ class UsersController extends Controller
             return Response::json(array(
                 'status' => 200,
                 'validation_callback' => $validation_results
+            ));
+        }
+    }
+
+    public function postUserAuth()
+    {
+        if(Request::ajax()){
+
+            $status = 400;
+            if (Auth::check()) {
+                $status = 200;
+            }
+            return Response::json(array(
+                'status' => $status
             ));
         }
     }

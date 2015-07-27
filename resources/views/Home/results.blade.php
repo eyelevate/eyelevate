@@ -32,110 +32,57 @@
         </ul>
       </div>
       <div id="thread-group">
-        <div class="thread-single">
-          <div class="media">
-            <div class="media-left">
-              <a href="#">
-                <img class="media-object" data-src="holder.js/64x64" alt="64x64" src="assets/images/blank_male.png" data-holder-rendered="true" style="width: 64px; height: 64px;">
-              </a>
-            </div>
-            <div class="media-body">
-              <div class="media-inner-left">
-                <h4 class="media-heading">My small business needs help</h4>
-                <div class="thread-info">Pedram kh . 
-                  <span class="thread-date">1 hours ago</span>
-                </div> 
-              </br>
-              <div class="label-container">
-                <span class="label label-default">Business</span>
-                <span class="label label-default">Social</span>
-                <span class="label label-default">Politics</span>
-              </div>
-            </div>
-            <div class="media-inner-right">
-              <div class="right-text"><span class="reply-no"><i class="fa fa-eye-slash"></i></span></br><span class="reply-html">0</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      @for ($i = 1; $i < 5; $i++)
-      <div class="thread-single">
-        <div class="media">
-          <div class="media-left">
-            <a href="#">
-              <img class="media-object" data-src="holder.js/64x64" alt="64x64" src="assets/images/blank_male.png" data-holder-rendered="true" style="width: 64px; height: 64px;">
-            </a>
-          </div>
-          <div class="media-body">
-            <div class="media-inner-left">
-              <h4 class="media-heading">My small business needs help</h4>
-              <div class="thread-info">Pedram kh . 
-                <span class="thread-date">{{$i}} hours ago</span>
-              </div> 
-            </br>
-            <div class="label-container">
-              <span class="label label-default">Business</span>
-              <span class="label label-default">Social</span>
-              <span class="label label-default">Politics</span>
-            </div>
-          </div>
-          <div class="media-inner-right">
-            <div class="right-text"><span class="reply-no"><i class="fa fa-eye"></i></span></br><span class="reply-html">{{$i}}</span></div>
-          </div>
-        </div>
+        {!! $threads !!}
       </div>
     </div>
-    @endfor
   </div>
-</div>
-</div>
-<!-- LEFT BOX END -->
-<!-- RIGHT BOX START -->
-<div class="col-md-3 " id="right-box"> 
-  <a class="btn btn-primary btn-block ask_q_btn">Ask a Question</a>
-  <div class="" id="right-box-inner">
+  <!-- LEFT BOX END -->
+  <!-- RIGHT BOX START -->
+  <div class="col-md-3 " id="right-box"> 
+    <a class="btn btn-primary btn-block ask_q_btn">Ask a Question</a>
+    <div class="" id="right-box-inner">
 
-    <div class="list-group list-group-container">
-      <a href="#" class="list-group-item active " id="list-search-bar">
-        <div class="input-group" >
-          <input type="text" class="form-control" id="list-search-input" placeholder="Search for Categories">
-          <span class="input-group-btn">
-            <button class="btn btn-default " id="list-search-btn" type="button"><i class="glyphicon glyphicon-search">  </i></button>
-          </span>
-        </div><!-- /input-group -->
-      </a>
-      <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
-      <a href="#" class="list-group-item">Morbi leo risus</a>
-      <a href="#" class="list-group-item">Porta ac consectetur ac</a>
-      <a href="#" class="list-group-item">Vestibulum at eros</a>
-      <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
-      <a href="#" class="list-group-item">Morbi leo risus</a>
-      <a href="#" class="list-group-item">Porta ac consectetur ac</a>
-      <a href="#" class="list-group-item">Vestibulum at eros</a>
-      <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
-      <a href="#" class="list-group-item">Morbi leo risus</a>
-      <a href="#" class="list-group-item">Porta ac consectetur ac</a>
-      <a href="#" class="list-group-item">Vestibulum at eros</a>
-      <a href="#" class="list-group-item">Porta ac consectetur ac</a>
-      <a href="#" class="list-group-item">Vestibulum at eros</a>
-      <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
-      <a href="#" class="list-group-item">Morbi leo risus</a>
-      <a href="#" class="list-group-item">Porta ac consectetur ac</a>
-      <a href="#" class="list-group-item">Vestibulum at eros</a>
-      <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
-      <a href="#" class="list-group-item">Morbi leo risus</a>
-      <a href="#" class="list-group-item">Porta ac consectetur ac</a>
-      <a href="#" class="list-group-item">Vestibulum at eros</a>
-      <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
-      <a href="#" class="list-group-item">Morbi leo risus</a>
-      <a href="#" class="list-group-item">Porta ac consectetur ac</a>
-      <a href="#" class="list-group-item">Vestibulum at eros</a>
-      <a href="#" class="list-group-item">Porta ac consectetur ac</a>
-      <a href="#" class="list-group-item">Vestibulum at eros</a>
+      <div class="list-group list-group-container">
+        <a href="#" class="list-group-item active " id="list-search-bar">
+          <div class="input-group" >
+            <input type="text" class="form-control" id="list-search-input" placeholder="Search for Categories">
+            <span class="input-group-btn">
+              <button class="btn btn-default " id="list-search-btn" type="button"><i class="glyphicon glyphicon-search">  </i></button>
+            </span>
+          </div><!-- /input-group -->
+        </a>
+        <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+        <a href="#" class="list-group-item">Morbi leo risus</a>
+        <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+        <a href="#" class="list-group-item">Vestibulum at eros</a>
+        <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+        <a href="#" class="list-group-item">Morbi leo risus</a>
+        <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+        <a href="#" class="list-group-item">Vestibulum at eros</a>
+        <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+        <a href="#" class="list-group-item">Morbi leo risus</a>
+        <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+        <a href="#" class="list-group-item">Vestibulum at eros</a>
+        <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+        <a href="#" class="list-group-item">Vestibulum at eros</a>
+        <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+        <a href="#" class="list-group-item">Morbi leo risus</a>
+        <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+        <a href="#" class="list-group-item">Vestibulum at eros</a>
+        <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+        <a href="#" class="list-group-item">Morbi leo risus</a>
+        <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+        <a href="#" class="list-group-item">Vestibulum at eros</a>
+        <a href="#" class="list-group-item">Dapibus ac facilisis in</a>
+        <a href="#" class="list-group-item">Morbi leo risus</a>
+        <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+        <a href="#" class="list-group-item">Vestibulum at eros</a>
+        <a href="#" class="list-group-item">Porta ac consectetur ac</a>
+        <a href="#" class="list-group-item">Vestibulum at eros</a>
+      </div>
     </div>
   </div>
-</div>
-<!-- RIGHT BOX END -->
+  <!-- RIGHT BOX END -->
 </div>
 </div>
 
@@ -168,6 +115,7 @@
 </div><!-- /.modal -->
 
 <div class="modal fade" id="ask_modal">
+  {!! Form::open(array('action' => 'ThreadsController@postAdd', 'class'=>'','role'=>"form",'id'=>'question_add')) !!}
   <div class="modal-dialog ask-dialog">
     <div class="modal-content" style="padding: 20px;">
       <div class="modal-header ask-header">
@@ -179,7 +127,7 @@
         <div class="step-1 step" step="1" state="active">
           <div class="left-modal-inner col-sm-8">
             <textarea placeholder="Title of your question"
-            name="comment[text]" id="comment_text" cols="40"
+            id="comment_text" cols="40"
             class="ui-autocomplete-input" autocomplete="off" role="textbox"
             aria-autocomplete="list" aria-haspopup="true"></textarea>
           </div>
@@ -196,8 +144,8 @@
             <div class="alert alert-success alert-dark-1 alert-top-margin" id="you-asked" role="alert"></div>
             <hr>
             <span class="inner-title">Existing Questions:</span>
-            <div class="alert alert-success alert-dark-2 alert-top-margin" role="alert">...</div>
-
+            <div class="alert alert-success alert-dark-2 alert-top-margin existing-query" role="alert">
+            </div>
             <hr>
           </div>
         </div>
@@ -206,10 +154,14 @@
         <!-- STEP 3 -->
         <div class="step-3 step hide" step="3">
           <div class="left-modal-inner-3 col-sm-8">
-            <div class="alert alert-success alert-dark-1 alert-top-margin" role="alert">...</div>
             <textarea placeholder="Title of your question"
-            name="comment[text]" id="comment_text" cols="40"
-            class="ui-autocomplete-input" autocomplete="off" role="textbox"
+            name="question[title]" id="question-title"
+            class="ui-autocomplete-input textarea-title" autocomplete="off" role="textbox"
+            aria-autocomplete="list" aria-haspopup="true"></textarea>
+
+            <textarea placeholder="Description of your question"
+            name="question[description]" id="question-description" cols="40"
+            class="ui-autocomplete-input textarea-description" autocomplete="off" role="textbox"
             aria-autocomplete="list" aria-haspopup="true"></textarea>
           </div>
           <div class="right-modal-inner-3 col-sm-4">
@@ -230,47 +182,49 @@
 
         <!-- STEP 4 -->
         <div class="step-4 step hide" step="4">
-            <div class="form-group">
-                  <span class="custom-dropdown custom-dropdown--white">
-                      <select class="custom-dropdown__select custom-dropdown__select--white">
-                        <option value="1">Agriculture</option>
-                        <option value="2">Architecture</option>
-                        <option value="3">Art</option>
-                        <option value="4">Business</option>
-                        <option value="5">Cooking, Food and Wine</option>
-                        <option value="6">Crafts and Hobbies</option>
-                        <option value="7">Family and Parenting</option>
-                        <option value="8">Fun and Games</option>
-                        <option value="9">Health, Mind, and Body</option>
-                        <option value="10">History</option>
-                        <option value="11">Medical</option>
-                        <option value="12">Music</option>
-                        <option value="13">Performing Arts</option>
-                        <option value="14">Pets</option>
-                        <option value="15">Philosophy</option>
-                        <option value="16">Photography</option>
-                        <option value="17">Religion</option>
-                        <option value="18">Sports</option>
-                        <option value="19">Transportation</option>
-                        <option value="20">Travel</option>
-                      </select>
-                  </span>
-            </div>
-            <div class="cat-wrapper col-md-12"> 
-              <h3 id="h3-wrapper">
+          <div class="form-group padding-categories">
+            <span class="custom-dropdown custom-dropdown--white">
+              <select class="custom-dropdown__select custom-dropdown__select--white">
+                <option value="1">Agriculture</option>
+                <option value="2">Architecture</option>
+                <option value="3">Art</option>
+                <option value="4">Business</option>
+                <option value="5">Cooking, Food and Wine</option>
+                <option value="6">Crafts and Hobbies</option>
+                <option value="7">Family and Parenting</option>
+                <option value="8">Fun and Games</option>
+                <option value="9">Health, Mind, and Body</option>
+                <option value="10">History</option>
+                <option value="11">Medical</option>
+                <option value="12">Music</option>
+                <option value="13">Performing Arts</option>
+                <option value="14">Pets</option>
+                <option value="15">Philosophy</option>
+                <option value="16">Photography</option>
+                <option value="17">Religion</option>
+                <option value="18">Sports</option>
+                <option value="19">Transportation</option>
+                <option value="20">Travel</option>
+              </select>
+            </span>
+          </div>
+          <span id="duplicate-error" class="hide">Category has been selected!</span>
+          <div class="cat-wrapper col-md-12"> 
+            <h3 id="h3-wrapper">
 
-              </h3>
-            </div>
+            </h3>
+          </div>
         </div>
         <!-- STEP 4 END -->
 
       </div>
       <div class="modal-footer clearfix ask-footer">
         <button type="button" class="btn btn-default pull-left back-btn hide">Back</button>
-        <button type="button" class="btn btn-primary pull-right next-btn">Next</button>
+        <button type="button" id="nxt-btn" class="btn btn-primary pull-right next-btn">Next</button>
+        <button type="button" id="qst-submit" class="btn btn-primary pull-right next-btn hide">Submit</button>
       </div>
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
-
+  {!! Form::close() !!}
 </div><!-- /.modal -->
 @stop

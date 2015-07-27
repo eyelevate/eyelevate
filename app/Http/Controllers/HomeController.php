@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use View;
 use App\Job;
+use App\Thread;
 use Input;
 use Session;
 use Auth;
+use URL;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
@@ -35,6 +37,7 @@ class HomeController extends Controller
      */
     public function getIndex()
     {
+
         $reset_success = false;
         $username = null;
         if (Session::get('reset_success') == true) {
@@ -51,8 +54,14 @@ class HomeController extends Controller
 
         public function postIndex()
     {
+        $prepared_thread = Thread::prepareThreadForView(Thread::Where('status',1)
+            ->orderBy('created_at', 'ASC')
+            ->get());
         $this->layout = 'layouts.master-layout';
         return view('home.results')
-        ->with('layout',$this->layout);
+            ->with('layout',$this->layout)
+            ->with('threads',$prepared_thread);
+
+
     } 
 }

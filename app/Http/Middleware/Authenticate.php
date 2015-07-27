@@ -9,6 +9,7 @@ use URL;
 
 class Authenticate
 {
+
     /**
      * The Guard implementation.
      *
@@ -37,14 +38,8 @@ class Authenticate
      */
     public function handle($request, Closure $next)
     {
- 
         if ($this->auth->guest()) {
             Session::flash('redirect', URL::full()); 
-            // if ($request->ajax()) {
-            //     return response('Unauthorized.', 401);
-            // } else {
-            //     return redirect()->guest('auth/login');
-            // }
         }
 
         return $next($request);

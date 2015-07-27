@@ -30,6 +30,7 @@ var popupTemplate='<li class="spam-popup">Report as spam</li>';
 					if (!$.isBlank(search_text)) {
 
 						var next_step = current_step + 1;
+
 						//DEACTIVE THE PREVIOUS STATE AND HIDE IT
 						_this.attr('state',null);
 						_this.addClass('hide');
@@ -45,7 +46,20 @@ var popupTemplate='<li class="spam-popup">Report as spam</li>';
 					};
 
 				} else {
+
+					//THIS IS THE FINAL STEP SHOW SUBMIT BTN
+					if (current_step == 3) {
+						$('#nxt-btn').addClass('hide');
+						$('#qst-submit').removeClass('hide');						
+					} else {
+						$('#nxt-btn').removeClass('hide');
+						$('#qst-submit').addClass('hide');
+					}
 					var next_step = current_step + 1;
+					if (next_step == 3) {
+						var search_text = $('#comment_text').val();
+						$('#question-title').html(search_text);
+					}
 					//DEACTIVE THE PREVIOUS STATE AND HIDE IT
 					_this.attr('state',null);
 					_this.addClass('hide');
@@ -74,6 +88,11 @@ var popupTemplate='<li class="spam-popup">Report as spam</li>';
 			var _this = $(this).parents('.modal:first').find('.step[state="active"]');
 			var current_step = parseInt(_this.attr('step'));
 			if (current_step > 1) {
+				//THIS IS THE FINAL STEP SHOW SUBMIT BTN
+				if (current_step == 4) {
+					$('#nxt-btn').removeClass('hide');
+					$('#qst-submit').addClass('hide');
+				}
 				var next_step = current_step - 1;
 				//DEACTIVE THE PREVIOUS STATE AND HIDE IT
 				_this.attr('state',null);
@@ -111,7 +130,7 @@ var popupTemplate='<li class="spam-popup">Report as spam</li>';
 		});
 
 		$('.ask_q_btn').click(function(){
-			$('#ask_modal').modal('show');
+			request.user_auth();
 		});
 
 
@@ -177,6 +196,7 @@ var popupTemplate='<li class="spam-popup">Report as spam</li>';
 		$(document).on('click','.reply-btn',function(){
 		
 		});
+
 		
 		$('#login').click(function(){
 			$('#myModal').modal('toggle');
@@ -186,6 +206,9 @@ var popupTemplate='<li class="spam-popup">Report as spam</li>';
 		});
 		$('#forgot').click(function(){
 			window.location = '/password-reset';
+		});
+		$('#qst-submit').click(function(){
+			$('#question_add').submit();
 		});
 
 		//MORE CLICKED
@@ -257,6 +280,7 @@ var popupTemplate='<li class="spam-popup">Report as spam</li>';
 }
 request = {
 	search_query: function(search_text) {
+	$('.existing-query').html('');
 	var token = $('meta[name=csrf-token]').attr('content');
 	$.post(
 		'/threads/search-query',
@@ -265,13 +289,66 @@ request = {
 			"search_text":search_text
 		},
 		function(result){
+
 			var status = result.status;
-			// var call_back = result.validation_callback;
-			// view_errors(call_back);
+			var search_results = result.search_results;
 			switch(status) {
 				case 200: // Approved
+
+				var html = '';
+
+				var array_l = Object.keys(search_results).length;
+
+				var counter = 0
+
+				$.each(search_results, function( key, value ) {
+					if (counter == array_l-1) {
+						html += '<div class="search-single">'+
+				                '<a class="search-single-a" thread-id="'+value["id"]+'"> <span>'+value["description"]+'</span></br>'+
+				                '<span class="search-reply">1 reply</h5></a>'+
+				   		'</div>';
+					} else {
+						html += '<div class="search-single search-single-first">'+
+				                '<a class="search-single-a" thread-id="'+value["id"]+'"> <span>'+value["description"]+'</span></br>'+
+				                '<span class="search-reply">1 reply</h5></a>'+
+				   		'</div>';
+					}
+					counter++;
+				});    
+				$('.existing-query').html(html); 
+
+				$('.search-single-a').click(function(){
+					var id = $(this).attr('thread-id');
+					window.open('/thread/'+id);
+				});
+
+				break;				
+				case 400: // Approved
+				
 				break;
 
+				default:
+				break;
+			}
+		}
+		);
+	},
+	user_auth: function() {
+	var token = $('meta[name=csrf-token]').attr('content');
+	$.post(
+		'/users/user-auth',
+		{
+			"_token": token
+		},
+		function(result){
+			var status = result.status;
+			switch(status) {
+				case 200: // Approved
+					$('#ask_modal').modal('show');
+				break;				
+				case 400: // Approved
+					$('#myModal').modal('toggle');
+				break;
 				default:
 				break;
 			}
@@ -280,18 +357,35 @@ request = {
 	}
 };
 function add_new_category(val , text){
-	var html =  '<span class="tag label label-primary">'+
-                '<span>'+text+'</span>'+
-                '<a><i class="remove-label glyphicon glyphicon-remove-sign glyphicon-white"></i></a>'+
-                '<input name="categories" type="hidden" value="'+val+'" text="'+text+'">'+
-                '</span>';
-    $('#h3-wrapper').append(html);
-    $(document).find('.remove-label').click(function(){
-		$(this).parents('.label:first').remove();
+	$('#duplicate-error').addClass('hide');
+
+	var total = $('.category-tag').length;
+	var is_set = false;
+
+	//CHECK IF IT EXISTS
+	if (total > 0) {
+		$( ".category-tag" ).each(function() {
+		  var current_val = $( this ).attr('this-val');
+		  if (current_val == val) {
+		  	is_set = true;
+		  	//SHOW ERROR
+		  	$('#duplicate-error').removeClass('hide');
+		  };
+		});
+	};
+	//THERE WAS NO DUPLICATE
+	if (is_set == false) {
+		var html =  '<span class="tag label label-primary category-tag" this-val="'+val+'">'+
+	                '<span>'+text+'</span>'+
+	                '<a><i class="remove-label glyphicon glyphicon-remove-sign glyphicon-white"></i></a>'+
+	                '<input name="categories['+total+']" type="hidden" value="'+val+'" text="'+text+'">'+
+	                '</span>';
+	    $('#h3-wrapper').append(html);
+	    $(document).find('.remove-label').click(function(){
+			$(this).parents('.label:first').remove();
 	});
+	};
 }
-
-
 (function($){
   $.isBlank = function(obj){
     return(!obj || $.trim(obj) === "");

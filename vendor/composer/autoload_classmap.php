@@ -8,7 +8,10 @@ $baseDir = dirname($vendorDir);
 return array(
     'AddAgeToUsersTable' => $baseDir . '/database/migrations/2015_07_21_012003_add_age_to_users_table.php',
     'AddCompanyToUsersTable' => $baseDir . '/database/migrations/2015_07_21_012232_add_company_to_users_table.php',
+    'AddNotifyFieldsToThreadsTable' => $baseDir . '/database/migrations/2015_07_27_084138_add_notify_fields_to_threads_table.php',
+    'AddTwoFieldsToThreadsTable' => $baseDir . '/database/migrations/2015_07_27_071333_add_two_fields_to_threads_table.php',
     'AddUsernameToUsersTable' => $baseDir . '/database/migrations/2015_07_20_074228_add_username_to_users_table.php',
+    'AddViewToThreadsTable' => $baseDir . '/database/migrations/2015_07_27_090914_add_view_to_threads_table.php',
     'CreateCategoriesTable' => $baseDir . '/database/migrations/2015_07_14_060223_create_categories_table.php',
     'CreateDiscussionsTable' => $baseDir . '/database/migrations/2015_07_14_060107_create_discussions_table.php',
     'CreateFilterTable' => $baseDir . '/database/migrations/2015_07_14_060244_create_filter_table.php',
@@ -481,6 +484,7 @@ return array(
     'PHP_Token_XOR_EQUAL' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_YIELD' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_YIELD_FROM' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
+    'RemoveNotifyFromThreadsTable' => $baseDir . '/database/migrations/2015_07_27_084000_remove_notify_from_threads_table.php',
     'SebastianBergmann\\Comparator\\ArrayComparator' => $vendorDir . '/sebastian/comparator/src/ArrayComparator.php',
     'SebastianBergmann\\Comparator\\Comparator' => $vendorDir . '/sebastian/comparator/src/Comparator.php',
     'SebastianBergmann\\Comparator\\ComparisonFailure' => $vendorDir . '/sebastian/comparator/src/ComparisonFailure.php',
