@@ -72,6 +72,7 @@
                  {!!Auth::user()->username!!}
                 <span class="caret"></span></a>
                 <ul class="dropdown-menu" role="menu">
+                  <li><a href="/users/profile/{!!Auth::user()->username!!}">View Profile</a></li>
                   <li>{!! Html::link('/logout', 'Logout') !!}</li>
                 </ul>
               </li>
@@ -101,9 +102,9 @@
       <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
       <!-- Latest compiled and minified JavaScript -->
       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-      <script src="packages/Magister3/assets/js/modernizr.custom.72241.js"></script>
+      <script src="/packages/Magister3/assets/js/modernizr.custom.72241.js"></script>
       <!-- Custom template scripts -->
-      <script src="packages/Magister3/assets/js/magister.js"></script>
+      <script src="/packages/Magister3/assets/js/magister.js"></script>
 
       @yield('scripts')
 

@@ -2,6 +2,7 @@ $(document).ready(function(){
 	results.pageLoad();
 	results.modal_stepy();
 	results.events();
+	results.file_upload();
 
 });
 results = {
@@ -11,12 +12,17 @@ results = {
 			headers: { 'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content') }
 		});
 		var popupTemplate='<li class="spam-popup">Report as spam</li>';
-		$('.popbutton').popover({
-		    animation:true, 
-		    content:popupTemplate, 
-		    html:true
-		});
-	},
+			$('.popbutton').popover({
+			    animation:true, 
+			    content:popupTemplate, 
+			    html:true
+			});
+		},
+	file_upload: function(){
+			$('.form-submit-btn').fileupload({
+				alert();
+			});
+		},
 	modal_stepy: function(){
 		$('.next-btn').click(function(){
 

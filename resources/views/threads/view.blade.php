@@ -1,9 +1,9 @@
 @extends($layout)
 @section('stylesheets')
-{!! Html::style('assets/css/home/results.css') !!}
+  {!! Html::style('assets/css/home/results.css') !!}
 @stop
 @section('scripts')
-<script src="assets/js/home/results.js"></script>
+  <script src="/assets/js/home/results.js"></script>
 @stop
 
 @section('content')
@@ -22,14 +22,6 @@
               </button>
             </span>
           </div><!-- /input-group -->
-        </br>
-        <ul class="" id="preferences">
-          <li class="preferences-li"><a class="preferences-text ask-li ask_q_btn">Ask a Question</a></li>
-          <li class="preferences-li"><a class="preferences-text preferences-text-first">Newest</a></li>
-          <li class="preferences-li"><a class="preferences-text">Active</a></li>
-          <li class="preferences-li"><a class="preferences-text">Unanswered</a></li>
-          <li class="preferences-li"><a class="preferences-text">Featured</a></li>
-        </ul>
       </div>
       <div id="thread-group">
         {!! $threads !!}

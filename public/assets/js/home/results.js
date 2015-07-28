@@ -196,7 +196,10 @@ var popupTemplate='<li class="spam-popup">Report as spam</li>';
 		$(document).on('click','.reply-btn',function(){
 		
 		});
-
+		$(document).on('click','.thread-title',function(){
+			var id = $(this).attr('thread-id');
+			window.location = '/threads/view/'+id;
+		});
 		
 		$('#login').click(function(){
 			$('#myModal').modal('toggle');

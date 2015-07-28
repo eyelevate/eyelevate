@@ -1012,12 +1012,10 @@ body {
 .datepicker, .datepickerSpan {
   cursor: pointer;
 }
-
 /**
 * FONTS AND COLORS
 *
 **/
-
 .muted {
   color:#999999;
 }

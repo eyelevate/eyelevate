@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Job;
-use App\Search;
-use App\User;
-use App\Thread;
+
 use Input;
 use Validator;
 use Redirect;
@@ -17,6 +14,11 @@ use Session;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Job;
+use App\Search;
+use App\User;
+use App\Thread;
+use App\Category;
 
 
 class ThreadsController extends Controller
@@ -63,7 +65,17 @@ class ThreadsController extends Controller
             return Redirect::back();
         }
     }
-
+        public function getView($id)
+    {
+        $threads = Thread::find($id);
+        $categories_for_select = Category::prepareForSelect(Category::where('status',1)->get());
+        $categories_for_side = Category::prepareForSide(Category::where('status',1)->get());
+        return view('threads.view')
+            ->with('layout',$this->layout)
+            ->with('threads',$threads)
+            ->with('categories_for_select',$categories_for_select)
+            ->with('categories_for_side',$categories_for_side);
+    }
     public function postSearchQuery()
     {
         if(Request::ajax()){

@@ -21,10 +21,12 @@ Route::post('/search', ['middleware' => 'auth', 'uses' => 'HomeController@postIn
 
 //USER ROUTE
 Route::controller('users', 'UsersController');
+	Route::get('/users/profile/{$username}', 'UsersController@getProfile');
 	Route::get('/registration', 'UsersController@getRegistration');
 	Route::post('/validate', 'UsersController@getValidate');
 	Route::get('/logout', 'UsersController@getLogout');
 	Route::post('/users/user-auth', 'UsersController@postUserAuth');
+
 
 //REMINDERS ROUTE
 Route::controller('reminders', 'RemindersController');
@@ -32,6 +34,7 @@ Route::controller('reminders', 'RemindersController');
 
 //THREAD ROUTE 
 Route::controller('threads', 'ThreadsController');
+	Route::get('/threads/view/{$id}', 'ThreadsController@getView');
 	Route::post('/threads/search-query', 'ThreadsController@postSearchQuery');
 
 

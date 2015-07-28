@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Job;
-use App\User;
+
 use Input;
 use Validator;
 use Redirect;
@@ -16,6 +15,11 @@ use Session;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Job;
+use App\User;
+use App\Thread;
+use App\Category;
+
 
 class UsersController extends Controller
 {
@@ -97,6 +101,25 @@ class UsersController extends Controller
         Auth::logout();
         Session::reflash(); // Keep for inteded pages backfall. This helps users get back to the intended page if session expire
         return Redirect::action('HomeController@getIndex');
+    }
+
+        public function getProfile($username)
+    {
+        $prepared_thread = Thread::prepareThreadForView(Thread::Where('status',1)
+            ->orderBy('created_at', 'ASC')
+            ->get());
+
+        $categories_for_select = Category::prepareForSelect(Category::where('status',1)->get());
+        $categories_for_side = Category::prepareForSide(Category::where('status',1)->get());
+        return view('users.profile')
+            ->with('layout',$this->layout)
+            ->with('threads',$prepared_thread)
+            ->with('categories_for_select',$categories_for_select)
+            ->with('categories_for_side',$categories_for_side);
+    }
+        public function postProfile()
+    {
+
     }
 
         public function postValidate()

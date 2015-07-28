@@ -1,9 +1,9 @@
 @extends($layout)
 @section('stylesheets')
-{!! Html::style('assets/css/home/results.css') !!}
+{!! Html::style('assets/css/users/profile.css') !!}
 @stop
 @section('scripts')
-<script src="assets/js/home/results.js"></script>
+<script src="/assets/js/users/profile.js"></script>
 @stop
 
 @section('content')
@@ -13,28 +13,47 @@
     <div class="col-md-9" id="left-box" target="false">
       <div class="container" id="left-box-inner">
 
-        <div class="" id="preferences-frame">
-          <div class="input-group " id="top-search-bar" >
-            <input type="text" class="form-control" id="top-search-input" placeholder="Search for Categories">
-            <span class="input-group-btn">
-              <button class="btn btn-default " id="top-search-btn" type="button">
-                <i class="glyphicon glyphicon-search"> </i>
-              </button>
-            </span>
-          </div><!-- /input-group -->
-        </br>
-        <ul class="" id="preferences">
-          <li class="preferences-li"><a class="preferences-text ask-li ask_q_btn">Ask a Question</a></li>
-          <li class="preferences-li"><a class="preferences-text preferences-text-first">Newest</a></li>
-          <li class="preferences-li"><a class="preferences-text">Active</a></li>
-          <li class="preferences-li"><a class="preferences-text">Unanswered</a></li>
-          <li class="preferences-li"><a class="preferences-text">Featured</a></li>
-        </ul>
+          <form class="form-horizontal">
+            <div class="form-group ind-box">
+              <label for="inputEmail3" class="col-sm-2 control-label">Photo</label>
+              <div class="col-sm-8 pull-right">
+                  <a href="#">
+                    <img class="media-object profile-picture" data-src="holder.js/64x64" alt="64x64" src="/assets/images/blank_male.png" data-holder-rendered="true" style="width: 64px; height: 64px;">
+                  </a>
+                  <div class="file-container"> 
+                      <span class="file-wrapper">
+                        <input type="file" class="form-submit-btn" />
+                        <span class="button" id="sub-btn">Choose File</span>
+                      </span>
+                     <span class="file-span">No file selected</span>
+                  </div>
+              </div>
+            </div>
+            <hr>
+            <div class="form-group">
+              <label for="inputEmail3" class="col-sm-2 control-label">First Name</label>
+              <div class="col-sm-8 pull-right">
+                <input type="email" class="form-control" id="inputEmail3" placeholder="First name">
+              </div>
+            </div>
+            <hr>
+            <div class="form-group">
+              <label for="inputEmail3" class="col-sm-2 control-label">Last Name</label>
+              <div class="col-sm-8 pull-right">
+                <input type="email" class="form-control" id="inputEmail3" placeholder="Last Name">
+              </div>
+            </div>
+            <hr>
+            <div class="form-group">
+              <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+              <div class="col-sm-8 pull-right">
+                <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+              </div>
+            </div>
+            <hr>
+          </form>
+
       </div>
-      <div id="thread-group">
-        {!! $threads !!}
-      </div>
-    </div>
   </div>
   <!-- LEFT BOX END -->
   <!-- RIGHT BOX START -->
