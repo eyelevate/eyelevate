@@ -26,6 +26,7 @@ Route::controller('users', 'UsersController');
 	Route::post('/validate', 'UsersController@getValidate');
 	Route::get('/logout', 'UsersController@getLogout');
 	Route::post('/users/user-auth', 'UsersController@postUserAuth');
+	Route::post('/users/send-file', 'UsersController@postSendFile');
 
 
 //REMINDERS ROUTE

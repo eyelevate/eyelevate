@@ -80,7 +80,7 @@
               <li class="dropdown" id="login">
               <a class="dropdown-toggle" data-toggle="dropdown"> 
                  <span >Login</span> </a>
-
+                <li><a class="active" href="/registration">Sign Up</a></li>
               </li>
               @endif
           </ul>
@@ -89,12 +89,9 @@
     </nav>
 
 
-
-
       <div class="container-fluid background-color">
 
         @yield('content')
-
 
       </div>
 

@@ -13,6 +13,58 @@
 .background-color{
 	background-color: #fff;
 }
+
+/*INPUT FILE UPLOAD DESING*/
+
+.file-wrapper {
+  vertical-align: middle;
+  cursor: pointer;
+  display: inline-block;
+  overflow: hidden;
+  position: relative;
+}
+.file-wrapper .button {
+    background: #FFFFFF;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border: 3px solid #C3C3C3;
+    border-radius: 5px;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 500;
+    padding: 12px 15px;
+    /* text-transform: uppercase; */
+}
+.file-wrapper input {
+  cursor: pointer;
+  height: 100%;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+.file-wrapper input {
+  filter: alpha(opacity=50);
+  -moz-opacity: 0.5;
+  opacity: 0.5;
+}
+.file-wrapper input {
+  filter: alpha(opacity=1);
+  -moz-opacity: 0.01;
+  opacity: 0.01;
+}
+
+/*INPUT FILE UPLOAD DESING END*/
+.file-span{
+    vertical-align: middle;
+}
+.profile-picture{
+      float: left;
+          margin-right: 45px;
+
+}
+
+
 h3{
 	font: 19px/29px "Gotham Rounded A", "Gotham Rounded B", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }

@@ -24,6 +24,7 @@
 					{!! Form::close() !!}
 				 @else
 					<li><a class="active" id="login">Login</a></li>
+					<li><a class="active" href="/registration">Sign Up</a></li>
 				 @endif
 
 				<li><a>About Us</a></li>

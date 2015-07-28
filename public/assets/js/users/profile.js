@@ -18,11 +18,7 @@ results = {
 			    html:true
 			});
 		},
-	file_upload: function(){
-			$('.form-submit-btn').fileupload({
-				alert();
-			});
-		},
+
 	modal_stepy: function(){
 		$('.next-btn').click(function(){
 
@@ -284,9 +280,75 @@ results = {
 			  	};
 			}, 3000);
 		});
-	}
+	},
+	file_upload: function(){
+		$('#form-submit-btn').change(function () {
+			event.stopPropagation(); // Stop stuff happening
+		    event.preventDefault(); // Totally stop stuff happening
+
+		    // START A LOADING SPINNER HERE
+
+		    // Create a formdata object and add the files
+		    var this_file = new FormData();
+		    $.each(this.files, function(key, value)
+		    {
+		        this_file.append(key, value);
+		    });
+		 	$.ajax({
+			        url: '/users/send-file',
+			        type: 'POST',
+			        data: this_file,
+			        cache: false,
+			        dataType: 'json',
+			        processData: false, // Don't process the files
+			        contentType: false, // Set content type to false as jQuery will tell the server its a query string request
+			        success: function(data, textStatus, jqXHR)
+			        {
+			        	var status = data.status;
+			        	switch (status){
+			        		case 'success':
+			        			var image_name = data.image_name;
+			        			var image_type = data.image_type;
+			        			var html = '/assets/images/profile-images/'+image_name+'.'+image_type;
+			        			$('.profile-picture').attr('src',html);
+			        		break;
+			        		case 'error':
+
+			        		break;
+			        	}
+			        },
+			        error: function(jqXHR, textStatus, errorThrown)
+			        {
+
+			        }
+			    });
+			});
+		},
 }
 request = {
+	sendfile: function(file) {
+	var token = $('meta[name=csrf-token]').attr('content');
+	$.post(
+		'/users/send-file',
+		{
+			"_token": token,
+			"file":file
+		},
+		function(result){
+			var status = result.status;
+			switch(status) {
+				case 200: // Approved
+
+				break;				
+				case 400: // Approved
+
+				break;
+				default:
+				break;
+			}
+		}
+		);
+	},
 	search_query: function(search_text) {
 	$('.existing-query').html('');
 	var token = $('meta[name=csrf-token]').attr('content');
@@ -399,3 +461,5 @@ function add_new_category(val , text){
     return(!obj || $.trim(obj) === "");
   };
 })(jQuery);
+function uploadFiles(event)
+{alert()}

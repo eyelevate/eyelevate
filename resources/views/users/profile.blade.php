@@ -18,11 +18,11 @@
               <label for="inputEmail3" class="col-sm-2 control-label">Photo</label>
               <div class="col-sm-8 pull-right">
                   <a href="#">
-                    <img class="media-object profile-picture" data-src="holder.js/64x64" alt="64x64" src="/assets/images/blank_male.png" data-holder-rendered="true" style="width: 64px; height: 64px;">
+                    <img class="media-object profile-picture" data-src="holder.js/64x64" alt="64x64" src="/assets/images/profile-images/{{$profile_image}}" data-holder-rendered="true" style="width: 64px; height: 64px;">
                   </a>
                   <div class="file-container"> 
                       <span class="file-wrapper">
-                        <input type="file" class="form-submit-btn" />
+                        <input type="file" id="form-submit-btn" />
                         <span class="button" id="sub-btn">Choose File</span>
                       </span>
                      <span class="file-span">No file selected</span>
@@ -33,21 +33,21 @@
             <div class="form-group">
               <label for="inputEmail3" class="col-sm-2 control-label">First Name</label>
               <div class="col-sm-8 pull-right">
-                <input type="email" class="form-control" id="inputEmail3" placeholder="First name">
+                <input type="email" class="form-control" id="inputEmail3" placeholder="First name" value="{{$fname}}">
               </div>
             </div>
             <hr>
             <div class="form-group">
               <label for="inputEmail3" class="col-sm-2 control-label">Last Name</label>
               <div class="col-sm-8 pull-right">
-                <input type="email" class="form-control" id="inputEmail3" placeholder="Last Name">
+                <input type="email" class="form-control" id="inputEmail3" placeholder="Last Name" value="{{$lname}}">
               </div>
             </div>
             <hr>
             <div class="form-group">
               <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
               <div class="col-sm-8 pull-right">
-                <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                <input type="email" class="form-control" id="inputEmail3" placeholder="Email" value="{{$email}}">
               </div>
             </div>
             <hr>
