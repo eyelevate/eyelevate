@@ -68,6 +68,29 @@ class Thread extends Model
 		}
 		return $cat_html;
 	}
+	static public function prepareCategoriesAfterSearch($cat,$item_selected) {
+		$cat_html = '';
+		if (isset($cat)) {
+			$categories_name = null;
+			foreach ($cat as $cakey => $cavalue) {
+				$categories = Category::find($cavalue);
+				$check_match = false;
+				foreach ($item_selected as $sikey => $sivalue) {
+					if ($cavalue == $sivalue) {
+						$cat_html .= '<span class="label label-primary label-style">'.$categories['name'].'</span>';
+						$check_match = true;
+						break;
+					} else {
+						continue;
+					}
+				}
+				if($check_match == false) {
+					$cat_html .= '<span class="label label-default label-style">'.$categories['name'].'</span>';
+				}
+			}
+		}
+		return $cat_html;
+	}
 
 	static public function humanTiming ($time)
 	{

@@ -30,18 +30,24 @@ class Category extends Model
 	public static function prepareSearchedCat($data) {
 		$categories = [];
 		$html = '';
+
+		$count = 0;
 		if(isset($data)) {
 			$threads = Thread::where('status',1)->get();
+
 			foreach ($threads as $thkey => $thvalue) {
+				$matching_items = [];
 				$is_match = false;
 				$this_cat = json_decode($thvalue->categories);
 				foreach ($this_cat as $tckey => $tcvalue) {
 					foreach ($data as $dakey => $davalue) {
 						if ($tcvalue == $davalue) {
 							$is_match = true;
+							$matching_items[$count] = $davalue;
+							$count++;
+							}
 						}
 					}
-				}
 				if ($is_match == true) {
 					$this_thread = Thread::find($thvalue->id);
 					$users = User::find($this_thread->user_id);
@@ -50,7 +56,8 @@ class Category extends Model
 					$profile_image = Job::imageValidator($users->profile_image);
 
 					$categories_j = json_decode($this_thread->categories);
-					$categories_prepared = Thread::prepareCategories($categories_j);
+
+					$categories_prepared = Thread::prepareCategoriesAfterSearch($categories_j,$matching_items);
 
 					$time_s = date(strtotime($this_thread['created_at']));
 					$time_ago = Thread::humanTiming($time_s);
