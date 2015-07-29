@@ -15,6 +15,11 @@
 
 //HOME ROUTE
 Route::get('/', 'HomeController@getIndex');
+
+//CATEGORY ROUTE
+
+	Route::post('/categories/search-cat', 'CategoriesController@postCatSearch');
+
 // Route::post('/search','HomeController@postIndex');
 Route::get('/search', ['middleware' => 'auth', 'uses' => 'HomeController@postIndex']);
 Route::post('/search', ['middleware' => 'auth', 'uses' => 'HomeController@postIndex']);
@@ -27,6 +32,7 @@ Route::controller('users', 'UsersController');
 	Route::get('/logout', 'UsersController@getLogout');
 	Route::post('/users/user-auth', 'UsersController@postUserAuth');
 	Route::post('/users/send-file', 'UsersController@postSendFile');
+	Route::post('/users/send-file-temp', 'UsersController@postSendFileTemp');
 
 
 //REMINDERS ROUTE

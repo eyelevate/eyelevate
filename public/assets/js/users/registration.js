@@ -1,6 +1,7 @@
 $(document).ready(function(){
 	registration.pageLoad();
 	registration.events();
+	registration.file_upload();
 
 });
 registration = {
@@ -15,7 +16,54 @@ registration = {
 			var reg_form = $('#reg-form').serialize();
 			request.form_validate(reg_form);
 		});
-	}
+	},
+		file_upload: function(){
+		$('#form-submit-btn').change(function () {
+			event.stopPropagation(); // Stop stuff happening
+		    event.preventDefault(); // Totally stop stuff happening
+
+		    // START A LOADING SPINNER HERE
+
+		    // Create a formdata object and add the files
+		    var this_file = new FormData();
+		    $.each(this.files, function(key, value)
+		    {
+		        this_file.append(key, value);
+		    });
+		 	$.ajax({
+			        url: '/users/send-file-temp',
+			        type: 'POST',
+			        data: this_file,
+			        cache: false,
+			        dataType: 'json',
+			        processData: false, // Don't process the files
+			        contentType: false, // Set content type to false as jQuery will tell the server its a query string request
+			        success: function(data, textStatus, jqXHR)
+			        {
+			        	var status = data.status;
+			        	switch (status){
+			        		case 'success':
+			        			var image_name = data.image_name;
+			        			var image_type = data.image_type;
+			        			var html = '/assets/images/profile-images/tmp/'+image_name+'.'+image_type;
+			        			$('.profile-picture').attr('src',html);
+
+			        			var hidden_form = '<input type="hidden" id="profile-pic" name="profile-image" value="'+image_name+'.'+image_type+'">';
+			        			$('#profile-pic').remove();
+			        			$('.form-frame').append(hidden_form);
+			        		break;
+			        		case 'error':
+
+			        		break;
+			        	}
+			        },
+			        error: function(jqXHR, textStatus, errorThrown)
+			        {
+
+			        }
+			    });
+			});
+		}
 }
 request = {
 	form_validate: function(reg_form) {

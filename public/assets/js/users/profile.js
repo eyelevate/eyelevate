@@ -309,11 +309,11 @@ results = {
 			        		case 'success':
 			        			var image_name = data.image_name;
 			        			var image_type = data.image_type;
-			        			var html = '/assets/images/profile-images/'+image_name+'.'+image_type;
+			        			var html = '/assets/images/profile-images/perm/'+image_name+'.'+image_type;
 			        			$('.profile-picture').attr('src',html);
+			        			$('#saved').removeClass('hide');
 			        		break;
 			        		case 'error':
-
 			        		break;
 			        	}
 			        },

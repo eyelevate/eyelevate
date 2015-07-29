@@ -52,7 +52,7 @@
           </div><!-- /input-group -->
         </a>
         @foreach($categories_for_side as $sbkey => $sbvalue)
-          <a href="#" class="list-group-item" cat-id={{$sbkey}}>{{$sbvalue}}</a>
+          <a href="#" class="list-group-item cat-items" cat-id={{$sbkey}}>{{$sbvalue}}</a>
         @endforeach
 
       </div>

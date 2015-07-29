@@ -2,10 +2,17 @@ $(document).ready(function(){
 	results.pageLoad();
 	results.modal_stepy();
 	results.events();
+	results.cat_selector();
 
 });
 results = {
-
+	cat_selector:function(){
+		$('.cat-items').click(function(){
+			var is_select = is_cat_select($(this));
+			var this_val = cat_toggle($(this),is_select);
+			search_selected_group();
+		});
+	},
 	pageLoad: function() {
 		$.ajaxSetup({
 			headers: { 'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content') }
@@ -196,11 +203,6 @@ var popupTemplate='<li class="spam-popup">Report as spam</li>';
 		$(document).on('click','.reply-btn',function(){
 		
 		});
-		$(document).on('click','.thread-title',function(){
-			var id = $(this).attr('thread-id');
-			window.location = '/threads/view/'+id;
-		});
-		
 		$('#login').click(function(){
 			$('#myModal').modal('toggle');
 		});
@@ -357,6 +359,29 @@ request = {
 			}
 		}
 		);
+	},
+	search_cat: function(data) {
+	var token = $('meta[name=csrf-token]').attr('content');
+	$.post(
+		'/categories/search-cat',
+		{
+			"_token": token,
+			"data":data
+		},
+		function(result){
+			var status = result.status;
+			var html = result.prepared_cat_html;
+			switch(status) {
+				case 200: // Approved
+					$('#thread-group').html(html);
+				break;				
+				case 400: // Approved
+				break;
+				default:
+				break;
+			}
+		}
+		);
 	}
 };
 function add_new_category(val , text){
@@ -394,3 +419,27 @@ function add_new_category(val , text){
     return(!obj || $.trim(obj) === "");
   };
 })(jQuery);
+
+function is_cat_select(_this){
+	var return_data = false;
+	if (_this.hasClass('act')) {
+		return_data = true;
+	};
+	return return_data;
+}
+function cat_toggle(_this,is_select){
+	if (is_select == true) { 
+		_this.removeClass('act');
+	} else {
+		_this.addClass('act');
+	}
+}
+function search_selected_group(){
+	var data = new Array();
+		$( ".cat-items" ).each(function() {
+			if ($(this).hasClass('act')) {
+				data.push($(this).attr('cat-id'));
+			};
+		});
+		request.search_cat(data);
+}

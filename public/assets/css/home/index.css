@@ -10,6 +10,11 @@
   right: 0%;
   outline: none;
 }
+#failed_modal {
+  top: 20%;
+  right: 0%;
+  outline: none;
+}
 #myModal .modal-dialog  {width:45%;}
 .modal-header {
    border-bottom: none; 

@@ -2,6 +2,10 @@
 
 namespace App;
 
+use Auth;
+use App\User;
+use App\Job;
+
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -10,6 +14,8 @@ use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
 class User extends Model implements AuthenticatableContract, CanResetPasswordContract
 {
+
+
     use Authenticatable, CanResetPassword;
 
     /**
@@ -18,6 +24,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      * @var string
      */
     protected $table = 'users';
+    public static $registration = array(
+        'email'=>'required|email|unique:users',
+        'password'=>'required|between:6,25|',
+        'password_again'=>'required|between:6,25'
+    );
+
 
     public static $rules_password_reset = array(
         'email'=>'required|email|unique:users',
@@ -39,7 +51,12 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
      */
     protected $hidden = ['password', 'remember_token'];
 
-    public static $registration = array(
- 
-    );
+    static public function updateValidation() {
+        $current_user = Auth::user()->id;
+            return $update = array(
+                'email'=>'',
+                'fname'=>'required|alpha|min:2',
+                'lname'=>'required|alpha|min:2'
+             );
+        }
 }

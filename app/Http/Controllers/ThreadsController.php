@@ -68,6 +68,13 @@ class ThreadsController extends Controller
         public function getView($id)
     {
         $threads = Thread::find($id);
+
+        //ADD TO THE VIEWS
+        $views_before = $threads->views;
+        $views_after = $views_before + 1;
+        $threads->views = $views_after;
+        $threads->save();
+
         $categories_for_select = Category::prepareForSelect(Category::where('status',1)->get());
         $categories_for_side = Category::prepareForSide(Category::where('status',1)->get());
         return view('threads.view')

@@ -13,7 +13,7 @@
   <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 
   <!-- Custom styles -->
- <link rel="stylesheet" href="assets/css/home.css">
+ <link rel="stylesheet" href="/assets/css/home.css">
 
   <!-- Fonts -->
   <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -25,7 +25,7 @@
     <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 </head>
-<body class="theme-invert">
+    <body class="theme-invert">
     <div id="video-wrap">
     </div>
 
@@ -36,7 +36,7 @@
 <!-- Load js libs only when the page is loaded. -->
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-<script src="packages/Magister3/assets/js/modernizr.custom.72241.js"></script>
+<script src="/packages/Magister3/assets/js/modernizr.custom.72241.js"></script>
 <!-- Custom template scripts -->
 <!-- <script src="packages/Magister3/assets/js/magister.js"></script> -->
 
@@ -70,7 +70,7 @@
   opacity:1;
   z-index: 0;
   /*SET FOR OLDER BROWSER INCASE THEY COULDNT RENDER VIDEO TAG*/
-  background: url(assets/main-background/frames/frame-1-min.png) no-repeat;
+  background: url(/assets/main-background/frames/frame-1-min.png) no-repeat;
 }
 
   #overlay{

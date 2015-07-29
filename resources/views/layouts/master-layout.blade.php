@@ -66,16 +66,16 @@
           <ul class="nav navbar-nav navbar-right">
             <li><a href="../navbar/">Default</a></li>
             <li><a href="../navbar-static-top/">Static top</a></li>
-                        @if(Auth::user())
-            <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span> 
-                 {!!Auth::user()->username!!}
-                <span class="caret"></span></a>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="/users/profile/{!!Auth::user()->username!!}">View Profile</a></li>
-                  <li>{!! Html::link('/logout', 'Logout') !!}</li>
-                </ul>
-              </li>
+              @if(Auth::user())
+                <li class="dropdown">
+                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span> 
+                   {!!Auth::user()->username!!}
+                  <span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="/users/profile/{!!Auth::user()->username!!}">View Profile</a></li>
+                    <li>{!! Html::link('/logout', 'Logout') !!}</li>
+                  </ul>
+                </li>
               @else
               <li class="dropdown" id="login">
               <a class="dropdown-toggle" data-toggle="dropdown"> 

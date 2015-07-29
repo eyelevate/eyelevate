@@ -1,7 +1,7 @@
 #main-frame{
 	/*background-color: rgb(241, 241, 241);*/
 	background-color: #fff;
-	min-height: 585px;
+    min-height: 795px;
 	display: block;
 	margin: 80px auto;
 	float: none;
@@ -13,7 +13,23 @@
 .background-color{
 	background-color: #fff;
 }
+.step3{
+    margin-top: 31px;
+}
+.step2{
+  height: 205px;
+  margin-top: 30px;
+}
+.step1{
+  height:150px;
+}
+.ind-box{
+  margin-top:11px;
+}
 
+.rows{
+    margin-bottom: 85px;
+}
 /*INPUT FILE UPLOAD DESING*/
 
 .file-wrapper {
@@ -36,6 +52,7 @@
     padding: 12px 15px;
     /* text-transform: uppercase; */
 }
+
 .file-wrapper input {
   cursor: pointer;
   height: 100%;
@@ -53,18 +70,14 @@
   -moz-opacity: 0.01;
   opacity: 0.01;
 }
-
 /*INPUT FILE UPLOAD DESING END*/
 .file-span{
     vertical-align: middle;
 }
 .profile-picture{
       float: left;
-          margin-right: 45px;
-
+      margin-right: 45px;
 }
-
-
 h3{
 	font: 19px/29px "Gotham Rounded A", "Gotham Rounded B", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -98,16 +111,15 @@ h3{
 	float: none;
 	position: absolute;
 }
-#email{
-	
+.row-margin-btm{
+	margin-bottom: 10px;
 }
 .top-margin{
 	margin-top: 15px;
 }
-.input-section{
+/*.input-section{
 	  height: 220px;
-
-}
+}*/
 #submit-btn{
 	margin-top: 35px;
 }
@@ -130,11 +142,13 @@ h3{
   width: 16.66666667%;
   position: relative;
 }
-
-
-
-.rows{
-	margin-top: 30px;
+.has-error{
+  border-color: #a94442;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+}
+.form-title{
+  margin-bottom: 25px;
 }
 .error-first_name{
   background-color: #d9534f;
@@ -156,7 +170,7 @@ h3{
   top: 27px;
   height: 30px;
 left: 90.4%;
-  width: 100%;
+    width: 99.9%;
   z-index: 0;
   border-radius: 0 0 5px 5px;
   color: white;
@@ -181,7 +195,7 @@ left: 499.6%;
   background-color: #d9534f;
   /* border: 1px solid green; */
   position: absolute;
-  top: 91px;
+  top: 26px;
   /* left: 81.9%; */
   height: 30px;
   width: 100%;
@@ -195,7 +209,7 @@ left: 499.6%;
 background-color: #d9534f;
   /* border: 1px solid green; */
   position: absolute;
-      top: 27px;
+  top: 26px;
   /* left: 81.9%; */
   height: 30px;
   width: 100%;
@@ -209,7 +223,7 @@ background-color: #d9534f;
 background-color: #d9534f;
   /* border: 1px solid green; */
   position: absolute;
-  top: 91px;
+    top: 85px;
   /* left: 81.9%; */
   height: 30px;
   width: 100%;
@@ -223,7 +237,7 @@ background-color: #d9534f;
   background-color: #d9534f;
   /* border: 1px solid green; */
   position: absolute;
-  top: 155px;
+  top: 144px;
   /* left: 81.9%; */
   height: 30px;
   width: 100%;
@@ -257,38 +271,28 @@ background-color: #d9534f;
   .error-email{left:0;top:-37px;}
   .error-username{left:0;top:-37px;}
   .error-password{left:0;top:-37px;}
-  .error-password-again{left:0;top:-7px;}
+  .error-password-again{left:0;top:-18px;}
 
   .top-margin{margin-top: 0;}
   .rows{margin-top: 0;}
-	.form-frame{width: 100%;}
-	#main-frame {min-height: 730px}
-	#first_name{width: 100%;margin-bottom: 30px;}
-	#last_name{width: 100%;margin-left: 0;margin-bottom: 30px;}
-	#age{width: 100%;margin-bottom: 30px;}
-	#email{width: 100%;margin-bottom: 30px;}
-	#company{width: 100%;}
-	#username{width: 100%;margin-bottom: 30px;}
-	#password{width: 100%;margin-bottom: 30px;}
-	#password_again{width: 100%;}
-	.input-section {height: 365px;}
-	#age {margin-left: 0;}
-	#submit-btn {margin-top: 0px; margin-top: 35px;width: 100%;
-}
+  .form-frame{width: 100%;}
+  #main-frame {min-height: 955px}
+  #first_name{width: 100%;margin-bottom: 30px;}
+  #last_name{width: 100%;margin-left: 0;margin-bottom: 30px;}
+  #age{width: 100%;margin-bottom: 30px;}
+  #email{width: 100%;margin-bottom: 30px;}
+  #company{width: 100%;}
+  #username{width: 100%;margin-bottom: 30px;}
+  #password{width: 100%;margin-bottom: 30px;}
+  #password_again{width: 100%;}
+/*  .input-section {height: 365px;}*/
+  #age {margin-left: 0;}
+  .rows {margin-bottom: 0;}
+  #submit-btn {margin-top: 0px; margin-top: 35px;width: 100%;}
+  .step1{
 
-}
-.has-error{
-	border-color: #a94442;
-	-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-	box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-}
-.step3{
-
-}
-.step2{
-	height: 145px !important;
-
-}
-.form-title{
-	margin-bottom: 25px;
+  } 
+  .step2{
+    height: 370px;
+  }
 }

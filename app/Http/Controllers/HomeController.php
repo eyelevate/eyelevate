@@ -39,7 +39,6 @@ class HomeController extends Controller
      */
     public function getIndex()
     {
-
         $reset_success = false;
         $username = null;
         if (Session::get('reset_success') == true) {

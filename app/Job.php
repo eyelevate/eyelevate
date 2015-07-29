@@ -27,8 +27,6 @@ class Job extends Model
 		'validator' => ''
 		];
 		if (isset($input_all)) {
-
-
 			foreach ($input_all as $type => $value) {
 				switch ($type) {
 					case 'first_name':
@@ -60,7 +58,7 @@ class Job extends Model
 					break;
 					case 'username':
 						$message="Username has already been taken.";
-						$count = count(User::where('username',$value)->get());
+						$count = count(User::where('username',$value)->first());
 						if ($count == 0) {
 							if (strlen($value) >= '4') {
 								$data_output[$type]['message']="";
@@ -70,16 +68,26 @@ class Job extends Model
 								$data_output[$type]['message']="Must Contain At Least 4 Characters!";
 								$data_output[$type]['status'] = 400;
 							}
+						} else {
+								$data_output[$type]['message']="Username Aleardy Exists";
+								$data_output[$type]['status'] = 400;
 						}
 					break;
 					case 'email':
-						if (filter_var($input_all[$type], FILTER_VALIDATE_EMAIL)) {
-							$data_output[$type]['status'] = 200;
+						$count = count(User::where('email',$value)->first());
+						if ($count == 0) {
+							if (filter_var($input_all[$type], FILTER_VALIDATE_EMAIL)) {
+								$data_output[$type]['status'] = 200;
 
+							} else {
+								$data_output[$type]['message']  = 'Invalid Format';
+								$data_output[$type]['status'] = 400;
+							}
 						} else {
-							$data_output[$type]['message']  = 'Invalid Format';
-							$data_output[$type]['status'] = 400;
+								$data_output[$type]['message']  = 'Email Already Registered';
+								$data_output[$type]['status'] = 400;
 						}
+
 					break;
 					case 'password':
 				         $valid = 1;
@@ -206,6 +214,13 @@ class Job extends Model
 
 	}
 
+	static public function imageValidator($image_path) {
+		$full_path = public_path("/assets/images/profile-images/perm/".$image_path);
+		if (!file_exists($full_path)) {
+		    $image_path = "blank_male.png";
+		}
+		return $image_path;
+	}
 
 
 }

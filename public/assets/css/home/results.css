@@ -14,6 +14,9 @@
   font-weight: 900 !important;
    display: none;
 }
+.act{
+  background-color: rgba(168, 228, 246, 0.55) !important}
+
 .right-text{
     text-align: right;
 }
