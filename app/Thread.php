@@ -68,6 +68,39 @@ class Thread extends Model
 		}
 		return $cat_html;
 	}
+	static public function prepareCategoriesForFeedback($cat) {
+		$cat_html = '<h4>You searched for : </h4>';
+		if (isset($cat)) {
+			$count = 1;
+			$categories_name = null;
+			$cat_size = sizeof($cat);
+			$new_size = ($cat_size - 1);
+				if ($cat_size == 1) {
+					foreach ($cat as $cakey => $cavalue) {
+						$categories = Category::find($cavalue);
+						$cat_html .= '<strong><span>'.$categories['name'].' - </span></strong>';
+					}
+				} else {
+					foreach ($cat as $cakey => $cavalue) {
+						$categories = Category::find($cavalue);
+						if ($count < $cat_size) {
+							$cat_html .= '<strong><span>'.$categories['name'].', </span></strong>';
+						} else{
+							$cat_html .= '<strong><span>'.$categories['name'].' - </span></strong>';				
+						}
+						$count++;
+					}
+				}
+		}
+		$cat_html .= 'did not match any threads.';
+		$cat_html .= '<hr><h4>Suggestions:</h4>
+						<ul>
+						  <li>Make sure all categories are chosen correctly</li>
+						  <li>Try Selecting fewer categories</li>
+						</ul> 
+		';
+		return $cat_html;
+	}
 	static public function prepareCategoriesAfterSearch($cat,$item_selected) {
 		$cat_html = '';
 		if (isset($cat)) {

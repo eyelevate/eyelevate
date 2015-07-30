@@ -10,6 +10,7 @@ return array(
     'AddCompanyToUsersTable' => $baseDir . '/database/migrations/2015_07_21_012232_add_company_to_users_table.php',
     'AddImgSrcToUsersTable' => $baseDir . '/database/migrations/2015_07_28_080104_add_img_src_to_users_table.php',
     'AddNewColumnsToCategoriesTable' => $baseDir . '/database/migrations/2015_07_28_001334_add_new_columns_to_categories_table.php',
+    'AddNewColumnsToRepliesTable' => $baseDir . '/database/migrations/2015_07_30_041940_add_new_columns_to_replies_table.php',
     'AddNotifyFieldsToThreadsTable' => $baseDir . '/database/migrations/2015_07_27_084138_add_notify_fields_to_threads_table.php',
     'AddTwoFieldsToThreadsTable' => $baseDir . '/database/migrations/2015_07_27_071333_add_two_fields_to_threads_table.php',
     'AddUsernameToUsersTable' => $baseDir . '/database/migrations/2015_07_20_074228_add_username_to_users_table.php',

@@ -42,7 +42,9 @@ public function postCatSearch()
     if(Request::ajax()){
         $status = 200;
         $cat_array = Input::get('data');
-        $prepared_cat_html = Category::prepareSearchedCat($cat_array);
+        $pre = Input::get('pre');
+        $prepare_pre = Category::preparePre($pre);
+        $prepared_cat_html = Category::prepareSearchedCat($cat_array,$prepare_pre);
         return Response::json(array(
             'status' => $status,
             'prepared_cat_html'=>$prepared_cat_html

@@ -1,181 +1,493 @@
 @extends($layout)
 @section('stylesheets')
-  {!! Html::style('assets/css/home/results.css') !!}
+
 @stop
 @section('scripts')
-  <script src="/assets/js/home/results.js"></script>
+<script src="/assets/js/threads/view.js"></script>
 @stop
 
 @section('content')
-<div class="site-wrapper">
+<div class="outer">
   <div class="container-fluid">
-    <!-- LEFT BOX START -->
-    <div class="col-md-9" id="left-box" target="false">
-      <div class="container" id="left-box-inner">
 
-        <div class="" id="preferences-frame">
-          <div class="input-group " id="top-search-bar" >
-            <input type="text" class="form-control" id="top-search-input" placeholder="Search for Categories">
-            <span class="input-group-btn">
-              <button class="btn btn-default " id="top-search-btn" type="button">
-                <i class="glyphicon glyphicon-search"> </i>
-              </button>
-            </span>
-          </div><!-- /input-group -->
-      </div>
-      <div id="thread-group">
-        {!! $threads !!}
-      </div>
-    </div>
-  </div>
-  <!-- LEFT BOX END -->
-  <!-- RIGHT BOX START -->
-  <div class="col-md-3 " id="right-box"> 
-    <a class="btn btn-primary btn-block ask_q_btn">Ask a Question</a>
-    <div class="" id="right-box-inner">
+    <div class="col-md-3 inner" id="new-left-box" style="height:100% !important;">
 
-      <div class="list-group list-group-container">
-        <a href="#" class="list-group-item active " id="list-search-bar">
-          <div class="input-group" >
-            <input type="text" class="form-control" id="list-search-input" placeholder="Search for Categories">
-            <span class="input-group-btn">
-              <button class="btn btn-default " id="list-search-btn" type="button"><i class="glyphicon glyphicon-search">  </i></button>
-            </span>
-          </div><!-- /input-group -->
+      <!-- DUMMY DATA START -->
+      <div class="list-group" id="tread-side-group">
+        <a  class="list-group-item right-data active" id="tread-side-title">
+
+
+      <div id="toggle-right">
+        <i class="fa fa-arrow-circle-o-right" id="right-arr" href="#" state="0"></i>
+      </div>
+
+        
         </a>
-        @foreach($categories_for_side as $sbkey => $sbvalue)
-          <a href="#" class="list-group-item" cat-id={{$sbkey}}>{{$sbvalue}}</a>
-        @endforeach
+        <a  class="list-group-item right-data" expended="0">
+
+          <span class="message-header">
+            <span class="message-sender" id="">Pedram kh</span> — Wednesday, July 15, 2015, 03:25 PM
+          </br></span>
+          <span class="message-body">
+            197  4
+            Cras sit amet nibh libero, in gravida nulla. Nulla vel metusscelerisque
+            ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at,
+            tempus viverra turpis.Fusce condimentum nunc ac nisi vulputate fringi
+            lla. Donec lacinia congue felis in faucibus.
+            <span class=" glyphicon glyphicon-chevron-down more icon-top"></span> 
+          </span>
+        </a>
+        <a  class="list-group-item right-data" expended="0">
+
+          <span class="message-header">
+            <span class="message-sender" id="">Pedram kh</span> — Wednesday, July 15, 2015, 03:25 PM
+          </br></span>
+          <span class="message-body">
+            197  4
+            Cras sit amet nibh libero, in gravida nulla. Nulla vel metusscelerisque
+            ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at,
+            tempus viverra turpis.Fusce condimentum nunc ac nisi vulputate fringi
+            lla. Donec lacinia congue felis in faucibus.
+            <span class="more glyphicon glyphicon-chevron-down"></span> 
+          </span>
+        </a>
+        <a  class="list-group-item right-data" expended="0">
+
+          <span class="message-header">
+            <span class="message-sender" id="">Pedram kh</span> — Wednesday, July 15, 2015, 03:25 PM
+          </br></span>
+          <span class="message-body">
+            197  4
+            Cras sit amet nibh libero, in gravida nulla. Nulla vel metusscelerisque
+            ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at,
+            tempus viverra turpis.Fusce condimentum nunc ac nisi vulputate fringi
+            lla. Donec lacinia congue felis in faucibus.
+            <span class="more glyphicon glyphicon-chevron-down"></span> 
+          </span>
+        </a>
+        <a  class="list-group-item right-data" expended="0">
+
+          <span class="message-header">
+            <span class="message-sender" id="">Pedram kh</span> — Wednesday, July 15, 2015, 03:25 PM
+          </br></span>
+          <span class="message-body">
+            197  4
+            Cras sit amet nibh libero, in gravida nulla. Nulla vel metusscelerisque
+            ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at,
+            tempus viverra turpis.Fusce condimentum nunc ac nisi vulputate fringi
+            lla. Donec lacinia congue felis in faucibus.
+            <span class="more glyphicon glyphicon-chevron-down"></span> 
+          </span>
+        </a>
+        <a  class="list-group-item right-data" expended="0">
+
+          <span class="message-header">
+            <span class="message-sender" id="">Pedram kh</span> — Wednesday, July 15, 2015, 03:25 PM
+          </br></span>
+          <span class="message-body">
+            197  4
+            Cras sit amet nibh libero, in gravida nulla. Nulla vel metusscelerisque
+            ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at,
+            tempus viverra turpis.Fusce condimentum nunc ac nisi vulputate fringi
+            lla. Donec lacinia congue felis in faucibus.
+            <span class="more glyphicon glyphicon-chevron-down"></span> 
+          </span>
+        </a>
+        <a  class="list-group-item right-data" expended="0">
+
+          <span class="message-header">
+            <span class="message-sender" id="">Pedram kh</span> — Wednesday, July 15, 2015, 03:25 PM
+          </br></span>
+          <span class="message-body">
+            197  4
+            Cras sit amet nibh libero, in gravida nulla. Nulla vel metusscelerisque
+            ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at,
+            tempus viverra turpis.Fusce condimentum nunc ac nisi vulputate fringi
+            lla. Donec lacinia congue felis in faucibus.
+            <span class="more glyphicon glyphicon-chevron-down"></span> 
+          </span>
+        </a>
+        <a  class="list-group-item right-data" expended="0">
+
+          <span class="message-header">
+            <span class="message-sender" id="">Pedram kh</span> — Wednesday, July 15, 2015, 03:25 PM
+          </br></span>
+          <span class="message-body">
+            197  4
+            Cras sit amet nibh libero, in gravida nulla. Nulla vel metusscelerisque
+            ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at,
+            tempus viverra turpis.Fusce condimentum nunc ac nisi vulputate fringi
+            lla. Donec lacinia congue felis in faucibus.
+            <span class="more glyphicon glyphicon-chevron-down"></span> 
+          </span>
+        </a>
+        <a  class="list-group-item right-data" expended="0">
+
+          <span class="message-header">
+            <span class="message-sender" id="">Pedram kh</span> — Wednesday, July 15, 2015, 03:25 PM
+          </br></span>
+          <span class="message-body">
+            197  4
+            Cras sit amet nibh libero, in gravida nulla. Nulla vel metusscelerisque
+            ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at,
+            tempus viverra turpis.Fusce condimentum nunc ac nisi vulputate fringi
+            lla. Donec lacinia congue felis in faucibus.
+            <span class="more glyphicon glyphicon-chevron-down"></span> 
+          </span>
+        </a>
+        <a  class="list-group-item right-data" expended="0">
+
+          <span class="message-header">
+            <span class="message-sender" id="">Pedram kh</span> — Wednesday, July 15, 2015, 03:25 PM
+          </br></span>
+          <span class="message-body">
+            197  4
+            Cras sit amet nibh libero, in gravida nulla. Nulla vel metusscelerisque
+            ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at,
+            tempus viverra turpis.Fusce condimentum nunc ac nisi vulputate fringi
+            lla. Donec lacinia congue felis in faucibus.
+            <span class="more glyphicon glyphicon-chevron-down"></span> 
+          </span>
+        </a>
+
+
+
 
       </div>
+
+      <!-- DUMMY DATA END -->
     </div>
+    <!-- RIGHT BOX START -->
+
+    <div class="col-md-9 left-box" id="zoom" target="false">
+      <!-- DUMMY DATA START -->
+      <hr>
+      <hr>
+      <hr>
+      <hr>
+      <hr>
+      <span class="reply-text"><a href="#zoom"  class="reply-text-a">Reply</a></span>
+      <span class="reply-text"><a href="#zoom"  class="reply-text-a">Reply</a></span>
+      <span class="reply-text"><a href="#zoom"  class="reply-text-a">Reply</a></span>
+      <span class="reply-text"><a href="#zoom"  class="reply-text-a">Reply</a></span>
+
+      <!-- DUMMY DATA END -->
+    </div>
+    <!-- RIGHT BOX START -->
+
+
+
+
+
   </div>
-  <!-- RIGHT BOX END -->
-</div>
 </div>
 
+<style>
+.inner {
+  width: 25%;
+  position: fixed;
+  min-height: 700px;
+  left: -315px;
+  top: 0;
+  overflow-y: aut;
+  -webkit-transition: right 1s;
+  -moz-transition: right 1s;
+  -o-transition: right 1s;
+  transition:  right 1s;
+   -webkit-transition: left 1s;
+ -moz-transition: left 1s;
+ -o-transition: left 1s;
+ transition:  left 1s;
+}
+#zoom[target='false'] {
+ width: 100%;
+ -webkit-transition: width 1s;
+ -moz-transition: width 1s;
+ -o-transition: width 1s;
+ transition: width 1s;
+}
 
-<div class="modal fade" id="myModal">
-  {!! Form::open(array('action' => 'UsersController@postLogin', 'class'=>'','role'=>"form",'id'=>'login-form')) !!}
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Login</h4>
-      </div>
-      <div class="modal-body">
-        <div class="form-group">
-          <input type="text" class="form-control form-control-login" name="username" id="username" placeholder="Username" aria-describedby="sizing-addon2">
-        </div>
-        <div class="form-group">
-          <input type="password" class="form-control form-control-login" name="password" id="password" placeholder="Password" aria-describedby="sizing-addon2">     
-        </div>
-      </div>
-      <div class="modal-footer clearfix">
-        <div id="forgot-wrapper pull-left">
-          <a id="forgot"> I forgot my password</a>
-        </div>
-        <button type="button" class="btn btn-primary pull-right login-btn">Login</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-  {!! Form::close() !!}
-</div><!-- /.modal -->
+/* Compliance = IE8+, Firefox 2+, Safari, Chrome, Opera 10+ */
+#zoom[target='true'] {
+ float: right;
+ width: 75%;
+ -webkit-transition: width 1s;
+ -moz-transition: width 1s;
+ -o-transition: width 1s;
+ transition: width 1s;
+ 1
+}
 
-<div class="modal fade" id="ask_modal">
-  {!! Form::open(array('action' => 'ThreadsController@postAdd', 'class'=>'','role'=>"form",'id'=>'question_add')) !!}
-  <div class="modal-dialog ask-dialog">
-    <div class="modal-content" style="padding: 20px;">
-      <div class="modal-header ask-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Your Question</h4>
-      </div>
-      <div class="modal-body">
-        <!-- STEP 1 -->
-        <div class="step-1 step" step="1" state="active">
-          <div class="left-modal-inner col-sm-8">
-            <textarea placeholder="Title of your question"
-            id="comment_text" cols="40"
-            class="ui-autocomplete-input" autocomplete="off" role="textbox"
-            aria-autocomplete="list" aria-haspopup="true"></textarea>
-          </div>
-          <div class="right-modal-inner col-sm-4">
-            <span>Did you search first to make sure your question is unique?</span>
-          </div>
-        </div>
-        <!-- STEP 1 END -->
+.right-box-expand {
+ left: 0 !important;
+}
+/*SIDE MESSAGES*/
+.right-data{
+ height: 105px;
+  -webkit-transition: width 1s;
+ -moz-transition: width 1s;
+ -o-transition: width 1s;
+ transition: width 1s;
+}
+.sidebar-ind-expand{
+ height: 100%;
 
-        <!-- STEP 2 -->
-        <div class="step-2 step hide" step="2">
-          <div class="model-inner-2 col-sm-12">
-            <span class="inner-title">You Asked:</span>
-            <div class="alert alert-success alert-dark-1 alert-top-margin" id="you-asked" role="alert"></div>
-            <hr>
-            <span class="inner-title">Existing Questions:</span>
-            <div class="alert alert-success alert-dark-2 alert-top-margin existing-query" role="alert">
-            </div>
-            <hr>
-          </div>
-        </div>
-        <!-- STEP 2 END -->
+}
+@media (max-width: 850px) {
+  .inner {display: none !important;}
+  #zoom[target='true'] {width: 100%;}
+}
 
-        <!-- STEP 3 -->
-        <div class="step-3 step hide" step="3">
-          <div class="left-modal-inner-3 col-sm-8">
-            <textarea placeholder="Title of your question"
-            name="question[title]" id="question-title"
-            class="ui-autocomplete-input textarea-title" autocomplete="off" role="textbox"
-            aria-autocomplete="list" aria-haspopup="true"></textarea>
+.left-box{
+  /*border:1px solid red;*/
+  min-height: 700px;
+}
 
-            <textarea placeholder="Description of your question"
-            name="question[description]" id="question-description" cols="40"
-            class="ui-autocomplete-input textarea-description" autocomplete="off" role="textbox"
-            aria-autocomplete="list" aria-haspopup="true"></textarea>
-          </div>
-          <div class="right-modal-inner-3 col-sm-4">
-            <div class="module secondary-module">
-              <div class="secondary-heading">
-                <h4>Notifications</h4>
-              </div>
-              <ul class="options-list">
-                <li class="options-list-item"> 
-                  <input checked="checked" id="notify-me" name="notify-me" type="checkbox" value="1" class="placeholder-processed">
-                  <label for="notify-me" class="notify-me">Email me when someone replies to this discussion</label>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <!-- STEP 3 END -->
+.right-data{
+  color:black;
+}
+body,html{
+  color:black;
+}
+.list-group-item:first-child {
+  border-top-right-radius: 0px;
+  border-top-left-radius: 0px;
+}
 
-        <!-- STEP 4 -->
-        <div class="step-4 step hide" step="4">
-          <div class="form-group padding-categories">
-            <span class="custom-dropdown custom-dropdown--white">
-              <select class="custom-dropdown__select custom-dropdown__select--white">
-                @foreach($categories_for_select as $ckey => $category)
-                  <option value={{$ckey}}>{!!$category!!}</option>
-                @endforeach
-              </select>
-            </span>
-          </div>
-          <span id="duplicate-error" class="hide">Category has been selected!</span>
-          <div class="cat-wrapper col-md-12"> 
-            <h3 id="h3-wrapper">
+#tread-title{
+  border-bottom: 1px solid gray;
+  height: 40px;
+  margin-top: 15px;
+}
+#tread-side-title{
+  height: 55px;
+  border-bottom: 1px solid gray;
+}
+#tread-side-group{
+  overflow: hidden;
+}
 
-            </h3>
-          </div>
-        </div>
-        <!-- STEP 4 END -->
+.container-fluid {
+  padding-right: 0;
+  padding-left: 0;
+}
+.media-box {
+  background: #fff;
+  padding: 15px 20px 15px 25px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-right: -12px;
+  color: rgb(10, 10, 10);
+}
 
-      </div>
-      <div class="modal-footer clearfix ask-footer">
-        <button type="button" class="btn btn-default pull-left back-btn hide">Back</button>
-        <button type="button" id="nxt-btn" class="btn btn-primary pull-right next-btn">Next</button>
-        <button type="button" id="qst-submit" class="btn btn-primary pull-right next-btn hide">Submit</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-  {!! Form::close() !!}
-</div><!-- /.modal -->
+.dash-separator{
+  color: #807676;
+  margin: 0 8px;
+}
+.heading-date{
+  font-size: 0.8em;
+  color: #807676;
+  letter-spacing: 0.6px;
+}
+.media-text {
+  padding-top: 10px;
+}
+
+.thumb-up {
+  cursor: pointer;
+}
+.thumb-down {
+  cursor: pointer;
+}
+
+.flags {
+  cursor: pointer;
+  margin-left: 10px;
+}
+.thumbs-text {
+  background: #FFFFFF;
+  padding: 0px 3px 3px 3px;
+  border: 1px solid #E6E6E6;
+  border-radius: 3px;
+}
+.thumbs-icon{
+  font-size: 16px;
+}
+.thumb-set{
+  margin-left:5px;
+  margin-right: 5px;
+  vertical-align: top;
+}
+
+/*TEST*/
+.tip {
+  width: 0px;
+  height: 0px;
+  position: absolute;
+  background: transparent;
+  border: 10px solid #FFF;
+}
+
+.tip-left {
+  top: 10px;
+  left: -20px;
+  border-top-color: transparent;
+  border-left-color: transparent;
+  border-bottom-color: transparent;
+}
+
+.dialogbox .body {
+  position: relative;
+  /* max-width: 300px; */
+  height: auto;
+  margin-left: 9px;
+  background: #fff;
+  padding: 15px 11px 20px 25px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  font-size: 16px;
+  line-height: 1.6;
+
+}
+.body .message {
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgb(10, 10, 10);
+}
+.reply-text{
+  color: #555;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: bold;
+  opacity: .75;
+  /*  vertical-align: top;*/
+}
+.reply-text-a:hover{
+  color: black;
+  text-decoration: none;
+}
+a{
+  color: #555;
+}
+.spam-popup{
+  cursor: pointer;
+  white-space: nowrap;
+  list-style-type:none;
+  margin-left: 5px;
+  margin-right: 5px;
+  background:#fff;
+  color: black;
+  padding:3px;
+  border:none;
+}
+.spam-popup:hover{
+  white-space: nowrap;
+  list-style-type:none;
+  background:rgb(28, 27, 27);
+  color: white;
+  border:1px gray solid;
+}
+
+.popover-content {
+  padding: 9px 0px;
+}
+.popover{
+  padding:0;
+
+}
+
+/*MEDIA*/
+.media-group{
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+.media {
+ margin-top: 0; 
+}
+.media-child{
+
+}
+.media-reply{
+  padding-top: 10px;
+}
+
+.outer {
+ overflow: hidden;
+ position: relative;
+}
+
+@media (max-width: 850px) {
+  .inner {display: none !important;}
+}
+#right-arr{
+  font-size: 33px;
+  z-index: 100;
+  color: rgba(46, 46, 46, 0.84);
+  cursor: pointer;
+}
+
+/*DISABLING A TAG DEFAULT*/
+#right-arr:hover{
+  text-decoration: none;
+}
+#right-arr:active{
+  text-decoration: none;
+}
+#right-arr:focus{
+  text-decoration: none;
+}
+
+
+
+.message-header{
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgb(10, 10, 10);
+  cursor: pointer;
+  font-weight: bold;
+  opacity: .75;
+}
+.message-header:hover{
+  text-decoration: underline;
+}
+.message-body{
+
+}
+.more{
+  position: absolute;
+  top: 83px !important;
+  bottom: auto;
+  right: 0px;
+  cursor: pointer;
+  /* top: 385px; */
+  background-color: rgb(238, 233, 233);
+  padding: 3px;
+}
+
+.icon-top{
+  top: 83px !important;
+  bottom: auto !important;
+}
+.icon-bottom{
+  top:auto !important;
+  bottom: 0 !important;
+}
+.reply-box{
+  padding-top: 10px;
+}
+textarea{
+  resize: vertical;
+}
+.reply-form{
+  margin-bottom: 5px;
+}
+.left-btn{
+  margin-right: 10px;
+
+}
+</style>
+
+
 @stop

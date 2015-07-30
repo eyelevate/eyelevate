@@ -56,7 +56,7 @@ class HomeController extends Controller
         public function postIndex()
     {
         $prepared_thread = Thread::prepareThreadForView(Thread::Where('status',1)
-            ->orderBy('created_at', 'ASC')
+            ->orderBy('created_at', 'DESC')
             ->get());
         $this->layout = 'layouts.master-layout';
         $categories_for_select = Category::prepareForSelect(Category::where('status',1)->get());

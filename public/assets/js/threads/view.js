@@ -1,6 +1,5 @@
 $(document).ready(function(){
 	results.pageLoad();
-	results.modal_stepy();
 	results.events();
 
 });
@@ -10,134 +9,17 @@ results = {
 		$.ajaxSetup({
 			headers: { 'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content') }
 		});
-		var popupTemplate='<li class="spam-popup">Report as spam</li>';
-		$('.popbutton').popover({
-		    animation:true, 
-		    content:popupTemplate, 
-		    html:true
-		});
-	},
-	modal_stepy: function(){
-		$('.next-btn').click(function(){
 
-			var _this = $(this).parents('.modal:first').find('.step[state="active"]');
-			var current_step = parseInt(_this.attr('step'));
-			if (current_step < 4) {
-				if (current_step == 1) {
-					var search_text = $('#comment_text').val();
-					//CHECK IF THE SEARCH AREA WAS NOT EMPTY
-					if (!$.isBlank(search_text)) {
+var popupTemplate='<li class="spam-popup">Report as spam</li>';
 
-						var next_step = current_step + 1;
-
-						//DEACTIVE THE PREVIOUS STATE AND HIDE IT
-						_this.attr('state',null);
-						_this.addClass('hide');
-						//SHOW AND ACTIVE THE NEXT STEP
-						$('.step-'+next_step).removeClass('hide').attr('state','active');
-
-						//ADD THE QUERY TO NEXT STEP
-						$('#you-asked').html(search_text);
-
-						//SEND SEARCH REQUEST TO PHP 
-						request.search_query(search_text);
-
-					};
-
-				} else {
-
-					//THIS IS THE FINAL STEP SHOW SUBMIT BTN
-					if (current_step == 3) {
-						$('#nxt-btn').addClass('hide');
-						$('#qst-submit').removeClass('hide');						
-					} else {
-						$('#nxt-btn').removeClass('hide');
-						$('#qst-submit').addClass('hide');
-					}
-					var next_step = current_step + 1;
-					if (next_step == 3) {
-						var search_text = $('#comment_text').val();
-						$('#question-title').html(search_text);
-					}
-					//DEACTIVE THE PREVIOUS STATE AND HIDE IT
-					_this.attr('state',null);
-					_this.addClass('hide');
-					//SHOW AND ACTIVE THE NEXT STEP
-					$('.step-'+next_step).removeClass('hide').attr('state','active');
-				}
-
-			}
-			//SETTING THE HEADER TITLE
-			switch(next_step){
-				case 2:
-					$(this).parents('.modal:first').find('.modal-title').html('<h4>Is your question unique?</h4>');
-					$('.back-btn').removeClass('hide');
-				break;
-				case 3:
-					$(this).parents('.modal:first').find('.modal-title').html('<h4>Add question details</h4>');
-					$('.back-btn').removeClass('hide');
-				break;
-				case 4:
-					$(this).parents('.modal:first').find('.modal-title').html('<h4>Pick Categories</h4>');
-					$('.back-btn').removeClass('hide');
-				break;
-			}
-		});
-		$('.back-btn').click(function(){
-			var _this = $(this).parents('.modal:first').find('.step[state="active"]');
-			var current_step = parseInt(_this.attr('step'));
-			if (current_step > 1) {
-				//THIS IS THE FINAL STEP SHOW SUBMIT BTN
-				if (current_step == 4) {
-					$('#nxt-btn').removeClass('hide');
-					$('#qst-submit').addClass('hide');
-				}
-				var next_step = current_step - 1;
-				//DEACTIVE THE PREVIOUS STATE AND HIDE IT
-				_this.attr('state',null);
-				_this.addClass('hide');
-				//SHOW AND ACTIVE THE NEXT STEP
-				$('.step-'+next_step).removeClass('hide').attr('state','active');
-			}
-			//SETTING THE HEADER TITLE
-			switch(next_step){
-				case 1:
-					$(this).parents('.modal:first').find('.modal-title').html('<h4>Your Question</h4>');
-					$('.back-btn').addClass('hide');
-				break;
-				case 2:
-					$(this).parents('.modal:first').find('.modal-title').html('<h4>Is your question unique?</h4>');
-				break;
-				case 3:
-					$(this).parents('.modal:first').find('.modal-title').html('<h4>Add question details</h4>');
-				break;
-				case 4:
-					$(this).parents('.modal:first').find('.modal-title').html('<h4>Pick Categories</h4>');
-				break;
-			}
-		});
-
+$('.popbutton').popover({
+    animation:true, 
+    content:popupTemplate, 
+    html:true
+});
 
 	},
 	events: function() {
-
-		$( ".custom-dropdown__select" ).change(function() {
-			var this_val = $(this).find('option:selected').val();
-			var this_text = $(this).find('option:selected').text();
-			add_new_category(this_val,this_text);
-
-		});
-
-		$('.ask_q_btn').click(function(){
-			request.user_auth();
-		});
-
-
-		$(document).find('.remove-label').click(function(){
-			$(this).parents('.label:first').remove();
-		});
-
-
 
 		//WANT TO REPLY
 		$('.reply-text').click(function(){
@@ -146,6 +28,10 @@ results = {
 			$(document).find('.reply-media').remove();
 			
 			var state = parseInt($('#right-arr').attr('state'));
+
+			if (state == 0) {//CLOSE
+				right_box_expende();
+			}
 		    // CREATE REPLY BOX
 		    var reply_html = '<div class="media reply-media">'+
 								'<div class="media-left">'+
@@ -171,10 +57,19 @@ results = {
 
 		//HIDE RIGHT BOX
 		$('#right-arr').click(function(){
+			
 			var state = parseInt($('#right-arr').attr('state'));
+
+			if (state == 1) {//OPEN
+				right_box_compress();
+			}
+
+
+
 		});
 		//REPLY CANCEL BTN WAS CLICKED
 		$(document).on('click','.left-btn',function(){
+				right_box_compress();
 				$(this).parents('.dialogbox-container:first').find('.reply-media:first').remove();
 		});
 
@@ -195,23 +90,9 @@ results = {
 		$(document).on('click','.reply-btn',function(){
 		
 		});
-		$(document).on('click','.thread-title',function(){
-			var id = $(this).attr('thread-id');
-			window.location = '/threads/view/'+id;
-		});
 		
-		$('#login').click(function(){
-			$('#myModal').modal('toggle');
-		});
-		$(document).find('.login-btn').click(function(){
-			$('#login-form').submit();
-		});
-		$('#forgot').click(function(){
-			window.location = '/password-reset';
-		});
-		$('#qst-submit').click(function(){
-			$('#question_add').submit();
-		});
+		
+
 
 		//MORE CLICKED
 		$('.more').click(function(){
@@ -252,6 +133,8 @@ results = {
 	// });
 		//FLAG WAS CLICKED
 		$('.flags').click(function(){
+			
+
 			//MOUSE OVER POPUP MESSAGE
 		    $(document).find( ".popover" ).mouseout(function() {
 		    	var i = false;
@@ -277,119 +160,20 @@ results = {
 			  		$('.popbutton').popover('hide') ;
 			  	};
 			}, 3000);
+
 		});
+
 	}
 }
 request = {
-	search_query: function(search_text) {
-	$('.existing-query').html('');
-	var token = $('meta[name=csrf-token]').attr('content');
-	$.post(
-		'/threads/search-query',
-		{
-			"_token": token,
-			"search_text":search_text
-		},
-		function(result){
 
-			var status = result.status;
-			var search_results = result.search_results;
-			switch(status) {
-				case 200: // Approved
-
-				var html = '';
-
-				var array_l = Object.keys(search_results).length;
-
-				var counter = 0
-
-				$.each(search_results, function( key, value ) {
-					if (counter == array_l-1) {
-						html += '<div class="search-single">'+
-				                '<a class="search-single-a" thread-id="'+value["id"]+'"> <span>'+value["description"]+'</span></br>'+
-				                '<span class="search-reply">1 reply</h5></a>'+
-				   		'</div>';
-					} else {
-						html += '<div class="search-single search-single-first">'+
-				                '<a class="search-single-a" thread-id="'+value["id"]+'"> <span>'+value["description"]+'</span></br>'+
-				                '<span class="search-reply">1 reply</h5></a>'+
-				   		'</div>';
-					}
-					counter++;
-				});    
-				$('.existing-query').html(html); 
-
-				$('.search-single-a').click(function(){
-					var id = $(this).attr('thread-id');
-					window.open('/thread/'+id);
-				});
-
-				break;				
-				case 400: // Approved
-				
-				break;
-
-				default:
-				break;
-			}
-		}
-		);
-	},
-	user_auth: function() {
-	var token = $('meta[name=csrf-token]').attr('content');
-	$.post(
-		'/users/user-auth',
-		{
-			"_token": token
-		},
-		function(result){
-			var status = result.status;
-			switch(status) {
-				case 200: // Approved
-					$('#ask_modal').modal('show');
-				break;				
-				case 400: // Approved
-					$('#myModal').modal('toggle');
-				break;
-				default:
-				break;
-			}
-		}
-		);
-	}
 };
-function add_new_category(val , text){
-	$('#duplicate-error').addClass('hide');
-
-	var total = $('.category-tag').length;
-	var is_set = false;
-
-	//CHECK IF IT EXISTS
-	if (total > 0) {
-		$( ".category-tag" ).each(function() {
-		  var current_val = $( this ).attr('this-val');
-		  if (current_val == val) {
-		  	is_set = true;
-		  	//SHOW ERROR
-		  	$('#duplicate-error').removeClass('hide');
-		  };
-		});
-	};
-	//THERE WAS NO DUPLICATE
-	if (is_set == false) {
-		var html =  '<span class="tag label label-primary category-tag" this-val="'+val+'">'+
-	                '<span>'+text+'</span>'+
-	                '<a><i class="remove-label glyphicon glyphicon-remove-sign glyphicon-white"></i></a>'+
-	                '<input name="categories['+total+']" type="hidden" value="'+val+'" text="'+text+'">'+
-	                '</span>';
-	    $('#h3-wrapper').append(html);
-	    $(document).find('.remove-label').click(function(){
-			$(this).parents('.label:first').remove();
-	});
-	};
+function right_box_expende(){
+	$('#right-arr').attr('state','1');
+	$('#zoom').attr('target','true');
+	$('#new-left-box').addClass('right-box-expand');
+} 
+function right_box_compress(){
+	$('#right-arr').attr('state','0');
+	$('#zoom').attr('target','false');
 }
-(function($){
-  $.isBlank = function(obj){
-    return(!obj || $.trim(obj) === "");
-  };
-})(jQuery);

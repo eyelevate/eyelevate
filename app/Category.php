@@ -27,13 +27,14 @@ class Category extends Model
 		}
 		return $categories;
 	}
-	public static function prepareSearchedCat($data) {
+	public static function prepareSearchedCat($data,$prepare_pre) {
 		$categories = [];
 		$html = '';
-
 		$count = 0;
 		if(isset($data)) {
-			$threads = Thread::where('status',1)->get();
+			$threads = Thread::where('status',1)
+			->orderBy($prepare_pre, 'DESC')
+			->get();
 
 			foreach ($threads as $thkey => $thvalue) {
 				$matching_items = [];
@@ -93,8 +94,38 @@ class Category extends Model
 						    </div>';
 				}
 			}
-
+		} else {
+	        $html = Thread::prepareThreadForView(Thread::Where('status',1)
+	            ->orderBy($prepare_pre, 'DESC')
+	            ->get());
+		}
+		//NO RESULT FOUND
+		if ($html == '') {
+			$html = Thread::prepareCategoriesForFeedback($data);
 		}
 		return $html;
+	}
+
+	public static function preparePre($data) {
+		if(isset($data)) {
+			switch ($data) {
+				case '1':
+					$data = 'created_at';
+					break;				
+				case '2':
+					$data = 'views';
+					break;				
+				case '3':
+					# code...
+					break;
+				
+				default:
+					# code...
+					break;
+			}
+
+		}
+
+		return $data;
 	}
 }

@@ -25,10 +25,9 @@
         </br>
         <ul class="" id="preferences">
           <li class="preferences-li"><a class="preferences-text ask-li ask_q_btn">Ask a Question</a></li>
-          <li class="preferences-li"><a class="preferences-text preferences-text-first">Newest</a></li>
-          <li class="preferences-li"><a class="preferences-text">Active</a></li>
-          <li class="preferences-li"><a class="preferences-text">Unanswered</a></li>
-          <li class="preferences-li"><a class="preferences-text">Featured</a></li>
+          <li class="preferences-li op active-li"  this-pre="1"><a class="preferences-text preferences-text-first ">Newest</a></li>
+          <li class="preferences-li op"  this-pre="2"><a class="preferences-text">Most Viewed</a></li>
+          <li class="preferences-li op"  this-pre="3"><a class="preferences-text">Featured</a></li>
         </ul>
       </div>
       <div id="thread-group">
