@@ -1,6 +1,6 @@
 @extends($layout)
 @section('stylesheets')
-
+{!! Html::style('/assets/css/threads/view.css') !!}
 @stop
 @section('scripts')
 <script src="/assets/js/threads/view.js"></script>
@@ -9,485 +9,184 @@
 @section('content')
 <div class="outer">
   <div class="container-fluid">
-
     <div class="col-md-3 inner" id="new-left-box" style="height:100% !important;">
+      <div class="list-group left-box-inner" id="tread-side-group">
+        <div class="list-group list-group-container">
+          <a href="#" class="list-group-item active " id="list-search-bar">
+            <div class="clearfix" id="left-top-container" state="0">
 
+
+              <div class="col-md-3" id="top-left-side">
+                <i class="glyphicon glyphicon-triangle-left" id="left-arrow"></i>
+              </div>
+
+
+
+              <div class="col-md-9" id="top-right-side">
+                <div class="input-group" >
+                  <div id="quote-text-wrapp" class="quote-btnn" state="0">
+                    <span id="quote-text">Quote</span><span id="user-name"> Pedram</span>
+                  </div>
+                  <span class="input-group-btn">
+                    <button class="btn btn-default quote-btnn"  id="quote-btn" type="button" state="0">
+                      <i class="fa fa-quote-left"></i>
+                      &nbsp<i class="fa fa-quote-right"></i>
+                    </button>
+                  </span>
+                </div><!-- /input-group --> 
+              </div>
+
+
+
+            </div>
+          </a>
+          <div id="quote-textarea" class="hide">
+            <textarea placeholder="type somthing ..."
+            id="comment_text" cols="40"
+            class="ui-autocomplete-input" autocomplete="off" role="textbox"
+            aria-autocomplete="list" aria-haspopup="true"></textarea>   
+            <div class="quote-footer">
+              <a class="btn btn-primary pull-left quote-cancel">Cancel</a>
+              <a class="btn btn-primary pull-right quote-quote">Reply</a>
+            </div>
+          </div>
+          <a  class="list-group-item right-data" expended="0">
+            <span class="message-header">
+              <span class="message-sender" id="">Pedram kh</span> <span class="quote-details">— Wednesday, July 15, 2015, 03:25 PM</span>
+            </br></span>
+            <span class="message-body">
+              <span class="btn btn-primary view-quote">view</span>
+              197  4
+              Cras sit amet nibh libero, in gravida nulla. Nulla vel metusscelerisque
+              ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at,
+              tempus viverra turpis.Fusce condimentum nunc ac nisi vulputate fringi
+              lla. Donec lacinia congue felis in faucibus.
+              <span class="more fa fa-expand"></span> 
+            </span>
+          </a>
+          <a  class="list-group-item right-data" expended="0">
+            <span class="message-header">
+              <span class="message-sender" id="">Pedram kh</span> <span class="quote-details">— Wednesday, July 15, 2015, 03:25 PM</span>
+            </br></span>
+            <span class="message-body">
+              <span class="btn btn-primary view-quote" thread-id="">view</span>
+              197  4
+              Cras sit amet nibh libero, in gravida nulla. Nulla vel metusscelerisque
+              ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at,
+              tempus viverra turpis.Fusce condimentum nunc ac nisi vulputate fringi
+              lla. Donec lacinia congue felis in faucibus.
+              <span class="more fa fa-expand"></span> 
+            </span>
+          </a>
+
+
+
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- RIGHT BOX START -->
+
+    <div class="col-md-9 right-box" id="zoom" target="false">
       <!-- DUMMY DATA START -->
-      <div class="list-group" id="tread-side-group">
-        <a  class="list-group-item right-data active" id="tread-side-title">
+      <div class="container" id="right-box-inner">
+
+        <div id="thread-group">
 
 
-      <div id="toggle-right">
-        <i class="fa fa-arrow-circle-o-right" id="right-arr" href="#" state="0"></i>
-      </div>
-
-        
-        </a>
-        <a  class="list-group-item right-data" expended="0">
-
-          <span class="message-header">
-            <span class="message-sender" id="">Pedram kh</span> — Wednesday, July 15, 2015, 03:25 PM
-          </br></span>
-          <span class="message-body">
-            197  4
-            Cras sit amet nibh libero, in gravida nulla. Nulla vel metusscelerisque
-            ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at,
-            tempus viverra turpis.Fusce condimentum nunc ac nisi vulputate fringi
-            lla. Donec lacinia congue felis in faucibus.
-            <span class=" glyphicon glyphicon-chevron-down more icon-top"></span> 
-          </span>
-        </a>
-        <a  class="list-group-item right-data" expended="0">
-
-          <span class="message-header">
-            <span class="message-sender" id="">Pedram kh</span> — Wednesday, July 15, 2015, 03:25 PM
-          </br></span>
-          <span class="message-body">
-            197  4
-            Cras sit amet nibh libero, in gravida nulla. Nulla vel metusscelerisque
-            ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at,
-            tempus viverra turpis.Fusce condimentum nunc ac nisi vulputate fringi
-            lla. Donec lacinia congue felis in faucibus.
-            <span class="more glyphicon glyphicon-chevron-down"></span> 
-          </span>
-        </a>
-        <a  class="list-group-item right-data" expended="0">
-
-          <span class="message-header">
-            <span class="message-sender" id="">Pedram kh</span> — Wednesday, July 15, 2015, 03:25 PM
-          </br></span>
-          <span class="message-body">
-            197  4
-            Cras sit amet nibh libero, in gravida nulla. Nulla vel metusscelerisque
-            ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at,
-            tempus viverra turpis.Fusce condimentum nunc ac nisi vulputate fringi
-            lla. Donec lacinia congue felis in faucibus.
-            <span class="more glyphicon glyphicon-chevron-down"></span> 
-          </span>
-        </a>
-        <a  class="list-group-item right-data" expended="0">
-
-          <span class="message-header">
-            <span class="message-sender" id="">Pedram kh</span> — Wednesday, July 15, 2015, 03:25 PM
-          </br></span>
-          <span class="message-body">
-            197  4
-            Cras sit amet nibh libero, in gravida nulla. Nulla vel metusscelerisque
-            ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at,
-            tempus viverra turpis.Fusce condimentum nunc ac nisi vulputate fringi
-            lla. Donec lacinia congue felis in faucibus.
-            <span class="more glyphicon glyphicon-chevron-down"></span> 
-          </span>
-        </a>
-        <a  class="list-group-item right-data" expended="0">
-
-          <span class="message-header">
-            <span class="message-sender" id="">Pedram kh</span> — Wednesday, July 15, 2015, 03:25 PM
-          </br></span>
-          <span class="message-body">
-            197  4
-            Cras sit amet nibh libero, in gravida nulla. Nulla vel metusscelerisque
-            ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at,
-            tempus viverra turpis.Fusce condimentum nunc ac nisi vulputate fringi
-            lla. Donec lacinia congue felis in faucibus.
-            <span class="more glyphicon glyphicon-chevron-down"></span> 
-          </span>
-        </a>
-        <a  class="list-group-item right-data" expended="0">
-
-          <span class="message-header">
-            <span class="message-sender" id="">Pedram kh</span> — Wednesday, July 15, 2015, 03:25 PM
-          </br></span>
-          <span class="message-body">
-            197  4
-            Cras sit amet nibh libero, in gravida nulla. Nulla vel metusscelerisque
-            ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at,
-            tempus viverra turpis.Fusce condimentum nunc ac nisi vulputate fringi
-            lla. Donec lacinia congue felis in faucibus.
-            <span class="more glyphicon glyphicon-chevron-down"></span> 
-          </span>
-        </a>
-        <a  class="list-group-item right-data" expended="0">
-
-          <span class="message-header">
-            <span class="message-sender" id="">Pedram kh</span> — Wednesday, July 15, 2015, 03:25 PM
-          </br></span>
-          <span class="message-body">
-            197  4
-            Cras sit amet nibh libero, in gravida nulla. Nulla vel metusscelerisque
-            ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at,
-            tempus viverra turpis.Fusce condimentum nunc ac nisi vulputate fringi
-            lla. Donec lacinia congue felis in faucibus.
-            <span class="more glyphicon glyphicon-chevron-down"></span> 
-          </span>
-        </a>
-        <a  class="list-group-item right-data" expended="0">
-
-          <span class="message-header">
-            <span class="message-sender" id="">Pedram kh</span> — Wednesday, July 15, 2015, 03:25 PM
-          </br></span>
-          <span class="message-body">
-            197  4
-            Cras sit amet nibh libero, in gravida nulla. Nulla vel metusscelerisque
-            ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at,
-            tempus viverra turpis.Fusce condimentum nunc ac nisi vulputate fringi
-            lla. Donec lacinia congue felis in faucibus.
-            <span class="more glyphicon glyphicon-chevron-down"></span> 
-          </span>
-        </a>
-        <a  class="list-group-item right-data" expended="0">
-
-          <span class="message-header">
-            <span class="message-sender" id="">Pedram kh</span> — Wednesday, July 15, 2015, 03:25 PM
-          </br></span>
-          <span class="message-body">
-            197  4
-            Cras sit amet nibh libero, in gravida nulla. Nulla vel metusscelerisque
-            ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at,
-            tempus viverra turpis.Fusce condimentum nunc ac nisi vulputate fringi
-            lla. Donec lacinia congue felis in faucibus.
-            <span class="more glyphicon glyphicon-chevron-down"></span> 
-          </span>
-        </a>
-
-
-
+          <div class="thread-single " id="main-thread">
+            <div class="media">
+              <div class="media-left">
+                <a href="#">
+                  <img class="media-object media-image" data-src="holder.js/64x64" alt="64x64" src="/assets/images/profile-images/perm/1438229768-i.jpeg" data-holder-rendered="true" style="width: 64px; height: 64px;">
+                </a>
+              </div>
+              <div class="media-body">
+                <div class="media-inner-left">
+                  <div class="thread-info">Pedram 
+                    <span class="thread-date">1 hour ago</span>
+                  </div> 
+                  <h4 ><a href="/threads/view/'.$davalue->id.'">I need help with my business</a></h4>
+                </br>
+                <div class="thread-description">
+                  <p>I'm working on the song array challenge in the iOS track and am having trouble getting it to work proper.  I'm getting a notification that says string:string is not convertible to int, which I understand what it means, but unsure how to fix it since I can't designate the array as a string.</p>
+                  <p>import UIKit</p>
+                  <p>let songOne = ["Title": "Summer Highland Falls", "Artist": "Billy Joel", "Album": "Turnstiles"]
+                    let songTwo = ["Title": "Angry Young Man", "Artist": "Billy Joel", "Album": "Turnstiles"]
+                    let songThree = ["Title": "Zanzibar", "Artist": "Billy Joel", "Album": "52nd Street"]
+                    let songFour = ["Title": "Vienna", "Artist": "Billy Joel", "Album": "The Stranger"]
+                    let songFive = ["Title": "All for Leyna", "Artist": "Billy Joel", "Album": "Glass Houses"]
+                    let songSix = ["Title": "I Don't Want to Be Alone", "Artist": "Billy Joel", "Album": "Glass Houses"]
+                    let songSeven = ["Title": "Sleeping with the Televsion On", "Artist": "Billy Joel", "Album": "Glass Houses"]
+                    let songEight = ["Title": "Piano Man", "Artist": "Billy Joel", "Album": "The Essential Billy Joel"]
+                    let songNine = ["Title": "An Innocent Man", "Artist": "Billy Joel", "Album": "The Essential Billy Joel"]
+                    let songTen = ["Title": "A Matter Of Trust", "Artist": "Billy Joel", "Album": "The Essential Billy Joel"]</p>
+                    <p>var songArray = [songOne, songTwo, songThree, songFour, songFive, songSix, songSeven, songEight, songNine, songTen]</p>
+                    <p>songArray [songOne]</p>
+                  </div>
+                  <div class="label-container">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="thread-single">
+            <div class="media">
+              <div class="media-left">
+                <a href="#">
+                  <img class="media-object media-image" data-src="holder.js/64x64" alt="64x64" src="/assets/images/profile-images/perm/1438229768-i.jpeg" data-holder-rendered="true" style="width: 64px; height: 64px;">
+                </a>
+              </div>
+              <div class="media-body">
+                <div class="media-inner-left">
+                  <div class="thread-info">Pedram 
+                    <span class="thread-date">1 hour ago</span>
+                  </div> 
+                  <h4 ><a href="/threads/view/'.$davalue->id.'">I need help with my business</a></h4>
+                </br>
+                <div class="thread-description">
+                  <p>I'm working on the song array challenge in the iOS track and am having trouble getting it to work proper.  I'm getting a notification that says string:string is not convertible to int, which I understand what it means, but unsure how to fix it since I can't designate the array as a string.</p>
+                  <p>import UIKit</p>
+                  </div>
+                  <div class="label-container">
+                  </div>
+                </div>
+                <div class="media-inner-right">
+                  <div class="right-text btn btn-primary show-quote">Quoted 2 times</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- THREAD SINGLE END -->
+        </div>
+        <!-- THREAD GROUP END -->
+        <div class="" id="add-answer">
+          <h4 id="add-answer-title">Add an Answer</h4>
+          <div class="media">
+            <div class="media-left">
+              <a href="#">
+                <img class="media-object right-box-inner" data-src="holder.js/64x64" alt="64x64" src="/assets/images/profile-images/perm/1438154195-F.jpg" data-holder-rendered="true" style="width: 64px; height: 64px;">
+              </a>
+            </div>
+            <div class="media-body">
+              <textarea placeholder="Your Answer..."
+              id="comment_text" cols="40"
+              class="ui-autocomplete-input add-answer-textarea" autocomplete="off" role="textbox"
+              aria-autocomplete="list" aria-haspopup="true"></textarea> 
+            </div>
+          </div>
+          <a class="btn btn-primary " id="post-answer">Post Answer</a>
+        </div>
 
       </div>
-
       <!-- DUMMY DATA END -->
     </div>
     <!-- RIGHT BOX START -->
-
-    <div class="col-md-9 left-box" id="zoom" target="false">
-      <!-- DUMMY DATA START -->
-      <hr>
-      <hr>
-      <hr>
-      <hr>
-      <hr>
-      <span class="reply-text"><a href="#zoom"  class="reply-text-a">Reply</a></span>
-      <span class="reply-text"><a href="#zoom"  class="reply-text-a">Reply</a></span>
-      <span class="reply-text"><a href="#zoom"  class="reply-text-a">Reply</a></span>
-      <span class="reply-text"><a href="#zoom"  class="reply-text-a">Reply</a></span>
-
-      <!-- DUMMY DATA END -->
-    </div>
-    <!-- RIGHT BOX START -->
-
-
-
-
-
   </div>
 </div>
 
-<style>
-.inner {
-  width: 25%;
-  position: fixed;
-  min-height: 700px;
-  left: -315px;
-  top: 0;
-  overflow-y: aut;
-  -webkit-transition: right 1s;
-  -moz-transition: right 1s;
-  -o-transition: right 1s;
-  transition:  right 1s;
-   -webkit-transition: left 1s;
- -moz-transition: left 1s;
- -o-transition: left 1s;
- transition:  left 1s;
-}
-#zoom[target='false'] {
- width: 100%;
- -webkit-transition: width 1s;
- -moz-transition: width 1s;
- -o-transition: width 1s;
- transition: width 1s;
-}
-
-/* Compliance = IE8+, Firefox 2+, Safari, Chrome, Opera 10+ */
-#zoom[target='true'] {
- float: right;
- width: 75%;
- -webkit-transition: width 1s;
- -moz-transition: width 1s;
- -o-transition: width 1s;
- transition: width 1s;
- 1
-}
-
-.right-box-expand {
- left: 0 !important;
-}
-/*SIDE MESSAGES*/
-.right-data{
- height: 105px;
-  -webkit-transition: width 1s;
- -moz-transition: width 1s;
- -o-transition: width 1s;
- transition: width 1s;
-}
-.sidebar-ind-expand{
- height: 100%;
-
-}
-@media (max-width: 850px) {
-  .inner {display: none !important;}
-  #zoom[target='true'] {width: 100%;}
-}
-
-.left-box{
-  /*border:1px solid red;*/
-  min-height: 700px;
-}
-
-.right-data{
-  color:black;
-}
-body,html{
-  color:black;
-}
-.list-group-item:first-child {
-  border-top-right-radius: 0px;
-  border-top-left-radius: 0px;
-}
-
-#tread-title{
-  border-bottom: 1px solid gray;
-  height: 40px;
-  margin-top: 15px;
-}
-#tread-side-title{
-  height: 55px;
-  border-bottom: 1px solid gray;
-}
-#tread-side-group{
-  overflow: hidden;
-}
-
-.container-fluid {
-  padding-right: 0;
-  padding-left: 0;
-}
-.media-box {
-  background: #fff;
-  padding: 15px 20px 15px 25px;
-  border: 1px solid #ddd;
-  border-radius: 3px;
-  font-size: 16px;
-  line-height: 1.6;
-  margin-right: -12px;
-  color: rgb(10, 10, 10);
-}
-
-.dash-separator{
-  color: #807676;
-  margin: 0 8px;
-}
-.heading-date{
-  font-size: 0.8em;
-  color: #807676;
-  letter-spacing: 0.6px;
-}
-.media-text {
-  padding-top: 10px;
-}
-
-.thumb-up {
-  cursor: pointer;
-}
-.thumb-down {
-  cursor: pointer;
-}
-
-.flags {
-  cursor: pointer;
-  margin-left: 10px;
-}
-.thumbs-text {
-  background: #FFFFFF;
-  padding: 0px 3px 3px 3px;
-  border: 1px solid #E6E6E6;
-  border-radius: 3px;
-}
-.thumbs-icon{
-  font-size: 16px;
-}
-.thumb-set{
-  margin-left:5px;
-  margin-right: 5px;
-  vertical-align: top;
-}
-
-/*TEST*/
-.tip {
-  width: 0px;
-  height: 0px;
-  position: absolute;
-  background: transparent;
-  border: 10px solid #FFF;
-}
-
-.tip-left {
-  top: 10px;
-  left: -20px;
-  border-top-color: transparent;
-  border-left-color: transparent;
-  border-bottom-color: transparent;
-}
-
-.dialogbox .body {
-  position: relative;
-  /* max-width: 300px; */
-  height: auto;
-  margin-left: 9px;
-  background: #fff;
-  padding: 15px 11px 20px 25px;
-  border: 1px solid #ddd;
-  border-radius: 3px;
-  font-size: 16px;
-  line-height: 1.6;
-
-}
-.body .message {
-  font-size: 16px;
-  line-height: 1.6;
-  color: rgb(10, 10, 10);
-}
-.reply-text{
-  color: #555;
-  cursor: pointer;
-  font-size: 11px;
-  font-weight: bold;
-  opacity: .75;
-  /*  vertical-align: top;*/
-}
-.reply-text-a:hover{
-  color: black;
-  text-decoration: none;
-}
-a{
-  color: #555;
-}
-.spam-popup{
-  cursor: pointer;
-  white-space: nowrap;
-  list-style-type:none;
-  margin-left: 5px;
-  margin-right: 5px;
-  background:#fff;
-  color: black;
-  padding:3px;
-  border:none;
-}
-.spam-popup:hover{
-  white-space: nowrap;
-  list-style-type:none;
-  background:rgb(28, 27, 27);
-  color: white;
-  border:1px gray solid;
-}
-
-.popover-content {
-  padding: 9px 0px;
-}
-.popover{
-  padding:0;
-
-}
-
-/*MEDIA*/
-.media-group{
-  margin-top: 15px;
-  margin-bottom: 15px;
-}
-.media {
- margin-top: 0; 
-}
-.media-child{
-
-}
-.media-reply{
-  padding-top: 10px;
-}
-
-.outer {
- overflow: hidden;
- position: relative;
-}
-
-@media (max-width: 850px) {
-  .inner {display: none !important;}
-}
-#right-arr{
-  font-size: 33px;
-  z-index: 100;
-  color: rgba(46, 46, 46, 0.84);
-  cursor: pointer;
-}
-
-/*DISABLING A TAG DEFAULT*/
-#right-arr:hover{
-  text-decoration: none;
-}
-#right-arr:active{
-  text-decoration: none;
-}
-#right-arr:focus{
-  text-decoration: none;
-}
-
-
-
-.message-header{
-  font-size: 16px;
-  line-height: 1.6;
-  color: rgb(10, 10, 10);
-  cursor: pointer;
-  font-weight: bold;
-  opacity: .75;
-}
-.message-header:hover{
-  text-decoration: underline;
-}
-.message-body{
-
-}
-.more{
-  position: absolute;
-  top: 83px !important;
-  bottom: auto;
-  right: 0px;
-  cursor: pointer;
-  /* top: 385px; */
-  background-color: rgb(238, 233, 233);
-  padding: 3px;
-}
-
-.icon-top{
-  top: 83px !important;
-  bottom: auto !important;
-}
-.icon-bottom{
-  top:auto !important;
-  bottom: 0 !important;
-}
-.reply-box{
-  padding-top: 10px;
-}
-textarea{
-  resize: vertical;
-}
-.reply-form{
-  margin-bottom: 5px;
-}
-.left-btn{
-  margin-right: 10px;
-
-}
-</style>
 
 
 @stop

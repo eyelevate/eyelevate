@@ -22,50 +22,53 @@ $('.popbutton').popover({
 	events: function() {
 
 		//WANT TO REPLY
-		$('.reply-text').click(function(){
-
+		$('.show-quote').click(function(){
 			//DELETE ALL OTHER REPLY BOXES
 			$(document).find('.reply-media').remove();
 			
-			var state = parseInt($('#right-arr').attr('state'));
+			var state = parseInt($('#left-top-container').attr('state'));
 
 			if (state == 0) {//CLOSE
 				right_box_expende();
+			} else {
+				right_box_compress();
 			}
-		    // CREATE REPLY BOX
-		    var reply_html = '<div class="media reply-media">'+
-								'<div class="media-left">'+
-								'<a href="#">'+
-								'<img class="media-object" data-src="holder.js/64x64" alt="64x64" src="assets/images/blank_male.png" data-holder-rendered="true" style="width: 64px; height: 64px;">'+
-								'</a>'+
-								'</div>'+
-								'<div class="media-body">'+
-								' <div class="form-group reply-form">'+
-								'<label for="comment">Reply:</label>'+
-								'<textarea class="form-control" rows="5" id="comment" placeholder="type somthing..."></textarea>'+
-								'</div>'+
-								'<div class="reply-btns pull-right">'+
-								'<a class="btn btn-default left-btn">Cancel</a>'+
-								'<a class="btn btn-primary reply-btn">Reply</a>'+
-								'</div>'+
-								'</div>'+
-							'</div>';
+		 //    // CREATE REPLY BOX
+		 //    var reply_html = '<div class="media reply-media">'+
+			// 					'<div class="media-left">'+
+			// 					'<a href="#">'+
+			// 					'<img class="media-object" data-src="holder.js/64x64" alt="64x64" src="assets/images/blank_male.png" data-holder-rendered="true" style="width: 64px; height: 64px;">'+
+			// 					'</a>'+
+			// 					'</div>'+
+			// 					'<div class="media-body">'+
+			// 					' <div class="form-group reply-form">'+
+			// 					'<label for="comment">Reply:</label>'+
+			// 					'<textarea class="form-control" rows="5" id="comment" placeholder="type somthing..."></textarea>'+
+			// 					'</div>'+
+			// 					'<div class="reply-btns pull-right">'+
+			// 					'<a class="btn btn-default left-btn">Cancel</a>'+
+			// 					'<a class="btn btn-primary reply-btn">Reply</a>'+
+			// 					'</div>'+
+			// 					'</div>'+
+			// 				'</div>';
 
-			$(this).parents('.dialogbox-container:first').find('.reply-box:first').append(reply_html); 
+			// $(this).parents('.dialogbox-container:first').find('.reply-box:first').append(reply_html); 
 
 		});
 
 		//HIDE RIGHT BOX
-		$('#right-arr').click(function(){
-			
-			var state = parseInt($('#right-arr').attr('state'));
-
+		$('#top-left-side').click(function(){
+			var state = parseInt($('#left-top-container').attr('state'));
 			if (state == 1) {//OPEN
 				right_box_compress();
 			}
+		});
 
-
-
+		$('.quote-btnn').click(function(){
+			toogle_this($(this));
+		});
+		$('.quote-cancel').click(function(){
+			toogle_this($('#quote-btn'));
 		});
 		//REPLY CANCEL BTN WAS CLICKED
 		$(document).on('click','.left-btn',function(){
@@ -126,7 +129,7 @@ $('.popbutton').popover({
 		
 
 
-	// $('a #right-arr').click(function(e)
+	// $('a #left-top-container').click(function(e)
 	// {
 	// 	alert();
 	//     // e.preventDefault();
@@ -169,11 +172,29 @@ request = {
 
 };
 function right_box_expende(){
-	$('#right-arr').attr('state','1');
+	$('#left-top-container').attr('state','1');
 	$('#zoom').attr('target','true');
 	$('#new-left-box').addClass('right-box-expand');
 } 
+
 function right_box_compress(){
-	$('#right-arr').attr('state','0');
+	$('#left-top-container').attr('state','0');
 	$('#zoom').attr('target','false');
+	$('#new-left-box').removeClass('right-box-expand');
 }
+
+
+
+function toogle_this(_this){
+	var this_state = parseInt(_this.attr('state'));
+	switch(this_state){
+		case 0:
+			$('#quote-textarea').removeClass('hide');
+			_this.attr('state',1);
+		break;
+		case 1:
+			$('#quote-textarea').addClass('hide');
+			_this.attr('state',0);
+		break;
+	}
+} 
