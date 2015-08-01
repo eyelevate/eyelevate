@@ -26,6 +26,7 @@
   <![endif]-->
 </head>
 <body class="theme-invert">
+@include('flash::message')
 
 @yield('content')
 

@@ -8,11 +8,14 @@
 
 @section('content')
 <div class="site-wrapper">
+  
   <div class="container-fluid">
     <!-- LEFT BOX START -->
-    <div class="col-md-9" id="left-box" target="false">
-      <div class="container" id="left-box-inner">
 
+    <div class="col-md-9" id="left-box" target="false">
+      <!-- Page Flash messages go here -->
+      @include('flash::message')
+      <div class="container" id="left-box-inner">
         <div class="" id="preferences-frame">
           <div class="input-group " id="top-search-bar" >
             <input type="text" class="form-control" id="top-search-input" placeholder="Search for Categories">

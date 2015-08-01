@@ -25,22 +25,23 @@
     <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
 </head>
-    <body class="theme-invert">
-    <div id="video-wrap">
-    </div>
+<body class="theme-invert">
+  @include('flash::message')
+  <div id="video-wrap">
+  </div>
 
-    <div id="overlay">
-    </div>
-@yield('content')
+  <div id="overlay">
+  </div>
+  @yield('content')
 
-<!-- Load js libs only when the page is loaded. -->
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
-<script src="/packages/Magister3/assets/js/modernizr.custom.72241.js"></script>
-<!-- Custom template scripts -->
-<!-- <script src="packages/Magister3/assets/js/magister.js"></script> -->
+  <!-- Load js libs only when the page is loaded. -->
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+  <script src="/packages/Magister3/assets/js/modernizr.custom.72241.js"></script>
+  <!-- Custom template scripts -->
+  <!-- <script src="packages/Magister3/assets/js/magister.js"></script> -->
 
-@yield('scripts')
+  @yield('scripts')
 
 </body>
 </html>

@@ -11,6 +11,7 @@ use Request;
 use Response;
 use Auth;
 use Session;
+use Flash;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -39,11 +40,11 @@ class ThreadsController extends Controller
     }
 
 
-        public function getAdd()
+    public function getAdd()
     {
 
     }
-        public function postAdd()
+    public function postAdd()
     {
         $sanitized_data = Job::sanitize(Input::all());
         $question = $sanitized_data['question'];
@@ -65,7 +66,7 @@ class ThreadsController extends Controller
             return Redirect::back();
         }
     }
-        public function getView($id)
+    public function getView($id)
     {
         $threads = Thread::find($id);
 

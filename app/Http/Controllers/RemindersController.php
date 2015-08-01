@@ -10,6 +10,7 @@ use App\Job;
 use App\User;
 use Password;
 use Input;
+use Flash;
 
 use Illuminate\Auth\Passwords;
 

@@ -12,6 +12,7 @@ use Response;
 use Auth;
 use URL;
 use Session;
+use Flash;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -85,7 +86,19 @@ class UsersController extends Controller
                         rename($oldpath, $newpath);
                     }
                 }
-                return Redirect::to('/');
+                if (Auth::attempt(array('username'=> $user->username, 'password'=>Input::get('password')))) {
+                    $redirect = (Session::get('redirect')) ? Session::get('redirect') : null; 
+                    
+                    if(isset($redirect)) {
+                        Flash::success('You have successfully been registered as '.$user->username.'!');
+                        return Redirect::to(Session::get('redirect'));
+                    } else {
+                        Flash::error('There was an error with your registration');
+                        //SESION DOESN'T EXIST
+                        return redirect()->action('HomeController@postIndex');
+                    }
+                }
+
             }
 
         } else {
@@ -98,18 +111,20 @@ class UsersController extends Controller
         }
 
     }
-    public function postLogin()
-    {
-        $username = Input::get('username');
-        $password = Input::get('password');
-        Session::reflash();
+public function postLogin()
+{
+    $username = Input::get('username');
+    $password = Input::get('password');
+    // Session::reflash();
 
     if (Auth::attempt(array('username'=>$username, 'password'=>$password))) {
-            $redirect = (Session::get('redirect')) ? Session::get('redirect') : null; 
-            if(isset($redirect)) {
-               return Redirect::to(Session::get('redirect'));
-           } else {
-                //SESION DOESN'T EXIST
+        Flash::success('Welcome back '.$username.'!');
+        $redirect = (Session::get('redirect')) ? Session::get('redirect') : null; 
+        
+        if(isset($redirect)) {
+            return Redirect::to(Session::get('redirect'));
+        } else {
+            //SESION DOESN'T EXIST
             return redirect()->action('HomeController@postIndex');
         }
     } else { //LOGING FAILED

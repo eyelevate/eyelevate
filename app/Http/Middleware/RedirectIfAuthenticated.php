@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 use App\Job;
 use Closure;
+use Flash;
 use Illuminate\Contracts\Auth\Guard;
 
 class RedirectIfAuthenticated
@@ -36,6 +37,8 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next)
     {
         if ($this->auth->check()) {
+            Flash::success('Welcome back!');
+            // return Redirect::home();
             return redirect('/home');
         }
 

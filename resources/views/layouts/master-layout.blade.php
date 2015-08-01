@@ -31,11 +31,9 @@
     <![endif]-->
   </head>
   <body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div class="container"> 
 
-
-
-   <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
             <span class="sr-only">Toggle navigation</span>
@@ -43,7 +41,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          
+            
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -89,24 +87,24 @@
     </nav>
 
 
-      <div class="container-fluid background-color">
+    <div class="container-fluid background-color">
 
-        @yield('content')
+      @yield('content')
 
-      </div>
+    </div>
 
-      <!-- Load js libs only when the page is loaded. -->
-      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-      <!-- Latest compiled and minified JavaScript -->
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-      <script src="/packages/Magister3/assets/js/modernizr.custom.72241.js"></script>
-      <!-- Custom template scripts -->
-      <script src="/packages/Magister3/assets/js/magister.js"></script>
+    <!-- Load js libs only when the page is loaded. -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="/packages/Magister3/assets/js/modernizr.custom.72241.js"></script>
+    <!-- Custom template scripts -->
+    <script src="/packages/Magister3/assets/js/magister.js"></script>
 
-      @yield('scripts')
+    @yield('scripts')
 
-    </body>
-    </html>
+  </body>
+</html>
     <style>
     .background-color{
       background-color: rgb(241, 241, 241);

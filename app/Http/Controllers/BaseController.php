@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 use Illuminate\Routing\Controller;
+use Flash;
 
 class BaseController extends Controller {
 
