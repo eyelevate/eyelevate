@@ -10,13 +10,13 @@ results = {
 			headers: { 'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content') }
 		});
 
-var popupTemplate='<li class="spam-popup">Report as spam</li>';
+	var popupTemplate='<li class="spam-popup">Report as spam</li>';
 
-$('.popbutton').popover({
-    animation:true, 
-    content:popupTemplate, 
-    html:true
-});
+	$('.popbutton').popover({
+	    animation:true, 
+	    content:popupTemplate, 
+	    html:true
+	});
 
 	},
 	events: function() {
@@ -29,31 +29,11 @@ $('.popbutton').popover({
 			var state = parseInt($('#left-top-container').attr('state'));
 
 			if (state == 0) {//CLOSE
-				right_box_expende();
+				var _this_reply = parseInt($(this).attr('this_reply'));
+				right_box_expende(_this_reply);
 			} else {
 				right_box_compress();
 			}
-		 //    // CREATE REPLY BOX
-		 //    var reply_html = '<div class="media reply-media">'+
-			// 					'<div class="media-left">'+
-			// 					'<a href="#">'+
-			// 					'<img class="media-object" data-src="holder.js/64x64" alt="64x64" src="assets/images/blank_male.png" data-holder-rendered="true" style="width: 64px; height: 64px;">'+
-			// 					'</a>'+
-			// 					'</div>'+
-			// 					'<div class="media-body">'+
-			// 					' <div class="form-group reply-form">'+
-			// 					'<label for="comment">Reply:</label>'+
-			// 					'<textarea class="form-control" rows="5" id="comment" placeholder="type somthing..."></textarea>'+
-			// 					'</div>'+
-			// 					'<div class="reply-btns pull-right">'+
-			// 					'<a class="btn btn-default left-btn">Cancel</a>'+
-			// 					'<a class="btn btn-primary reply-btn">Reply</a>'+
-			// 					'</div>'+
-			// 					'</div>'+
-			// 				'</div>';
-
-			// $(this).parents('.dialogbox-container:first').find('.reply-box:first').append(reply_html); 
-
 		});
 
 		//HIDE RIGHT BOX
@@ -76,7 +56,6 @@ $('.popbutton').popover({
 				$(this).parents('.dialogbox-container:first').find('.reply-media:first').remove();
 		});
 
-
 		//FLAG UP CLICKED
 		$(document).on('click','.thumb-up',function(){
 
@@ -93,9 +72,21 @@ $('.popbutton').popover({
 		$(document).on('click','.reply-btn',function(){
 		
 		});
-		
-		
+		//POST A REPLY
+		$(document).on('click','#post-answer',function(){
+			var this_text = $('#answer_text').val();
+			var this_thread = $(this).attr('this-thread');
+			request.post_answer(this_text,this_thread);
+		});
 
+		//quote-quote
+		$(document).on('click','#quote-reply-btn',function(){
+			var this_text = $('#quote_text').val();
+			var this_quote = $(this).attr('this-reply');
+			var this_thread = $(this).attr('this-thread'); 
+
+			request.post_quote(this_text,this_quote,this_thread);
+		});
 
 		//MORE CLICKED
 		$('.more').click(function(){
@@ -124,10 +115,7 @@ $('.popbutton').popover({
 				//BRING THE GLYPHICON TO top	
 				$(this).removeClass('icon-bottom').addClass('icon-top');
 			}
-
 		});
-		
-
 
 	// $('a #left-top-container').click(function(e)
 	// {
@@ -169,9 +157,95 @@ $('.popbutton').popover({
 	}
 }
 request = {
+	retrive_quotes: function(_this_reply) {
+	var token = $('meta[name=csrf-token]').attr('content');
+	$('#loading-icons-1').removeClass('hide');
+	$('#quote-container').html('');
 
+	$('#quote-reply-btn').attr('this-reply',_this_reply);
+	$.post(
+		'/threads/retrive-quotes',
+		{
+			"_token": token,
+			"this_reply":_this_reply
+		},
+		function(result){
+			var status = result.status;
+			var html = result.quotes_html;
+			$('#loading-icons-1').addClass('hide');
+
+			switch(status) {
+				case 200: // Approved
+					$('#quote-container').append(html);
+				break;				
+				case 400: // Approved
+				break;
+				default:
+				break;
+			}
+		}
+		);
+	},
+	post_answer: function(this_answer,this_thread) {
+		var token = $('meta[name=csrf-token]').attr('content');
+		$.post(
+			'/threads/post-answer',
+			{
+				"_token": token,
+				"this_answer":this_answer,
+				"this_thread":this_thread
+			},
+			function(result){
+				var status = result.status;
+				var answer = result.answer_html;
+				switch(status) {
+					case 200: // Approved
+
+					$('#thread-group').append(answer);
+
+					break;				
+					case 400: // Approved
+					break;
+					default:
+					break;
+				}
+			}
+			);
+	},
+		post_quote: function(this_answer,this_reply,this_thread) {
+		var token = $('meta[name=csrf-token]').attr('content');
+		$.post(
+			'/threads/post-quote',
+			{
+				"_token": token,
+				"this_answer":this_answer,
+				"this_quote":this_reply,
+				"this_thread":this_thread
+			},
+			function(result){
+				var status = result.status;
+				var answer = result.quote_html;
+				var total_quote = result.quote_count;
+				switch(status) {
+					case 200: // Approved
+
+	
+					$('.show-quote[this_reply='+this_reply+']').html('Quoted '+total_quote+' times');
+
+					$('#quote-container').append(answer);
+					toogle_this($('#quote-btn'));
+					break;				
+					case 400: // Approved
+					break;
+					default:
+					break;
+				}
+			}
+			);
+	}
 };
-function right_box_expende(){
+function right_box_expende(_this_reply){
+	request.retrive_quotes(_this_reply);
 	$('#left-top-container').attr('state','1');
 	$('#zoom').attr('target','true');
 	$('#new-left-box').addClass('right-box-expand');
@@ -190,11 +264,11 @@ function toogle_this(_this){
 	switch(this_state){
 		case 0:
 			$('#quote-textarea').removeClass('hide');
-			_this.attr('state',1);
+			$('.quote-btnn').attr('state',1);
 		break;
 		case 1:
 			$('#quote-textarea').addClass('hide');
-			_this.attr('state',0);
+			$('.quote-btnn').attr('state',0);
 		break;
 	}
 } 

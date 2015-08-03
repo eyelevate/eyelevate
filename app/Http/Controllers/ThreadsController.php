@@ -16,6 +16,7 @@ use Flash;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Job;
+use App\Reply;
 use App\Search;
 use App\User;
 use App\Thread;
@@ -76,13 +77,18 @@ class ThreadsController extends Controller
         $threads->views = $views_after;
         $threads->save();
 
-        $categories_for_select = Category::prepareForSelect(Category::where('status',1)->get());
-        $categories_for_side = Category::prepareForSide(Category::where('status',1)->get());
+
+        $threads_html = Thread::prepareThreadsAndThreadReply($threads);
+
+        $this_user = User::find(Auth::user()->id);
+        //PROFILE IMAGE
+        $this_user_profile_image = Job::imageValidator($this_user->profile_image);
+
         return view('threads.view')
             ->with('layout',$this->layout)
             ->with('threads',$threads)
-            ->with('categories_for_select',$categories_for_select)
-            ->with('categories_for_side',$categories_for_side);
+            ->with('threads_html',$threads_html)
+            ->with('this_user_profile_image',$this_user_profile_image);
     }
     public function postSearchQuery()
     {
@@ -97,4 +103,83 @@ class ThreadsController extends Controller
             ));
         }
     }
+
+    public function postRetriveQuotes()
+    {
+        if(Request::ajax()){
+            $status = 200;
+            $reply_id = Input::get('this_reply');
+            $quotes_html = Reply::PrepareQuotesForView($reply_id);
+            return Response::json(array(
+                'status' => $status,
+                'quotes_html' => $quotes_html
+            ));
+        }
+    }
+
+    public function postPostAnswer()
+    {
+        if(Request::ajax()){
+            $status = 400;
+            $this_answer = Job::sanitize(Input::get('this_answer'));
+
+            $this_thread = Input::get('this_thread');
+
+            $answer_html = Reply::preparePostedAnswer($this_answer);
+
+            $reply = new Reply;
+            $reply->thread_id = $this_thread;
+            $reply->user_id = Auth::user()->id;
+            $reply->reply = $this_answer;
+            $reply->status = 1;
+            $reply->quote_id = null;
+            $reply->eye_likes = 0;
+            $reply->dont_likes = 0;
+            $reply->flag = 0;
+
+            if ($reply->save()) {
+                $status = 200;
+            }
+            return Response::json(array(
+                'status' => $status,
+                'answer_html' =>$answer_html
+            ));
+        }
+    }
+
+        public function postPostQuote()
+    {
+        if(Request::ajax()){
+            $status = 400;
+            $this_answer = Job::sanitize(Input::get('this_answer'));
+            $this_quote = Input::get('this_quote');
+            $this_thread = Input::get('this_thread');
+
+
+            $quote_html = Reply::preparePostedQuote($this_answer);
+
+            $quote = new Reply;
+            $quote->thread_id = $this_thread;
+            $quote->user_id = Auth::user()->id;
+            $quote->reply = $this_answer;
+            $quote->status = 1;
+            $quote->quote_id = $this_quote;
+            $quote->eye_likes = 0;
+            $quote->dont_likes = 0;
+            $quote->flag = 0;
+
+            if ($quote->save()) {
+                $status = 200;
+            }
+
+            $quote_count = count(Reply::where('quote_id',$this_quote)->get());
+
+            return Response::json(array(
+                'status' => $status,
+                'quote_html' => $quote_html,
+                'quote_count' => $quote_count
+            ));
+        }
+    }
+    
 }

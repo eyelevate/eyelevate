@@ -1,70 +1,3 @@
-@extends($layout)
-@section('stylesheets')
-{!! Html::style('assets/css/general.css') !!}
-{!! Html::style('assets/css/home/results.css') !!}
-@stop
-@section('scripts')
-<script src="assets/js/home/results.js"></script>
-@stop
-@section('content')
-<div class="site-wrapper">
-  <div class="container-fluid">
-    <!-- LEFT BOX START -->
-    <div class="col-md-9" id="left-box" target="false">
-      <!-- Page Flash messages go here -->
-      @include('flash::message')
-      <div class="container" id="left-box-inner">
-        <div class="" id="preferences-frame">
-          <div class="input-group " id="top-search-bar" >
-            <input type="text" class="form-control" id="top-search-input" placeholder="Search for Categories">
-            <span class="input-group-btn">
-              <button class="btn btn-default " id="top-search-btn" type="button">
-                <i class="glyphicon glyphicon-search"> </i>
-              </button>
-            </span>
-          </div><!-- /input-group -->
-        </br>
-        <ul class="" id="preferences">
-          <li class="preferences-li"><a class="preferences-text ask-li ask_q_btn">Ask a Question</a></li>
-          <li class="preferences-li op active-li"  this-pre="1"><a class="preferences-text preferences-text-first ">Newest</a></li>
-          <li class="preferences-li op"  this-pre="2"><a class="preferences-text">Most Viewed</a></li>
-          <li class="preferences-li op"  this-pre="3"><a class="preferences-text">Featured</a></li>
-        </ul>
-      </div>
-      <div id="thread-group">
-        {!! $threads !!}
-      </div>
-    </div>
-  </div>
-  <!-- LEFT BOX END -->
-  <!-- RIGHT BOX START -->
-  <div class="col-md-3 " id="right-box"> 
-    <a class="btn btn-primary btn-block ask_q_btn">Ask a Question</a>
-    <div class="" id="right-box-inner">
-
-      <div class="list-group list-group-container">
-        <a href="#" class="list-group-item active " id="list-search-bar">
-          <div class="input-group" >
-            <input type="text" class="form-control" id="list-search-input" placeholder="Search for Categories">
-            <span class="input-group-btn">
-              <button class="btn btn-default " id="list-search-btn" type="button"><i class="glyphicon glyphicon-search">  </i></button>
-            </span>
-          </div><!-- /input-group -->
-        </a>
-        @foreach($categories_for_side as $sbkey => $sbvalue)
-          <a href="#" class="list-group-item cat-items" cat-id={{$sbkey}}>{{$sbvalue}}</a>
-        @endforeach
-
-      </div>
-    </div>
-  </div>
-  <!-- RIGHT BOX END -->
-</div>
-</div>
-
-
-{!! View::make('partials.login_modal') !!}
-
 <div class="modal fade" id="ask_modal">
   {!! Form::open(array('action' => 'ThreadsController@postAdd', 'class'=>'','role'=>"form",'id'=>'question_add')) !!}
   <div class="modal-dialog ask-dialog">
@@ -161,4 +94,3 @@
   </div><!-- /.modal-dialog -->
   {!! Form::close() !!}
 </div><!-- /.modal -->
-@stop

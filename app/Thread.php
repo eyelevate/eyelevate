@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\User;
 use App\Job;
+use App\Reply;
 
 class Thread extends Model
 {
@@ -22,12 +23,9 @@ class Thread extends Model
 				$categories_prepared = Thread::prepareCategories($categories_j);
 
 				$time_s = date(strtotime($davalue['created_at']));
-				$time_ago = Thread::humanTiming($time_s);
-				if ($time_ago == null) {
-					$time_ago = 'just now';
-				} else {
-					$time_ago = $time_ago.' ago';
-				}
+				$time_ago = Job::formatTimeAgo(Job::humanTiming($time_s));
+
+
 
 		$html .= '<div class="thread-single">
 					        <div class="media">
@@ -125,28 +123,105 @@ class Thread extends Model
 		return $cat_html;
 	}
 
-	static public function humanTiming ($time)
-	{
 
-	    $time = time() - $time; // to get the time since that moment
+	static public function prepareThreadsAndThreadReply($threads) {
+		$html = '' ;
+		if (isset($threads)) {
+			$this_user = User::find($threads->user_id);
+			$this_main_username = $this_user->username;
+
+			//TIME AGO
+			$time_s = date(strtotime($threads['created_at']));
+			$time_ago_main = Job::formatTimeAgo(Job::humanTiming($time_s));
+
+			//PROFILE IMAGE
+			$profile_image = Job::imageValidator($this_user->profile_image);
+
+			//PREPARING THE MAIN THREADS
+			$html .= '  <div class="thread-single " id="main-thread">
+				            <div class="media">
+				              <div class="media-left">
+				                <a href="#">
+				                  <img class="media-object media-image" data-src="holder.js/64x64" alt="64x64" src="/assets/images/profile-images/perm/'.$profile_image.'" data-holder-rendered="true" style="width: 64px; height: 64px;">
+				                </a>
+				              </div>
+				              <div class="media-body">
+				                <div class="media-inner-left">
+				                  <div class="thread-info">'.$this_main_username.'
+				                    <span class="thread-date">'.$time_ago_main.'</span>
+				                  </div> 
+				                  <h4 ><a href="/threads/view/'.$threads->id.'">'.$threads->title.'</a></h4>
+				                </br>
+				                <div class="thread-description">
+									'.$threads->description.'
+				                </div>
+				                  <div class="label-container">
+				                  </div>
+				                </div>
+				              </div>
+				            </div>
+				          </div>';
 
 
-	    $tokens = array (
-	        31536000 => 'year',
-	        2592000 => 'month',
-	        604800 => 'week',
-	        86400 => 'day',
-	        3600 => 'hour',
-	        60 => 'minute',
-	        1 => 'second'
-	    );
 
-	    foreach ($tokens as $unit => $text) {
-	        if ($time < $unit) continue;
-	        $numberOfUnits = floor($time / $unit);
-	        return $numberOfUnits.' '.$text.(($numberOfUnits>1)?'s':'');
-	    }
+			//GET ALL REPLIES
+			$all_replies = Reply::where('thread_id',$threads->id)
+			->where('quote_id',null)
+			->get();
 
+			foreach ($all_replies as $arkey => $arvalue) {
+
+				$this_replier = User::find($arvalue->user_id);
+				$this_replier_username = $this_replier->username;
+
+				//TIME AGO
+				$time_s_r = date(strtotime($arvalue['created_at']));
+				$time_ago_replies = Job::formatTimeAgo(Job::humanTiming($time_s_r));
+
+				//PROFILE IMAGE
+				$replier_profile_image = Job::imageValidator($this_replier->profile_image);
+
+				//NUMBER OF QUOTES
+				$quote_count = count(Reply::where('quote_id',$arvalue->id)->get());
+
+				if ($quote_count > 0) {
+					$quote_count_html = '<div class="right-text btn btn-primary show-quote" this_reply="'.$arvalue->id.'">Quoted '.$quote_count.' times</div>';
+
+				} else {
+					$quote_count_html = '';
+				}
+				//PREPARE ALL REPLIES
+				$html .= '<div class="thread-single">
+				            <div class="media">
+				              <div class="media-left">
+				                <a href="#">
+				                  <img class="media-object media-image" data-src="holder.js/64x64" alt="64x64" src="/assets/images/profile-images/perm/'.$replier_profile_image.'" data-holder-rendered="true" style="width: 64px; height: 64px;">
+				                </a>
+				              </div>
+				              <div class="media-body">
+				                <div class="media-inner-left">
+				                  <div class="thread-info">'.$this_replier_username.' 
+				                    <span class="thread-date">'.$time_ago_replies.'</span>
+				                    <i class="glyphicon glyphicon-euro pull-right"></i>
+				                  </div> 
+				                </br>
+				                <div class="thread-description">
+									'.$arvalue->reply.'
+				                  </div>
+				                  <div class="label-container">
+
+				                  </div>
+				                </div>
+				                <div class="media-inner-right">'.$quote_count_html.'</div>
+				              </div>
+				            </div>
+				          </div>';
+			}
+
+	
+		}
+		return $html;
 	}
+
 
 }

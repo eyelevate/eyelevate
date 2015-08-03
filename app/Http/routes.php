@@ -43,6 +43,10 @@ Route::controller('reminders', 'RemindersController');
 Route::controller('threads', 'ThreadsController');
 	Route::get('/threads/view/{$id}', 'ThreadsController@getView');
 	Route::post('/threads/search-query', 'ThreadsController@postSearchQuery');
+	Route::post('/threads/retrive-quotes', 'ThreadsController@postRetriveQuotes');
+	Route::post('/threads/post-answer', 'ThreadsController@postPostAnswer');
+	Route::post('/threads/post-quote', 'ThreadsController@postPostQuote');
+
 
 
 Route::controller('password', 'Auth\PasswordController');
