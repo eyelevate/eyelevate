@@ -1,0 +1,77 @@
+<?php 
+namespace App;
+use Route;
+use Illuminate\Database\Eloquent\Model;
+
+class Permission extends Model
+{
+    /**
+     * The database table used by the model.
+     *
+     * @var string
+     */
+    protected $table = 'permissions';
+
+    /*
+    |--------------------------------------------------------------------------
+    | Relationship Methods
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * many-to-many relationship method
+     *
+     * @return QueryBuilder
+     */
+    public function roles()
+    {
+        return $this->belongsToMany('App\Role');
+    }
+
+    public static function PerpareAllForSelect() {
+        $data = Permission::get();
+        $permissions = array(''=>'Select Permission');
+        if(isset($data)) {
+            foreach ($data as $key => $value) {
+                $permissions_id = $value['id'];
+                $permissions_title = $value['permission_title'];
+                $permissions[$permissions_id] = $permissions_title; 
+            }
+        }
+        return $permissions;
+    }
+
+
+    public static function PrepareAllRouteForSelect() {
+        $name = Route::getRoutes();
+        $routeCollection = Route::getRoutes();
+        $controller_names = [];
+
+        foreach ($routeCollection as $key => $value) {
+                //KEEP THE NAME OF THE ROUTE
+            $new_name = explode("/",$value->getPath());
+            if (sizeof( $new_name) == 1) {
+                $new_name = explode("/",$value->getPath());
+                $controller_names[$key] = $new_name[0];
+            } elseif (sizeof( $new_name) < 3) {
+                $new_name = explode("/",$value->getPath());
+                $controller_names[$key] = $new_name[0].'/'.$new_name[1];
+            } else {
+                $new_name = explode("/",$value->getPath());
+                $controller_names[$key] = $new_name[0].'/'.$new_name[1].'/'.$new_name[2];
+            }
+            // $controller_names[$key] = $new_name[0].'/'.$new_name[1];
+        }   
+        //TAKE OUT DUPLICATE AND REINDEX
+        $new_controller_names = array_values(array_unique($controller_names));
+
+        $permissions_r = array(''=>'Select Permission');
+        if(isset($new_controller_names)) {
+            foreach ($new_controller_names as $key => $value) {
+                $permissions_r[$value] = $value; 
+            }
+        }
+        return $permissions_r;
+    }
+
+}

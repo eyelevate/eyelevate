@@ -16,6 +16,11 @@
 #add-answer{
   padding:30px;
 }
+.show-quote{
+    position: absolute;
+    right: 0;
+    top: 39px;
+}
 /*ADD ANSWER STYLING END*/
 #main-thread{
     background-color: rgba(0, 197, 255, 0.09);

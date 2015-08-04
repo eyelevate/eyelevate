@@ -9,16 +9,36 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
-
- 
-
 //HOME ROUTE
 Route::get('/', 'HomeController@getIndex');
 
-//CATEGORY ROUTE
 
-	Route::post('/categories/search-cat', 'CategoriesController@postCatSearch');
+
+Route::get('/admins',  [
+	'uses' => 'AdminsController@getIndex',
+	'middleware' => ['acl:admins']
+	]);
+
+// Route::get('/admins',  [
+// 	'uses' => 'AdminsController@getIndex',
+// 	'middleware' => ['acl:admins']
+// 	]);
+
+//ADMINS CONTROLLER
+// Route::get('/admins', 'AdminsController@getIndex');	
+Route::get('/admins/roles/add', 'AdminsController@getAddRoles');
+Route::post('/admins/roles/add', 'AdminsController@postAddRoles');
+Route::get('/admins/permissions/add', 'AdminsController@getAddPermission');
+Route::post('/admins/permissions/add', 'AdminsController@postAddPermission');
+Route::get('/admins/permission-roles/add', 'AdminsController@getAddPermissionRole');
+Route::post('/admins/permission-roles/add', 'AdminsController@postAddPermissionRole');
+// Route::get('/admins/add', 'AdminsController@getAdd');
+// Route::post('/admins/add', 'AdminsController@postAdd');
+// Route::get('/admins/edit', 'AdminsController@getEdit');
+// Route::post('/admins/edit', 'AdminsController@postEdit');
+
+//CATEGORY ROUTE
+Route::post('/categories/search-cat', 'CategoriesController@postCatSearch');
 
 // Route::post('/search','HomeController@postIndex');
 Route::get('/search', ['middleware' => 'auth', 'uses' => 'HomeController@postIndex']);
@@ -26,6 +46,7 @@ Route::post('/search', ['middleware' => 'auth', 'uses' => 'HomeController@postIn
 
 //USER ROUTE
 Route::controller('users', 'UsersController');
+	Route::get('/users/login', 'UsersController@getLogin');
 	Route::get('/users/profile/{$username}', 'UsersController@getProfile');
 	Route::get('/registration', 'UsersController@getRegistration');
 	Route::post('/validate', 'UsersController@getValidate');
@@ -47,8 +68,6 @@ Route::controller('threads', 'ThreadsController');
 	Route::post('/threads/post-answer', 'ThreadsController@postPostAnswer');
 	Route::post('/threads/post-quote', 'ThreadsController@postPostQuote');
 
-
-
 Route::controller('password', 'Auth\PasswordController');
 // Password reset link request routes...
 Route::get('password/email', 'Auth\PasswordController@getEmail');
@@ -57,4 +76,3 @@ Route::get('password/email', 'Auth\PasswordController@getEmail');
 // Password reset routes...
 Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
 	Route::post('password/reset', 'Auth\PasswordController@postReset');
-	

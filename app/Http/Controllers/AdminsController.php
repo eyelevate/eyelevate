@@ -6,98 +6,163 @@ use Validator;
 use Redirect;
 use Hash;
 use Request;
+use Route;
 use Response;
 use Auth;
 use URL;
 use Session;
 use Flash;
+use View;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Job;
 use App\User;
-use App\Thread;
-use App\Category;
+use App\Admin;
+use App\Role;
+use App\Permission;
+use App\PermissionRole;
 
 class AdminsController extends Controller
 {
     public function __construct() {
         // Define layout
         $this->layout = 'layouts.admins';
+        $this_user = User::find(Auth::user()->id);
+        $this_username = $this_user->username;
+
+        //PROFILE IMAGE
+        $this_user_profile_image = Job::imageValidator($this_user->profile_image);
+
+        View::share('this_username',$this_username);
+        View::share('this_user_profile_image',$this_user_profile_image);
 
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function index()
+      public function getIndex()
     {
-        //
+
+        
+        return view('admins.index')
+        ->with('layout',$this->layout);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
+    //ROLES
+       public function getAddRoles()
+    {   
+        return view('admins.add_roles')
+        ->with('layout',$this->layout);
+    }
+        public function postAddRoles()
     {
-        //
+            $validator = Validator::make(Input::all(), Admin::$add_roles);
+            if ($validator->passes()) {
+            	$title = Input::get('role-title');
+            	$slug = Input::get('role-slug');
+
+            	$roles = new Role;
+            	$roles->role_title = $title;
+            	$roles->role_slug = $slug;
+
+            	if ($roles->save()) {
+			        return view('admins.add_roles')
+			        ->with('layout',$this->layout)
+			        ->with('message_feedback','Successfully Added');
+            	}
+	        }
+	        else {
+	            // validation has failed, display error messages    
+	            return Redirect::back()
+	                ->with('message', 'The following errors occurred')
+	                ->with('alert_type','alert-danger')
+	                ->withErrors($validator)
+	                ->withInput();  
+	        } 
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @return Response
-     */
-    public function store()
+    //PERMISSIONS
+
+    public function getAddPermission()
+    {           Route::get('routes', array('uses'=>'RoutesController@routes'));
+
+
+        $all_routes = Permission::PrepareAllRouteForSelect();
+        return view('admins.add_permission')
+        ->with('layout',$this->layout)
+        ->with('all_routes',$all_routes);
+    }
+        public function postAddPermission()
+    {   
+
+	    $validator = Validator::make(Input::all(), Admin::$add_permission);
+        if ($validator->passes()) {
+        	$title = Input::get('permission-title');
+        	$slug = Input::get('permission-slug');
+        	$description = Input::get('permission-description');
+
+        	$permissions = new Permission;
+        	$permissions->permission_title = $title;
+        	$permissions->permission_slug = $slug;
+        	$permissions->permission_description = $description;
+
+        	if ($permissions->save()) {
+                $all_routes = Permission::PrepareAllRouteForSelect();
+                return view('admins.add_permission')
+                ->with('layout',$this->layout)
+                ->with('all_routes',$all_routes)
+                ->with('message_feedback','Successfully Added');
+        	}
+        }
+        else {
+            // validation has failed, display error messages    
+            return Redirect::back()
+                ->with('message', 'The following errors occurred')
+                ->with('alert_type','alert-danger')
+                ->withErrors($validator)
+                ->withInput();  
+        } 
+    }
+
+        public function getAddPermissionRole()
+    {   
+        $permissions = Permission::PerpareAllForSelect();
+        $roles = Role::PerpareAllForSelect();
+        return view('admins.add_permission_role')
+        ->with('layout',$this->layout)
+        ->with('permissions',$permissions)
+        ->with('roles',$roles);
+               
+    }
+
+
+    //PERMISISON ROLE
+    public function postAddPermissionRole()
     {
-        //
-    }
+        $validator = Validator::make(Input::all(), Admin::$add_permission_role);
+        if ($validator->passes()) {
+            $permission = Input::get('permission_id');
+            $role = Input::get('role_id');
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        //
-    }
+            $permission_role = new PermissionRole;
+            $permission_role->permission_id = $permission;
+            $permission_role->role_id = $role;
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
+            if ($permission_role->save()) {
+                $permissions = Permission::PerpareAllForSelect();
+                $roles = Role::PerpareAllForSelect();
+                return view('admins.add_permission_role')
+                ->with('layout',$this->layout)
+                ->with('permissions',$permissions)
+                ->with('roles',$roles)
+                ->with('message_feedback','Successfully Added');
+            }
+        }
+        else {
+            // validation has failed, display error messages    
+            return Redirect::back()
+                ->with('message', 'The following errors occurred')
+                ->with('alert_type','alert-danger')
+                ->withErrors($validator)
+                ->withInput();  
+        } 
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function update($id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
 }

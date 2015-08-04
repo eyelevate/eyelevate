@@ -111,6 +111,11 @@ class UsersController extends Controller
         }
 
     }
+public function getLogin()
+{
+    return view('users.login')
+    ->with('layout',$this->layout);
+}
 public function postLogin()
 {
     $username = Input::get('username');
