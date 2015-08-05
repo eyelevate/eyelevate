@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use App\Job;
 
 class CheckPermission
 {
@@ -21,7 +22,6 @@ class CheckPermission
                 
                 return $next($request);
             }
-
             return $request->ajax ? response('Unauthorized.', 401) : redirect('/users/login');
         }
     }

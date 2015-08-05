@@ -7,6 +7,7 @@ use App\Job;
 use App\User;
 use App\Admin;
 use App\Role;
+use App\RoleUser;
 use App\Permission;
 use App\PermissionRole;
 
@@ -63,7 +64,10 @@ AuthenticatableContract, CanResetPasswordContract
      */
     public function can($permission = null)
     {
+
+
         return !is_null($permission) && $this->checkPermission($permission);
+
     }
 
     /**
@@ -74,11 +78,16 @@ AuthenticatableContract, CanResetPasswordContract
      */
     protected function checkPermission($perm)
     {
-        $permissions = $this->getAllPermissionsFormAllRoles();
-        
+        $grant_access = false;
+        $permissions = $this->getUserPermission();
         $permissionArray = is_array($perm) ? $perm : [$perm];
-
-        return count(array_intersect($permissions, $permissionArray));
+        foreach ($permissionArray as $pekey => $pevalue) {
+            if ($pevalue == $permissions) {
+                $grant_access = true;
+            }
+        }
+        //FOR SOME REASON PREMISSION ARRAY IS ALWASY ADMINS
+        return $grant_access;
     }
 
     /**
@@ -86,20 +95,19 @@ AuthenticatableContract, CanResetPasswordContract
      *
      * @return Array of permission slugs
      */
-    protected function getAllPermissionsFormAllRoles()
+    protected function getUserPermission()
     {
         $permissionsArray = [];
-
-        $permissions = $this->roles->load('permissions')->fetch('permissions')->toArray();
-
-        // $permissions = Permission::get()->toArray();
-
-        return array_map('strtolower', array_unique(array_flatten(array_map(function ($permission) {
-
-
-            return array_fetch($permission, 'permission_slug');
-
-        }, $permissions))));
+        //GET USER ID
+        $this_user_id = Auth::user()->id;
+        //GET USER ROLE
+        $this_role = RoleUser::where('user_id',$this_user_id)->first();
+        $permission_role = PermissionRole::where('role_id',$this_role->id)->first();
+        $permissions = $permission_role?Permission::find($permission_role->permission_id):false;
+        return $permissions?$permissions->permission_slug:false;
+        // return array_map('strtolower', array_unique(array_flatten(array_map(function ($permission) {
+        //     return array_fetch($permission, 'permission_slug');
+        // }, $permissions))));
     }
 
     /*

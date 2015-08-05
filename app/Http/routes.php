@@ -15,7 +15,8 @@ Route::get('/', 'HomeController@getIndex');
 
 
 Route::get('/admins',  [
-	'uses' => 'AdminsController@getIndex',
+	'uses' => 'AdminsController@getIndex'
+	,
 	'middleware' => ['acl:admins']
 	]);
 
