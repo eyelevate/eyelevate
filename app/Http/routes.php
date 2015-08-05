@@ -33,6 +33,13 @@ Route::get('/admins/permissions/add', 'AdminsController@getAddPermission');
 Route::post('/admins/permissions/add', 'AdminsController@postAddPermission');
 Route::get('/admins/permission-roles/add', 'AdminsController@getAddPermissionRole');
 Route::post('/admins/permission-roles/add', 'AdminsController@postAddPermissionRole');
+Route::get('/admins/acl/view', 'AdminsController@getViewAcl');
+Route::get('/admins/category/view', 'AdminsController@getViewCategory');
+
+Route::get('/admins/categories/add', 'CategoriesController@getAdd');
+Route::post('/admins/categories/add', 'CategoriesController@postAdd');
+Route::get('/admins/categories/edit', 'CategoriesController@getEdit');
+Route::post('/admins/categories/edit', 'CategoriesController@postEdit');
 // Route::get('/admins/add', 'AdminsController@getAdd');
 // Route::post('/admins/add', 'AdminsController@postAdd');
 // Route::get('/admins/edit', 'AdminsController@getEdit');

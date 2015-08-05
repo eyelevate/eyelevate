@@ -27,7 +27,7 @@
     <script src="/assets/js/admins/nprogress.js"></script>
     <script>
     </script>
-    
+      @yield('stylesheets')
     <!--[if lt IE 9]>
         <script src="../assets/js/ie8-responsive-file-warning.js"></script>
         <![endif]-->
@@ -82,40 +82,16 @@
                                 </li>
                                 <li class="li-menus"><a><i class="fa fa-edit"></i> Access Control List <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu" style="display: none">
-                                        <li><a href="form.html">View</a>
+                                        <li><a href="/admins/acl/view">View</a>
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="li-menus"><a><i class="fa fa-edit"></i> Permissions <span class="fa fa-chevron-down"></span></a>
+                                <li class="li-menus"><a><i class="fa fa-edit"></i> Thread Setting<span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu" style="display: none">
-                                        <li><a href="form.html">View</a>
-                                        </li>
-                                        <li><a href="/admins/permissions/add">Add</a>
-                                        </li>
-                                        <li><a href="form.html">Edit</a>
+                                        <li><a href="/admins/category/view">Category</a>
                                         </li>
                                     </ul>
                                 </li>
-                                <li class="li-menus"><a><i class="fa fa-edit"></i> Permission Roles <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu" style="display: none">
-                                        <li><a href="form.html">Views</a>
-                                        </li>
-                                        <li><a href="/admins/permission-roles/add">Add</a>
-                                        </li>
-                                        <li><a href="form.html">Edita</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="li-menus"><a><i class="fa fa-edit"></i> Roles <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu" style="display: none">
-                                        <li><a href="form.html">View</a>
-                                        </li>
-                                        <li><a href="/admins/roles/add">Add</a>
-                                        </li>
-                                        <li><a href="form.html">Edit</a>
-                                        </li>
-                                    </ul>
-                                </li>                                
                             </ul>
                         </div>
                         <div class="menu_section">
@@ -242,6 +218,7 @@
 
 
     <script src="/assets/js/admins/custom.js"></script>
+        @yield('scripts')
 
     <!-- flot js -->
     <!--[if lte IE 8]><script type="text/javascript" src="js/excanvas.min.js"></script><![endif]-->

@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
+	public static $add_roles = array(
+        'category-title'=>'required',
+        'category-description'=>'required'
+    );
+
+
     public static function prepareForSelect($data) {
 		$categories = array(''=>'Choose a Categories');
 		if(isset($data)) {
@@ -128,4 +134,21 @@ class Category extends Model
 
 		return $data;
 	}
+
+	static public function prepareCategoriesForEdit() {
+		$cat = Category::where('status', 1)->get();
+
+		$cat_html = '';
+		if (isset($cat)) {
+			$categories_name = null;
+			foreach ($cat as $cakey => $cavalue) {
+				$cat_html .= '<span class="tag label label-primary category-tag" this-val="'.$cavalue->id.'">
+				                <span>'.$cavalue->name.'</span>
+				                <a><i class="remove-label glyphicon glyphicon-remove-sign glyphicon-white"></i></a>
+				                <input name="categories['.$cavalue->name.']" type="hidden" value="'.$cavalue->name.'" text="'.$cavalue->name.'">
+				             </span>';
+		}
+		return $cat_html;
+	}
+}
 }

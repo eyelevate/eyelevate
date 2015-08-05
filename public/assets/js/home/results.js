@@ -149,12 +149,9 @@ var popupTemplate='<li class="spam-popup">Report as spam</li>';
 			request.user_auth();
 		});
 
-
 		$(document).find('.remove-label').click(function(){
 			$(this).parents('.label:first').remove();
 		});
-
-
 
 		//WANT TO REPLY
 		$('.reply-text').click(function(){

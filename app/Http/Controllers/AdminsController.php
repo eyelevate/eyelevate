@@ -165,4 +165,20 @@ class AdminsController extends Controller
                 ->withInput();  
         } 
     }
+
+    public function getViewAcl()
+    {   
+        return view('admins.acl_view')
+        ->with('layout',$this->layout);
+               
+    }
+
+    public function getViewCategory()
+    {   
+        return view('admins.category_view')
+        ->with('layout',$this->layout);
+               
+    }
+
+    
 }
