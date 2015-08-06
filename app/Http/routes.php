@@ -14,36 +14,53 @@ Route::get('/', 'HomeController@getIndex');
 
 
 
-Route::get('/admins',  [
-	'uses' => 'AdminsController@getIndex'
-	,
-	'middleware' => ['acl:admins']
-	]);
+/**
+ * ADMIN SECTION
+ */
+$acl_variable = "admins";
+Route::get('/admins',  ['uses' => 'AdminsController@getIndex',
+						'middleware' => ['auth','acl:'.$acl_variable]
+						]);
+Route::get('/admins/roles/add',  ['uses' => 'AdminsController@getAddRoles',
+						'middleware' => ['auth','acl:'.$acl_variable]
+						]);
+Route::post('/admins/roles/add',  ['uses' => 'AdminsController@postAddRoles',
+						'middleware' => ['auth','acl:'.$acl_variable]
+						]);
+Route::get('/admins/permissions/add',  ['uses' => 'AdminsController@getAddPermission',
+						'middleware' => ['auth','acl:'.$acl_variable]
+						]);
+Route::post('/admins/permissions/add',  ['uses' => 'AdminsController@postAddPermission',
+						'middleware' => ['auth','acl:'.$acl_variable]
+						]);
+Route::get('/admins/permission-roles/add',  ['uses' => 'AdminsController@getAddPermissionRole',
+						'middleware' => ['auth','acl:'.$acl_variable]
+						]);
+Route::post('/admins/permission-roles/add',  ['uses' => 'AdminsController@postAddPermissionRole',
+						'middleware' => ['auth','acl:'.$acl_variable]
+						]);
+Route::get('/admins/acl/view',  ['uses' => 'AdminsController@getViewAcl',
+						'middleware' => ['auth','acl:'.$acl_variable]
+						]);
+Route::get('/admins/category/view',  ['uses' => 'AdminsController@getViewCategory',
+						'middleware' => ['auth','acl:'.$acl_variable]
+						]);
+Route::get('/admins/categories/add',  ['uses' => 'CategoriesController@getAdd',
+						'middleware' => ['auth','acl:'.$acl_variable]
+						]);
+Route::post('/admins/categories/add',  ['uses' => 'CategoriesController@postAdd',
+						'middleware' => ['auth','acl:'.$acl_variable]
+						]);
+Route::get('/admins/categories/edit',  ['uses' => 'CategoriesController@getEdit',
+						'middleware' => ['auth','acl:'.$acl_variable]
+						]);
+Route::post('/admins/categories/edit',  ['uses' => 'CategoriesController@postEdit',
+						'middleware' => ['auth','acl:'.$acl_variable]
+						]);
+Route::get('/admins/login', 'AdminsController@getLogin');
+Route::post('/admins/login', 'AdminsController@postLogin');
+Route::get('/admins/logout', 'AdminsController@getLogout');
 
-// Route::get('/admins',  [
-// 	'uses' => 'AdminsController@getIndex',
-// 	'middleware' => ['acl:admins']
-// 	]);
-
-//ADMINS CONTROLLER
-// Route::get('/admins', 'AdminsController@getIndex');	
-Route::get('/admins/roles/add', 'AdminsController@getAddRoles');
-Route::post('/admins/roles/add', 'AdminsController@postAddRoles');
-Route::get('/admins/permissions/add', 'AdminsController@getAddPermission');
-Route::post('/admins/permissions/add', 'AdminsController@postAddPermission');
-Route::get('/admins/permission-roles/add', 'AdminsController@getAddPermissionRole');
-Route::post('/admins/permission-roles/add', 'AdminsController@postAddPermissionRole');
-Route::get('/admins/acl/view', 'AdminsController@getViewAcl');
-Route::get('/admins/category/view', 'AdminsController@getViewCategory');
-
-Route::get('/admins/categories/add', 'CategoriesController@getAdd');
-Route::post('/admins/categories/add', 'CategoriesController@postAdd');
-Route::get('/admins/categories/edit', 'CategoriesController@getEdit');
-Route::post('/admins/categories/edit', 'CategoriesController@postEdit');
-// Route::get('/admins/add', 'AdminsController@getAdd');
-// Route::post('/admins/add', 'AdminsController@postAdd');
-// Route::get('/admins/edit', 'AdminsController@getEdit');
-// Route::post('/admins/edit', 'AdminsController@postEdit');
 
 //CATEGORY ROUTE
 Route::post('/categories/search-cat', 'CategoriesController@postCatSearch');

@@ -12,6 +12,7 @@ return array(
     'AddColumnsToPermissionsTable' => $baseDir . '/database/migrations/2015_08_04_041353_add_columns_to_permissions_table.php',
     'AddCompanyToUsersTable' => $baseDir . '/database/migrations/2015_07_21_012232_add_company_to_users_table.php',
     'AddImgSrcToUsersTable' => $baseDir . '/database/migrations/2015_07_28_080104_add_img_src_to_users_table.php',
+    'AddNewColumnToRoleUserTable' => $baseDir . '/database/migrations/2015_08_06_001959_add_new_column_to_role_user_table.php',
     'AddNewColumnsToCategoriesTable' => $baseDir . '/database/migrations/2015_07_28_001334_add_new_columns_to_categories_table.php',
     'AddNewColumnsToRepliesTable' => $baseDir . '/database/migrations/2015_07_30_041940_add_new_columns_to_replies_table.php',
     'AddNotifyFieldsToThreadsTable' => $baseDir . '/database/migrations/2015_07_27_084138_add_notify_fields_to_threads_table.php',

@@ -20,7 +20,7 @@ use App\Job;
 use App\User;
 use App\Thread;
 use App\Category;
-
+use App\RoleUser;
 
 class UsersController extends Controller
 {
@@ -71,34 +71,41 @@ class UsersController extends Controller
 
             $user->profile_image = Input::get('profile-image')?$final_path.'.'.$image_type:'blank_male.png';           
              if($user->save()) { // Save the user and redirect to owners home
-                if (Input::get('profile-image')) {
-                    if( ! \File::isDirectory($imagePath) ) {
-                        \File::makeDirectory($imagePath, 493, true);
-                    }
-                    if (!is_writable(dirname($imagePath))) {
-                        $status = 401;
-                        return Response::json(array(
-                            "error" => 'Destination Unwritable'
-                            ));
-                    } else {
-                        $oldpath = public_path("assets/images/profile-images/tmp/".Input::get('profile-image'));
-                        $newpath = public_path("assets/images/profile-images/perm/".$final_path.'.'.$image_type);
-                        rename($oldpath, $newpath);
-                    }
-                }
-                if (Auth::attempt(array('username'=> $user->username, 'password'=>Input::get('password')))) {
-                    $redirect = (Session::get('redirect')) ? Session::get('redirect') : null; 
-                    
-                    if(isset($redirect)) {
-                        Flash::success('You have successfully been registered as '.$user->username.'!');
-                        return Redirect::to(Session::get('redirect'));
-                    } else {
-                        Flash::error('There was an error with your registration');
-                        //SESION DOESN'T EXIST
-                        return redirect()->action('HomeController@postIndex');
-                    }
-                }
 
+                //ASSIGN LEVEL TWO ACL (GUESTS)
+                $new_rule = new RoleUser;
+                $new_rule->role_id = 5;
+                $new_rule->user_id = $user->id;
+
+                if($new_rule->save()) {
+                    if (Input::get('profile-image')) {
+                        if( ! \File::isDirectory($imagePath) ) {
+                            \File::makeDirectory($imagePath, 493, true);
+                        }
+                        if (!is_writable(dirname($imagePath))) {
+                            $status = 401;
+                            return Response::json(array(
+                                "error" => 'Destination Unwritable'
+                                ));
+                        } else {
+                            $oldpath = public_path("assets/images/profile-images/tmp/".Input::get('profile-image'));
+                            $newpath = public_path("assets/images/profile-images/perm/".$final_path.'.'.$image_type);
+                            rename($oldpath, $newpath);
+                        }
+                    }
+                    if (Auth::attempt(array('username'=> $user->username, 'password'=>Input::get('password')))) {
+                        $redirect = (Session::get('redirect')) ? Session::get('redirect') : null; 
+                        
+                        if(isset($redirect)) {
+                            Flash::success('You have successfully been registered as '.$user->username.'!');
+                            return Redirect::to(Session::get('redirect'));
+                        } else {
+                            Flash::success('You have successfully been registered as '.$user->username.'!');
+                            //SESION DOESN'T EXIST
+                            return redirect()->action('HomeController@postIndex');
+                        }
+                    }
+                }
             }
 
         } else {
@@ -120,7 +127,8 @@ public function postLogin()
 {
     $username = Input::get('username');
     $password = Input::get('password');
-    // Session::reflash();
+
+    $direct_login = Input::get('direct-login');
 
     if (Auth::attempt(array('username'=>$username, 'password'=>$password))) {
         Flash::success('Welcome back '.$username.'!');
@@ -133,21 +141,28 @@ public function postLogin()
             return redirect()->action('HomeController@postIndex');
         }
     } else { //LOGING FAILED
-        $reset_success = false;
-        $username = null;
-        return view('home.home-index')
-            ->with('layout','layouts.home-layout')
-            ->with('username',$username)
-            ->with('reset_success',$reset_success)
-            ->with('login_failed',true);
+        if (isset($direct_login)) {
+            return view('users.login')
+            ->with('layout',$this->layout)
+            ->with('wrong',true);
+        } else {
+            $reset_success = false;
+            $username = null;
+            return view('home.home-index')
+                ->with('layout','layouts.home-layout')
+                ->with('username',$username)
+                ->with('reset_success',$reset_success)
+                ->with('login_failed',true);  
+        }
+
     }
 }
-public function getLogout()
-{
-    Auth::logout();
-        Session::reflash(); // Keep for inteded pages backfall. This helps users get back to the intended page if session expire
-        return Redirect::action('HomeController@getIndex');
-    }
+    public function getLogout()
+    {
+        Auth::logout();
+            Session::reflash(); // Keep for inteded pages backfall. This helps users get back to the intended page if session expire
+            return Redirect::action('HomeController@getIndex');
+        }
     public function postLogout()
     {
         Auth::logout();

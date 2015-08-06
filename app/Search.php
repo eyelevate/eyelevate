@@ -45,6 +45,7 @@ class Search extends Model
    			$tier_2_result = $numeric_filtered;
 
 
+
    			//SEARCHING
    			$counted_results = []; // inst new array for counted results
    			// EMPTY FINALL ARRAY
@@ -101,8 +102,6 @@ class Search extends Model
 				if (str_word_count($final_product_array[$fpkey]->description) > 20) {
 					$final_product[$final_product_array[$fpkey]->id]['description'] .='...';
 				}
-
-				
 				// Job::dump($final_product_array[$fpkey]->description);
 				$fp_count++;
 			}
