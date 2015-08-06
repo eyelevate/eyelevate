@@ -3,5 +3,7 @@ Homestead.yaml
 /.vagrant
 
 /config/database.php
+
 .env.*.php
 .env.php
+.env
