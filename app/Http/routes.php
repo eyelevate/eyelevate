@@ -66,8 +66,8 @@ Route::get('/admins/logout', 'AdminsController@getLogout');
 Route::post('/categories/search-cat', 'CategoriesController@postCatSearch');
 
 // Route::post('/search','HomeController@postIndex');
-Route::get('/search', ['middleware' => 'auth', 'uses' => 'HomeController@postIndex']);
-Route::post('/search', ['middleware' => 'auth', 'uses' => 'HomeController@postIndex']);
+Route::get('/search', 'HomeController@postIndex');
+Route::post('/search', 'HomeController@postIndex');
 
 //USER ROUTE
 Route::controller('users', 'UsersController');

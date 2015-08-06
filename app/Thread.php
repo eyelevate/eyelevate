@@ -27,30 +27,30 @@ class Thread extends Model
 
 
 
-		$html .= '<div class="thread-single">
-					        <div class="media">
-					          <div class="media-left">
-					            <a href="#">
-					              <img class="media-object" data-src="holder.js/64x64" alt="64x64" src="/assets/images/profile-images/perm/'.$profile_image.'" data-holder-rendered="true" style="width: 64px; height: 64px;">
-					            </a>
-					          </div>
-					          <div class="media-body">
-					            <div class="media-inner-left">
-					              <h4 ><a href="/threads/view/'.$davalue->id.'">'.$davalue->title.'</a></h4>
-					              <div class="thread-info">'.$username.' . 
-					                <span class="thread-date">'.$time_ago.'</span>
-					              </div> 
-					            </br>
-					            <div class="label-container">
-									'.$categories_prepared.'
-					            </div>
-					          </div>
-					          <div class="media-inner-right">
-					            <div class="right-text"><span class="reply-no"><i class="fa fa-eye"></i></span></br><span class="reply-html">'.$davalue->views.'</span></div>
-					          </div>
-					        </div>
-					      </div>
-					    </div>';
+				$html .= '<div class="thread-single">
+							        <div class="media">
+							          <div class="media-left">
+							            <a href="#">
+							              <img class="media-object" data-src="holder.js/64x64" alt="64x64" src="/assets/images/profile-images/perm/'.$profile_image.'" data-holder-rendered="true" style="width: 64px; height: 64px;">
+							            </a>
+							          </div>
+							          <div class="media-body">
+							            <div class="media-inner-left">
+							              <h4 ><a href="/threads/view/'.$davalue->id.'">'.$davalue->title.'</a></h4>
+							              <div class="thread-info">'.$username.' . 
+							                <span class="thread-date">'.$time_ago.'</span>
+							              </div> 
+							            </br>
+							            <div class="label-container">
+											'.$categories_prepared.'
+							            </div>
+							          </div>
+							          <div class="media-inner-right">
+							            <div class="right-text"><span class="reply-no"><i class="fa fa-eye"></i></span></br><span class="reply-html">'.$davalue->views.'</span></div>
+							          </div>
+							        </div>
+							      </div>
+							    </div>';
 			}
 		}
 		return $html;
@@ -162,13 +162,10 @@ class Thread extends Model
 				            </div>
 				          </div>';
 
-
-
 			//GET ALL REPLIES
 			$all_replies = Reply::where('thread_id',$threads->id)
 			->where('quote_id',null)
 			->get();
-
 			foreach ($all_replies as $arkey => $arvalue) {
 
 				$this_replier = User::find($arvalue->user_id);
@@ -202,7 +199,14 @@ class Thread extends Model
 				                <div class="media-inner-left">
 				                  <div class="thread-info">'.$this_replier_username.' 
 				                    <span class="thread-date">'.$time_ago_replies.'</span>
-				                    <i class="glyphicon glyphicon-euro pull-right"></i>
+				                    <div class="panel-btn pull-right">
+										<div class="btn-group" role="group" aria-label="...">
+										  <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-euro"></i></button>
+										  <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-euro"></i></button>
+										  <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-euro"></i></button>
+										  <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-euro"></i></button>
+										</div>
+				                    </div>
 				                  </div> 
 				                </br>
 				                <div class="thread-description">

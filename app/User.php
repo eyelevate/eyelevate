@@ -140,4 +140,15 @@ AuthenticatableContract, CanResetPasswordContract
                 'lname'=>'required|alpha|min:2'
              );
         }
+
+    static public function CheckForProfileImage() {
+            $data = 'empty';
+            if (Auth::check()) {
+                $this_user = User::find(Auth::user()->id);
+                $data = Job::imageValidator($this_user->profile_image);
+            } else {
+                $data = Job::imageValidator($data);
+            }
+            return $data;
+        }
 }

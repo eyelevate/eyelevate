@@ -1,0 +1,45 @@
+#myModal {
+  top: 19%;
+  right: 0%;
+  outline: none;
+}
+#myModal .modal-dialog  {width:45%;}
+.modal-header {
+   border-bottom: none; 
+   padding-left: 20px;
+}
+.modal-footer {
+  border-top: none;
+}
+.form-control-login {
+  height: 43px;
+}
+#forgot{
+  color:  rgb(112, 112, 112);
+  float: left;
+  cursor: pointer;
+}
+.modal-footer {
+  margin-top: -20px;
+}
+.login-btn {
+  color: #fff !important;
+  background-color: #428bca !important;
+  border-color: #357ebd !important;
+}
+.modal {
+overflow: hidden;
+}
+
+.a-style {
+color: rgb(112, 112, 112) !important;
+float: left;
+cursor: pointer;
+margin-top: 5px;
+}
+
+#forgot {
+color: rgb(112, 112, 112) !important;
+float: left;
+cursor: pointer;
+}

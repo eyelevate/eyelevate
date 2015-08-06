@@ -205,6 +205,7 @@ request = {
 
 					break;				
 					case 400: // Approved
+					$('#myModal').modal('toggle');
 					break;
 					default:
 					break;

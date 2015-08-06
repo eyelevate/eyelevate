@@ -70,20 +70,13 @@ class ThreadsController extends Controller
     public function getView($id)
     {
         $threads = Thread::find($id);
-
         //ADD TO THE VIEWS
         $views_before = $threads->views;
         $views_after = $views_before + 1;
         $threads->views = $views_after;
         $threads->save();
-
-
         $threads_html = Thread::prepareThreadsAndThreadReply($threads);
-
-        $this_user = User::find(Auth::user()->id);
-        //PROFILE IMAGE
-        $this_user_profile_image = Job::imageValidator($this_user->profile_image);
-
+        $this_user_profile_image = User::CheckForProfileImage();
         return view('threads.view')
             ->with('layout',$this->layout)
             ->with('threads',$threads)
@@ -123,24 +116,23 @@ class ThreadsController extends Controller
     {
         if(Request::ajax()){
             $status = 400;
-            $this_answer = Job::sanitize(Input::get('this_answer'));
-
-            $this_thread = Input::get('this_thread');
-
-            $answer_html = Reply::preparePostedAnswer($this_answer);
-
-            $reply = new Reply;
-            $reply->thread_id = $this_thread;
-            $reply->user_id = Auth::user()->id;
-            $reply->reply = $this_answer;
-            $reply->status = 1;
-            $reply->quote_id = null;
-            $reply->eye_likes = 0;
-            $reply->dont_likes = 0;
-            $reply->flag = 0;
-
-            if ($reply->save()) {
-                $status = 200;
+            $answer_html = 'Not Authorized';
+            if (Auth::check()) {
+                $this_answer = Job::sanitize(Input::get('this_answer'));
+                $this_thread = Input::get('this_thread');
+                $answer_html = Reply::preparePostedAnswer($this_answer);
+                $reply = new Reply;
+                $reply->thread_id = $this_thread;
+                $reply->user_id = Auth::user()->id;
+                $reply->reply = $this_answer;
+                $reply->status = 1;
+                $reply->quote_id = null;
+                $reply->eye_likes = 0;
+                $reply->dont_likes = 0;
+                $reply->flag = 0;
+                if ($reply->save()) {
+                    $status = 200;
+                }
             }
             return Response::json(array(
                 'status' => $status,

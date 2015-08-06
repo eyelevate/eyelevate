@@ -530,6 +530,11 @@ textarea {
   transition: background-color 0.2s ease 0s;
   resize: none;
 }
+
+
+
+
+
 #myModal {
   top: 19%;
   right: 0%;

@@ -1,8 +1,10 @@
 @extends($layout)
 @section('stylesheets')
 {!! Html::style('/assets/css/threads/view.css') !!}
+{!! Html::style('/assets/css/login_modal.css') !!}
 @stop
 @section('scripts')
+<script src="/assets/js/login_modal.js"></script>
 <script src="/assets/js/threads/view.js"></script>
 @stop
 
@@ -96,5 +98,5 @@
 </div>
 
 
-
+{!! View::make('partials.login_modal') !!}
 @stop

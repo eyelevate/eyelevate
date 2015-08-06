@@ -26,14 +26,13 @@ results = {
 		$.ajaxSetup({
 			headers: { 'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content') }
 		});
-
-var popupTemplate='<li class="spam-popup">Report as spam</li>';
-		$('.popbutton').popover({
-		    animation:true, 
-		    content:popupTemplate, 
-		    html:true
-		});
-	},
+	var popupTemplate='<li class="spam-popup">Report as spam</li>';
+			$('.popbutton').popover({
+			    animation:true, 
+			    content:popupTemplate, 
+			    html:true
+			});
+		},
 	modal_stepy: function(){
 		$('.next-btn').click(function(){
 
