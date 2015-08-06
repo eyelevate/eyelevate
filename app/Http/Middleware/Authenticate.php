@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\Guard;
 use Session;
 use URL;
 use Flash;
+use Auth;
 
 class Authenticate
 {
@@ -39,10 +40,9 @@ class Authenticate
      */
     public function handle($request, Closure $next)
     {
-        if ($this->auth->guest()) {
-            Session::flash('redirect', URL::full()); 
+        if (!Auth::check()) {
+             return redirect('/users/login');
         }
-
         return $next($request);
     }
 }

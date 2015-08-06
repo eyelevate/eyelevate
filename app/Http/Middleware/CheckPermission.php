@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use App\Job;
-
+use Auth;
 class CheckPermission
 {
     /**
@@ -18,7 +18,7 @@ class CheckPermission
     {
         if (!app('Illuminate\Contracts\Auth\Guard')->guest()) {
 
-            if ($request->user()->can($permission)) {
+            if ( $request->user()->can($permission)) {
                 
                 return $next($request);
             }

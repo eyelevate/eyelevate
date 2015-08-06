@@ -58,11 +58,9 @@ var popupTemplate='<li class="spam-popup">Report as spam</li>';
 
 						//SEND SEARCH REQUEST TO PHP 
 						request.search_query(search_text);
-
 					};
 
 				} else {
-
 					//THIS IS THE FINAL STEP SHOW SUBMIT BTN
 					if (current_step == 3) {
 						$('#nxt-btn').addClass('hide');
