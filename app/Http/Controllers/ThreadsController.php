@@ -93,10 +93,12 @@ class ThreadsController extends Controller
     public function postSearchQuery()
     {
         if(Request::ajax()){
+            $status = 200;
             $search_query = Input::get('search_text');
             $search_results = Search::search_function($search_query);
-            $status = isset($search_results)?200:400;
-
+            if (empty($search_results)) {
+                $status = 400;
+            }
             return Response::json(array(
                 'status' => $status,
                 'search_results' => $search_results

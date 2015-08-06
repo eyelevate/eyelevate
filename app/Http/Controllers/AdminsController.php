@@ -11,7 +11,7 @@ use Response;
 use Auth;
 use URL;
 use Session;
-use Flash;
+use Laracasts\Flash\Flash;
 use View;
 
 use App\Http\Requests;
@@ -28,8 +28,6 @@ class AdminsController extends Controller
     public function __construct() {
         // Define layout
         $this->layout = 'layouts.admins';
-
-
         $this_username = null;
         //PROFILE IMAGE
         $this_user_profile_image = null;
@@ -67,7 +65,7 @@ class AdminsController extends Controller
         // Session::reflash();
 
         if (Auth::attempt(array('username'=>$username, 'password'=>$password))) {
-            Flash::success('Welcome back '.$username.'!');
+            // Flash::success('Welcome back '.$username.'!');
             return redirect()->action('AdminsController@getIndex');
         } else { //LOGING FAILED
             $this->layout = 'layouts.master-layout';

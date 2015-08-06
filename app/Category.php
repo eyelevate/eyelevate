@@ -38,23 +38,31 @@ class Category extends Model
 		$html = '';
 		$count = 0;
 		if(isset($data)) {
+
+			//ISSUE IS HERE
+			//XXX
+			//WHEN WE SET PAGGINATION NUMBER 
+			//IT ONLY SEARCHES THORUGH FIRS T10 OR 5 DATA FOR SIMMILAR CATEGORIES
+			//WHEREAS IT MUST SEACH THROUGH ALL
 			$threads = Thread::where('status',1)
-			->orderBy($prepare_pre, 'DESC')
-			->get();
+			->orderBy($prepare_pre, 'DESC')->get();
 
 			foreach ($threads as $thkey => $thvalue) {
 				$matching_items = [];
 				$is_match = false;
-				$this_cat = json_decode($thvalue->categories);
-				foreach ($this_cat as $tckey => $tcvalue) {
-					foreach ($data as $dakey => $davalue) {
-						if ($tcvalue == $davalue) {
-							$is_match = true;
-							$matching_items[$count] = $davalue;
-							$count++;
+				if (isset($thvalue->categories)) {
+					$this_cat = json_decode($thvalue->categories);
+					foreach ($this_cat as $tckey => $tcvalue) {
+						foreach ($data as $dakey => $davalue) {
+							if ($tcvalue == $davalue) {
+								$is_match = true;
+								$matching_items[$count] = $davalue;
+								$count++;
+								}
 							}
 						}
-					}
+				}
+
 				if ($is_match == true) {
 					$this_thread = Thread::find($thvalue->id);
 					$users = User::find($this_thread->user_id);
@@ -67,7 +75,7 @@ class Category extends Model
 					$categories_prepared = Thread::prepareCategoriesAfterSearch($categories_j,$matching_items);
 
 					$time_s = date(strtotime($this_thread['created_at']));
-					$time_ago = Thread::humanTiming($time_s);
+					$time_ago = Job::humanTiming($time_s);
 					if ($time_ago == null) {
 						$time_ago = 'just now';
 					} else {
@@ -78,7 +86,7 @@ class Category extends Model
 						        <div class="media">
 						          <div class="media-left">
 						            <a href="#">
-						              <img class="media-object" data-src="holder.js/64x64" alt="64x64" src="assets/images/profile-images/perm/'.$profile_image.'" data-holder-rendered="true" style="width: 64px; height: 64px;">
+						              <img class="media-object" data-src="holder.js/64x64" alt="64x64" src="/assets/images/profile-images/perm/'.$profile_image.'" data-holder-rendered="true" style="width: 64px; height: 64px;">
 						            </a>
 						          </div>
 						          <div class="media-body">
@@ -103,7 +111,7 @@ class Category extends Model
 		} else {
 	        $html = Thread::prepareThreadForView(Thread::Where('status',1)
 	            ->orderBy($prepare_pre, 'DESC')
-	            ->get());
+	            ->paginate(10));
 		}
 		//NO RESULT FOUND
 		if ($html == '') {

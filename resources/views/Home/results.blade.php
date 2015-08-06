@@ -1,10 +1,10 @@
 @extends($layout)
 @section('stylesheets')
-{!! Html::style('assets/css/general.css') !!}
-{!! Html::style('assets/css/home/results.css') !!}
+{!! Html::style('/assets/css/general.css') !!}
+{!! Html::style('/assets/css/home/results.css') !!}
 @stop
 @section('scripts')
-<script src="assets/js/home/results.js"></script>
+<script src="/assets/js/home/results.js"></script>
 @stop
 @section('content')
 <div class="site-wrapper">
@@ -34,6 +34,10 @@
       <div id="thread-group">
         {!! $threads !!}
       </div>
+      <div class="pag pull-right">
+      {!! $prepared_thread_clone->render() !!}
+      </div>
+
     </div>
   </div>
   <!-- LEFT BOX END -->

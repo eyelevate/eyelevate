@@ -52,13 +52,20 @@ class HomeController extends Controller
     {
         $prepared_thread = Thread::prepareThreadForView(Thread::Where('status',1)
             ->orderBy('created_at', 'DESC')
-            ->get());
+            ->paginate(10));
+
+        $prepared_thread_clone = Thread::Where('status',1)
+            ->orderBy('created_at', 'DESC')
+            ->paginate(10);
+
+
         $this->layout = 'layouts.master-layout';
         $categories_for_select = Category::prepareForSelect(Category::where('status',1)->get());
         $categories_for_side = Category::prepareForSide(Category::where('status',1)->get());
         return view('home.results')
             ->with('layout',$this->layout)
             ->with('threads',$prepared_thread)
+            ->with('prepared_thread_clone',$prepared_thread_clone)
             ->with('categories_for_select',$categories_for_select)
             ->with('categories_for_side',$categories_for_side);
     } 

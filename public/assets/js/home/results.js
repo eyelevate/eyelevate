@@ -44,20 +44,8 @@ var popupTemplate='<li class="spam-popup">Report as spam</li>';
 					var search_text = $('#comment_text').val();
 					//CHECK IF THE SEARCH AREA WAS NOT EMPTY
 					if (!$.isBlank(search_text)) {
-
-						var next_step = current_step + 1;
-
-						//DEACTIVE THE PREVIOUS STATE AND HIDE IT
-						_this.attr('state',null);
-						_this.addClass('hide');
-						//SHOW AND ACTIVE THE NEXT STEP
-						$('.step-'+next_step).removeClass('hide').attr('state','active');
-
-						//ADD THE QUERY TO NEXT STEP
-						$('#you-asked').html(search_text);
-
 						//SEND SEARCH REQUEST TO PHP 
-						request.search_query(search_text);
+						request.search_query(search_text, _this, current_step,$(this));
 					};
 
 				} else {
@@ -79,24 +67,13 @@ var popupTemplate='<li class="spam-popup">Report as spam</li>';
 					_this.addClass('hide');
 					//SHOW AND ACTIVE THE NEXT STEP
 					$('.step-'+next_step).removeClass('hide').attr('state','active');
+
+
+					manage_modal_btns($(this),next_step);
 				}
 
 			}
-			//SETTING THE HEADER TITLE
-			switch(next_step){
-				case 2:
-					$(this).parents('.modal:first').find('.modal-title').html('<h4>Is your question unique?</h4>');
-					$('.back-btn').removeClass('hide');
-				break;
-				case 3:
-					$(this).parents('.modal:first').find('.modal-title').html('<h4>Add question details</h4>');
-					$('.back-btn').removeClass('hide');
-				break;
-				case 4:
-					$(this).parents('.modal:first').find('.modal-title').html('<h4>Pick Categories</h4>');
-					$('.back-btn').removeClass('hide');
-				break;
-			}
+			
 		});
 		$('.back-btn').click(function(){
 			var _this = $(this).parents('.modal:first').find('.step[state="active"]');
@@ -106,30 +83,27 @@ var popupTemplate='<li class="spam-popup">Report as spam</li>';
 				if (current_step == 4) {
 					$('#nxt-btn').removeClass('hide');
 					$('#qst-submit').addClass('hide');
+				} else if (current_step == 2) {
+					$(this).addClass('hide');
 				}
-				var next_step = current_step - 1;
+
+				if (current_step == 3) {
+					if ($('#not_unique').val() == "false") {
+						var next_step = current_step - 1;
+					} else {
+						var next_step = current_step - 2;
+					}
+				} else {
+					var next_step = current_step - 1;
+				}
+
 				//DEACTIVE THE PREVIOUS STATE AND HIDE IT
 				_this.attr('state',null);
 				_this.addClass('hide');
 				//SHOW AND ACTIVE THE NEXT STEP
 				$('.step-'+next_step).removeClass('hide').attr('state','active');
 			}
-			//SETTING THE HEADER TITLE
-			switch(next_step){
-				case 1:
-					$(this).parents('.modal:first').find('.modal-title').html('<h4>Your Question</h4>');
-					$('.back-btn').addClass('hide');
-				break;
-				case 2:
-					$(this).parents('.modal:first').find('.modal-title').html('<h4>Is your question unique?</h4>');
-				break;
-				case 3:
-					$(this).parents('.modal:first').find('.modal-title').html('<h4>Add question details</h4>');
-				break;
-				case 4:
-					$(this).parents('.modal:first').find('.modal-title').html('<h4>Pick Categories</h4>');
-				break;
-			}
+
 		});
 
 
@@ -288,7 +262,7 @@ var popupTemplate='<li class="spam-popup">Report as spam</li>';
 	}
 }
 request = {
-	search_query: function(search_text) {
+	search_query: function(search_text, _this, c_step, this_elem) {
 	$('.existing-query').html('');
 	var token = $('meta[name=csrf-token]').attr('content');
 	$.post(
@@ -298,28 +272,38 @@ request = {
 			"search_text":search_text
 		},
 		function(result){
-
+			$('#not_unique').remove();
 			var status = result.status;
 			var search_results = result.search_results;
 			switch(status) {
 				case 200: // Approved
 
+				var next_step = c_step + 1;
+				//DEACTIVE THE PREVIOUS STATE AND HIDE IT
+				_this.attr('state',null);
+				_this.addClass('hide');
+				//SHOW AND ACTIVE THE NEXT STEP
+				$('.step-'+next_step).removeClass('hide').attr('state','active');
+				var search_text = $('#comment_text').val();
+				$('#you-asked').html(search_text);
+
+
+
+				manage_modal_btns(this_elem,next_step);
+
 				var html = '';
-
 				var array_l = Object.keys(search_results).length;
-
-				var counter = 0
-
+				var counter = 0;
 				$.each(search_results, function( key, value ) {
 					if (counter == array_l-1) {
 						html += '<div class="search-single">'+
-				                '<a class="search-single-a" thread-id="'+value["id"]+'"> <span>'+value["description"]+'</span></br>'+
-				                '<span class="search-reply">1 reply</h5></a>'+
+				                '<a class="search-single-a" thread-id="'+value["id"]+'"> <span>'+value["title"]+'</span></br>'+
+				                '<span class="search-reply">'+value["reply"]+' reply</h5></a>'+
 				   		'</div>';
 					} else {
 						html += '<div class="search-single search-single-first">'+
-				                '<a class="search-single-a" thread-id="'+value["id"]+'"> <span>'+value["description"]+'</span></br>'+
-				                '<span class="search-reply">1 reply</h5></a>'+
+				                '<a class="search-single-a" thread-id="'+value["id"]+'"> <span>'+value["title"]+'</span></br>'+
+				                '<span class="search-reply">'+value["reply"]+' reply</h5></a>'+
 				   		'</div>';
 					}
 					counter++;
@@ -331,9 +315,28 @@ request = {
 					window.open('/thread/'+id);
 				});
 
+
+
+				var hidden_form = '<input type="hidden" id="not_unique" value="false">';
+
+				$('body').append(hidden_form);
+
 				break;				
 				case 400: // Approved
-				
+					var next_step = c_step + 2;
+					//DEACTIVE THE PREVIOUS STATE AND HIDE IT
+					_this.attr('state',null);
+					_this.addClass('hide');
+					//SHOW AND ACTIVE THE NEXT STEP
+					$('.step-'+next_step).removeClass('hide').attr('state','active');
+					var search_text = $('#comment_text').val();
+					$('#question-title').html(search_text);
+
+					var hidden_form = '<input type="hidden" id="not_unique" value="true">';
+					$('body').append(hidden_form);
+
+
+					manage_modal_btns(this_elem,next_step);
 				break;
 
 				default:
@@ -449,4 +452,25 @@ function search_selected_group(){
 		//CHECK THE PREFERENCE
 		var preference = $('.active-li').attr('this-pre');
 		request.search_cat(data,preference);
+}
+
+function manage_modal_btns(this_elem, next_step){
+				//SETTING THE HEADER TITLE
+			switch(next_step){
+				case 1:
+					this_elem.parents('.modal:first').find('.modal-title').html('<h4>Your Question</h4>');
+					$('.back-btn').addClass('hide');
+				break;
+				case 2:
+					this_elem.parents('.modal:first').find('.modal-title').html('<h4>Is your question unique?</h4>');
+					$('.back-btn').removeClass('hide');
+				break;
+				case 3:
+					this_elem.parents('.modal:first').find('.modal-title').html('<h4>Add question details</h4>');
+					$('.back-btn').removeClass('hide');
+				break;
+				case 4:
+					this_elem.parents('.modal:first').find('.modal-title').html('<h4>Pick Categories</h4>');
+				break;
+			}
 }

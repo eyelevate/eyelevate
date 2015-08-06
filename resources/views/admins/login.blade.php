@@ -1,6 +1,6 @@
 @extends($layout)
 @section('stylesheets')
-{!! Html::style('assets/css/users/login.css') !!}
+{!! Html::style('assets/css/admins/login.css') !!}
 @stop
 @section('scripts')
 @stop

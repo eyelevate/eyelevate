@@ -31,7 +31,7 @@ class Thread extends Model
 					        <div class="media">
 					          <div class="media-left">
 					            <a href="#">
-					              <img class="media-object" data-src="holder.js/64x64" alt="64x64" src="assets/images/profile-images/perm/'.$profile_image.'" data-holder-rendered="true" style="width: 64px; height: 64px;">
+					              <img class="media-object" data-src="holder.js/64x64" alt="64x64" src="/assets/images/profile-images/perm/'.$profile_image.'" data-holder-rendered="true" style="width: 64px; height: 64px;">
 					            </a>
 					          </div>
 					          <div class="media-body">

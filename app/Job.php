@@ -156,7 +156,7 @@ class Job extends Model
 		$filter_array_p = array(
 			"hello","hi","all","another","any","anybody","anyone","anything","both
 			","each","each other","either everybody","everything
-			","her","hers","herself","him","himself","it","It","its","itself","little
+			","her","with","hers","herself","him","himself","it","It","its","itself","little
 			","many","me","mine","more","most","much","my","myself","neither 
 			","no one","nobody","none","nothing","one","one another 
 			","other","others","our","ours","ourselves","several","she 
