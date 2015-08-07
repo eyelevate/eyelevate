@@ -13,6 +13,12 @@
 .background-color{
 	background-color: #fff;
 }
+#loading-container{
+  position: absolute;
+  left: 32px;
+  top: 16px;
+}
+
 .step3{
     margin-top: 31px;
 }

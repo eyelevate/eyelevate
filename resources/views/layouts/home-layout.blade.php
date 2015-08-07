@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Admin</title>
+  <title>Eyelevate</title>
 
 <link rel="shortcut icon" href="assets/images/gt_favicon.png">
   
@@ -27,7 +27,7 @@
 </head>
 <body class="theme-invert">
   @include('flash::message')
-  <div id="video-wrap">
+  <div id="video-wrap"  class="img-responsive">
   </div>
 
   <div id="overlay">
@@ -46,52 +46,5 @@
 </body>
 </html>
 <style>
-  video#video-bg{
-  position: fixed;
-  min-width: 100%;
-  min-height: 100%;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  top: 0;
-  left: 0;
-  opacity:1;
-  /*SET FOR OLDER BROWSER INCASE THEY COULDNT RENDER VIDEO TAG*/
-}
 
-  #video-wrap{
-  position: fixed;
-  min-width: 100%;
-  min-height: 100%;
-  width: auto;
-  height: auto;
-  background-size:cover;
-  top: 0;
-  left: 0;
-  opacity:1;
-  z-index: 0;
-  /*SET FOR OLDER BROWSER INCASE THEY COULDNT RENDER VIDEO TAG*/
-  background: url(/assets/main-background/frames/frame-1-min.png) no-repeat;
-}
-
-  #overlay{
-  position: fixed;
-  min-width: 100%;
-  min-height: 100%;
-  width: auto;
-  height: auto;
-  background-size:cover;
-  top: 0;
-  left: 0;
-  opacity:0.1;
-  z-index: 0;
-  /*SET FOR OLDER BROWSER INCASE THEY COULDNT RENDER VIDEO TAG*/
-  background: gray;
-}
-  #main-content{
-  z-index: 2;
-}
-body, html{
-  background: black;
-}
 </style>

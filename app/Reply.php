@@ -35,7 +35,7 @@ class Reply extends Model
 		return $html;
 	}
 
-		static public function 	preparePostedAnswer($this_answer) {
+		static public function 	preparePostedAnswer($this_answer,$reply_id,$thread_id) {
 		$html = '';
 		if (isset($this_answer)) {
 			$this_user = User::find(Auth::user()->id);
@@ -44,7 +44,16 @@ class Reply extends Model
 			//PROFILE IMAGE
 			$profile_image = Job::imageValidator($this_user->profile_image);
 
-	        $html .=  '<div class="thread-single">
+	        $html .=  '
+		    <div class="panel-btn-sm pull-right">
+				<div class="btn-group" role="group" aria-label="...">
+				  <button type="button" class="first-btn btn btn-default btn-panel-single show-quote"><i class="fa fa-quote-right"></i></br><span class="inner-val">5</span></button>
+				  <button type="button" class="btn btn-default btn-panel-single eye-like"><i class="fa fa-thumbs-o-up"></i></br><span class="inner-val">2</span></button>
+				  <button type="button" class="btn btn-default btn-panel-single dont-like"><i class="fa fa-thumbs-o-down"></i></br><span class="inner-val">1980</span></button>
+				  <button type="button" class="last-btn btn btn-default btn-panel-single flag-it"><i class="glyphicon glyphicon-flag"></i></br><span class="inner-val">453</span></button>
+				</div>
+            </div>
+	        <div class="thread-single">
 				            <div class="media">
 				              <div class="media-left">
 				                <a href="#">
@@ -55,6 +64,14 @@ class Reply extends Model
 				                <div class="media-inner-left">
 				                  <div class="thread-info">'.$this_username.' 
 				                    <span class="thread-date">Just now</span>
+	                    				<div class="panel-btn-bg pull-right panel-parent" this_reply="'.$reply_id.'" this_thread="'.$thread_id.'">
+											<div class="btn-group" role="group" aria-label="...">
+											  <button type="button" class="btn btn-default btn-panel-single show-quote"><i class="fa fa-quote-right"></i></br><span class="inner-val">0</span></button>
+											  <button type="button" class="btn btn-default btn-panel-single eye-like"><i class="fa fa-thumbs-o-up"></i></br><span class="inner-val">0</span></button>
+											  <button type="button" class="btn btn-default btn-panel-single dont-like"><i class="fa fa-thumbs-o-down"></i></br><span class="inner-val">0</span></button>
+											  <button type="button" class="btn btn-default btn-panel-single flag-it"><i class="glyphicon glyphicon-flag"></i></br><span class="inner-val">0</span></button>
+											</div>
+					                    </div>
 				                  </div> 
 				                </br>
 				                <div class="thread-description">

@@ -92,6 +92,9 @@ Route::controller('threads', 'ThreadsController');
 	Route::post('/threads/retrive-quotes', 'ThreadsController@postRetriveQuotes');
 	Route::post('/threads/post-answer', 'ThreadsController@postPostAnswer');
 	Route::post('/threads/post-quote', 'ThreadsController@postPostQuote');
+	Route::post('/threads/submit-flag', 'ThreadsController@postSubmitFlag');
+	Route::post('/threads/submit-like', 'ThreadsController@postSubmitLike');
+	Route::post('/threads/submit-dislike', 'ThreadsController@postSubmitDislike');
 
 Route::controller('password', 'Auth\PasswordController');
 // Password reset link request routes...

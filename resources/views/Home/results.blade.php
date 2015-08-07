@@ -4,6 +4,7 @@
 {!! Html::style('/assets/css/home/results.css') !!}
 @stop
 @section('scripts')
+<script src="/assets/js/login_modal.js"></script>
 <script src="/assets/js/home/results.js"></script>
 @stop
 @section('content')

@@ -19,6 +19,8 @@ registration = {
 	},
 		file_upload: function(){
 		$('#form-submit-btn').change(function () {
+			$('#loading-icons-1').removeClass('hide');
+
 			event.stopPropagation(); // Stop stuff happening
 		    event.preventDefault(); // Totally stop stuff happening
 
@@ -43,6 +45,7 @@ registration = {
 			        	var status = data.status;
 			        	switch (status){
 			        		case 'success':
+			        			$('#loading-icons-1').addClass('hide');
 			        			var image_name = data.image_name;
 			        			var image_type = data.image_type;
 			        			var html = '/assets/images/profile-images/tmp/'+image_name+'.'+image_type;
