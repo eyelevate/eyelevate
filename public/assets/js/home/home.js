@@ -44,12 +44,6 @@ home = {
 		$('#logout').click(function(){
 			$('#logout-form').submit();
 		});
-		$(document).find('.login-btn').click(function(){
-			$('#login-form').submit();
-		});
-		$('#forgot').click(function(){
-			window.location = '/password-reset';
-		});
 
 	}
 }

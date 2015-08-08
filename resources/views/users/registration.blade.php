@@ -23,6 +23,9 @@
 							<input type="file" id="form-submit-btn" />
 							<span class="button" id="sub-btn">Choose File</span>
 						</span>
+						<div id="loading-container">
+				            <img id="loading-icons-1" height="30px" width="30px" class="hide" src="/assets/images/icons/gif/loading1.gif" alt="">
+				        </div>
 					</div>
 				</div>
 			</div>
@@ -46,8 +49,8 @@
 				<div class="form-single">
 					<select class="form-style col-md-2 age" name="age" id="age">
 						<option >Age</option>
-						<option value="1">Below 18</option>
 						<option value="2">18 or older</option>
+						<option value="1">Below 18</option>
 					</select>
 					<div class="error-wrapper-age">
 						<div class="error-age hide error"></div>

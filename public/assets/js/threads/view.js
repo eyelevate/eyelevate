@@ -72,6 +72,25 @@ results = {
 		$(document).on('click','.reply-btn',function(){
 		
 		});
+
+		//EYE LIKE
+		$(document).on('click','.eye-like',function(){
+			var this_reply = $(this).parents('.panel-parent:first').attr('this_reply');
+			var this_thread = $(this).parents('.panel-parent:first').attr('this_thread');
+			request.submit_like(this_reply,this_thread,$(this));
+		});
+		//DONT LIKE
+		$(document).on('click','.dont-like',function(){
+			var this_reply = $(this).parents('.panel-parent:first').attr('this_reply');
+			var this_thread = $(this).parents('.panel-parent:first').attr('this_thread');
+			request.submit_dislike(this_reply,this_thread,$(this));
+		});
+		//FLAG IT
+		$(document).on('click','.flag-it',function(){
+			var this_reply = $(this).parents('.panel-parent:first').attr('this_reply');
+			var this_thread = $(this).parents('.panel-parent:first').attr('this_thread');
+			request.submit_flag(this_reply,this_thread,$(this));
+		});
 		//POST A REPLY
 		$(document).on('click','#post-answer',function(){
 			var this_text = $('#answer_text').val();
@@ -235,6 +254,86 @@ request = {
 
 					$('#quote-container').append(answer);
 					toogle_this($('#quote-btn'));
+					break;				
+					case 400: // Approved
+					break;
+					default:
+					break;
+				}
+			}
+			);
+	},
+		submit_flag: function(this_reply,this_thread,_this) {
+		var token = $('meta[name=csrf-token]').attr('content');
+		$.post(
+			'/threads/submit-flag',
+			{
+				"_token": token,
+				"this_reply":this_reply,
+				"this_thread":this_thread
+			},
+			function(result){
+				var status = result.status;
+				var total_flag_count = result.total_flag_count;
+
+				_this.find('.inner-val:first').text(total_flag_count);
+
+				switch(status) {
+					case 200: // Approved
+
+					break;				
+					case 400: // Approved
+					break;
+					default:
+					break;
+				}
+			}
+			);
+	},
+		submit_like: function(this_reply,this_thread,_this) {
+		var token = $('meta[name=csrf-token]').attr('content');
+		$.post(
+			'/threads/submit-like',
+			{
+				"_token": token,
+				"this_reply":this_reply,
+				"this_thread":this_thread
+			},
+			function(result){
+				var status = result.status;
+				var total_like_count = result.total_like_count;
+				var prev_dislike = result.prev_dislike;
+				switch(status) {
+					case 200: // Approved
+						_this.find('.inner-val').text(total_like_count);
+						_this.parents('.btn-group').find('.dont-like .inner-val:first').text(prev_dislike);
+					break;				
+					case 400: // Approved
+					break;
+					default:
+					break;
+				}
+			}
+			);
+	},
+		submit_dislike: function(this_reply,this_thread,_this) {
+		var token = $('meta[name=csrf-token]').attr('content');
+		$.post(
+			'/threads/submit-dislike',
+			{
+				"_token": token,
+				"this_reply":this_reply,
+				"this_thread":this_thread
+			},
+			function(result){
+				var status = result.status;
+				var total_dislike_count = result.total_dislike_count;
+				var prev_like = result.prev_like;
+
+				switch(status) {
+					case 200: // Approved
+					_this.find('.inner-val').text(total_dislike_count);
+					_this.parents('.btn-group').find('.eye-like .inner-val:first').text(prev_like);
 					break;				
 					case 400: // Approved
 					break;

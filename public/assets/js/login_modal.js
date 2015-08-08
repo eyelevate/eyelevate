@@ -13,6 +13,16 @@ login_modal = {
 		$(document).find('.login-btn').click(function(){
 			$('#login-form').submit();
 		});
+		$('#forgot').click(function(){
+			window.location = '/password-reset';
+		});
+
+		$('#username, #password').bind('keyup', function(e) {
+		    if (e.which == 13) {
+				$('#login-form').submit();
+		        e.preventDefault();
+		    }
+		});
 	}
 }
 request = {

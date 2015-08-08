@@ -18,7 +18,7 @@ class AddNewColumnsToRepliesTable extends Migration
             $table->unsignedInteger('quote_id', false)->nullable();
             $table->bigInteger('eye_likes');
             $table->bigInteger('dont_likes');
-            $table->tinyInteger('flag');
+            // $table->tinyInteger('flag');
             $table->text('reply')->nullable();
         });
     }

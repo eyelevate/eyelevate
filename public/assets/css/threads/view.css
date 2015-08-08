@@ -12,14 +12,14 @@
     top: 50%;
     left: 47%;
 }
-
+.panel-btn-sm{
+  display: none;
+}
 #add-answer{
   padding:30px;
 }
 .show-quote{
-    position: absolute;
-    right: 0;
-    top: 39px;
+
 }
 /*ADD ANSWER STYLING END*/
 #main-thread{
@@ -164,6 +164,7 @@ color: inherit !important;
     font-size: 14px;
     line-height: 1.5;
     margin-bottom: 15px;
+    margin-top: 30px;
 }
 .thread-single{
   padding-left: 10px;
@@ -177,7 +178,18 @@ color: inherit !important;
 }
 .media-inner-left{
   float: left;
-  width: 90%;
+  width: 99%;
+}
+.inner-val{
+
+}
+.btn-panel-single{
+    width: 55px;
+    padding: 0px 10px!important;
+    border-radius: 0 !important;
+}
+.panel-btn{
+
 }
 .reply-html{
   font-size: 23px;
@@ -376,10 +388,7 @@ width: 90%;
 .sidebar-ind-expand{
  height: 100%;
 }
-@media (max-width: 850px) {
-  .inner {display: none !important;}
-  #zoom[target='true'] {width: 100%;}
-}
+
 
 .right-box{
   /*border:1px solid red;*/
@@ -424,7 +433,6 @@ body,html{
   margin-right: -12px;
   color: rgb(10, 10, 10);
 }
-
 .dash-separator{
   color: #807676;
   margin: 0 8px;
@@ -463,7 +471,6 @@ body,html{
   margin-right: 5px;
   vertical-align: top;
 }
-
 /*TEST*/
 .tip {
   width: 0px;
@@ -472,7 +479,6 @@ body,html{
   background: transparent;
   border: 10px solid #FFF;
 }
-
 .tip-left {
   top: 10px;
   left: -20px;
@@ -480,7 +486,6 @@ body,html{
   border-left-color: transparent;
   border-bottom-color: transparent;
 }
-
 .dialogbox .body {
   position: relative;
   /* max-width: 300px; */
@@ -492,7 +497,6 @@ body,html{
   border-radius: 3px;
   font-size: 16px;
   line-height: 1.6;
-
 }
 .body .message {
   font-size: 16px;
@@ -532,15 +536,12 @@ a{
   color: white;
   border:1px gray solid;
 }
-
 .popover-content {
   padding: 9px 0px;
 }
 .popover{
   padding:0;
-
 }
-
 /*MEDIA*/
 .media-group{
   margin-top: 15px;
@@ -550,22 +551,14 @@ a{
  margin-top: 0; 
 }
 .media-child{
-
 }
 .media-reply{
   padding-top: 10px;
 }
-
 .outer {
  overflow: hidden;
  position: relative;
 }
-
-@media (max-width: 850px) {
-  .inner {display: none !important;}
-}
-
-
 /*DISABLING A TAG DEFAULT*/
 .right-arr:hover{
   text-decoration: none;
@@ -576,9 +569,6 @@ a{
 .right-arr:focus{
   text-decoration: none;
 }
-
-
-
 .message-header{
   font-size: 16px;
   line-height: 1.6;
@@ -603,7 +593,6 @@ color: #576366;
   background-color: rgb(238, 233, 233);
   padding: 3px;
 }
-
 .icon-top{
   top: 83px !important;
   bottom: auto !important;
@@ -625,3 +614,105 @@ textarea{
   margin-right: 10px;
 
 }
+
+
+@media (max-width: 850px) {
+  .inner {display: none !important;}
+  #zoom[target='true'] {width: 100%;}
+  .inner {display: none !important;}
+}
+
+
+/*==================================================
+=            Bootstrap 3 Media Queries             =
+==================================================*/
+
+
+    /*==========  Mobile First Method  ==========*/
+
+    /* Custom, iPhone Retina */ 
+    @media only screen and (min-width : 320px) {
+        
+    }
+
+    /* Extra Small Devices, Phones */ 
+    @media only screen and (min-width : 480px) {
+
+    }
+
+    /* Small Devices, Tablets */
+    @media only screen and (min-width : 768px) {
+
+    }
+
+    /* Medium Devices, Desktops */
+    @media only screen and (min-width : 992px) {
+
+    }
+
+    /* Large Devices, Wide Screens */
+    @media only screen and (min-width : 1200px) {
+
+    }
+
+
+
+    /*==========  Non-Mobile First Method  ==========*/
+
+    /* Large Devices, Wide Screens */
+    @media only screen and (max-width : 1200px) {
+
+    }
+
+    /* Medium Devices, Desktops */
+    @media only screen and (max-width : 992px) {
+
+    }
+
+    /* Small Devices, Tablets */
+    @media only screen and (max-width : 768px) {
+      .panel-btn-bg{
+        display: none;
+      }
+      .panel-btn-sm{
+        display: block;
+        float:left !important;
+        width: 100%;
+      }
+      .btn-group{
+        width: 100%;
+      }
+      .thread-single{
+        margin-top: 30px;
+      }
+      .btn-panel-single {
+        width: 25%;
+        margin-left: 0 !important;
+      }
+      .thread-single {
+          border-bottom: rgba(66, 139, 202, 0.46) solid 6px;
+      }
+      .thread-description {
+          margin-top: 0 !important; 
+        }
+      #main-thread {
+          border-bottom: rgba(66, 139, 202, 0.46) solid 6px;
+      }
+
+      .first-btn{
+        border-left: 0 !important;
+      }
+      .last-btn{
+        border-right: 0 !important;
+      }
+    }
+
+    /* Extra Small Devices, Phones */ 
+    @media only screen and (max-width : 480px) {
+
+    }
+
+    /* Custom, iPhone Retina */ 
+    @media only screen and (max-width : 320px) {
+        
+    }

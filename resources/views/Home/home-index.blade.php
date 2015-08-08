@@ -1,8 +1,10 @@
 @extends($layout)
 @section('stylesheets')
 {!! Html::style('/assets/css/home/index.css') !!}
+{!! Html::style('/assets/css/login_modal.css') !!}
 @stop
 @section('scripts')
+<script src="/assets/js/login_modal.js"></script>
 <script src="/assets/js/home/home.js"></script>
 @stop
 

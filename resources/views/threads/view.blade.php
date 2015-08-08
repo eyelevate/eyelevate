@@ -45,9 +45,7 @@
             </div>
           </div>
           <div id="loading-container">
-            
             <img id="loading-icons-1" height="30px" width="30px" class="hide" src="/assets/images/icons/gif/loading1.gif" alt="">
-
           </div>
             <div id="quote-container">
 

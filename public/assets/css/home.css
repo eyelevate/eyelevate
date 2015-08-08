@@ -1,8 +1,5 @@
 html {
-	/*background:#CE1139; */
-	/*background:#778899;*/
 	background:#F3F3F3;
-	
 	min-height:100%;
 	-webkit-background-size: cover;
 	   -moz-background-size: cover;
@@ -24,6 +21,58 @@ body {
 
 
 /********************************************************/
+/*                        VIDEO                         */
+/********************************************************/
+
+  video#video-bg{
+  position: fixed;
+  min-width: 100%;
+  min-height: 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  top: 0;
+  left: 0;
+  opacity:1;
+  /*SET FOR OLDER BROWSER INCASE THEY COULDNT RENDER VIDEO TAG*/
+}
+
+  #video-wrap{
+ position: fixed;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  background-size:cover;
+  top: 0;
+  left: 0;
+  opacity:1;
+  z-index: 0;
+  /*SET FOR OLDER BROWSER INCASE THEY COULDNT RENDER VIDEO TAG*/
+  background: url(/assets/main-background/frames/frame-1-min.png) no-repeat;
+
+}
+
+  #overlay{
+  position: fixed;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  background-size:cover;
+  top: 0;
+  left: 0;
+  opacity:0.1;
+  z-index: 0;
+  /*SET FOR OLDER BROWSER INCASE THEY COULDNT RENDER VIDEO TAG*/
+  background: gray;
+}
+  #main-content{
+  z-index: 2;
+}
+
+
+/********************************************************/
 /*                    Navigation bar                    */
 /********************************************************/
 #master-navigation{
@@ -34,9 +83,6 @@ body {
 
 
 .mainmenu { z-index: 999999; width:100%;  padding: 30px 0 0 0;}
-@media (min-width: 768px) {
-	.mainmenu { position: fixed; }
-}
 
 .navbar-toggle {
 	position:relative;
@@ -124,9 +170,7 @@ body {
 	display:none;
 	top:0;
 } 
-@media (min-width: 768px) {
-	.section { padding-top:160px;}
-}
+
 
 /* Show one of sections */
 #head { 
@@ -167,52 +211,6 @@ a:hover, a:active { /*color:#fff; text-decoration: underline; */}
 	margin-bottom:75px;
 }
 
-@media (max-width: 767px) {
-	.lead { 
-		font-size:1.3em;
-	}
-}
-
-
-/********************************************************/
-/*                   UI - Buttons                       */
-/********************************************************/
-/*.btn{
-	color:#333;
-	text-shadow: none;
-	text-decoration: none;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-	
-}
-.btn:hover {
-	color:#000;
-}
-.btn-lg { 
-	padding:16px 30px;
-	font-size:inherit;
-}
-
-.btn-link {
-	color:rgba(255,255,255,.8);
-}
-.btn-link:hover, .btn-link:focus, .btn-link:active {
-	color:#fff
-}
-.btn-default {
-	background: rgba(255,255,255,.5);
-}
-.btn-default:hover, .btn-default:focus, .btn-default:active, .btn-default.active {
-	background: rgba(255,255,255,.8);
-}
-.btn-primary {
-	background: rgba(255,255,255,.2);
-}
-.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary:active {
-	background: rgba(255,255,255,.5);
-}
-*/
 
 
 /********************************************************/
@@ -253,34 +251,6 @@ a:hover, a:active { /*color:#fff; text-decoration: underline; */}
 	width:340px; 
 	margin:0 auto;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /***********************************************************/
@@ -374,4 +344,86 @@ a:hover, a:active { /*color:#fff; text-decoration: underline; */}
 }
 
 
+/*==================================================
+=            Bootstrap 3 Media Queries             =
+==================================================*/
 
+
+    /*==========  Mobile First Method  ==========*/
+
+    /* Custom, iPhone Retina */ 
+    @media only screen and (min-width : 320px) {
+        
+    }
+
+    /* Extra Small Devices, Phones */ 
+    @media only screen and (min-width : 480px) {
+
+    }
+
+    /* Small Devices, Tablets */
+    @media only screen and (min-width : 768px) {
+
+    }
+
+    /* Medium Devices, Desktops */
+    @media only screen and (min-width : 992px) {
+
+    }
+
+    /* Large Devices, Wide Screens */
+    @media only screen and (min-width : 1200px) {
+
+    }
+
+
+
+    /*==========  Non-Mobile First Method  ==========*/
+
+    /* Large Devices, Wide Screens */
+    @media only screen and (max-width : 1200px) {
+
+    }
+
+    /* Medium Devices, Desktops */
+    @media only screen and (max-width : 992px) {
+
+    }
+
+    /* Small Devices, Tablets */
+    @media only screen and (max-width : 768px) {
+		.lead { 
+			font-size:1.3em;
+		}
+		.section { padding-top:160px;}
+		.mainmenu { position: fixed; }
+    }
+
+
+    /* Extra Small Devices, Phones */ 
+    @media only screen and (max-width : 480px) {
+		html { 
+		  background: url(/assets/gifs/bulb.gif) no-repeat center center fixed; 
+		  -webkit-background-size: cover;
+		  -moz-background-size: cover;
+		  -o-background-size: cover;
+		  background-size: cover;
+		}
+		#video-wrap{
+			display: none;
+		}
+    }
+
+    /* Custom, iPhone Retina */ 
+    @media only screen and (max-width : 320px) {
+		html { 
+		  background: url(/assets/gifs/bulb.gif) no-repeat center center fixed; 
+		  -webkit-background-size: cover;
+		  -moz-background-size: cover;
+		  -o-background-size: cover;
+		  background-size: cover;
+		}
+		#video-wrap{
+			display: none;
+		}
+    }
