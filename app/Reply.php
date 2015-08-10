@@ -11,23 +11,25 @@ class Reply extends Model
 {
 	static public function PrepareQuotesForView($reply_id) {
 		$html = '';
+
 		if (isset($reply_id)) {
 			$all_quotes = Reply::where('quote_id',$reply_id)->get();
 			foreach ($all_quotes as $aqkey => $aqvalue) {
+				$expend_icon = '';
 				$this_replier = User::find($aqvalue->user_id);
 				$this_replier_username = $this_replier->username;
-
 				$quote_data = strtotime($aqvalue->created_at);
 				$quote_data_formated = date("l, F j, Y, h:i a",$quote_data);
-
+				if (strlen($aqvalue->reply) > 160) {
+					$expend_icon = '<span class="more fa fa-expand"></span>';
+				}
 		        $html .=  '<a  class="list-group-item right-data" expended="0">
 				            <span class="message-header">
 				              <span class="message-sender" id="">'.$this_replier_username.'</span> <span class="quote-details">- '.$quote_data_formated.'</span>
 				            </br></span>
 				            <span class="message-body">
-				              <span class="btn btn-primary view-quote">view</span>
-								'.$aqvalue->reply.'
-				              <span class="more fa fa-expand"></span> 
+								<p>'.$aqvalue->reply.'</p>
+				               	'.$expend_icon.'
 				            </span>
 				          </a>';
 			}
@@ -89,20 +91,26 @@ class Reply extends Model
 
 		static public function 	preparePostedQuote($this_quote) {
 		$html = '';
+		$expend_icon = '';
 		if (isset($this_quote)) {
 			$this_user = User::find(Auth::user()->id);
 			$this_username = $this_user->username;
 
 			$time = date('l, F j, Y, h:i a');
 
+
+			if (strlen($this_quote) > 194) {
+				$expend_icon = '<span class="more fa fa-expand"></span>';
+			}
+
 	        $html .=  '<a  class="list-group-item right-data" expended="0">
 				            <span class="message-header">
 				              <span class="message-sender" id="">'.$this_username.'</span> <span class="quote-details">- '.$time.'</span>
 				            </br></span>
 				            <span class="message-body">
-				              <span class="btn btn-primary view-quote">view</span>
-								'.$this_quote.'
-				              <span class="more fa fa-expand"></span> 
+
+								<p>'.$this_quote.'</p>
+				              	'.$expend_icon.' 
 				            </span>
 				          </a>';
 		}

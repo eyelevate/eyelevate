@@ -39,13 +39,10 @@ class ThreadsController extends Controller
 
         // // THIRD TEMPLATE
         $this->layout = 'layouts.master-layout';
-
         $this->user_id = null;
         if (Auth::check()) {
             $this->user_id =  Auth::user()->id;
         }
-
-   
     }
 
 
@@ -85,11 +82,17 @@ class ThreadsController extends Controller
         $threads->save();
         $threads_html = Thread::prepareThreadsAndThreadReply($threads);
         $this_user_profile_image = User::CheckForProfileImage();
+
+        $thread_user = User::find($threads->user_id);
+        $thread_username = $thread_user->username;
+
+        
         return view('threads.view')
             ->with('layout',$this->layout)
             ->with('threads',$threads)
             ->with('threads_html',$threads_html)
-            ->with('this_user_profile_image',$this_user_profile_image);
+            ->with('this_user_profile_image',$this_user_profile_image)
+            ->with('thread_username',$thread_username);
     }
     public function postSearchQuery()
     {
@@ -157,10 +160,7 @@ class ThreadsController extends Controller
             $this_answer = Job::sanitize(Input::get('this_answer'));
             $this_quote = Input::get('this_quote');
             $this_thread = Input::get('this_thread');
-
-
             $quote_html = Reply::preparePostedQuote($this_answer);
-
             $quote = new Reply;
             $quote->thread_id = $this_thread;
             $quote->user_id = Auth::user()->id;
@@ -190,43 +190,43 @@ class ThreadsController extends Controller
         if(Request::ajax()){
             $status = 400;
             $total_flag_count = null;
-            $this_reply = Input::get('this_reply'); 
-            $this_thread = Input::get('this_thread'); 
-            //IT WAS A REPLY
-            if (isset($this_reply)) {
-                $replys = Reply::find($this_reply);
-                $flagged_user = $replys->user_id;
-            } 
-            //THIS WAS A THREAD
-            else{
-                $threads = Thread::find($this_thread);
-                $flagged_user = $threads->user_id;
-            }
-            //CHECK IF THIS USER HAS FLAGGED THIS REPLY OR THREAD BEFORE
-            $prev_flags = count(Flag::where('reply_id',$this_reply)
-                                    ->where('thread_id',$this_thread)
-                                    ->where('flagger_user_id',$this->user_id)
-                                    ->where('flagged_user_id',$flagged_user)
-                                    ->get());
-            if ($prev_flags == 0) {
-                $flags = new Flag();
-                $flags->reply_id = $this_reply;
-                $flags->thread_id = $this_thread;
-                $flags->flagger_user_id = $this->user_id;
-                $flags->flagged_user_id = $flagged_user;
-                $flags->status = 1;
-                if ($flags->save()) {
-                    $status = 200;
+            if (Auth::check()) {
+                $this_reply = Input::get('this_reply'); 
+                $this_thread = Input::get('this_thread'); 
+                //IT WAS A REPLY
+                if (isset($this_reply)) {
+                    $replys = Reply::find($this_reply);
+                    $flagged_user = $replys->user_id;
+                } 
+                //THIS WAS A THREAD
+                else{
+                    $threads = Thread::find($this_thread);
+                    $flagged_user = $threads->user_id;
                 }
-            } else {
-                $status = 401;
+                //CHECK IF THIS USER HAS FLAGGED THIS REPLY OR THREAD BEFORE
+                $prev_flags = count(Flag::where('reply_id',$this_reply)
+                                        ->where('thread_id',$this_thread)
+                                        ->where('flagger_user_id',$this->user_id)
+                                        ->where('flagged_user_id',$flagged_user)
+                                        ->get());
+                if ($prev_flags == 0) {
+                    $flags = new Flag();
+                    $flags->reply_id = $this_reply;
+                    $flags->thread_id = $this_thread;
+                    $flags->flagger_user_id = $this->user_id;
+                    $flags->flagged_user_id = $flagged_user;
+                    $flags->status = 1;
+                    if ($flags->save()) {
+                        $status = 200;
+                    }
+                } else {
+                    $status = 401;
+                }
+                $total_flag_count = count(Flag::where('reply_id',$this_reply)
+                                ->where('thread_id',$this_thread)
+                                ->where('status',1)
+                                ->get());
             }
-
-            $total_flag_count = count(Flag::where('reply_id',$this_reply)
-                            ->where('thread_id',$this_thread)
-                            ->where('status',1)
-                            ->get());
-
             return Response::json(array(
                 'status' => $status,
                 'total_flag_count' => $total_flag_count
@@ -241,58 +241,60 @@ class ThreadsController extends Controller
             $status = 400;
             $total_like_count = null;
             $prev_dislike = null;
-            $this_reply = Input::get('this_reply'); 
-            $this_thread = Input::get('this_thread'); 
-            //IT WAS A REPLY
-            if (isset($this_reply)) {
-                $replys = Reply::find($this_reply);
-                $liked_user = $replys->user_id;
-            } 
-            //THIS WAS A THREAD
-            else{
-                $threads = Thread::find($this_thread);
-                $liked_user = $threads->user_id;
-            }
-            //CHECK IF THIS USER HAS FLAGGED THIS REPLY OR THREAD BEFORE
-            $prev_likes = count(Like::where('reply_id',$this_reply)
-                                    ->where('thread_id',$this_thread)
-                                    ->where('liker_user_id',$this->user_id)
-                                    ->where('liked_user_id',$liked_user)
-                                    ->get());
-            if ($prev_likes == 0) {
-                $likes = new Like();
-                $likes->reply_id = $this_reply;
-                $likes->thread_id = $this_thread;
-                $likes->liker_user_id = $this->user_id;
-                $likes->liked_user_id = $liked_user;
-                $likes->status = 1;
-                if ($likes->save()) {
-                    $status = 200;
 
 
-                    //CHECK IF DISIKE EXIST DELETE IT
-                    $prev_dislike = Dislike::CountDislike($this_reply,$this_thread,$this->user_id,$liked_user);
-                    if ($prev_dislike > 0) {
-                        $old_dislike = Dislike::where('reply_id',$this_reply)
-                                            ->where('thread_id',$this_thread)
-                                            ->where('disliker_user_id',$this->user_id)
-                                            ->where('disliked_user_id',$liked_user)
-                                            ->first();
-                        $old_dislike->delete();
-                        
-                        $prev_dislike = Dislike::CountDislike($this_reply,$this_thread,$this->user_id,$liked_user);
-                    }
 
-
+            if (Auth::check()) {
+                $this_reply = Input::get('this_reply'); 
+                $this_thread = Input::get('this_thread'); 
+                //IT WAS A REPLY
+                if (isset($this_reply)) {
+                    $replys = Reply::find($this_reply);
+                    $liked_user = $replys->user_id;
+                } 
+                //THIS WAS A THREAD
+                else{
+                    $threads = Thread::find($this_thread);
+                    $liked_user = $threads->user_id;
                 }
-            } else {
-                $status = 401;
-            }
-            $total_like_count = count(Like::where('reply_id',$this_reply)
-                            ->where('thread_id',$this_thread)
-                            ->where('status',1)
-                            ->get());
-
+                //CHECK IF THIS USER HAS FLAGGED THIS REPLY OR THREAD BEFORE
+                $prev_likes = count(Like::where('reply_id',$this_reply)
+                                        ->where('thread_id',$this_thread)
+                                        ->where('liker_user_id',$this->user_id)
+                                        ->where('liked_user_id',$liked_user)
+                                        ->get());
+                if ($prev_likes == 0) {
+                    $likes = new Like();
+                    $likes->reply_id = $this_reply;
+                    $likes->thread_id = $this_thread;
+                    $likes->liker_user_id = $this->user_id;
+                    $likes->liked_user_id = $liked_user;
+                    $likes->status = 1;
+                    if ($likes->save()) {
+                        $status = 200;
+                        //CHECK IF DISIKE EXIST DELETE IT
+                        $prev_dislike = Dislike::CountDislike($this_reply,$this_thread,$this->user_id,$liked_user);
+                        if ($prev_dislike > 0) {
+                            $old_dislike = Dislike::where('reply_id',$this_reply)
+                                                ->where('thread_id',$this_thread)
+                                                ->where('disliker_user_id',$this->user_id)
+                                                ->where('disliked_user_id',$liked_user)
+                                                ->first();
+                            $old_dislike->delete();
+                            $prev_dislike = count(Dislike::where('reply_id',$this_reply)
+                                                ->where('thread_id',$this_thread)
+                                                ->where('disliked_user_id',$liked_user)
+                                                ->first());
+                        }
+                    }
+                } else {
+                    $status = 401;
+                }
+                $total_like_count = count(Like::where('reply_id',$this_reply)
+                                ->where('thread_id',$this_thread)
+                                ->where('status',1)
+                                ->get());
+    }
 
 
             return Response::json(array(
@@ -306,58 +308,62 @@ class ThreadsController extends Controller
     {
         if(Request::ajax()){
             $status = 400;
-            $total_flag_count = null;
+            $total_dislike_count = null;
             $prev_like = null;
-            $this_reply = Input::get('this_reply'); 
-            $this_thread = Input::get('this_thread'); 
-            //IT WAS A REPLY
-            if (isset($this_reply)) {
-                $replys = Reply::find($this_reply);
-                $disliked_user = $replys->user_id;
-            } 
-            //THIS WAS A THREAD
-            else{
-                $threads = Thread::find($this_thread);
-                $disliked_user = $threads->user_id;
-            }
-            //CHECK IF THIS USER HAS FLAGGED THIS REPLY OR THREAD BEFORE
-            $prev_dislike = count(Dislike::where('reply_id',$this_reply)
-                                    ->where('thread_id',$this_thread)
-                                    ->where('disliker_user_id',$this->user_id)
-                                    ->where('disliked_user_id',$disliked_user)
-                                    ->get());
-            if ($prev_dislike == 0) {
-                $flags = new Dislike();
-                $flags->reply_id = $this_reply;
-                $flags->thread_id = $this_thread;
-                $flags->disliker_user_id = $this->user_id;
-                $flags->disliked_user_id = $disliked_user;
-                $flags->status = 1;
-                if ($flags->save()) {
-                    $status = 200;
 
-                    //CHECK IF DISIKE EXIST DELETE IT
-                    $prev_like = Like::Countlike($this_reply,$this_thread,$this->user_id,$disliked_user);
-                    if ($prev_like > 0) {
-                        $old_like = Like::where('reply_id',$this_reply)
-                                            ->where('thread_id',$this_thread)
-                                            ->where('liker_user_id',$this->user_id)
-                                            ->where('liked_user_id',$disliked_user)
-                                            ->first();
-                        $old_like->delete();
-                        
-                        $prev_like = Like::Countlike($this_reply,$this_thread,$this->user_id,$disliked_user);
-                    }
+            if (Auth::check()) {
+                $this_reply = Input::get('this_reply'); 
+                $this_thread = Input::get('this_thread'); 
+                //IT WAS A REPLY
+                if (isset($this_reply)) {
+                    $replys = Reply::find($this_reply);
+                    $disliked_user = $replys->user_id;
+                } 
+                //THIS WAS A THREAD
+                else{
+                    $threads = Thread::find($this_thread);
+                    $disliked_user = $threads->user_id;
                 }
-            } else {
-                $status = 401;
-            }
+                //CHECK IF THIS USER HAS FLAGGED THIS REPLY OR THREAD BEFORE
+                $prev_dislike = count(Dislike::where('reply_id',$this_reply)
+                                        ->where('thread_id',$this_thread)
+                                        ->where('disliker_user_id',$this->user_id)
+                                        ->where('disliked_user_id',$disliked_user)
+                                        ->get());
+                if ($prev_dislike == 0) {
+                    $flags = new Dislike();
+                    $flags->reply_id = $this_reply;
+                    $flags->thread_id = $this_thread;
+                    $flags->disliker_user_id = $this->user_id;
+                    $flags->disliked_user_id = $disliked_user;
+                    $flags->status = 1;
+                    if ($flags->save()) {
+                        $status = 200;
+                        //CHECK IF DISIKE EXIST DELETE IT
+                        $prev_like = Like::Countlike($this_reply,$this_thread,$this->user_id,$disliked_user);
+                        if ($prev_like > 0) {
+                            $old_like = Like::where('reply_id',$this_reply)
+                                                ->where('thread_id',$this_thread)
+                                                ->where('liker_user_id',$this->user_id)
+                                                ->where('liked_user_id',$disliked_user)
+                                                ->first();
+                            $old_like->delete();
+                            
+                            $prev_like = count(Like::where('reply_id',$this_reply)
+                                                ->where('thread_id',$this_thread)
+                                                ->where('liked_user_id',$disliked_user)
+                                                ->first());
+                        }
+                    }
+                } else {
+                    $status = 401;
+                }
 
-            $total_dislike_count = count(Dislike::where('reply_id',$this_reply)
-                            ->where('thread_id',$this_thread)
-                            ->where('status',1)
-                            ->get());
-
+                $total_dislike_count = count(Dislike::where('reply_id',$this_reply)
+                                ->where('thread_id',$this_thread)
+                                ->where('status',1)
+                                ->get());
+    }
             return Response::json(array(
                 'status' => $status,
                 'total_dislike_count' => $total_dislike_count,
