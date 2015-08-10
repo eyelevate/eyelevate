@@ -38,8 +38,7 @@ class RedirectIfAuthenticated
     {
         if ($this->auth->check()) {
             Flash::success('Welcome back!');
-            // return Redirect::home();
-            return redirect('/home');
+
         }
 
         return $next($request);
