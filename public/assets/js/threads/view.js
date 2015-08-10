@@ -10,8 +10,23 @@ results = {
 			headers: { 'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content') }
 		});
 
-	var popupTemplate='<li class="spam-popup">Report as spam</li>';
 
+		/*==================================================
+		=                   MOBILE JQUERY                  =
+		==================================================*/
+		$(document).ready(function(){
+		    $("a").each(function(){
+		          $(this).attr("rel","external");
+		    });
+		}); 
+		// (or presumably as submitted by @Pnct)
+		$.mobile.loading().remove();
+		/*==================================================
+		=                   MOBILE JQUERY                  =
+		==================================================*/
+
+
+	var popupTemplate='<li class="spam-popup">Report as spam</li>';
 	$('.popbutton').popover({
 	    animation:true, 
 	    content:popupTemplate, 
@@ -23,16 +38,17 @@ results = {
 
 		//WANT TO REPLY
 		$('.show-quote').click(function(){
-			//DELETE ALL OTHER REPLY BOXES
-			$(document).find('.reply-media').remove();
-			
+			// //DELETE ALL OTHER REPLY BOXES
+			// $(document).find('.reply-media').remove();
 			var state = parseInt($('#left-top-container').attr('state'));
-
 			if (state == 0) {//CLOSE
-				var _this_reply = parseInt($(this).attr('this_reply'));
+				var quoted_username = $(this).parents('.thread-single').find('.quoter-username').text();
+				$('#replace-quoter-name').text(' '+quoted_username);
+				var _this_reply = parseInt($(this).parents('.panel-parent').attr('this_reply'));
 				right_box_expende(_this_reply);
 			} else {
-				right_box_compress();
+				// right_box_compress();
+				// close_quote_textarea();
 			}
 		});
 
@@ -48,7 +64,7 @@ results = {
 			toogle_this($(this));
 		});
 		$('.quote-cancel').click(function(){
-			toogle_this($('#quote-btn'));
+			toogle_this($('.quote-btnn'));
 		});
 		//REPLY CANCEL BTN WAS CLICKED
 		$(document).on('click','.left-btn',function(){
@@ -100,20 +116,27 @@ results = {
 
 		//quote-quote
 		$(document).on('click','#quote-reply-btn',function(){
+			//GET TEXT
 			var this_text = $('#quote_text').val();
-			var this_quote = $(this).attr('this-reply');
-			var this_thread = $(this).attr('this-thread'); 
+			//GET QUOTE
+			var this_reply = $(this).parents('.inner').attr('this-reply');
+			// GET THREAD
+			var this_thread = $(this).parents('.inner').attr('this-thread'); 
+			if (true) {
 
-			request.post_quote(this_text,this_quote,this_thread);
+			};
+			if (!$.isBlank(this_text)) {
+				request.post_quote(this_text,this_reply,this_thread);
+			}
 		});
 
 		//MORE CLICKED
-		$('.more').click(function(){
-			
+		$(document).on('click','.more',function(){
 			var current_height = parseInt($(this).parents('.right-data:first').css('height'));
 			var expended = parseInt($(this).parents('.right-data:first').attr('expended'));
 			// EXPENDED 0 = CLOSE, 1 = OPEN
 			if (expended == 0) {
+
 				//CHANGE THE EXPENDED TO OPEN
 				$(this).parents('.right-data:first').attr('expended','1');
 				$(this).parents('.right-data:first').css('height','100%');
@@ -124,6 +147,7 @@ results = {
 				//BRING THE GLYPHICON TO BOTTOM
 				$(this).removeClass('icon-top').addClass('icon-bottom');
 			} else {
+
 				// CHANGE THE EXPENDED TO CLOSE
 				$(this).parents('.right-data:first').attr('expended','0');
 				$(this).parents('.right-data:first').css('height','105px');
@@ -136,15 +160,20 @@ results = {
 			}
 		});
 
-	// $('a #left-top-container').click(function(e)
-	// {
-	// 	alert();
-	//     // e.preventDefault();
-	// });
+		/*==================================================
+		=                   MOBILE SWIPE                   =
+		==================================================*/
+		$(document).on('swipeleft','.swipeable-both',function(){
+			right_box_open();
+			// close_quote_textarea();
+		});
+		$(document).on('swiperight','.swipeable-both',function(){
+			right_box_close();
+		});
+
+
 		//FLAG WAS CLICKED
 		$('.flags').click(function(){
-			
-
 			//MOUSE OVER POPUP MESSAGE
 		    $(document).find( ".popover" ).mouseout(function() {
 		    	var i = false;
@@ -180,8 +209,6 @@ request = {
 	var token = $('meta[name=csrf-token]').attr('content');
 	$('#loading-icons-1').removeClass('hide');
 	$('#quote-container').html('');
-
-	$('#quote-reply-btn').attr('this-reply',_this_reply);
 	$.post(
 		'/threads/retrive-quotes',
 		{
@@ -219,8 +246,9 @@ request = {
 				var answer = result.answer_html;
 				switch(status) {
 					case 200: // Approved
-
 					$('#thread-group').append(answer);
+					//CLEAROUT TEXTAREA
+					$('textarea#answer_text').val('');
 
 					break;				
 					case 400: // Approved
@@ -246,14 +274,14 @@ request = {
 				var status = result.status;
 				var answer = result.quote_html;
 				var total_quote = result.quote_count;
+				close_quote_textarea();
 				switch(status) {
 					case 200: // Approved
-
-	
-					$('.show-quote[this_reply='+this_reply+']').html('Quoted '+total_quote+' times');
-
-					$('#quote-container').append(answer);
-					toogle_this($('#quote-btn'));
+						$('.show-quote[this_reply='+this_reply+']').html('Quoted '+total_quote+' times');
+						$('#quote-container').append(answer);
+						toogle_this($('#quote-btn'));
+						//EMPTY THE TESTAREA
+						$('textarea#quote_text').val('');
 					break;				
 					case 400: // Approved
 					break;
@@ -274,15 +302,13 @@ request = {
 			},
 			function(result){
 				var status = result.status;
-				var total_flag_count = result.total_flag_count;
-
-				_this.find('.inner-val:first').text(total_flag_count);
-
 				switch(status) {
 					case 200: // Approved
-
+						var total_flag_count = result.total_flag_count;
+						_this.find('.inner-val:first').text(total_flag_count);
 					break;				
 					case 400: // Approved
+						$('#myModal').modal('toggle');
 					break;
 					default:
 					break;
@@ -301,14 +327,16 @@ request = {
 			},
 			function(result){
 				var status = result.status;
-				var total_like_count = result.total_like_count;
-				var prev_dislike = result.prev_dislike;
+
 				switch(status) {
 					case 200: // Approved
+						var total_like_count = result.total_like_count;
+						var prev_dislike = result.prev_dislike;
 						_this.find('.inner-val').text(total_like_count);
 						_this.parents('.btn-group').find('.dont-like .inner-val:first').text(prev_dislike);
 					break;				
 					case 400: // Approved
+						$('#myModal').modal('toggle');				
 					break;
 					default:
 					break;
@@ -327,15 +355,17 @@ request = {
 			},
 			function(result){
 				var status = result.status;
-				var total_dislike_count = result.total_dislike_count;
-				var prev_like = result.prev_like;
+
 
 				switch(status) {
 					case 200: // Approved
-					_this.find('.inner-val').text(total_dislike_count);
-					_this.parents('.btn-group').find('.eye-like .inner-val:first').text(prev_like);
+						var total_dislike_count = result.total_dislike_count;
+						var prev_like = result.prev_like;
+						_this.find('.inner-val').text(total_dislike_count);
+						_this.parents('.btn-group').find('.eye-like .inner-val:first').text(prev_like);
 					break;				
 					case 400: // Approved
+						$('#myModal').modal('toggle');
 					break;
 					default:
 					break;
@@ -349,6 +379,8 @@ function right_box_expende(_this_reply){
 	$('#left-top-container').attr('state','1');
 	$('#zoom').attr('target','true');
 	$('#new-left-box').addClass('right-box-expand');
+
+	$('.inner').attr('this-reply',_this_reply);
 } 
 
 function right_box_compress(){
@@ -357,6 +389,18 @@ function right_box_compress(){
 	$('#new-left-box').removeClass('right-box-expand');
 }
 
+//SIMILAR TO EXPENDE AND COMPRESS BUT NO AJAX JUST OPEN AND CLOSE
+function right_box_close(_this_reply){
+	$('#left-top-container').attr('state','1');
+	$('#zoom').attr('target','true');
+	$('#new-left-box').addClass('right-box-expand');
+} 
+
+function right_box_open(){
+	$('#left-top-container').attr('state','0');
+	$('#zoom').attr('target','false');
+	$('#new-left-box').removeClass('right-box-expand');
+}
 
 
 function toogle_this(_this){
@@ -371,4 +415,14 @@ function toogle_this(_this){
 			$('.quote-btnn').attr('state',0);
 		break;
 	}
+}
+
+function close_quote_textarea(){
+	$('#quote-textarea').addClass('hide');
+	$('.quote-btnn').attr('state',0);
 } 
+(function($){
+  $.isBlank = function(obj){
+    return(!obj || $.trim(obj) === "");
+  };
+})(jQuery);

@@ -1,3 +1,12 @@
+html{
+  overflow: hidden;
+}
+
+
+div#thread-group {
+      overflow: scroll !important;
+    height: 600px !important;
+}
 /*ADD ANSWER STYLING*/
 #add-answer-title{
   font-size: 22px;
@@ -6,17 +15,20 @@
   text-align: center;
 
 }
-
+span.message-body {
+    word-wrap: break-word;
+}
 #loading-icons-1{
-      position: absolute;
-    top: 50%;
-    left: 47%;
+  position: absolute;
+  top: 50%;
+  left: 47%;
 }
 .panel-btn-sm{
   display: none;
 }
-#add-answer{
-  padding:30px;
+#add-answer {
+    padding: 30px;
+    margin-bottom: 10px;
 }
 .show-quote{
 
@@ -38,9 +50,9 @@ padding: 8px 0px 0px 9px;
 height: 45px;
 width:12%;
 /*background-color: yellow;*/
-float: left;
+float: right;
 border: 1px solid #D7D6D6;
-border-top-left-radius: 4px 
+border-top-right-radius: 4px 
 }
 #quote-x{
 
@@ -56,14 +68,16 @@ border-top-left-radius: 4px
 #quote-text-wrapp:hover{
   background-color: #2E679A;
 }
-
+.top-bar.input-group {
+  width: 100%;
+}
 #top-left-sidee{
 height: 45px;
-width: 88%;
+width: 100%;
+
 /*background-color: red;*/
-float: right;
-border: 1px solid #D7D6D6;
-border-top-right-radius: 4px;
+float: left;
+border-top-left-radius: 4px;
 padding-right: 0; 
 padding-left: 0;
 }
@@ -241,7 +255,7 @@ a{
 }
 .right-arr{
   font-size: 33px;
-  z-index: 100;
+  z-index: 10;
   color: rgba(46, 46, 46, 0.84);
   cursor: pointer;
 }
@@ -304,7 +318,9 @@ width: 90%;
 .list-group-item{
   overflow: hidden;
 }
-
+.list-group.list-group-container {
+  margin-bottom: 100px;
+}
 .list-group-item:first-child {
   border-top-right-radius: 0px;
   border-top-left-radius: 0px;
@@ -312,8 +328,6 @@ width: 90%;
 /*LEFT BOX STYLING END*/
 #right-box-inner{
   width: 100%;
-  height: 100%;
-  min-height: 650px;
   /* border:1px solid yellow;*/
   background-color:#fff;
   box-shadow: 0 1px 2px rgba(0,0,0,.1);
@@ -323,6 +337,7 @@ width: 90%;
   margin-bottom: 20px;
   padding-left: 0;
   padding-right: 0;
+  height: 579px;
 }
 #right-box{
   /*border:1px solid red;*/
@@ -331,30 +346,35 @@ width: 90%;
   padding-bottom: 20px;
 }
 
+
+
+
+
+
+
+
+
+
 .inner {
   padding-right: 0;
   margin-top: 65px !important;
   width: 35%;
   position: fixed;
   min-height: 700px;
-    left: -35%;
+  left: -35%;
   top: 0;
-  overflow-y: auto;
-  -webkit-transition: right 1s;
-  -moz-transition: right 1s;
-  -o-transition: right 1s;
-  transition:  right 1s;
-   -webkit-transition: left 1s;
- -moz-transition: left 1s;
- -o-transition: left 1s;
- transition:  left 1s;
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  transition:  all 1s ease;
 }
 
 #zoom[target='false'] {
  margin-top: 65px !important;
   float: right;
  width: 100%;
- -webkit-transition: width 1s;
+ right:0;
+  -webkit-transition: width 1s;
  -moz-transition: width 1s;
  -o-transition: width 1s;
  transition: width 1s;
@@ -366,16 +386,35 @@ width: 90%;
  float: right;
  width: 65%;
  margin-left: 0;
- -webkit-transition: width 1s;
+  -webkit-transition: width 1s;
  -moz-transition: width 1s;
  -o-transition: width 1s;
  transition: width 1s;
- 1
+}
+.right-box-expand {
+display: block;
+ left: 0;
+}
+#swipe-left{
+  display: none;
 }
 
-.right-box-expand {
- left: 0 !important;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*SIDE MESSAGES*/
 .right-data{
  height: 105px;
@@ -415,8 +454,9 @@ body,html{
   height: 55px;
   border-bottom: 1px solid gray;
 }
-#tread-side-group{
-  overflow: hidden;
+
+div#tread-side-group {
+    margin-bottom: 110px;
 }
 
 .container-fluid {
@@ -616,13 +656,6 @@ textarea{
 }
 
 
-@media (max-width: 850px) {
-  .inner {display: none !important;}
-  #zoom[target='true'] {width: 100%;}
-  .inner {display: none !important;}
-}
-
-
 /*==================================================
 =            Bootstrap 3 Media Queries             =
 ==================================================*/
@@ -705,6 +738,64 @@ textarea{
       .last-btn{
         border-right: 0 !important;
       }
+
+      #zoom[target='false'] {
+       margin-top: 65px !important;
+        float: right;
+       width: 100% !important;
+       right:0 !important;
+       -webkit-transition: right 1s;
+       -moz-transition: right 1s;
+       -o-transition: right 1s;
+       transition: right 1s;
+      }
+      /* Compliance = IE8+, Firefox 2+, Safari, Chrome, Opera 10+ */
+      #zoom[target='true'] {
+        margin-top: 65px !important;
+       float: right;
+       width: inherit !important;
+       margin-left: 0;
+       right:-90% !important;
+       -webkit-transition: right 1s;
+       -moz-transition: right 1s;
+       -o-transition: right 1s;
+       transition: right 1s;
+      }
+
+      .inner{
+        padding: 0;
+        padding-right: 0;
+        margin-top: 65px !important;
+        width: 90% !important;
+        position: fixed;
+        min-height: 700px;
+        left: -90% !important;
+        top: 0;
+        -webkit-transition: left 1s;
+        -moz-transition: left 1s;
+        -o-transition: left 1s;
+        transition:  left 1s;
+      }
+      .right-box-expand {
+         padding: 0;
+         display: block;
+          width: 90% !important;
+          left: 0% !important;
+      }
+      .right-box{
+        padding: 0;
+      }
+      #zoom[target='true']  #swipe-left{
+        display: block;
+        height: 100%;
+        position: absolute;
+        z-index: 10;
+        width: 10%;
+      }
+      #add-answer {
+          margin-bottom: 100px;
+      }
+
     }
 
     /* Extra Small Devices, Phones */ 
