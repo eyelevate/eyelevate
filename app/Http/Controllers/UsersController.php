@@ -118,45 +118,41 @@ class UsersController extends Controller
         }
 
     }
-public function getLogin()
-{
-    return view('users.login')
-    ->with('layout',$this->layout);
-}
-public function postLogin()
-{
-    $username = Input::get('username');
-    $password = Input::get('password');
-
-    $direct_login = Input::get('direct-login');
-
-    if (Auth::attempt(array('username'=>$username, 'password'=>$password))) {
-        Flash::success('Welcome back '.$username.'!');
-        $redirect = (Session::get('redirect')) ? Session::get('redirect') : null; 
-        
-        if(isset($redirect)) {
-            return Redirect::to(Session::get('redirect'));
-        } else {
-            //SESION DOESN'T EXIST
-            return redirect()->action('HomeController@postIndex');
-        }
-    } else { //LOGING FAILED
-        if (isset($direct_login)) {
-            return view('users.login')
-            ->with('layout',$this->layout)
-            ->with('wrong',true);
-        } else {
-            $reset_success = false;
-            $username = null;
-            return view('home.home-index')
-                ->with('layout','layouts.home-layout')
-                ->with('username',$username)
-                ->with('reset_success',$reset_success)
-                ->with('login_failed',true);  
-        }
-
+    public function getLogin()
+    {
+        return view('users.login')
+        ->with('layout',$this->layout);
     }
-}
+    public function postLogin()
+    {
+        $username = Input::get('username');
+        $password = Input::get('password');
+
+        $direct_login = Input::get('direct-login');
+
+        if (Auth::attempt(array('username'=>$username, 'password'=>$password))) {
+            Flash::success('Welcome back '.$username.'!');
+            $redirect = (Session::get('redirect')) ? Session::get('redirect') : null; 
+            
+            if(isset($redirect)) {
+                return Redirect::to(Session::get('redirect'));
+            } else {
+                //SESION DOESN'T EXIST
+                return redirect()->action('HomeController@postIndex');
+            }
+        } else { //LOGING FAILED
+            if (isset($direct_login)) {
+                return view('users.login')
+                    ->with('layout',$this->layout)
+                    ->with('wrong',1);
+            } else {
+                return view('users.login')
+                    ->with('layout',$this->layout)
+                    ->with('wrong',1); 
+            }
+
+        }
+    }   
     public function getLogout()
     {
         Auth::logout();

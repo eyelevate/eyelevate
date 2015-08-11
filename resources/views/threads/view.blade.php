@@ -6,8 +6,6 @@
 @section('scripts')
 <script src="/assets/js/login_modal.js"></script>
 <script src="/assets/js/threads/view.js"></script>
-<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
-
 @stop
 
 @section('content')

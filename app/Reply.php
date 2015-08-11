@@ -47,15 +47,15 @@ class Reply extends Model
 			$profile_image = Job::imageValidator($this_user->profile_image);
 
 	        $html .=  '
-		    <div class="panel-btn-sm pull-right">
-				<div class="btn-group" role="group" aria-label="...">
-				  <button type="button" class="first-btn btn btn-default btn-panel-single show-quote"><i class="fa fa-quote-right"></i></br><span class="inner-val">5</span></button>
-				  <button type="button" class="btn btn-default btn-panel-single eye-like"><i class="fa fa-thumbs-o-up"></i></br><span class="inner-val">2</span></button>
-				  <button type="button" class="btn btn-default btn-panel-single dont-like"><i class="fa fa-thumbs-o-down"></i></br><span class="inner-val">1980</span></button>
-				  <button type="button" class="last-btn btn btn-default btn-panel-single flag-it"><i class="glyphicon glyphicon-flag"></i></br><span class="inner-val">453</span></button>
-				</div>
-            </div>
-	        <div class="thread-single">
+					    <div class="panel-btn-sm pull-right panel-parent reply-sm-'.$reply_id.'">
+							<div class="btn-group" role="group" aria-label="...">
+							  <button type="button" class="first-btn btn btn-default btn-panel-single show-quote"><i class="fa fa-quote-right"></i></br><span class="inner-val">0</span></button>
+							  <button type="button" class="btn btn-default btn-panel-single eye-like"><i class="fa fa-thumbs-o-up"></i></br><span class="inner-val">0</span></button>
+							  <button type="button" class="btn btn-default btn-panel-single dont-like"><i class="fa fa-thumbs-o-down"></i></br><span class="inner-val">0</span></button>
+							  <button type="button" class="last-btn btn btn-default btn-panel-single flag-it"><i class="glyphicon glyphicon-flag"></i></br><span class="inner-val">0</span></button>
+							</div>
+			            </div>
+				        <div class="thread-single">
 				            <div class="media">
 				              <div class="media-left">
 				                <a href="#">
@@ -66,7 +66,7 @@ class Reply extends Model
 				                <div class="media-inner-left">
 				                  <div class="thread-info">'.$this_username.' 
 				                    <span class="thread-date">Just now</span>
-	                    				<div class="panel-btn-bg pull-right panel-parent" this_reply="'.$reply_id.'" this_thread="'.$thread_id.'">
+	                    				<div class="panel-btn-bg pull-right panel-parent reply-sm-'.$arvalue->id.'" this_reply="'.$reply_id.'" this_thread="'.$thread_id.'">
 											<div class="btn-group" role="group" aria-label="...">
 											  <button type="button" class="btn btn-default btn-panel-single show-quote"><i class="fa fa-quote-right"></i></br><span class="inner-val">0</span></button>
 											  <button type="button" class="btn btn-default btn-panel-single eye-like"><i class="fa fa-thumbs-o-up"></i></br><span class="inner-val">0</span></button>
@@ -85,7 +85,7 @@ class Reply extends Model
 				              </div>
 				            </div>
 				          </div>';
-		}
+									}
 		return $html;
 	}
 

@@ -38,7 +38,7 @@
       <div id="thread-group">
         {!! $threads !!}
       </div>
-      <div class="pag pull-right">
+      <div class="page pull-right">
       {!! $prepared_thread_clone->render() !!}
       </div>
 

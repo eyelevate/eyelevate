@@ -29,10 +29,6 @@
 					<li><a class="active" id="login">Login</a></li>
 					<li><a class="active" href="/registration">Sign Up</a></li>
 				 @endif
-
-				<li><a>About Us</a></li>
-				<li><a>Themes</a></li>
-				<li><a>Get in touch</a></li>
 			</ul>
 		</div>
 	</div>

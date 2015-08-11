@@ -122,8 +122,8 @@ request_a = {
 				                '<span class="search-reply">'+value["reply"]+' reply</h5></a>'+
 				   		'</div>';
 					} else {
-						html += '<div class="search-single search-single-first">'+
-				                '<a class="search-single-a" thread-id="'+value["id"]+'"> <span>'+value["title"]+'</span></br>'+
+						html += '<div  class="search-single search-single-first">'+
+				                '<a  class="search-single-a" thread-id="'+value["id"]+'"> <span>'+value["title"]+'</span></br>'+
 				                '<span class="search-reply">'+value["reply"]+' reply</h5></a>'+
 				   		'</div>';
 					}
@@ -132,7 +132,8 @@ request_a = {
 				$('.existing-query').html(html); 
 				$('.search-single-a').click(function(){
 					var id = $(this).attr('thread-id');
-					window.open('/thread/'+id);
+					window.open('/threads/view/'+id);
+					e.preventDefault();
 				});
 				var hidden_form = '<input type="hidden" id="not_unique" value="false">';
 				$('body').append(hidden_form);

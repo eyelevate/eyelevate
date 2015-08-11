@@ -9,23 +9,6 @@ results = {
 		$.ajaxSetup({
 			headers: { 'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content') }
 		});
-
-
-		/*==================================================
-		=                   MOBILE JQUERY                  =
-		==================================================*/
-		$(document).ready(function(){
-		    $("a").each(function(){
-		          $(this).attr("rel","external");
-		    });
-		}); 
-		// (or presumably as submitted by @Pnct)
-		$.mobile.loading().remove();
-		/*==================================================
-		=                   MOBILE JQUERY                  =
-		==================================================*/
-
-
 	var popupTemplate='<li class="spam-popup">Report as spam</li>';
 	$('.popbutton').popover({
 	    animation:true, 
@@ -41,14 +24,14 @@ results = {
 			// //DELETE ALL OTHER REPLY BOXES
 			// $(document).find('.reply-media').remove();
 			var state = parseInt($('#left-top-container').attr('state'));
+			var _this_reply = parseInt($(this).parents('.panel-parent').attr('this_reply'));
 			if (state == 0) {//CLOSE
-				var quoted_username = $(this).parents('.thread-single').find('.quoter-username').text();
-				$('#replace-quoter-name').text(' '+quoted_username);
-				var _this_reply = parseInt($(this).parents('.panel-parent').attr('this_reply'));
 				right_box_expende(_this_reply);
 			} else {
-				// right_box_compress();
-				// close_quote_textarea();
+				//SIDE BAR IS ALREAEDY OPEN FILLED THE NEW DATA
+				var _this_reply = parseInt($(this).parents('.panel-parent').attr('this_reply'));
+				right_box_renew(_this_reply);
+
 			}
 		});
 
@@ -122,9 +105,6 @@ results = {
 			var this_reply = $(this).parents('.inner').attr('this-reply');
 			// GET THREAD
 			var this_thread = $(this).parents('.inner').attr('this-thread'); 
-			if (true) {
-
-			};
 			if (!$.isBlank(this_text)) {
 				request.post_quote(this_text,this_reply,this_thread);
 			}
@@ -163,13 +143,25 @@ results = {
 		/*==================================================
 		=                   MOBILE SWIPE                   =
 		==================================================*/
-		$(document).on('swipeleft','.swipeable-both',function(){
-			right_box_open();
-			// close_quote_textarea();
+		$(function() {
+			$("html").swipe( {
+				swipeStatus:function(event, phase, direction, distance, duration, fingers, fingerData) {
+
+ 			  	switch(direction){
+			  		case "left":
+			  			right_box_open();
+			  		break;
+			  		case "right":
+			  			right_box_close();
+			  		break;
+			  	}
+			  },
+			  allowPageScroll:"vertical",
+			  threshold:0,
+			  fingers:1
+			});
 		});
-		$(document).on('swiperight','.swipeable-both',function(){
-			right_box_close();
-		});
+
 
 
 		//FLAG WAS CLICKED
@@ -218,7 +210,17 @@ request = {
 		function(result){
 			var status = result.status;
 			var html = result.quotes_html;
+			var reply_username = result.reply_username;
+			var isself = result.isself;
 			$('#loading-icons-1').addClass('hide');
+
+			if (isself == true) {
+				$('#quote-text').text('Responde');
+				$('#replace-quoter-name').text('');		
+			} else {
+				$('#quote-text').text('Quote');
+				$('#replace-quoter-name').text(' '+reply_username);
+			}
 
 			switch(status) {
 				case 200: // Approved
@@ -246,7 +248,7 @@ request = {
 				var answer = result.answer_html;
 				switch(status) {
 					case 200: // Approved
-					$('#thread-group').append(answer);
+					$(answer).insertBefore( "#add-answer" )
 					//CLEAROUT TEXTAREA
 					$('textarea#answer_text').val('');
 
@@ -275,10 +277,12 @@ request = {
 				var answer = result.quote_html;
 				var total_quote = result.quote_count;
 				close_quote_textarea();
+				$(document).find('.reply-bg-'+this_reply+ ' .show-quote .inner-val').text(total_quote);
+				$(document).find('.reply-sm-'+this_reply+ ' .show-quote .inner-val').text(total_quote);
 				switch(status) {
 					case 200: // Approved
-						$('.show-quote[this_reply='+this_reply+']').html('Quoted '+total_quote+' times');
 						$('#quote-container').append(answer);
+						
 						toogle_this($('#quote-btn'));
 						//EMPTY THE TESTAREA
 						$('textarea#quote_text').val('');
@@ -379,10 +383,12 @@ function right_box_expende(_this_reply){
 	$('#left-top-container').attr('state','1');
 	$('#zoom').attr('target','true');
 	$('#new-left-box').addClass('right-box-expand');
-
 	$('.inner').attr('this-reply',_this_reply);
 } 
-
+function right_box_renew(_this_reply){
+	request.retrive_quotes(_this_reply);
+	$('.inner').attr('this-reply',_this_reply);
+} 
 function right_box_compress(){
 	$('#left-top-container').attr('state','0');
 	$('#zoom').attr('target','false');

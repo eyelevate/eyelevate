@@ -115,10 +115,22 @@ class ThreadsController extends Controller
         if(Request::ajax()){
             $status = 200;
             $reply_id = Input::get('this_reply');
+            $replies = Reply::find($reply_id);
+            $isself = false;
+
+            $this_replier = User::find($replies->user_id);
+            $reply_username = $this_replier->username;
             $quotes_html = Reply::PrepareQuotesForView($reply_id);
+
+            if (Auth::user()->id == $replies->user_id) {
+                $isself = true;
+            }
+
             return Response::json(array(
                 'status' => $status,
-                'quotes_html' => $quotes_html
+                'quotes_html' => $quotes_html,
+                'reply_username' => $reply_username,
+                'isself' => $isself
             ));
         }
     }
@@ -138,9 +150,6 @@ class ThreadsController extends Controller
                 $reply->reply = $this_answer;
                 $reply->status = 1;
                 $reply->quote_id = null;
-                $reply->eye_likes = 0;
-                $reply->dont_likes = 0;
-                $reply->flag = 0;
                 if ($reply->save()) {
                     $answer_html = Reply::preparePostedAnswer($this_answer,$reply->id,$this_thread);
                     $status = 200;
@@ -167,11 +176,9 @@ class ThreadsController extends Controller
             $quote->reply = $this_answer;
             $quote->status = 1;
             $quote->quote_id = $this_quote;
-            $quote->eye_likes = 0;
-            $quote->dont_likes = 0;
-            $quote->flag = 0;
 
             if ($quote->save()) {
+                
                 $status = 200;
             }
 

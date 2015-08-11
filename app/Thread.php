@@ -137,6 +137,11 @@ class Thread extends Model
 			//PROFILE IMAGE
 			$profile_image = Job::imageValidator($this_user->profile_image);
 
+			//FLAGS COUNT
+			$main_flag_count = count(Flag::where('reply_id',null)
+						->where('thread_id',$threads->id)
+						->get());
+
 			//PREPARING THE MAIN THREADS
 			$html .= '<div class="thread-single" id="main-thread">
 				            <div class="media">
@@ -149,6 +154,12 @@ class Thread extends Model
 				                <div class="media-inner-left">
 				                  <div class="thread-info"> <span class="quoter-username">'.$this_main_username.'</span>
 				                    <span class="thread-date">'.$time_ago_main.'</span>
+
+		                    			<div class="panel-btn-bg pull-right panel-parent" this_reply="0" this_thread="'.$threads->id.'">
+											<div class="btn-group" role="group" aria-label="...">
+											  <button type="button" class="btn btn-default btn-panel-single flag-it"><i class="glyphicon glyphicon-flag"></i></br><span class="inner-val">'.$main_flag_count.'</span></button>
+											</div>
+					                    </div>
 
 				                  </div> 
 				                  <h4 ><a href="/threads/view/'.$threads->id.'">'.$threads->title.'</a></h4>
@@ -187,13 +198,13 @@ class Thread extends Model
 											->where('thread_id',$threads->id)
 											->get());
 
-				//FLAGS LIKES
+				// LIKES
 				$like_count = count(Like::where('reply_id',$arvalue->id)
 											->where('thread_id',$threads->id)
 											->get());
 
 
-				//FLAGS DISLIKES
+				// DISLIKES
 				$dislike_count = count(Dislike::where('reply_id',$arvalue->id)
 											->where('thread_id',$threads->id)
 											->get());
@@ -201,7 +212,7 @@ class Thread extends Model
 
 				//PREPARE ALL REPLIES
 				$html .= '
-								    <div class="panel-btn-sm pull-right panel-parent" this_reply="'.$arvalue->id.'" this_thread="'.$threads->id.'">
+								    <div class="panel-btn-sm pull-right panel-parent reply-sm-'.$arvalue->id.'" this_reply="'.$arvalue->id.'" this_thread="'.$threads->id.'">
 										<div class="btn-group" role="group" aria-label="...">
 										  <button type="button" class="first-btn btn btn-default btn-panel-single show-quote"><i class="fa fa-quote-right"></i></br><span class="inner-val">'.$quote_count.'</span></button>
 										  <button type="button" class="btn btn-default btn-panel-single eye-like"><i class="fa fa-thumbs-o-up"></i></br><span class="inner-val">'.$like_count.'</span></button>
@@ -220,8 +231,8 @@ class Thread extends Model
 							                <div class="media-inner-left">
 							                  <div class="thread-info"><span class="quoter-username">'.$this_replier_username.' </span>
 							                    <span class="thread-date">'.$time_ago_replies.'</span>
-							                    <div class="panel-btn-bg pull-right panel-parent" this_reply="'.$arvalue->id.'" this_thread="'.$threads->id.'">
-													<div class="btn-group" role="group" aria-label="...">
+							                    <div class="panel-btn-bg pull-right panel-parent reply-bg-'.$arvalue->id.'"  this_reply="'.$arvalue->id.'" this_thread="'.$threads->id.'">
+													<div class="btn-group  role="group" aria-label="...">
 													  <button type="button" class="btn btn-default btn-panel-single show-quote"><i class="fa fa-quote-right"></i></br><span class="inner-val">'.$quote_count.'</span></button>
 													  <button type="button" class="btn btn-default btn-panel-single eye-like"><i class="fa fa-thumbs-o-up"></i></br><span class="inner-val">'.$like_count.'</span></button>
 													  <button type="button" class="btn btn-default btn-panel-single dont-like"><i class="fa fa-thumbs-o-down"></i></br><span class="inner-val">'.$dislike_count.'</span></button>

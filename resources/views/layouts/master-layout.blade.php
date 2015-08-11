@@ -100,7 +100,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="/packages/Magister3/assets/js/modernizr.custom.72241.js"></script>
     <!-- Custom template scripts -->
-    <script src="/packages/Magister3/assets/js/magister.js"></script>
+    <script src="/packages/touchswipe1_6/jquery.touchSwipe.min.js"></script>
+    <script src="/packages/smart_scroll/smart_scroll.js"></script>
 
     @yield('scripts')
 

@@ -3,7 +3,7 @@
 {!! Html::style('assets/css/users/login.css') !!}
 @stop
 @section('scripts')
-<script src="/assets/js/users/login.js"></script>
+
 @stop
 
 @section('content')
@@ -20,6 +20,8 @@
       		    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       		    <strong>Warning!</strong> You are not authorized to view this page. Please Login.
       		  </div>
+
+           
       @elseif(isset($wrong))
             <div class="alert alert-danger alert-dismissible" role="alert" style="margin-top:100px">
               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>

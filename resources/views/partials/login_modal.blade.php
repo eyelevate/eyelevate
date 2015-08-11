@@ -1,5 +1,5 @@
 <div class="modal fade" id="myModal">
-	{!! Form::open(array('action' => 'UsersController@postLogin', 'class'=>'','role'=>"form",'id'=>'login-form')) !!}
+	{!! Form::open(array('action' => 'UsersController@postLogin', 'class'=>'','role'=>"form",'id'=>'login-form-1')) !!}
 	  <div class="modal-dialog">
 	    <div class="modal-content">
 	      <div class="modal-header">
@@ -20,7 +20,7 @@
 	        </br>
 	        	<a href="/registration" class="a-style">Sign up</a>
 	        </div>
-	        <button type="button" class="btn btn-primary pull-right login-btn">Login</button>
+	        <button type="button" id="login-btn-1" class="btn btn-primary pull-right login-btn">Login</button>
 	      </div>
 	    </div><!-- /.modal-content -->
 	  </div><!-- /.modal-dialog -->

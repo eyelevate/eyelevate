@@ -1,7 +1,6 @@
 $(document).ready(function(){
 	login_modal.pageLoad();
 	login_modal.events();
-
 });
 login_modal = {
 	pageLoad: function() {
@@ -10,8 +9,9 @@ login_modal = {
 		});
 	},
 	events: function() {
-		$(document).find('.login-btn').click(function(){
-			$('#login-form').submit();
+		$(document).find('#login-btn-1').click(function(){
+			$('#myModal').modal('toggle');
+			$('#login-form-1').submit();
 		});
 		$('#forgot').click(function(){
 			window.location = '/password-reset';

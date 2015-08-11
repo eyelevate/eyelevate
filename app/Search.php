@@ -15,7 +15,6 @@ class Search extends Model
    			if ($similar_queries_count > 0) {
    				$similar_query = Thread::where('description','LIKE','%'.$search_str.'%')->first();
    				$tier_1_result_id = $similar_query->id;
-
    				$results_1 = Thread::find($tier_1_result_id);
    				$final_product_tier1 = [];
    				$final_product_tier1[$results_1->id]["id"]=$results_1->id;
@@ -136,10 +135,13 @@ class Search extends Model
 	   		foreach ($merge as $mekey => $mevalue) {
 	   			$merge_sorted[$mevalue['reply']]['title'] = $mevalue['title'];
 	   			$merge_sorted[$mevalue['reply']]['reply'] = $mevalue['reply'];
+	   			$merge_sorted[$mevalue['reply']]['id'] = $mevalue['id'];
 	   		}
    		}
 
    		krsort($merge_sorted);
+
+
 		return $merge_sorted;
 	}
 }
