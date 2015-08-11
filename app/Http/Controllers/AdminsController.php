@@ -49,13 +49,12 @@ class AdminsController extends Controller
 
     public function getLogin()
     {
-        if (Auth::check()) {
-            return view('admins.index')
-            ->with('layout',$this->layout);
+        if (Auth::check()) { //If admin is already logged in. Have router check users acl permission and redirect them back
+            return redirect()->action('AdminsController@getIndex');
         }
         $this->layout = 'layouts.master-layout';
         return view('admins.login')
-        ->with('layout',$this->layout);
+            ->with('layout',$this->layout);
     }
 
     public function PostLogin()
@@ -77,9 +76,12 @@ class AdminsController extends Controller
 
     public function getLogout()
     {
-        Auth::logout();
-        Session::reflash(); // Keep for inteded pages backfall. This helps users get back to the intended page if session expire
-        return Redirect::action('HomeController@getIndex');
+        if(Auth::logout()){
+            Session::reflash(); // Keep for inteded pages backfall. This helps users get back to the intended page if session expire
+            return Redirect::action('AdminsController@getLogin');
+        }
+        
+        
     }
 
     //ROLES

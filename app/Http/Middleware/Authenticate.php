@@ -40,9 +40,9 @@ class Authenticate
      */
     public function handle($request, Closure $next)
     {
-        if (!Auth::check()) {
-             return redirect('/users/login');
-        }
+        // if (!Auth::check()) {
+        //      return redirect('/users/login');
+        // }
         return $next($request);
     }
 }
