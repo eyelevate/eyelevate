@@ -429,9 +429,6 @@ a{
 .ask-header{
   padding:0;
 }
-.back-btn{
-  width: 15%;
-}
 .alert-dark-1{
   background: #D8D8D8;
   padding: 16px 10px 15px 10px;
@@ -453,9 +450,6 @@ a{
     color: #8d9aa5;
     /* border-color: rgb(235, 234, 234); */
     border: none;
-}
-.next-btn{
-  width: 15%;
 }
 .padding-categories{
   padding-left: 15px !important;
@@ -900,12 +894,7 @@ textarea:focus {
   .label{
     border-radius: 0;
   }
-  .next-btn{
-  width: 49%;
-  }
-  .back-btn{
-   width: 49%;
-  }
+ 
   .right-modal-inner-3 {
   height: 100px;
   }

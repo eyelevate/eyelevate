@@ -1,7 +1,7 @@
 <div class="modal fade" id="ask_modal">
   {!! Form::open(array('action' => 'ThreadsController@postAdd', 'class'=>'','role'=>"form",'id'=>'question_add')) !!}
   <div class="modal-dialog ask-dialog">
-    <div class="modal-content" style="padding: 20px;">
+    <div class="modal-content question-modal-content">
       <div class="modal-header ask-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title">Your Question</h4>
@@ -42,7 +42,6 @@
             name="question[title]" id="question-title"
             class="ui-autocomplete-input textarea-title" autocomplete="off" role="textbox"
             aria-autocomplete="list" aria-haspopup="true"></textarea>
-
             <textarea placeholder="Description of your question"
             name="question[description]" id="question-description" cols="40"
             class="ui-autocomplete-input textarea-description" autocomplete="off" role="textbox"
@@ -63,7 +62,6 @@
           </div>
         </div>
         <!-- STEP 3 END -->
-
         <!-- STEP 4 -->
         <div class="step-4 step hide" step="4">
           <div class="form-group padding-categories">
@@ -78,16 +76,14 @@
           <span id="duplicate-error" class="hide">Category has been selected!</span>
           <div class="cat-wrapper col-md-12"> 
             <h3 id="h3-wrapper">
-
             </h3>
           </div>
         </div>
         <!-- STEP 4 END -->
-
       </div>
       <div class="modal-footer clearfix ask-footer">
-        <button type="button" class="btn btn-default pull-left back-btn hide">Back</button>
-        <button type="button" id="nxt-btn" class="btn btn-primary pull-right next-btn">Next</button>
+        <button type="button" id="question-modal-back-btn" class="btn btn-default pull-left back-btn hide">Back</button>
+        <button type="button" id="nxt-btn" class="btn btn-primary pull-right next-btn qst-modal">Next</button>
         <button type="button" id="qst-submit" class="btn btn-primary pull-right next-btn hide">Submit</button>
       </div>
     </div><!-- /.modal-content -->

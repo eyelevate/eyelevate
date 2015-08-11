@@ -1,0 +1,97 @@
+button.qst-modal#nxt-btn {
+    margin-top: 30px;
+}
+button#question-modal-back-btn {
+    margin-top: 30px;
+}
+
+
+.question-modal-content {
+    display: block;
+    padding: 20px;
+    margin-right: 15px;
+}
+.next-btn{
+width: 29%;
+}
+.back-btn{
+width: 47%;
+}
+
+
+
+
+
+
+
+/*==================================================
+=            Bootstrap 3 Media Queries             =
+==================================================*/
+
+
+    /*==========  Mobile First Method  ==========*/
+
+    /* Custom, iPhone Retina */ 
+    @media only screen and (min-width : 320px) {
+        
+    }
+
+    /* Extra Small Devices, Phones */ 
+    @media only screen and (min-width : 480px) {
+
+    }
+
+    /* Small Devices, Tablets */
+    @media only screen and (min-width : 768px) {
+
+    }
+
+    /* Medium Devices, Desktops */
+    @media only screen and (min-width : 992px) {
+
+    }
+
+    /* Large Devices, Wide Screens */
+    @media only screen and (min-width : 1200px) {
+
+    }
+
+
+
+    /*==========  Non-Mobile First Method  ==========*/
+
+    /* Large Devices, Wide Screens */
+    @media only screen and (max-width : 1200px) {
+
+    }
+
+    /* Medium Devices, Desktops */
+    @media only screen and (max-width : 992px) {
+
+    }
+
+    /* Small Devices, Tablets */
+    @media only screen and (max-width : 768px) {
+        button.qst-modal#nxt-btn {
+            margin-top: 0;
+        }
+        button#question-modal-back-btn {
+            margin-top: 0;
+        }
+         .next-btn{
+          width: 47% !important;
+          }
+          .back-btn{
+           width: 47%;
+          }
+    }
+
+    /* Extra Small Devices, Phones */ 
+    @media only screen and (max-width : 480px) {
+
+    }
+
+    /* Custom, iPhone Retina */ 
+    @media only screen and (max-width : 320px) {
+        
+    }

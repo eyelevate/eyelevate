@@ -20,7 +20,7 @@
 					</a>
 					<div class="file-container"> 
 						<span class="file-wrapper">
-							<input type="file" id="form-submit-btn" />
+							<input type="file" id="form-submit-btn" accept="image/*"/>
 							<span class="button" id="sub-btn">Choose File</span>
 						</span>
 						<div id="loading-container">
