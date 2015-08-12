@@ -132,10 +132,12 @@ class UsersController extends Controller
 
         if (Auth::attempt(array('username'=>$username, 'password'=>$password))) {
             Flash::success('Welcome back '.$username.'!');
-            $redirect = (Session::get('redirect')) ? Session::get('redirect') : null; 
+            $redirect = (Session::get('redirect_flash')) ? '/'.Session::get('redirect_flash') : null; 
             
             if(isset($redirect)) {
-                return Redirect::to('/');
+
+                return Redirect::to($redirect);
+
             } else {
                 //SESION DOESN'T EXIST
                 return redirect()->action('HomeController@postIndex');

@@ -41,7 +41,8 @@ class AdminsController extends Controller
             View::share('this_user_profile_image',$this_user_profile_image);
 
     }
-      public function getIndex()
+    
+    public function getIndex()
     {
         return view('admins.index')
         ->with('layout',$this->layout);
@@ -82,125 +83,6 @@ class AdminsController extends Controller
         }
         
         
-    }
-
-    //ROLES
-       public function getAddRoles()
-    {   
-        return view('admins.add_roles')
-        ->with('layout',$this->layout);
-    }
-        public function postAddRoles()
-    {
-            $validator = Validator::make(Input::all(), Admin::$add_roles);
-            if ($validator->passes()) {
-            	$title = Input::get('role-title');
-            	$slug = Input::get('role-slug');
-
-            	$roles = new Role;
-            	$roles->role_title = $title;
-            	$roles->role_slug = $slug;
-
-            	if ($roles->save()) {
-			        return view('admins.add_roles')
-			        ->with('layout',$this->layout)
-			        ->with('message_feedback','Successfully Added');
-            	}
-	        }
-	        else {
-	            // validation has failed, display error messages    
-	            return Redirect::back()
-	                ->with('message', 'The following errors occurred')
-	                ->with('alert_type','alert-danger')
-	                ->withErrors($validator)
-	                ->withInput();  
-	        } 
-    }
-
-    //PERMISSIONS
-
-    public function getAddPermission()
-    {           
-        Route::get('routes', array('uses'=>'RoutesController@routes'));
-        $all_routes = Permission::PrepareAllRouteForSelect();
-        return view('admins.add_permission')
-        ->with('layout',$this->layout)
-        ->with('all_routes',$all_routes);
-    }
-        public function postAddPermission()
-    {   
-
-	    $validator = Validator::make(Input::all(), Admin::$add_permission);
-        if ($validator->passes()) {
-        	$title = Input::get('permission-title');
-        	$slug = Input::get('permission-slug');
-        	$description = Input::get('permission-description');
-
-        	$permissions = new Permission;
-        	$permissions->permission_title = $title;
-        	$permissions->permission_slug = $slug;
-        	$permissions->permission_description = $description;
-
-        	if ($permissions->save()) {
-                $all_routes = Permission::PrepareAllRouteForSelect();
-                return view('admins.add_permission')
-                ->with('layout',$this->layout)
-                ->with('all_routes',$all_routes)
-                ->with('message_feedback','Successfully Added');
-        	}
-        }
-        else {
-            // validation has failed, display error messages    
-            return Redirect::back()
-                ->with('message', 'The following errors occurred')
-                ->with('alert_type','alert-danger')
-                ->withErrors($validator)
-                ->withInput();  
-        } 
-    }
-
-        public function getAddPermissionRole()
-    {   
-        $permissions = Permission::PerpareAllForSelect();
-        $roles = Role::PerpareAllForSelect();
-        return view('admins.add_permission_role')
-        ->with('layout',$this->layout)
-        ->with('permissions',$permissions)
-        ->with('roles',$roles);
-               
-    }
-
-
-    //PERMISISON ROLE
-    public function postAddPermissionRole()
-    {
-        $validator = Validator::make(Input::all(), Admin::$add_permission_role);
-        if ($validator->passes()) {
-            $permission = Input::get('permission_id');
-            $role = Input::get('role_id');
-
-            $permission_role = new PermissionRole;
-            $permission_role->permission_id = $permission;
-            $permission_role->role_id = $role;
-
-            if ($permission_role->save()) {
-                $permissions = Permission::PerpareAllForSelect();
-                $roles = Role::PerpareAllForSelect();
-                return view('admins.add_permission_role')
-                ->with('layout',$this->layout)
-                ->with('permissions',$permissions)
-                ->with('roles',$roles)
-                ->with('message_feedback','Successfully Added');
-            }
-        }
-        else {
-            // validation has failed, display error messages    
-            return Redirect::back()
-                ->with('message', 'The following errors occurred')
-                ->with('alert_type','alert-danger')
-                ->withErrors($validator)
-                ->withInput();  
-        } 
     }
 
     public function getViewAcl()
