@@ -76,25 +76,25 @@
                             <ul class="nav side-menu">
                                 <li class="li-menus"><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu" style="display: none">
-                                        <li><a href="/admins">Dashboard</a>
+                                        <li><a href="{!! route('admins_index') !!}">Dashboard</a>
                                         </li>
                                     </ul>
                                 </li>
                                 <li class="li-menus"><a><i class="fa fa-edit"></i> Access Control List <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu" style="display: none">
-                                        <li><a href="/admins/acl/view">View</a>
+                                        <li><a href="{!! route('acl_view') !!}">View</a>
                                         </li>
                                     </ul>
                                 </li>
                                 <li class="li-menus"><a><i class="fa fa-edit"></i> Thread Setting<span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu" style="display: none">
-                                        <li><a href="/admins/category/view">Category</a>
+                                        <li><a href="{!! route('category_view') !!}">Category</a>
                                         </li>
                                     </ul>
                                 </li>
                             </ul>
                         </div>
-                        <div class="menu_section">
+<!--                         <div class="menu_section">
                             <h3>Live On</h3>
                             <ul class="nav side-menu">
                                 <li><a><i class="fa fa-bug"></i> Additional Pages <span class="fa fa-chevron-down"></span></a>
@@ -129,7 +129,7 @@
                                 <li><a><i class="fa fa-laptop"></i> Landing Page <span class="label label-success pull-right">Coming Soon</span></a>
                                 </li>
                             </ul>
-                        </div>
+                        </div> -->
 
                     </div>
                     <!-- /sidebar menu -->

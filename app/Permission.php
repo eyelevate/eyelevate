@@ -43,6 +43,7 @@ class Permission extends Model
 
 
     public static function PrepareAllRouteForSelect() {
+        $created_permissions = Permission::all();  
         $name = Route::getRoutes();
         $routeCollection = Route::getRoutes();
         $controller_names = [];
@@ -68,7 +69,17 @@ class Permission extends Model
         $permissions_r = array(''=>'Select Permission');
         if(isset($new_controller_names)) {
             foreach ($new_controller_names as $key => $value) {
-                $permissions_r[$value] = $value; 
+                $check_slug = false;
+                foreach ($created_permissions as $cp) { // Check to see if the slug matches anything from db
+                    if($cp->permission_slug == $value) {
+                        $check_slug = true;
+                        break;
+                    }
+                }   
+                if($check_slug == false) { // Only add in the new row if there is not a match
+                    $permissions_r[$value] = $value; 
+                }
+                
             }
         }
         return $permissions_r;
