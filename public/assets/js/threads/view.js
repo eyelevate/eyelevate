@@ -67,6 +67,25 @@ results = {
 		$(document).on('click','.spam-popup',function(){
 
 		});
+		//THREAD ICON CLICKED
+		$(document).on('click','.setting-icon',function(){
+			$('#thread_setting').modal('toggle');
+		});
+		//THREAD ICON CLICKED
+		$(document).on('click','#notify_me_checkbox',function(){
+			var notify_me_condition = null;
+			var this_thread = $('#post-answer').attr('this-thread');
+			if (document.getElementById("notify_me_checkbox").checked) { 
+				notify_me_condition = 1;
+
+			} else {
+				notify_me_condition = 0;
+			}
+
+			request.thread_setting(notify_me_condition,this_thread);
+		});
+
+
 		//Reply FLAG CLICKED
 		$(document).on('click','.reply-btn',function(){
 		
@@ -197,6 +216,27 @@ results = {
 	}
 }
 request = {
+	thread_setting: function(notify_me_condition,this_thread) {
+		var token = $('meta[name=csrf-token]').attr('content');
+		$.post(
+			'/threads/set-setting',
+			{
+				"_token": token,
+				"notify_me_condition":notify_me_condition,
+				"this_thread":this_thread
+			},
+			function(result){
+				switch(status) {
+					case 200: // Approved
+					break;				
+					case 400: // Approved
+					break;
+					default:
+					break;
+				}
+			}
+			);
+	},
 	retrive_quotes: function(_this_reply) {
 	var token = $('meta[name=csrf-token]').attr('content');
 	$('#loading-icons-1').removeClass('hide');
@@ -248,13 +288,39 @@ request = {
 				var answer = result.answer_html;
 				switch(status) {
 					case 200: // Approved
-					$(answer).insertBefore( "#add-answer" )
-					//CLEAROUT TEXTAREA
-					$('textarea#answer_text').val('');
+						$(answer).insertBefore( "#add-answer" )
+						//CLEAROUT TEXTAREA
+						$('textarea#answer_text').val('');
 
+						var notify_me = result.notify_me;
+						if (notify_me['notify_me'] == 1) {
+							request.answer_notification(notify_me['user_id'],this_thread);
+						};
 					break;				
 					case 400: // Approved
 					$('#myModal').modal('toggle');
+					break;
+					default:
+					break;
+				}
+			}
+			);
+	},
+		answer_notification: function(user_id,this_thread) {
+		var token = $('meta[name=csrf-token]').attr('content');
+		$.post(
+			'/threads/answer-notification',
+			{
+				"_token": token,
+				"user_id":user_id,
+				"thread_id":this_thread
+			},
+			function(result){
+				var status = result.status;
+				switch(status) {
+					case 200: // Approved
+					break;				
+					case 400: // Approved
 					break;
 					default:
 					break;
@@ -276,18 +342,19 @@ request = {
 				var status = result.status;
 				var answer = result.quote_html;
 				var total_quote = result.quote_count;
-				close_quote_textarea();
-				$(document).find('.reply-bg-'+this_reply+ ' .show-quote .inner-val').text(total_quote);
-				$(document).find('.reply-sm-'+this_reply+ ' .show-quote .inner-val').text(total_quote);
+
 				switch(status) {
 					case 200: // Approved
+						close_quote_textarea();
+						$(document).find('.reply-bg-'+this_reply+ ' .show-quote .inner-val').text(total_quote);
+						$(document).find('.reply-sm-'+this_reply+ ' .show-quote .inner-val').text(total_quote);
 						$('#quote-container').append(answer);
-						
 						toogle_this($('#quote-btn'));
 						//EMPTY THE TESTAREA
 						$('textarea#quote_text').val('');
 					break;				
 					case 400: // Approved
+						$('#myModal').modal('toggle');
 					break;
 					default:
 					break;

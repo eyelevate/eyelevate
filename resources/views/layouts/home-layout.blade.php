@@ -13,7 +13,7 @@
   <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 
   <!-- Custom styles -->
- <link rel="stylesheet" href="/assets/css/home.css">
+ <link rel="stylesheet" href="/assets/css/layouts/home.css">
 
   <!-- Fonts -->
   <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">

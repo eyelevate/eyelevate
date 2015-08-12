@@ -11,7 +11,6 @@ class Reply extends Model
 {
 	static public function PrepareQuotesForView($reply_id) {
 		$html = '';
-
 		if (isset($reply_id)) {
 			$all_quotes = Reply::where('quote_id',$reply_id)->get();
 			foreach ($all_quotes as $aqkey => $aqvalue) {
@@ -66,7 +65,7 @@ class Reply extends Model
 				                <div class="media-inner-left">
 				                  <div class="thread-info">'.$this_username.' 
 				                    <span class="thread-date">Just now</span>
-	                    				<div class="panel-btn-bg pull-right panel-parent reply-sm-'.$arvalue->id.'" this_reply="'.$reply_id.'" this_thread="'.$thread_id.'">
+	                    				<div class="panel-btn-bg pull-right panel-parent reply-sm-'.$reply_id.'" this_reply="'.$reply_id.'" this_thread="'.$thread_id.'">
 											<div class="btn-group" role="group" aria-label="...">
 											  <button type="button" class="btn btn-default btn-panel-single show-quote"><i class="fa fa-quote-right"></i></br><span class="inner-val">0</span></button>
 											  <button type="button" class="btn btn-default btn-panel-single eye-like"><i class="fa fa-thumbs-o-up"></i></br><span class="inner-val">0</span></button>

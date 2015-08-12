@@ -16,11 +16,11 @@
 	      </div>
 	      <div class="modal-footer clearfix">
 	      	<div id="forgot-wrapper pull-left">
-	        	<a id="forgot"> I forgot my password</a>
+	        	<a href="/password-reset" id="forgot"> I forgot my password</a>
 	        </br>
 	        	<a href="/registration" class="a-style">Sign up</a>
 	        </div>
-	        <button type="button" id="login-btn-1" class="btn btn-primary pull-right login-btn">Login</button>
+	        <button type="submit" id="login-btn-1" class="btn btn-primary pull-right login-btn">Login</button>
 	      </div>
 	    </div><!-- /.modal-content -->
 	  </div><!-- /.modal-dialog -->

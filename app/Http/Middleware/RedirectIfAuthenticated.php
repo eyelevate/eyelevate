@@ -38,9 +38,7 @@ class RedirectIfAuthenticated
     {
         if ($this->auth->check()) {
             Flash::success('Welcome back!');
-
         }
-
         return $next($request);
     }
 }

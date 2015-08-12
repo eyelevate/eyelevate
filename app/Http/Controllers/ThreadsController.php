@@ -12,6 +12,7 @@ use Response;
 use Auth;
 use Session;
 use Flash;
+use Mail;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -110,6 +111,26 @@ class ThreadsController extends Controller
         }
     }
 
+    public function postSetSetting()
+    {
+        if(Request::ajax()){
+            $status = 400;
+            $notify_me_condition = Input::get('notify_me_condition');
+            $this_thread = Input::get('this_thread');
+            if (isset($notify_me_condition,$this_thread)) {
+                $threads = Thread::find($this_thread);
+                if (Auth::user()->id == $threads->user_id) {
+                    $threads->notify_me = $notify_me_condition;
+                    if ($threads->save()) {
+                        $status = 200;
+                    }
+                }
+            }
+            return Response::json(array(
+                'status' => $status
+            ));
+        }
+    }
     public function postRetriveQuotes()
     {
         if(Request::ajax()){
@@ -122,9 +143,12 @@ class ThreadsController extends Controller
             $reply_username = $this_replier->username;
             $quotes_html = Reply::PrepareQuotesForView($reply_id);
 
-            if (Auth::user()->id == $replies->user_id) {
-                $isself = true;
+            if (Auth::check()) {
+                if (Auth::user()->id == $replies->user_id) {
+                    $isself = true;
+                }
             }
+
 
             return Response::json(array(
                 'status' => $status,
@@ -139,6 +163,8 @@ class ThreadsController extends Controller
     {
         if(Request::ajax()){
             $status = 400;
+            $notify_me = array('notify_me' => 0, 'user_id'=>0);
+
             $answer_html = 'Not Authorized';
             if (Auth::check()) {
                 $this_answer = Job::sanitize(Input::get('this_answer'));
@@ -153,36 +179,70 @@ class ThreadsController extends Controller
                 if ($reply->save()) {
                     $answer_html = Reply::preparePostedAnswer($this_answer,$reply->id,$this_thread);
                     $status = 200;
+                    //CHECK FOR NOTIFICATION STATUS AND EMAIL IF NEEDED
+                    $threads = Thread::find($this_thread);
+                    $notify_me["notify_me"] = $threads->notify_me;
+                    if ($threads->notify_me == 1) {
+                         $notify_me["user_id"] = $threads->user_id;
+                    }
                 }
             }
             return Response::json(array(
                 'status' => $status,
-                'answer_html' =>$answer_html
+                'answer_html' =>$answer_html,
+                'notify_me' => $notify_me
             ));
         }
     }
+        public function postAnswerNotification()
+    {
+        $status = 400;
+        $user_id = Input::get('user_id');
+        $thread_id = Input::get('thread_id');
+        if (isset($user_id,$thread_id)) {
+            $users = User::find($user_id);
+            $user_email = $users->email?$users->email:'example@example.com';
+            if (Mail::send('emails.been_answered', 
+                    array(
+                        'thread_id'=>$thread_id
+                    )
+                    , function($message) use ($user_email){
+                        $message->to($user_email);
+                        $message->subject('You Have An Answer');
+                    }
+                    )
+                ) {
+                $status = 200;
+            }
+        }
 
+        return Response::json(array(
+            'status' => $status
+        ));
+
+    }
         public function postPostQuote()
     {
         if(Request::ajax()){
             $status = 400;
-            $this_answer = Job::sanitize(Input::get('this_answer'));
-            $this_quote = Input::get('this_quote');
-            $this_thread = Input::get('this_thread');
-            $quote_html = Reply::preparePostedQuote($this_answer);
-            $quote = new Reply;
-            $quote->thread_id = $this_thread;
-            $quote->user_id = Auth::user()->id;
-            $quote->reply = $this_answer;
-            $quote->status = 1;
-            $quote->quote_id = $this_quote;
-
-            if ($quote->save()) {
-                
-                $status = 200;
+            $quote_html = '';
+            $quote_count = null;
+            if (Auth::check()) {
+                $this_answer = Job::sanitize(Input::get('this_answer'));
+                $this_quote = Input::get('this_quote');
+                $this_thread = Input::get('this_thread');
+                $quote_html = Reply::preparePostedQuote($this_answer);
+                $quote = new Reply;
+                $quote->thread_id = $this_thread;
+                $quote->user_id = Auth::user()->id;
+                $quote->reply = $this_answer;
+                $quote->status = 1;
+                $quote->quote_id = $this_quote;
+                if ($quote->save()) {
+                    $status = 200;
+                }
+                $quote_count = count(Reply::where('quote_id',$this_quote)->get());
             }
-
-            $quote_count = count(Reply::where('quote_id',$this_quote)->get());
 
             return Response::json(array(
                 'status' => $status,
@@ -201,7 +261,7 @@ class ThreadsController extends Controller
                 $this_reply = Input::get('this_reply'); 
                 $this_thread = Input::get('this_thread'); 
                 //IT WAS A REPLY
-                if (isset($this_reply)) {
+                if ($this_reply != 0) {
                     $replys = Reply::find($this_reply);
                     $flagged_user = $replys->user_id;
                 } 

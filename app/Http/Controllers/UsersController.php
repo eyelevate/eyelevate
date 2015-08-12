@@ -135,7 +135,7 @@ class UsersController extends Controller
             $redirect = (Session::get('redirect')) ? Session::get('redirect') : null; 
             
             if(isset($redirect)) {
-                return Redirect::to(Session::get('redirect'));
+                return Redirect::to('/');
             } else {
                 //SESION DOESN'T EXIST
                 return redirect()->action('HomeController@postIndex');

@@ -105,15 +105,7 @@ results = {
 		$(document).on('click','.reply-btn',function(){
 		
 		});
-		$('#login').click(function(){
-			$('#myModal').modal('toggle');
-		});
-		$(document).find('.login-btn').click(function(){
-			$('#login-form').submit();
-		});
-		$('#forgot').click(function(){
-			window.location = '/password-reset';
-		});
+
 		$('#qst-submit').click(function(){
 			$('#question_add').submit();
 		});

@@ -90,6 +90,8 @@ Route::controller('threads', 'ThreadsController');
 	Route::post('/threads/submit-flag', 'ThreadsController@postSubmitFlag');
 	Route::post('/threads/submit-like', 'ThreadsController@postSubmitLike');
 	Route::post('/threads/submit-dislike', 'ThreadsController@postSubmitDislike');
+	Route::post('/threads/answer-notification', 'ThreadsController@postAnswerNotification');
+	Route::post('/threads/set-setting', 'ThreadsController@postSetSetting');
 
 Route::controller('password', 'Auth\PasswordController');
 

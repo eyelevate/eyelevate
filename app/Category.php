@@ -38,7 +38,6 @@ class Category extends Model
 		$html = '';
 		$count = 0;
 		if(isset($data)) {
-
 			//ISSUE IS HERE
 			//XXX
 			//WHEN WE SET PAGGINATION NUMBER 
@@ -130,7 +129,8 @@ class Category extends Model
 					$data = 'views';
 					break;				
 				case '3':
-					# code...
+					//CHANGE THIS LATER
+					$data = 'status';
 					break;
 				
 				default:

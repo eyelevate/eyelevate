@@ -7,6 +7,7 @@ use App\User;
 use App\Job;
 use App\Reply;
 use App\Flag;
+use Auth;
 
 class Thread extends Model
 {
@@ -138,9 +139,23 @@ class Thread extends Model
 			$profile_image = Job::imageValidator($this_user->profile_image);
 
 			//FLAGS COUNT
-			$main_flag_count = count(Flag::where('reply_id',null)
+			$main_flag_count = count(Flag::where('reply_id',0)
 						->where('thread_id',$threads->id)
 						->get());
+
+			$is_owner = false;
+			$setting_icon = '';
+			$checked = '';
+			if (Auth::check()) {
+				if ($threads->user_id == Auth::user()->id) {
+					$is_owner = true;
+					if ($threads->notify_me == 1) {
+						$checked = 'checked';
+					}
+					$setting_icon = '<i class="glyphicon glyphicon-cog setting-icon"></i>';
+				}
+			}
+
 
 			//PREPARING THE MAIN THREADS
 			$html .= '<div class="thread-single" id="main-thread">
@@ -154,13 +169,12 @@ class Thread extends Model
 				                <div class="media-inner-left">
 				                  <div class="thread-info"> <span class="quoter-username">'.$this_main_username.'</span>
 				                    <span class="thread-date">'.$time_ago_main.'</span>
-
+				                    	'.$setting_icon.'
 		                    			<div class="panel-btn-bg pull-right panel-parent" this_reply="0" this_thread="'.$threads->id.'">
 											<div class="btn-group" role="group" aria-label="...">
 											  <button type="button" class="btn btn-default btn-panel-single flag-it"><i class="glyphicon glyphicon-flag"></i></br><span class="inner-val">'.$main_flag_count.'</span></button>
 											</div>
 					                    </div>
-
 				                  </div> 
 				                  <h4 ><a href="/threads/view/'.$threads->id.'">'.$threads->title.'</a></h4>
 				                </br>
@@ -174,10 +188,31 @@ class Thread extends Model
 				            </div>
 				          </div>';
 
+				          if ($is_owner == true) {
+				          	$html .= '<div class="modal fade" id="thread_setting">
+								  <div class="modal-dialog">
+								    <div class="modal-content">
+								      <div class="modal-header">
+								        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								        <h4 class="modal-title">Thread Setting</h4>
+								      </div>
+								      <hr>
+								      <div class="modal-body">
+										  <div class="checkbox">
+										    <label>
+										      <input type="checkbox" id="notify_me_checkbox" '.$checked.'> Notify Me
+										    </label>
+										  </div>
+								      </div>
+								    </div><!-- /.modal-content -->
+								  </div><!-- /.modal-dialog -->
+								</div><!-- /.modal -->';
+				          }
+
 			//GET ALL REPLIES
 			$all_replies = Reply::where('thread_id',$threads->id)
-			->where('quote_id',null)
-			->get();
+				->where('quote_id',null)
+				->get();
 			foreach ($all_replies as $arkey => $arvalue) {
 
 				$this_replier = User::find($arvalue->user_id);

@@ -4,8 +4,8 @@ html{
 
 
 div#thread-group {
-      overflow: scroll !important;
-    height: 600px !important;
+      overflow-y: scroll !important;
+    height: 579px !important;
 }
 /*ADD ANSWER STYLING*/
 #add-answer-title{
@@ -14,6 +14,11 @@ div#thread-group {
 #loading-container{
   text-align: center;
 
+}
+.setting-icon{
+    margin-left: 5px;
+    color: rgb(133, 133, 133);
+    font-size: 14px;
 }
 span.message-body {
     word-wrap: break-word;

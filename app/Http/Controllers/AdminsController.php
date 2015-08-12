@@ -120,9 +120,8 @@ class AdminsController extends Controller
     //PERMISSIONS
 
     public function getAddPermission()
-    {           Route::get('routes', array('uses'=>'RoutesController@routes'));
-
-
+    {           
+        Route::get('routes', array('uses'=>'RoutesController@routes'));
         $all_routes = Permission::PrepareAllRouteForSelect();
         return view('admins.add_permission')
         ->with('layout',$this->layout)
