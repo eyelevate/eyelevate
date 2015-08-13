@@ -51,6 +51,21 @@ class HomeController extends Controller
 
     public function postIndex()
     {
+        // $search_array_count = 0;
+        // $paginate_num = 10;
+        // $new_paginate_num = 10;
+        //FIND SEARCH RESULTS
+        $search_query = Input::get('searched-content');
+        $searched_results_html = '';
+        if ($search_query) {
+            $search_results = Search::index_search_function($search_query);
+            if (!empty($search_results)) {
+                // $search_array_count = sizeof($search_results);
+                $searched_results_html = Thread::prepareSearchedResults($search_results);
+                // $new_paginate_num =  $paginate_num - $search_array_count;
+                // $new_paginate_num = $new_paginate_num < 1?$new_paginate_num = 1:$new_paginate_num;
+            }
+        }
         //ALL THREADS
         $prepared_thread = Thread::prepareThreadForView(Thread::Where('status',1)
             ->orderBy('created_at', 'DESC')
@@ -62,18 +77,6 @@ class HomeController extends Controller
         $categories_for_select = Category::prepareForSelect(Category::where('status',1)->get());
         $categories_for_side = Category::prepareForSide(Category::where('status',1)->get());
 
-
-        //FIND SEARCH RESULTS
-        $search_query = Input::get('searched-content');
-        $searched_results_html = '';
-        if ($search_query) {
-            $search_results = Search::index_search_function($search_query);
-            if (!empty($search_results)) {
-                $searched_results_html = Thread::prepareSearchedResults($search_results);
-            }
-        }
-
-        
         return view('home.results')
             ->with('layout',$this->layout)
             ->with('threads',$prepared_thread)

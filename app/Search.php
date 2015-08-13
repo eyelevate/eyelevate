@@ -209,8 +209,10 @@ class Search extends Model
    		}
    		if (isset($merge)) {
    			arsort($merge);
+   			$merge= array_slice($merge, 0, 4,true);
    		}
 }
+
 		return $merge;
 	}
 }
