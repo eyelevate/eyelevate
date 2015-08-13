@@ -143,7 +143,7 @@ class Job extends Model
 			'bollok','boner','boob','bugger','bum','butt','buttplug',
 			'clitoris','cock','coon','crap','cunt','damn','dick','dildo',
 			'dyke','fag','feck','fellate','fellatio','felching','fuck',
-			'f u c k','fudgepacker','fudge packer','flange','Goddamn',
+			'f u c k','fudgepacker','fudge packer','fucking','flange','Goddamn',
 			'God damn','hell','homo','jerk','jizz','knobend','knob end','labia',
 			'lmao','lmfao','muffnigger','omg','penis','piss','poop','prick',
 			'pube','pussy','queerscrotum','shit','s hit','sh1t','slut','smegma',
@@ -211,6 +211,34 @@ class Job extends Model
         $output  = Job::cleanInput($input);
     }
     return $output;
+
+	}
+
+	static public function trime_filter($input) {
+		$output = null;
+		
+		$output_string = '';
+		//FORMATING
+		$search_str_formated =  preg_replace("/[^a-zA-Z0-9]+/", " ", $input);
+		$trimmed = trim($search_str_formated);
+		$str_lowered = strtolower($trimmed);
+		$search_str_formated = explode(" ",$str_lowered);
+
+
+
+		//FILTERING
+		$swear_filtered = array_diff($search_str_formated, Job::swear_keywords());
+		$pronouns_filtered = array_diff($swear_filtered, Job::pronouns_keywords());
+		$alphabet_filtered = array_diff($pronouns_filtered, Job::alphabet_keywords());
+		$numeric_filtered = array_values(array_diff($alphabet_filtered, Job::numeric_keywords()));
+		$output = $numeric_filtered;
+
+		//Connect the string back togather 
+		foreach ($output as $opkey => $opvalue) {
+			$output_string .= $opvalue.' ';
+		}
+
+		return $output_string;
 
 	}
 

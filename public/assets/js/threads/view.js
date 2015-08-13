@@ -20,7 +20,7 @@ results = {
 	events: function() {
 
 		//WANT TO REPLY
-		$('.show-quote').click(function(){
+		$(document).on('click','.show-quote',function(){
 			// //DELETE ALL OTHER REPLY BOXES
 			// $(document).find('.reply-media').remove();
 			var state = parseInt($('#left-top-container').attr('state'));

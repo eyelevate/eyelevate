@@ -15,6 +15,7 @@ use App\Http\Controllers\Controller;
 use App\Job;
 use App\Thread;
 use App\Category;
+use App\Search;
 
 class HomeController extends Controller
 {
@@ -50,15 +51,22 @@ class HomeController extends Controller
 
     public function postIndex()
     {
-        $prepared_thread = Thread::prepareThreadForView(Thread::Where('status',1)
+        $search_query = Input::get('searched-content');
+        if ($search_query) {
+            $search_results = Search::index_search_function($search_query);
+            if (empty($search_results)) {
+
+            } else {
+                Job::dump($search_results);
+            }
+        } else { //SEARCH BAR WERE EMPTY
+             $prepared_thread = Thread::prepareThreadForView(Thread::Where('status',1)
             ->orderBy('created_at', 'DESC')
             ->paginate(10));
 
         $prepared_thread_clone = Thread::Where('status',1)
             ->orderBy('created_at', 'DESC')
             ->paginate(10);
-
-
         $this->layout = 'layouts.master-layout';
         $categories_for_select = Category::prepareForSelect(Category::where('status',1)->get());
         $categories_for_side = Category::prepareForSide(Category::where('status',1)->get());
@@ -67,6 +75,10 @@ class HomeController extends Controller
             ->with('threads',$prepared_thread)
             ->with('prepared_thread_clone',$prepared_thread_clone)
             ->with('categories_for_select',$categories_for_select)
-            ->with('categories_for_side',$categories_for_side);
+            ->with('categories_for_side',$categories_for_side);       
+        }
+
+
+
     } 
 }
