@@ -8,6 +8,7 @@ use Validator;
 use Redirect;
 use Hash;
 use Request;
+use Route;
 use Response;
 use Auth;
 use URL;
@@ -157,10 +158,20 @@ class UsersController extends Controller
     }   
     public function getLogout()
     {
-        Auth::logout();
-            Session::reflash(); // Keep for inteded pages backfall. This helps users get back to the intended page if session expire
-            return Redirect::action('HomeController@getIndex');
+        if (Session::get('redirect_logout_flash')) {
+            $pre_path = Session::get('redirect_logout_flash');
+            Auth::logout();
+            Session::reflash();
+            switch ($pre_path) {
+                case '/':
+                       return Redirect::action('HomeController@getIndex');
+                    break;
+                default:
+                        return Redirect::action('HomeController@postIndex');
+                    break;
+            }
         }
+    }
     public function postLogout()
     {
         Auth::logout();

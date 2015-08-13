@@ -22,9 +22,7 @@
 			<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
 				 @if(Auth::user())
 				 	<li><a href="/users/profile/{!!Auth::user()->username!!}" style="font-weight: bold;">View Profile</a></li>
-
-					<li><a class="active" href="/users/logout" id="logout">Logout</a></li>
-
+					<li>{!! Html::link('/logout', 'Logout') !!}</li>
 				 @else
 					<li><a class="active" id="login">Login</a></li>
 					<li><a class="active" href="/registration">Sign Up</a></li>

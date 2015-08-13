@@ -6,6 +6,7 @@ use Closure;
 use Session;
 use Request;
 use Flash;
+use Auth;
 
 class BeforeFilter
 {
@@ -35,6 +36,10 @@ class BeforeFilter
         // Perform action
         $uri = $request->path();
         Session::flash('redirect_flash',$uri);
+        if (!Request::is('logout'))
+        {
+         Session::flash('redirect_logout_flash',$uri);
+        }
 
         return $next($request);
     }
