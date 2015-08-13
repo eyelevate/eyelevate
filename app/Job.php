@@ -217,7 +217,7 @@ class Job extends Model
 	static public function trime_filter($input) {
 		$output = null;
 		
-		$output_string = '';
+		$output_string =  array('array' => '', 'string'=>'');
 		//FORMATING
 		$search_str_formated =  preg_replace("/[^a-zA-Z0-9]+/", " ", $input);
 		$trimmed = trim($search_str_formated);
@@ -233,10 +233,12 @@ class Job extends Model
 		$numeric_filtered = array_values(array_diff($alphabet_filtered, Job::numeric_keywords()));
 		$output = $numeric_filtered;
 
+		$output_string['array'] = $numeric_filtered;
 		//Connect the string back togather 
 		foreach ($output as $opkey => $opvalue) {
-			$output_string .= $opvalue.' ';
+			$output_string['string'] .= $opvalue.' ';
 		}
+
 
 		return $output_string;
 

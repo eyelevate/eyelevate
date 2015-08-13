@@ -57,7 +57,7 @@ class HomeController extends Controller
             if (empty($search_results)) {
 
             } else {
-                Job::dump($search_results);
+               Job::dump($search_results);
             }
         } else { //SEARCH BAR WERE EMPTY
              $prepared_thread = Thread::prepareThreadForView(Thread::Where('status',1)
