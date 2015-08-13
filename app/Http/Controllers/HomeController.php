@@ -51,34 +51,36 @@ class HomeController extends Controller
 
     public function postIndex()
     {
-        $search_query = Input::get('searched-content');
-        if ($search_query) {
-            $search_results = Search::index_search_function($search_query);
-            if (empty($search_results)) {
-
-            } else {
-               Job::dump($search_results);
-            }
-        } else { //SEARCH BAR WERE EMPTY
-             $prepared_thread = Thread::prepareThreadForView(Thread::Where('status',1)
+        //ALL THREADS
+        $prepared_thread = Thread::prepareThreadForView(Thread::Where('status',1)
             ->orderBy('created_at', 'DESC')
             ->paginate(10));
-
         $prepared_thread_clone = Thread::Where('status',1)
             ->orderBy('created_at', 'DESC')
             ->paginate(10);
         $this->layout = 'layouts.master-layout';
         $categories_for_select = Category::prepareForSelect(Category::where('status',1)->get());
         $categories_for_side = Category::prepareForSide(Category::where('status',1)->get());
+
+
+        //FIND SEARCH RESULTS
+        $search_query = Input::get('searched-content');
+        $searched_results_html = '';
+        if ($search_query) {
+            $search_results = Search::index_search_function($search_query);
+            if (!empty($search_results)) {
+                $searched_results_html = Thread::prepareSearchedResults($search_results);
+            }
+        }
+
+        
         return view('home.results')
             ->with('layout',$this->layout)
             ->with('threads',$prepared_thread)
             ->with('prepared_thread_clone',$prepared_thread_clone)
             ->with('categories_for_select',$categories_for_select)
-            ->with('categories_for_side',$categories_for_side);       
-        }
-
-
-
+            ->with('categories_for_side',$categories_for_side)
+            ->with('searched_results_html',$searched_results_html);       
+        
     } 
 }

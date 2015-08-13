@@ -36,6 +36,9 @@
         </ul>
       </div>
       <div id="thread-group">
+      <!-- EARCH RESULTS -->
+        {!! $searched_results_html !!}
+      <!-- ALL THREADS -->
         {!! $threads !!}
       </div>
       <div class="page pull-right">

@@ -56,6 +56,65 @@ class Thread extends Model
 		}
 		return $html;
 	}
+
+
+	static public function prepareSearchedResults($search_results) {
+		$html = '<h4>Your Search Results : </h4>';
+
+		foreach ($search_results as $srkey => $srvalue) {
+
+				$davalue = Thread::find($srkey);
+
+				$users = User::find($davalue->user_id);
+				$username = $users->username;
+
+				$profile_image = Job::imageValidator($users->profile_image);
+
+				$categories_j = json_decode($davalue->categories);
+				$categories_prepared = Thread::prepareCategories($categories_j);
+
+				$time_s = date(strtotime($davalue['created_at']));
+				$time_ago = Job::formatTimeAgo(Job::humanTiming($time_s));
+
+				$html .= '<div class="thread-single">
+							        <div class="media">
+							          <div class="media-left">
+							            <a href="#">
+							              <img class="media-object" data-src="holder.js/64x64" alt="64x64" src="/assets/images/profile-images/perm/'.$profile_image.'" data-holder-rendered="true" style="width: 64px; height: 64px;">
+							            </a>
+							          </div>
+							          <div class="media-body">
+							            <div class="media-inner-left">
+							              <h4 ><a href="/threads/view/'.$davalue->id.'">'.$davalue->title.'</a></h4>
+							              <div class="thread-info">'.$username.' . 
+							                <span class="thread-date">'.$time_ago.'</span>
+							              	
+							              </div> 
+							            </br>
+							            <div class="label-container">
+											'.$categories_prepared.'
+							            </div>
+							          </div>
+							          <div class="media-inner-right">
+							            <div class="right-text"><span class="reply-no"><i class="fa fa-eye"></i></span></br><span class="reply-html">'.$davalue->views.'</span></div>
+							          </div>
+							        </div>
+							      </div>
+							    </div>';
+		}
+
+		$html .= '<hr><h4>Other threads:</h4><hr>';
+		return $html;
+	}
+
+
+
+
+
+
+
+
+
 	static public function prepareCategories($cat) {
 		$cat_html = '';
 		if (isset($cat)) {
@@ -100,6 +159,7 @@ class Thread extends Model
 		';
 		return $cat_html;
 	}
+
 	static public function prepareCategoriesAfterSearch($cat,$item_selected) {
 		$cat_html = '';
 		if (isset($cat)) {
