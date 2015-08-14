@@ -9,6 +9,7 @@
 @section('content')
 <div class="jumbotron">
 	<h1>Access Control List</h1>
+  @include('flash::message')
 </div>
 <div class="container">
   <h2>Permissions</h2>

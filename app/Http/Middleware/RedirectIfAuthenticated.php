@@ -36,9 +36,7 @@ class RedirectIfAuthenticated
      */
     public function handle($request, Closure $next)
     {
-        if ($this->auth->check()) {
-            Flash::success('Welcome back!');
-        }
+            
         return $next($request);
     }
 }

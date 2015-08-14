@@ -31,12 +31,25 @@ class BeforeFilter
      */
     public function handle($request, Closure $next)
     {
-        // Perform action
-        $uri = $request->path();
+        // Perform before page load
+        
+        $url = ($request->isMethod('post')) ? Session::get('_previous')['url'] : $request->url();
+
         if (!Request::is('users/login-modal','logout','users/login'))
         {
-         Session::flash('redirect_flash',$uri);
+            Session::flash('redirect_flash',$url);
+        } 
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        $response = $next($request);
+        //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+        // Perform after page load
+        // If request is post remove intended url for authorized users who were logged out and want to return to previous page
+        if($request->isMethod('post')){
+            Session::forget('intended_url');
         }
-        return $next($request);
+
+        return $response;
+
     }
 }

@@ -144,7 +144,7 @@ class UsersController extends Controller
             }
         }
     }   
-        public function postLoginModal()
+    public function postLoginModal()
     {
         $username = Input::get('username');
         $password = Input::get('password');
@@ -152,17 +152,16 @@ class UsersController extends Controller
 
         if (Auth::attempt(array('username'=>$username, 'password'=>$password))) {
             Flash::success('Welcome back '.$username.'!');
-            $redirect = (Session::get('redirect_flash')) ? '/'.Session::get('redirect_flash') : null; 
+            $redirect = (Session::get('redirect_flash')) ? Session::get('redirect_flash') : null; 
             if(isset($redirect)) {
                 return Redirect::to($redirect);
-            } else {
-                //SESION DOESN'T EXIST
+            } else { //SESSION DOESN'T EXIST
                 return redirect()->action('HomeController@postIndex');
             }
-        } else { //LOGING FAILED
-            // return view('users.login')
-            //     ->with('layout',$this->layout)
-            //     ->with('wrong',1); 
+        } else { //LOGIN FAILED
+            return view('users.login')
+                ->with('layout',$this->layout)
+                ->with('wrong',1); 
         }
     }
     public function getLogout()
@@ -184,7 +183,7 @@ class UsersController extends Controller
     public function postLogout()
     {
         Auth::logout();
-        Session::reflash(); // Keep for inteded pages backfall. This helps users get back to the intended page if session expire
+
         return Redirect::action('HomeController@getIndex');
     }
 

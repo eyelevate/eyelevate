@@ -23,7 +23,7 @@ use App\Role;
 use App\Permission;
 use App\PermissionRole;
 
-class PermissionRolesController extends Controller
+class RolesController extends Controller
 {
     public function __construct() {
 

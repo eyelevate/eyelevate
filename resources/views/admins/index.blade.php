@@ -9,6 +9,7 @@
 @section('content')
 	<div class="jumbotron">
 		<h1>Welcome</h1>
+		@include('flash::message')
 	</div>
 
 	@if(isset($message))

@@ -79,14 +79,19 @@ AuthenticatableContract, CanResetPasswordContract
     protected function checkPermission($perm)
     {
         $grant_access = false;
-        $permissions = $this->getUserPermission();
-        $permissionArray = is_array($perm) ? $perm : [$perm];
-        foreach ($permissionArray as $pekey => $pevalue) {
-            if ($pevalue == $permissions) {
-                $grant_access = true;
+        $permissions = $this->getUserPermission(); // Returns a list of permission slugs for the specified user role
+        $permissionArray = is_array($perm) ? $perm : [$perm]; // Returns uri of current page as an array
+        foreach ($permissionArray as $uri) {
+            if($permissions) {
+                foreach ($permissions as $p) {
+                    if($uri == $p) {
+                        $grant_access = true;
+                        break;
+                    }
+                }
             }
         }
-        //FOR SOME REASON PREMISSION ARRAY IS ALWASY ADMINS
+    
         return $grant_access;
     }
 
@@ -97,17 +102,24 @@ AuthenticatableContract, CanResetPasswordContract
      */
     protected function getUserPermission()
     {
-        $permissionsArray = [];
+        $permissions = [];
         //GET USER ID
         $this_user_id = Auth::user()->id;
         //GET USER ROLE
-        $this_role = RoleUser::where('user_id',$this_user_id)->first();
-        $permission_role = PermissionRole::where('role_id',$this_role->id)->first();
-        $permissions = $permission_role?Permission::find($permission_role->permission_id):false;
-        return $permissions?$permissions->permission_slug:false;
-        // return array_map('strtolower', array_unique(array_flatten(array_map(function ($permission) {
-        //     return array_fetch($permission, 'permission_slug');
-        // }, $permissions))));
+        
+        $this_role = RoleUser::find($this_user_id);  
+        $permission_role = PermissionRole::where('role_id',$this_role->id)->get();
+
+        if($permission_role){
+            foreach ($permission_role as $pr_key => $pr_value) {
+                $_permission = Permission::find($pr_value->permission_id);
+                $permissions[$pr_key] = $_permission->permission_slug;
+
+            }  
+        }
+
+        // return $permissions?$permissions->permission_slug:false;
+        return $permissions;
     }
 
     /*

@@ -50,9 +50,7 @@ class AdminsController extends Controller
 
     public function getLogin()
     {
-        if (Auth::check()) { //If admin is already logged in. Have router check users acl permission and redirect them back
-            return redirect()->action('AdminsController@getIndex');
-        }
+
         $this->layout = 'layouts.master-layout';
         return view('admins.login')
             ->with('layout',$this->layout);
@@ -65,8 +63,11 @@ class AdminsController extends Controller
         // Session::reflash();
 
         if (Auth::attempt(array('username'=>$username, 'password'=>$password))) {
-            // Flash::success('Welcome back '.$username.'!');
-            return redirect()->action('AdminsController@getIndex');
+            Flash::success('Welcome back '.$username.'!');
+            // return redirect()->action('AdminsController@getIndex');
+            // Check for intended redirect, if not exists then go to default /admins page
+
+            return (Session::has('intended_url')) ? Redirect::to(Session::get('intended_url')) : redirect()->intended('/admins');
         } else { //LOGING FAILED
             $this->layout = 'layouts.master-layout';
             return view('admins.login')
@@ -77,12 +78,11 @@ class AdminsController extends Controller
 
     public function getLogout()
     {
-        if(Auth::logout()){
-            Session::reflash(); // Keep for inteded pages backfall. This helps users get back to the intended page if session expire
-            return Redirect::action('AdminsController@getLogin');
-        }
-        
-        
+        Auth::logout();
+        Flash::success('You have successfully been logged out');
+
+        return Redirect::action('AdminsController@getLogin');
+    
     }
 
     public function getViewAcl()

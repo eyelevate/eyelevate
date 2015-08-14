@@ -5,6 +5,9 @@ namespace App\Http\Middleware;
 use Closure;
 use App\Job;
 use Auth;
+use Flash;
+use Session;
+use Redirect;
 class CheckPermission
 {
     /**
@@ -14,15 +17,21 @@ class CheckPermission
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next, $permission = null)
+    public function handle($request, Closure $next)
     {
         if (!app('Illuminate\Contracts\Auth\Guard')->guest()) {
 
-            if ( $request->user()->can($permission)) {
-                
+            // If successful continue onto page request
+            if ($request->user()->can($request->path())) {
+
                 return $next($request);
             }
-            return $request->ajax ? response('Unauthorized.', 401) : redirect('/users/login');
+            // Determine the path of where the user came from and redirect accordingly
+            $redirect_path = Session::get('_previous')['url'];
+            Flash::warning('You do not have authorization to view this page');
+
+            // Check for unauthorized ajax requests and return 401, if post then redirect back to login page
+            return $request->ajax ? response('Unauthorized.', 401) : Redirect::to($redirect_path);
         }
     }
 }
