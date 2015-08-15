@@ -31,7 +31,7 @@
       <section class="login-form">
           {!! Form::open(array('action' => 'UsersController@postLogin','id'=>'reg-form', 'class'=>'','role'=>"form")) !!}
             <div class="form-group">
-              <input type="text" name="email" placeholder="Username" required class="form-control input-lg"  />
+              <input type="text" name="username" placeholder="Username" required class="form-control input-lg"  />
             </div>
             <div class="form-group">
              <input type="password" name="password" class="form-control input-lg" id="password" placeholder="Password" required="" />

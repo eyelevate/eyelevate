@@ -1,5 +1,5 @@
 <div class="modal fade" id="myModal">
-	{!! Form::open(array('action' => 'UsersController@postLogin', 'class'=>'','role'=>"form",'id'=>'login-form-1')) !!}
+	{!! Form::open(array('action' => 'UsersController@postLoginModal', 'class'=>'','role'=>"form",'id'=>'login-form-1')) !!}
 	  <div class="modal-dialog">
 	    <div class="modal-content">
 	      <div class="modal-header">

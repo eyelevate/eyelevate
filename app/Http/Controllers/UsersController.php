@@ -129,20 +129,9 @@ class UsersController extends Controller
         $username = Input::get('username');
         $password = Input::get('password');
 
-        $direct_login = Input::get('direct-login');
-
         if (Auth::attempt(array('username'=>$username, 'password'=>$password))) {
             Flash::success('Welcome back '.$username.'!');
-            $redirect = (Session::get('redirect_flash')) ? '/'.Session::get('redirect_flash') : null; 
-            
-            if(isset($redirect)) {
-
-                return Redirect::to($redirect);
-
-            } else {
-                //SESION DOESN'T EXIST
-                return redirect()->action('HomeController@postIndex');
-            }
+            return redirect()->action('HomeController@postIndex');
         } else { //LOGING FAILED
             if (isset($direct_login)) {
                 return view('users.login')
@@ -153,13 +142,33 @@ class UsersController extends Controller
                     ->with('layout',$this->layout)
                     ->with('wrong',1); 
             }
-
         }
     }   
+        public function postLoginModal()
+    {
+        $username = Input::get('username');
+        $password = Input::get('password');
+
+
+        if (Auth::attempt(array('username'=>$username, 'password'=>$password))) {
+            Flash::success('Welcome back '.$username.'!');
+            $redirect = (Session::get('redirect_flash')) ? '/'.Session::get('redirect_flash') : null; 
+            if(isset($redirect)) {
+                return Redirect::to($redirect);
+            } else {
+                //SESION DOESN'T EXIST
+                return redirect()->action('HomeController@postIndex');
+            }
+        } else { //LOGING FAILED
+            // return view('users.login')
+            //     ->with('layout',$this->layout)
+            //     ->with('wrong',1); 
+        }
+    }
     public function getLogout()
     {
-        if (Session::get('redirect_logout_flash')) {
-            $pre_path = Session::get('redirect_logout_flash');
+        if (Session::get('redirect_flash')) {
+            $pre_path = Session::get('redirect_flash');
             Auth::logout();
             Session::reflash();
             switch ($pre_path) {

@@ -22,8 +22,6 @@ class BeforeFilter
     {
         $this->route = null;
     }
-
-
     /**
      * Handle an incoming request.
      *
@@ -35,12 +33,10 @@ class BeforeFilter
     {
         // Perform action
         $uri = $request->path();
-        Session::flash('redirect_flash',$uri);
-        if (!Request::is('logout'))
+        if (!Request::is('users/login-modal','logout','users/login'))
         {
-         Session::flash('redirect_logout_flash',$uri);
+         Session::flash('redirect_flash',$uri);
         }
-
         return $next($request);
     }
 }

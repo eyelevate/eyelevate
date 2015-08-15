@@ -69,6 +69,7 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 	//USER ROUTE
 	Route::controller('users', 'UsersController');
 		Route::get('/users/login', 'UsersController@getLogin');
+		Route::post('/users/login-modal', 'UsersController@postLoginModal');
 		Route::get('/users/profile/{$username}', 'UsersController@getProfile');
 		Route::get('/registration', 'UsersController@getRegistration');
 		Route::post('/validate', 'UsersController@getValidate');
