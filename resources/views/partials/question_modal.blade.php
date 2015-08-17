@@ -13,7 +13,7 @@
             <textarea placeholder="Title of your question"
             id="comment_text" cols="40"
             class="ui-autocomplete-input" autocomplete="off" role="textbox"
-            aria-autocomplete="list" aria-haspopup="true"></textarea>
+            aria-autocomplete="list" aria-haspopup="true" name="question[title]"></textarea>
           </div>
           <div class="right-modal-inner col-sm-4">
             <span>Did you search first to make sure your question is unique?</span>
@@ -39,7 +39,7 @@
         <div class="step-3 step hide" step="3">
           <div class="left-modal-inner-3 col-sm-8">
             <textarea placeholder="Title of your question"
-            name="question[title]" id="question-title"
+            name="question[title_2]" id="question-title"
             class="ui-autocomplete-input textarea-title" autocomplete="off" role="textbox"
             aria-autocomplete="list" aria-haspopup="true"></textarea>
             <textarea placeholder="Description of your question"

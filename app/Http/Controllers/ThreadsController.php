@@ -58,7 +58,14 @@ class ThreadsController extends Controller
         $notify_me = isset($sanitized_data['notify-me'])?$sanitized_data['notify-me']:0;
         $categories = isset($sanitized_data['categories'])?json_encode($sanitized_data['categories']):null;
 
+
+        //IE.11 ERROR RESOLVED
         $title = $question['title'];
+        if ($question['title_2']) {
+            $title = $question['title_2'];
+        }
+        //---
+        
         $description = $question['description'];
 
         $thread = new Thread;
@@ -308,9 +315,6 @@ class ThreadsController extends Controller
             $status = 400;
             $total_like_count = null;
             $prev_dislike = null;
-
-
-
             if (Auth::check()) {
                 $this_reply = Input::get('this_reply'); 
                 $this_thread = Input::get('this_thread'); 
@@ -324,7 +328,7 @@ class ThreadsController extends Controller
                     $threads = Thread::find($this_thread);
                     $liked_user = $threads->user_id;
                 }
-                //CHECK IF THIS USER HAS FLAGGED THIS REPLY OR THREAD BEFORE
+                //CHECK IF THIS USER HAS LIKED THIS REPLY OR THREAD BEFORE
                 $prev_likes = count(Like::where('reply_id',$this_reply)
                                         ->where('thread_id',$this_thread)
                                         ->where('liker_user_id',$this->user_id)
@@ -361,13 +365,18 @@ class ThreadsController extends Controller
                                 ->where('thread_id',$this_thread)
                                 ->where('status',1)
                                 ->get());
+                $total_dislike_count = count(disLike::where('reply_id',$this_reply)
+                                ->where('thread_id',$this_thread)
+                                ->where('status',1)
+                                ->get());
     }
 
 
             return Response::json(array(
                 'status' => $status,
                 'total_like_count' => $total_like_count,
-                'prev_dislike' => $prev_dislike
+                'prev_dislike' => $prev_dislike,
+                'total_dislike_count' => $total_dislike_count
             ));
         }
     }
@@ -419,7 +428,7 @@ class ThreadsController extends Controller
                             $prev_like = count(Like::where('reply_id',$this_reply)
                                                 ->where('thread_id',$this_thread)
                                                 ->where('liked_user_id',$disliked_user)
-                                                ->first());
+                                                ->get());
                         }
                     }
                 } else {
@@ -430,10 +439,15 @@ class ThreadsController extends Controller
                                 ->where('thread_id',$this_thread)
                                 ->where('status',1)
                                 ->get());
+                $total_like_count = count(like::where('reply_id',$this_reply)
+                                ->where('thread_id',$this_thread)
+                                ->where('status',1)
+                                ->get());
     }
             return Response::json(array(
                 'status' => $status,
                 'total_dislike_count' => $total_dislike_count,
+                'total_like_count' => $total_like_count,
                 'prev_like' => $prev_like
             ));
         }

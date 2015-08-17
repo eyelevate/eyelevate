@@ -165,13 +165,12 @@ results = {
 		$(function() {
 			$("html").swipe( {
 				swipeStatus:function(event, phase, direction, distance, duration, fingers, fingerData) {
-
  			  	switch(direction){
 			  		case "left":
-			  			right_box_open();
+			  			if (distance > 25) {right_box_open()};
 			  		break;
 			  		case "right":
-			  			right_box_close();
+			  			if (distance > 25) {right_box_close()};
 			  		break;
 			  	}
 			  },
@@ -403,8 +402,9 @@ request = {
 					case 200: // Approved
 						var total_like_count = result.total_like_count;
 						var prev_dislike = result.prev_dislike;
+						var total_dislike_count = result.total_dislike_count;
 						_this.find('.inner-val').text(total_like_count);
-						_this.parents('.btn-group').find('.dont-like .inner-val:first').text(prev_dislike);
+						_this.parents('.btn-group').find('.dont-like .inner-val:first').text(total_dislike_count);
 					break;				
 					case 400: // Approved
 						$('#myModal').modal('toggle');				
@@ -432,8 +432,9 @@ request = {
 					case 200: // Approved
 						var total_dislike_count = result.total_dislike_count;
 						var prev_like = result.prev_like;
+						var total_like_count = result.total_like_count;
 						_this.find('.inner-val').text(total_dislike_count);
-						_this.parents('.btn-group').find('.eye-like .inner-val:first').text(prev_like);
+						_this.parents('.btn-group').find('.eye-like .inner-val:first').text(total_like_count);
 					break;				
 					case 400: // Approved
 						$('#myModal').modal('toggle');
