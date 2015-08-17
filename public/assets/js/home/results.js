@@ -107,11 +107,7 @@ results = {
 				request.inpage_search(searched_text);
 				$('.cat-items').removeClass('act');
 			};
-			
 		});
-
-
-
 		//MORE CLICKED
 		$('.more').click(function(){
 			

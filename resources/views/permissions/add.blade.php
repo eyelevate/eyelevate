@@ -61,7 +61,10 @@
 		<div class="panel-footer clearfix">
 			<a class="btn btn-default pull-left" href="{!! route('acl_view') !!}">Back</a>
 			<button class="btn btn-primary pull-right">Add</button>
+			{!! Form::close() !!}
+
+			<a href="/permissions/auto-update" class="btn btn-primary pull-right">Auto Update</a>
 		</div>
 	</div>
-	{!! Form::close() !!}
+
 @stop

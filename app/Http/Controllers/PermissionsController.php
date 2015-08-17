@@ -80,5 +80,23 @@ class PermissionsController extends Controller
                 ->withInput();  
         } 
     }
+        public function getAutoUpdate()
+    {   
+        $saved_permissions = Permission::all();
+        $all_routes = Permission::PrepareAllRouteForSelect();
+
+        foreach ($all_routes as $key => $value) {
+            if ($value != 'Select Permission') {
+                $permissions = new Permission;
+                $permissions->permission_title = $value;
+                $permissions->permission_slug = $value;
+                $permissions->permission_description = $value.' route';
+                $permissions->save();
+            }
+        }
+        Flash::success('Successfully Updated Permissions list');
+        return Redirect::back();
+    }
+
 
 }

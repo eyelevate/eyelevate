@@ -26,22 +26,6 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 	Route::get('/admins/logout', 'AdminsController@getLogout');
 
 		//NO ACL
-		Route::get('/admins',  ['as'=>'admins_index', 'uses' => 'AdminsController@getIndex']);
-		Route::get('/admins/roles/add',  ['as'=>'roles_add', 'uses' => 'RolesController@getAdd']);
-		Route::post('/admins/roles/add',  ['uses' => 'RolesController@postAdd']);
-		Route::get('/admins/permissions/add',  ['as'=>'permissions_add','uses' => 'PermissionsController@getAdd']);
-		Route::post('/admins/permissions/add',  ['uses' => 'PermissionsController@postAdd']);
-		Route::get('/admins/permission-roles/add',  ['as'=>'permissions_roles_add', 'uses' => 'PermissionRolesController@getAdd']);
-		Route::post('/admins/permission-roles/add',  ['uses' => 'PermissionRolesController@postAdd']);
-		Route::get('/admins/acl/view',  ['as' => 'acl_view','uses' => 'AdminsController@getViewAcl']);
-		Route::get('/admins/categories/view',  ['as'=>'category_view', 'uses' => 'AdminsController@getViewCategory']);
-		Route::get('/admins/categories/add',  ['as'=>'category_add', 'uses' => 'CategoriesController@getAdd']);
-		Route::post('/admins/categories/add',  ['uses' => 'CategoriesController@postAdd']);
-		Route::get('/admins/categories/edit',  ['as'=>'category_edit','uses' => 'CategoriesController@getEdit']);
-		Route::post('/admins/categories/edit',  ['uses' => 'CategoriesController@postEdit']);
-
-	/** ADMINS ACL GROUP **/
-	Route::group(['middleware' => ['auth','acl:'.$acl_variable]], function(){
 		// Route::get('/admins',  ['as'=>'admins_index', 'uses' => 'AdminsController@getIndex']);
 		// Route::get('/admins/roles/add',  ['as'=>'roles_add', 'uses' => 'RolesController@getAdd']);
 		// Route::post('/admins/roles/add',  ['uses' => 'RolesController@postAdd']);
@@ -55,6 +39,22 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 		// Route::post('/admins/categories/add',  ['uses' => 'CategoriesController@postAdd']);
 		// Route::get('/admins/categories/edit',  ['as'=>'category_edit','uses' => 'CategoriesController@getEdit']);
 		// Route::post('/admins/categories/edit',  ['uses' => 'CategoriesController@postEdit']);
+
+	/** ADMINS ACL GROUP **/
+	Route::group(['middleware' => ['auth','acl:'.$acl_variable]], function(){
+		Route::get('/admins',  ['as'=>'admins_index', 'uses' => 'AdminsController@getIndex']);
+		Route::get('/admins/roles/add',  ['as'=>'roles_add', 'uses' => 'RolesController@getAdd']);
+		Route::post('/admins/roles/add',  ['uses' => 'RolesController@postAdd']);
+		Route::get('/admins/permissions/add',  ['as'=>'permissions_add','uses' => 'PermissionsController@getAdd']);
+		Route::post('/admins/permissions/add',  ['uses' => 'PermissionsController@postAdd']);
+		Route::get('/admins/permission-roles/add',  ['as'=>'permissions_roles_add', 'uses' => 'PermissionRolesController@getAdd']);
+		Route::post('/admins/permission-roles/add',  ['uses' => 'PermissionRolesController@postAdd']);
+		Route::get('/admins/acl/view',  ['as' => 'acl_view','uses' => 'AdminsController@getViewAcl']);
+		Route::get('/admins/categories/view',  ['as'=>'category_view', 'uses' => 'AdminsController@getViewCategory']);
+		Route::get('/admins/categories/add',  ['as'=>'category_add', 'uses' => 'CategoriesController@getAdd']);
+		Route::post('/admins/categories/add',  ['uses' => 'CategoriesController@postAdd']);
+		Route::get('/admins/categories/edit',  ['as'=>'category_edit','uses' => 'CategoriesController@getEdit']);
+		Route::post('/admins/categories/edit',  ['uses' => 'CategoriesController@postEdit']);
 	});
 
 
@@ -101,6 +101,9 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 	Route::get('password/email', 'Auth\PasswordController@getEmail');
 		Route::post('password/email', 'Auth\PasswordController@postEmail');
 
+	//PERMISSIONS ROUTE
+	Route::controller('permissions', 'PermissionsController');
+		Route::get('/permissions/auto-update', 'PermissionsController@getAutoUpdate');
 	// // Password reset routes...
 	// Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
 	// 	Route::post('password/reset', 'Auth\PasswordController@postReset');
