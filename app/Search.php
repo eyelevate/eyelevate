@@ -137,10 +137,7 @@ class Search extends Model
 	   			$merge_sorted[$mevalue['reply']]['id'] = $mevalue['id'];
 	   		}
    		}
-
    		krsort($merge_sorted);
-
-
 		return $merge_sorted;
 	}
 

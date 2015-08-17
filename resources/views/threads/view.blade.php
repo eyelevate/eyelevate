@@ -9,10 +9,10 @@
 @stop
 
 @section('content')
-<div class="outer">
-  <div class="container-fluid">
-    <div class="col-md-3 inner swipeable-both" id="new-left-box" style="height:100% !important;" this-reply="" this-thread="{{$threads->id}}">
-      <div class="list-group left-box-inner" id="tread-side-group">
+<div class="outer max-height">
+  <div class="container-fluid max-height">
+    <div class="col-md-3 inner swipeable-both max-height" id="new-left-box" this-reply="" this-thread="{{$threads->id}}">
+      <div class="list-group left-box-inner " id="tread-side-group">
         <div class="list-group list-group-container">
           <a href="#" class="list-group-item active " id="list-search-bar">
             <div class="clearfix" id="left-top-container" state="0">
@@ -45,13 +45,8 @@
         </div>
       </div>
     </div>
-
-
-
     <!-- RIGHT BOX START -->
-
-    <div class="col-md-9 right-box swipeable-both" id="zoom" target="false">
-
+    <div class="col-md-9 right-box swipeable-both max-height" id="zoom" target="false">
       <!-- DUMMY DATA START -->
       <div class="container" id="right-box-inner">
               <div id="swipe-left">

@@ -1,3 +1,13 @@
 li a{
 	color: #777 !important;
 }
+.container {
+    max-width: 100%;
+    width: 100%;
+}
+.max-height {
+	height: 100% !important;
+}
+html, body {
+	height: 100% !important;
+}

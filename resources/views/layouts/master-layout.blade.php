@@ -30,7 +30,7 @@
     <script src="//oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
   </head>
-  <body>
+  <body >
     <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container"> 
         <div class="navbar-header">
@@ -69,7 +69,7 @@
     </nav>
 
 
-    <div class="container-fluid background-color">
+    <div class="container-fluid background-color max-height">
 
       @yield('content')
 

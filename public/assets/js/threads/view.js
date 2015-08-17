@@ -167,10 +167,10 @@ results = {
 				swipeStatus:function(event, phase, direction, distance, duration, fingers, fingerData) {
  			  	switch(direction){
 			  		case "left":
-			  			if (distance > 25) {right_box_open()};
+			  			if (distance > 50) {right_box_open()};
 			  		break;
 			  		case "right":
-			  			if (distance > 25) {right_box_close()};
+			  			if (distance > 50) {right_box_close()};
 			  		break;
 			  	}
 			  },
@@ -254,7 +254,7 @@ request = {
 			$('#loading-icons-1').addClass('hide');
 
 			if (isself == true) {
-				$('#quote-text').text('Responde');
+				$('#quote-text').text('Respond');
 				$('#replace-quoter-name').text('');		
 			} else {
 				$('#quote-text').text('Quote');

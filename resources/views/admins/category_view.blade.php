@@ -7,6 +7,7 @@
 @stop
 
 @section('content')
+
 <div class="jumbotron">
 	<h1>Category</h1>
 </div>

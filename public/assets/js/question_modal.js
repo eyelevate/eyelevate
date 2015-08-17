@@ -12,8 +12,7 @@ question_modal = {
 		});
 	},
 	modal_stepy: function(){
-		$('.next-btn').click(function(){
-
+		$(document).on('click','.next-btn',function(){
 			var _this = $(this).parents('.modal:first').find('.step[state="active"]');
 			var current_step = parseInt(_this.attr('step'));
 			if (current_step < 4) {
@@ -23,16 +22,33 @@ question_modal = {
 					if (!$.isBlank(search_text)) {
 						//SEND SEARCH REQUEST TO PHP 
 						request_a.search_query(search_text, _this, current_step,$(this));
-					};
-				} else {
-					//THIS IS THE FINAL STEP SHOW SUBMIT BTN
-					if (current_step == 3) {
-						$('#nxt-btn').addClass('hide');
-						$('#qst-submit').removeClass('hide');						
 					} else {
-						$('#nxt-btn').removeClass('hide');
-						$('#qst-submit').addClass('hide');
+						$('#comment_text').focus();
 					}
+				} else if(current_step == 3) {
+					var description_text = $('#question-description').val();
+					var title_text = $('#question-title').val();
+					
+					if (!$.isBlank(description_text) && !$.isBlank(title_text)) {
+						$('#nxt-btn').addClass('hide');
+						$('#qst-submit').removeClass('hide');
+						var next_step = current_step + 1;
+						//DEACTIVE THE PREVIOUS STATE AND HIDE IT
+						_this.attr('state',null);
+						_this.addClass('hide');
+						//SHOW AND ACTIVE THE NEXT STEP
+						$('.step-'+next_step).removeClass('hide').attr('state','active');
+						manage_modal_btns($(this),next_step);
+					} else {	
+						if ($.isBlank(description_text)) {
+							$('#question-description').focus();
+						} else {
+							$('#question-title').focus();
+						}
+					}
+				} else {
+					$('#nxt-btn').removeClass('hide');
+					$('#qst-submit').addClass('hide');
 					var next_step = current_step + 1;
 					if (next_step == 3) {
 						var search_text = $('#comment_text').val();
@@ -47,7 +63,7 @@ question_modal = {
 				}
 			}
 		});
-		$('.back-btn').click(function(){
+		$(document).on('click','.back-btn',function(){
 			var _this = $(this).parents('.modal:first').find('.step[state="active"]');
 			var current_step = parseInt(_this.attr('step'));
 			if (current_step > 1) {
@@ -67,7 +83,6 @@ question_modal = {
 				} else {
 					var next_step = current_step - 1;
 				}
-
 				//BACK TO STEP 1
 				if (next_step == 1) { 
 					$(this).addClass('hide');
@@ -82,6 +97,17 @@ question_modal = {
 		});
 	},
 	events: function() {
+		$('#ask_modal').on('hide.bs.modal', function (e) {
+			reset_ask_modal();
+		});
+		$(document).on('click','#qst-submit',function(){
+			var count = $('#h3-wrapper .category-tag').length;
+			if (count != 0) {
+				$('#question_add').submit();
+			} else {
+				$('.custom-dropdown__select--white').focus();
+			}
+		});
 	}
 }
 request_a = {
@@ -159,6 +185,15 @@ request_a = {
 		);
 	}
 };
+function reset_ask_modal(){
+	$('.step-1').removeClass('hide');
+	$('.step-2').addClass('hide');
+	$('.step-3').addClass('hide');
+	$('.step-4').addClass('hide');
+
+	$('.step').attr('state','');
+	$('.step-1').attr('state','active');
+}
 function manage_modal_btns(this_elem, next_step){
 				//SETTING THE HEADER TITLE
 			switch(next_step){

@@ -14,7 +14,7 @@ use Response;
 use Auth;
 use URL;
 use Session;
-use Flash;
+use Laracasts\Flash\Flash;
 use View;
 
 use App\Http\Requests;
@@ -47,18 +47,22 @@ class CategoriesController extends Controller
     }
     public function getAdd()
     {   
+        
         return view('categories.add')
         ->with('layout',$this->layout);
-               
     }
 
     public function postAdd()
     {   
-            $validator = Validator::make(Input::all(), Category::$add_roles);
-            if ($validator->passes()) {
-                $title = Input::get('category-title');
-                $description = Input::get('category-description');
+        $validator = Validator::make(Input::all(), Category::$add_roles);
+        
 
+
+        if ($validator->passes()) {
+            $title = Input::get('category-title');
+            $description = Input::get('category-description');
+            $duplicate = count(Category::where('name',$title)->get());
+            if ($duplicate == 0) {
                 $categories = new Category;
                 $categories->name = $title;
                 $categories->description = $description;
@@ -69,15 +73,19 @@ class CategoriesController extends Controller
                     ->with('layout',$this->layout)
                     ->with('message_feedback','Successfully Added');
                 }
+            } else {
+                Flash::error('Error: Duplicate Entry');
+                return Redirect::back();
             }
-            else {
-                // validation has failed, display error messages    
-                return Redirect::back()
-                    ->with('message', 'The following errors occurred')
-                    ->with('alert_type','alert-danger')
-                    ->withErrors($validator)
-                    ->withInput();  
-            }
+        }
+        else {
+            // validation has failed, display error messages    
+            return Redirect::back()
+                ->with('message', 'The following errors occurred')
+                ->with('alert_type','alert-danger')
+                ->withErrors($validator)
+                ->withInput();  
+        }
     }
 
 

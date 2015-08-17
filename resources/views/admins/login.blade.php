@@ -6,9 +6,6 @@
 @stop
 
 @section('content')
-
-
-
 <div class="container">
   <div class="row-fluid">
       <strong><h2 class="text-center" style="margin-top:100px">Admin Login</h2></strong>
@@ -18,7 +15,6 @@
                Wrong username or password
             </div>
       @endif
-      @include('flash::message')
   </div>
   <div class="row" id="pwd-container">
     <div class="col-md-4"></div>
@@ -33,10 +29,6 @@
              <input type="password" name="password" class="form-control input-lg" id="password" placeholder="Password" required="" />
             </div>
             <button type="submit" name="go" class="btn btn-lg btn-primary btn-block">Sign in</button>
-            <div>
-              <a href="#">Create account</a> or <a href="#">reset password</a>
-            </div>
-
            {!! Form::close() !!}
       </section>  
     </div>

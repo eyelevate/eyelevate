@@ -10,7 +10,6 @@
 
 	<div class="jumbotron">
 		<h1>Roles Add</h1>
-		@include('flash::message')
 		<a href="" id="url" class="hide" target="_blank"></a>
 		<div class="alert alert-warning delivery-area-alert hide clearfix">
 		</div>

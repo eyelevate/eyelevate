@@ -103,7 +103,7 @@ class Thread extends Model
 							    </div>';
 		}
 
-		$html .= '<hr><h4>Other threads:</h4><hr>';
+		$html .= '<h4 class="other-thread">Other threads:</h4><hr>';
 		return $html;
 	}
 

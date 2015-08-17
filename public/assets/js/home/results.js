@@ -87,8 +87,6 @@ results = {
 		$(document).on('click','.left-btn',function(){
 				$(this).parents('.dialogbox-container:first').find('.reply-media:first').remove();
 		});
-
-
 		//FLAG UP CLICKED
 		$(document).on('click','.thumb-up',function(){
 
@@ -102,13 +100,17 @@ results = {
 
 		});
 		//Reply FLAG CLICKED
-		$(document).on('click','.reply-btn',function(){
-		
+		$(document).on('click','.inpage-search-btn',function(){
+			var searched_text = $(this).parents('.input-group:first').find('.inpage-search').val();
+			var this_length = searched_text.length;
+			if (!$.isBlank(searched_text) && this_length > 2) {
+				request.inpage_search(searched_text);
+				$('.cat-items').removeClass('act');
+			};
+			
 		});
 
-		$('#qst-submit').click(function(){
-			$('#question_add').submit();
-		});
+
 
 		//MORE CLICKED
 		$('.more').click(function(){
@@ -137,16 +139,7 @@ results = {
 				//BRING THE GLYPHICON TO top	
 				$(this).removeClass('icon-bottom').addClass('icon-top');
 			}
-
 		});
-		
-
-
-	// $('a #right-arr').click(function(e)
-	// {
-	// 	alert();
-	//     // e.preventDefault();
-	// });
 		//FLAG WAS CLICKED
 		$('.flags').click(function(){
 			//MOUSE OVER POPUP MESSAGE
@@ -190,9 +183,36 @@ request = {
 			switch(status) {
 				case 200: // Approved
 					$('#ask_modal').modal('show');
+
 				break;				
 				case 400: // Approved
 					$('#myModal').modal('toggle');
+				break;
+				default:
+				break;
+			}
+		}
+		);
+	},
+	inpage_search: function(searched_text) {
+	var token = $('meta[name=csrf-token]').attr('content');
+	$.post(
+		'/threads/inpage-search',
+		{
+			"_token": token,
+			"searched_text":searched_text
+		},
+		function(result){
+			var status = result.status;
+			var searched_results_html = result.searched_results_html;
+			var prepared_thread = result.prepared_thread;
+			switch(status) {
+				case 200: // Approved
+					$('#thread-group').html('');
+					$('#thread-group').html(searched_results_html);
+					$('#thread-group').append(prepared_thread);
+				break;				
+				case 400: // Approved
 				break;
 				default:
 				break;

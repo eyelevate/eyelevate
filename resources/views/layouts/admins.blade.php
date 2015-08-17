@@ -51,7 +51,7 @@
                 <div class="left_col scroll-view">
 
                     <div class="navbar nav_title" style="border: 0;">
-                        <a href="index.html" class="site_title"> <span>Eyelevate - Admin</span></a>
+                        <a href="/search" class="site_title"> <span>Eyelevate - Admin</span></a>
                     </div>
                     <div class="clearfix"></div>
 
@@ -184,6 +184,7 @@
             <!-- page content -->
             <div class="right_col" role="main">
                 <div class="row">
+                    @include('flash::message')
 					@yield('content')
                 </div>
             </div>

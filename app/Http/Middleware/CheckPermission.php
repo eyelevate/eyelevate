@@ -5,7 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use App\Job;
 use Auth;
-use Flash;
+use Laracasts\Flash\Flash;
 use Session;
 use Redirect;
 class CheckPermission

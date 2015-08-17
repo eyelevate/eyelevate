@@ -58,12 +58,23 @@ class HomeController extends Controller
         $search_query = Input::get('searched-content');
         $searched_results_html = '';
         if ($search_query) {
-            $search_results = Search::index_search_function($search_query);
-            if (!empty($search_results)) {
-                // $search_array_count = sizeof($search_results);
-                $searched_results_html = Thread::prepareSearchedResults($search_results);
-                // $new_paginate_num =  $paginate_num - $search_array_count;
-                // $new_paginate_num = $new_paginate_num < 1?$new_paginate_num = 1:$new_paginate_num;
+            if (strlen($search_query) > 2) {
+                $searched_results_html = '<h4>You searched for : '.$search_query.'</h4> ';
+                $search_results = Search::index_search_function($search_query);
+                if (!empty($search_results)) {
+                    // $search_array_count = sizeof($search_results);
+                    $searched_results_html = Thread::prepareSearchedResults($search_results);
+                    // $new_paginate_num =  $paginate_num - $search_array_count;
+                    // $new_paginate_num = $new_paginate_num < 1?$new_paginate_num = 1:$new_paginate_num;
+                } else {
+                    $searched_results_html .= '"'.$search_query.'" Did not match any threads.';
+                    $searched_results_html .= '<hr><h4>Suggestions:</h4>
+                                    <ul>
+                                      <li>Make sure all words spelled correctly</li>
+                                      <li>Try diffrent or fewer words</li>
+                                    </ul> 
+                                    <h4 class="other-thread">Other threads:</h4><hr>';
+                }
             }
         }
         //ALL THREADS

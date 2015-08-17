@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\Auth\Guard;
 use Session;
 use URL;
-use Flash;
+use Laracasts\Flash\Flash;
 use Auth;
 
 class Authenticate

@@ -11,18 +11,18 @@
 <script src="/assets/js/question_modal.js"></script>
 @stop
 @section('content')
-<div class="site-wrapper">
-  <div class="container-fluid">
+<div class="site-wrapper max-height">
+  <div class="container-fluid max-height">
     <!-- LEFT BOX START -->
-    <div class="col-md-9" id="left-box" target="false">
+    <div class="col-md-9 max-height" id="left-box" target="false">
       <!-- Page Flash messages go here -->
       @include('flash::message')
       <div class="container" id="left-box-inner">
         <div class="" id="preferences-frame">
           <div class="input-group " id="top-search-bar" >
-            <input type="text" class="form-control" id="top-search-input" placeholder="Search for Categories">
+            <input type="text" class="form-control inpage-search" id="top-search-input" placeholder="Search for ...">
             <span class="input-group-btn">
-              <button class="btn btn-default " id="top-search-btn" type="button">
+              <button class="btn btn-default inpage-search-btn" id="top-search-btn" type="button">
                 <i class="glyphicon glyphicon-search"> </i>
               </button>
             </span>
@@ -49,16 +49,18 @@
   </div>
   <!-- LEFT BOX END -->
   <!-- RIGHT BOX START -->
-  <div class="col-md-3 " id="right-box"> 
+  <div class="col-md-3 max-height" id="right-box"> 
     <a class="btn btn-primary btn-block ask_q_btn">Ask a Question</a>
     <div class="" id="right-box-inner">
 
       <div class="list-group list-group-container">
         <a href="#" class="list-group-item active " id="list-search-bar">
           <div class="input-group" >
-            <input type="text" class="form-control" id="list-search-input" placeholder="Search for Categories">
+            <input type="text" class="form-control inpage-search" id="list-search-input" placeholder="Search for ...">
             <span class="input-group-btn">
-              <button class="btn btn-default " id="list-search-btn" type="button"><i class="glyphicon glyphicon-search">  </i></button>
+              <button class="btn btn-default inpage-search-btn" id="list-search-btn" type="button">
+                <i class="glyphicon glyphicon-search">  </i>
+              </button>
             </span>
           </div><!-- /input-group -->
         </a>

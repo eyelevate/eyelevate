@@ -452,4 +452,45 @@ class ThreadsController extends Controller
             ));
         }
     }
+
+    public function postInpageSearch()
+    {
+        $status = 200;
+        //FIND SEARCH RESULTS
+        $search_query = Input::get('searched_text');
+
+        $searched_results_html = '<h4>You searched for : '.$search_query.'</h4> ';
+
+        if ($search_query) {
+            $search_results = Search::index_search_function($search_query);
+            if (!empty($search_results)) {
+                $searched_results_html = Thread::prepareSearchedResults($search_results);
+            } else{
+                $searched_results_html .= '"'.$search_query.'" Did not match any threads.';
+                $searched_results_html .= '<hr><h4>Suggestions:</h4>
+                                <ul>
+                                  <li>Make sure all words spelled correctly</li>
+                                  <li>Try diffrent or fewer words</li>
+                                </ul> 
+                                <h4 class="other-thread">Other threads:</h4><hr>';
+            }
+        }
+        //ALL THREADS
+        $prepared_thread = Thread::prepareThreadForView(Thread::Where('status',1)
+            ->orderBy('created_at', 'DESC')
+            ->paginate(10));
+        $prepared_thread_clone = Thread::Where('status',1)
+            ->orderBy('created_at', 'DESC')
+            ->paginate(10);
+        $this->layout = 'layouts.master-layout';
+        $categories_for_select = Category::prepareForSelect(Category::where('status',1)->get());
+        $categories_for_side = Category::prepareForSide(Category::where('status',1)->get());
+  
+        return Response::json(array(
+            'status' => $status,
+            'searched_results_html' => $searched_results_html,
+            'prepared_thread' => $prepared_thread
+        ));
+
+    }
 }

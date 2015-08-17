@@ -1,12 +1,6 @@
 html{
   overflow: hidden;
 }
-
-
-div#thread-group {
-      overflow-y: scroll !important;
-    height: 579px !important;
-}
 /*ADD ANSWER STYLING*/
 #add-answer-title{
   font-size: 22px;
@@ -14,6 +8,9 @@ div#thread-group {
 #loading-container{
   text-align: center;
 
+}
+.max-height {
+  height: 100% !important;
 }
 .setting-icon{
     margin-left: 5px;
@@ -32,8 +29,7 @@ span.message-body {
   display: none;
 }
 #add-answer {
-    padding: 30px;
-    margin-bottom: 140px;
+  padding: 30px;
 }
 .show-quote{
 
@@ -176,7 +172,7 @@ color: inherit !important;
 #thread-group{
   margin: 0 0 0 0;
   height: 100%;
-
+height: 579px !important;
 }
 .thread-description{
     color: #576366;
@@ -280,8 +276,8 @@ a{
 }
 .left-box-inner {
     width: 100%;
-    height: 650px;
-    min-height: 650px;
+    height: 88%;
+    /*min-height: 650px;*/
     /* border: 1px solid yellow; */
     overflow: auto;
     background-color: #fff;
@@ -342,7 +338,8 @@ width: 90%;
   margin-bottom: 20px;
   padding-left: 0;
   padding-right: 0;
-  height: 579px;
+  height: 88%;
+  overflow-x: auto;
 }
 #right-box{
   /*border:1px solid red;*/
@@ -350,16 +347,6 @@ width: 90%;
   padding-top: 75px;
   padding-bottom: 20px;
 }
-
-
-
-
-
-
-
-
-
-
 .inner {
   padding-right: 0;
   margin-top: 65px !important;
@@ -403,23 +390,6 @@ display: block;
 #swipe-left{
   display: none;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*SIDE MESSAGES*/
 .right-data{
  height: 105px;
