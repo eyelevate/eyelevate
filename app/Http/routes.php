@@ -21,11 +21,51 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 	 */
 	$acl_variable = "admins";
 	/** PUBLIC SECTION **/
-	Route::get('/admins/login', 'AdminsController@getLogin');
-	Route::post('/admins/login', 'AdminsController@postLogin');
-	Route::get('/admins/logout', 'AdminsController@getLogout');
+		Route::get('/admins/login', 'AdminsController@getLogin');
+		Route::post('/admins/login', 'AdminsController@postLogin');
+		Route::get('/admins/logout', 'AdminsController@getLogout');
 
 		//NO ACL
+		Route::get('/admins',  ['as'=>'admins_index', 'uses' => 'AdminsController@getIndex']);
+
+
+		Route::get('/admins/roles/index',  ['as'=>'roles_index', 'uses' => 'RolesController@getIndex']);
+		Route::get('/admins/roles/add',  ['as'=>'roles_add', 'uses' => 'RolesController@getAdd']);
+		Route::post('/admins/roles/add',  ['uses' => 'RolesController@postAdd']);
+		Route::get('/admins/roles/edit/{id}',  ['as'=>'roles_edit', 'uses' => 'RolesController@getEdit']);
+		Route::post('/admins/roles/edit',  ['as'=>'roles_update','uses' => 'RolesController@postEdit']);
+		Route::get('/admins/roles/delete-data/{id}',  ['as'=>'roles_delete', 'uses' => 'RolesController@getDelete']);
+
+
+
+		Route::get('/admins/permissions/index',  ['as'=>'permissions_index', 'uses' => 'PermissionsController@getIndex']);
+		Route::get('/admins/permissions/add',  ['as'=>'permissions_add','uses' => 'PermissionsController@getAdd']);
+		Route::post('/admins/permissions/add',  ['uses' => 'PermissionsController@postAdd']);
+		Route::get('/admins/permissions/edit/{id}',  ['as'=>'permissions_edit','uses' => 'PermissionsController@getEdit']);
+		Route::post('/admins/permissions/edit',  ['uses' => 'PermissionsController@postEdit']);
+		Route::get('/admins/permissions/delete-data/{id}',  ['as'=>'permissions_delete','uses' => 'PermissionsController@getDelete']);
+
+
+
+		Route::get('/admins/permission-roles/index',  ['as'=>'permission_roles_index', 'uses' => 'PermissionRolesController@getIndex']);
+		Route::get('/admins/permission-roles/add',  ['as'=>'permission_roles_add', 'uses' => 'PermissionRolesController@getAdd']);
+		Route::post('/admins/permission-roles/add',  ['uses' => 'PermissionRolesController@postAdd']);
+		Route::get('/admins/permission-roles/edit/{id}',  ['as'=>'permission_roles_edit', 'uses' => 'PermissionRolesController@getEdit']);
+		Route::post('/admins/permission-roles/edit',  ['uses' => 'PermissionRolesController@postEdit']);
+		Route::get('/admins/permission-roles/delete-data/{id}',  ['as'=>'permission_roles_delete', 'uses' => 'PermissionRolesController@getDelete']);
+
+
+
+		Route::get('/admins/acl/view',  ['as' => 'acl_view','uses' => 'AdminsController@getViewAcl']);
+		Route::get('/admins/categories/view',  ['as'=>'category_view', 'uses' => 'AdminsController@getViewCategory']);
+		Route::get('/admins/categories/add',  ['as'=>'category_add', 'uses' => 'CategoriesController@getAdd']);
+		Route::post('/admins/categories/add',  ['uses' => 'CategoriesController@postAdd']);
+		Route::get('/admins/categories/edit',  ['as'=>'category_edit','uses' => 'CategoriesController@getEdit']);
+		Route::post('/admins/categories/edit',  ['uses' => 'CategoriesController@postEdit']);
+
+	/** ADMINS ACL GROUP **/
+	Route::group(['middleware' => ['auth','acl:'.$acl_variable]], function(){
+
 		// Route::get('/admins',  ['as'=>'admins_index', 'uses' => 'AdminsController@getIndex']);
 		// Route::get('/admins/roles/add',  ['as'=>'roles_add', 'uses' => 'RolesController@getAdd']);
 		// Route::post('/admins/roles/add',  ['uses' => 'RolesController@postAdd']);
@@ -39,22 +79,6 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 		// Route::post('/admins/categories/add',  ['uses' => 'CategoriesController@postAdd']);
 		// Route::get('/admins/categories/edit',  ['as'=>'category_edit','uses' => 'CategoriesController@getEdit']);
 		// Route::post('/admins/categories/edit',  ['uses' => 'CategoriesController@postEdit']);
-
-	/** ADMINS ACL GROUP **/
-	Route::group(['middleware' => ['auth','acl:'.$acl_variable]], function(){
-		Route::get('/admins',  ['as'=>'admins_index', 'uses' => 'AdminsController@getIndex']);
-		Route::get('/admins/roles/add',  ['as'=>'roles_add', 'uses' => 'RolesController@getAdd']);
-		Route::post('/admins/roles/add',  ['uses' => 'RolesController@postAdd']);
-		Route::get('/admins/permissions/add',  ['as'=>'permissions_add','uses' => 'PermissionsController@getAdd']);
-		Route::post('/admins/permissions/add',  ['uses' => 'PermissionsController@postAdd']);
-		Route::get('/admins/permission-roles/add',  ['as'=>'permissions_roles_add', 'uses' => 'PermissionRolesController@getAdd']);
-		Route::post('/admins/permission-roles/add',  ['uses' => 'PermissionRolesController@postAdd']);
-		Route::get('/admins/acl/view',  ['as' => 'acl_view','uses' => 'AdminsController@getViewAcl']);
-		Route::get('/admins/categories/view',  ['as'=>'category_view', 'uses' => 'AdminsController@getViewCategory']);
-		Route::get('/admins/categories/add',  ['as'=>'category_add', 'uses' => 'CategoriesController@getAdd']);
-		Route::post('/admins/categories/add',  ['uses' => 'CategoriesController@postAdd']);
-		Route::get('/admins/categories/edit',  ['as'=>'category_edit','uses' => 'CategoriesController@getEdit']);
-		Route::post('/admins/categories/edit',  ['uses' => 'CategoriesController@postEdit']);
 	});
 
 

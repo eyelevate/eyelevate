@@ -39,41 +39,78 @@ class PermissionRolesController extends Controller
         View::share('this_user_profile_image',$this_user_profile_image);
 
     }
+    public function getIndex()
+    {   
+        $per_roles = PermissionRole::all();
+        $output = [];
+        $roles_array = [];
+        foreach ($per_roles as $prkey => $prvalue) {
+            $role = Role::find($prvalue->role_id);
+            if (isset($role)) {
+                $roles_array[$role->role_title] = $role->role_title;
+                $permission = Permission::find($prvalue->permission_id);
+                if (isset($permission)) {
+                    $output[$role->role_title][$prvalue->id] = $permission->permission_slug;
+                }
+            }
 
+        }
+        return view('permission_roles.index')
+            ->with('layout',$this->layout)
+            ->with('output',$output)
+            ->with('roles_array',$roles_array);
+    }
 
     public function getAdd()
     {   
+
+        $per_roles = PermissionRole::all();
+        $output = [];
+        $roles_array = [];
+        foreach ($per_roles as $prkey => $prvalue) {
+            $role = Role::find($prvalue->role_id);
+            if (isset($role)) {
+                $roles_array[$role->role_title] = $role->role_title;
+                $permission = Permission::find($prvalue->permission_id);
+                if (isset($permission)) {
+                    $output[$role->role_title][$prvalue->id] = $permission->permission_slug;
+                }
+            }
+        }     
+
+
         $permissions = Permission::PerpareAllForSelect();
         $roles = Role::PerpareAllForSelect();
         return view('permission_roles.add')
 	        ->with('layout',$this->layout)
 	        ->with('permissions',$permissions)
-	        ->with('roles',$roles);
-               
+	        ->with('roles',$roles)
+            ->with('output',$output)
+            ->with('roles_array',$roles_array);
     }
-
-
     //PERMISISON ROLE
     public function postAdd()
     {
+        $permission = Input::get('permission_id');
+        $role = Input::get('role_id');
+        $perm_count = count(PermissionRole::
+                            where('permission_id',$permission)
+                            ->where('role_id',$role)
+                            ->get());
         $validator = Validator::make(Input::all(), Admin::$add_permission_role);
         if ($validator->passes()) {
-            $permission = Input::get('permission_id');
-            $role = Input::get('role_id');
+            if ($perm_count == 0) {
+                $permission_role = new PermissionRole;
+                $permission_role->permission_id = $permission;
+                $permission_role->role_id = $role;
 
-            $permission_role = new PermissionRole;
-            $permission_role->permission_id = $permission;
-            $permission_role->role_id = $role;
-
-            if ($permission_role->save()) {
-                $permissions = Permission::PerpareAllForSelect();
-                $roles = Role::PerpareAllForSelect();
-                return view('permission_roles.add')
-	                ->with('layout',$this->layout)
-	                ->with('permissions',$permissions)
-	                ->with('roles',$roles)
-	                ->with('message_feedback','Successfully Added');
+                if ($permission_role->save()) {
+                    return Redirect::action('PermissionRolesController@getAdd');
+                }
+            } else {
+                return Redirect::action('PermissionRolesController@getAdd');
             }
+
         }
         else {
             // validation has failed, display error messages    
@@ -83,5 +120,39 @@ class PermissionRolesController extends Controller
                 ->withErrors($validator)
                 ->withInput();  
         } 
+    }
+        public function getEdit($id = null)
+    {   
+        $p_role = PermissionRole::find($id);
+
+        $permissions = Permission::PerpareAllForSelect();
+        $roles = Role::PerpareAllForSelect();
+
+        return view('permission_roles.edit')
+            ->with('layout',$this->layout)
+            ->with('p_role',$p_role)
+            ->with('permissions',$permissions)
+            ->with('roles',$roles);
+
+    }
+    //PERMISISON ROLE
+    public function postEdit()
+    {
+        $pre_roles = PermissionRole::find(Input::get('id'));
+        $pre_roles->permission_id = Input::get('permission_id');
+        $pre_roles->role_id = Input::get('role_id');
+
+        if ($pre_roles->save()) {
+            return Redirect::action('PermissionRolesController@getIndex');
+        }
+
+    }
+
+    public function getDelete($id = null)
+    {   
+        $pre_roles = PermissionRole::find($id);
+        if ($pre_roles->delete()) {
+            return Redirect::action('PermissionRolesController@getIndex');
+        }
     }
 }

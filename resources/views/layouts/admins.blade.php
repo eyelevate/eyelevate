@@ -82,7 +82,11 @@
                                 </li>
                                 <li class="li-menus"><a><i class="fa fa-edit"></i> Access Control List <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu" style="display: none">
-                                        <li><a href="{!! route('acl_view') !!}">View</a>
+                                        <li><a href="{!! route('roles_index') !!}">Roles</a>
+                                        </li>
+                                        <li><a href="{!! route('permissions_index') !!}">Permissions</a>
+                                        </li>
+                                        <li><a href="{!! route('permission_roles_index') !!}">Permision Roles</a>
                                         </li>
                                     </ul>
                                 </li>

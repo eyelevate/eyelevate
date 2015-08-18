@@ -39,8 +39,51 @@ class PermissionsController extends Controller
         View::share('this_user_profile_image',$this_user_profile_image);
 
     }
+
+    public function getIndex()
+        {   
+            $permissions = Permission::all();
+            $perm = []; // Start the output
+
+            foreach ($permissions as $key => $value) {
+                $idx = 0;
+                $permission_roles = PermissionRole::where('permission_id',$value->id)->get();
+                if($permission_roles){
+                    foreach ($permission_roles as $prkey => $prvalue) {
+                        $idx++;
+                        $roles = Role::find($prvalue->role_id);
+                        $perm[$key][$idx] = $roles->role_title;
+                    }
+                }
+            }
+            if(count($perm) > 0){
+                foreach ($perm as $permkey => $permvalue) {
+                    $permissions[$permkey]['role_list'] = $permvalue;
+                }
+            }
+
+            return view('permissions.index')
+            ->with('layout',$this->layout)
+            ->with('permissions',$permissions);
+        }
+
     public function getAdd()
-    {               
+    {   
+        $per_roles = PermissionRole::all();
+        $output = [];
+        $roles_array = [];
+        foreach ($per_roles as $prkey => $prvalue) {
+            $role = Role::find($prvalue->role_id);
+            if (isset($role)) {
+                $roles_array[$role->role_title] = $role->role_title;
+                $permission = Permission::find($prvalue->permission_id);
+                if (isset($permission)) {
+                    $output[$role->role_title][$prvalue->id] = $permission->permission_slug;
+                }
+            }
+        }     
+
+
     	$saved_permissions = Permission::all();
         $all_routes = Permission::PrepareAllRouteForSelect();
         return view('permissions.add')
@@ -51,18 +94,15 @@ class PermissionsController extends Controller
     
     public function postAdd()
     {   
-
 	    $validator = Validator::make(Input::all(), Admin::$add_permission);
         if ($validator->passes()) {
         	$title = Input::get('permission-title');
         	$slug = Input::get('permission-slug');
         	$description = Input::get('permission-description');
-
         	$permissions = new Permission;
         	$permissions->permission_title = $title;
         	$permissions->permission_slug = $slug;
         	$permissions->permission_description = $description;
-
         	if ($permissions->save()) {
                 $all_routes = Permission::PrepareAllRouteForSelect();
                	return view('permissions.add')
@@ -80,6 +120,25 @@ class PermissionsController extends Controller
                 ->withInput();  
         } 
     }
+
+     public function getEdit($id = null)
+        {              
+            $per = Permission::find($id);
+            return view('permissions.edit')
+                ->with('layout',$this->layout)
+                ->with('permissions',$per);
+        }
+     public function postEdit()
+        {   
+            $per = Permission::find(Input::get('id'));
+            $per->permission_title = Input::get('title');
+            $per->permission_slug = Input::get('slug');
+            $per->permission_description = Input::get('description');
+
+            if ($per->save()) {
+                return Redirect::action('PermissionsController@getIndex');
+            }
+        }
         public function getAutoUpdate()
     {   
         $saved_permissions = Permission::all();
@@ -98,5 +157,11 @@ class PermissionsController extends Controller
         return Redirect::back();
     }
 
-
+    public function getDelete($id = null)
+    {   
+        $pre_roles = Permission::find($id);
+        if ($pre_roles->delete()) {
+            return Redirect::action('PermissionsController@getIndex');
+        }
+    }
 }
