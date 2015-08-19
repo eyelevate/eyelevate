@@ -29,12 +29,15 @@ class PermissionRolesController extends Controller
 
         // Define layout
         $this->layout = 'layouts.admins';
-        $this_user = User::find(Auth::user()->id);
-        $this_username = $this_user->username;
-
+        $this_username = null;
         //PROFILE IMAGE
-        $this_user_profile_image = Job::imageValidator($this_user->profile_image);
-
+        $this_user_profile_image = null;
+        if (Auth::check()) {
+            $this_user = User::find(Auth::user()->id);
+            $this_username = $this_user->username;
+            //PROFILE IMAGE
+            $this_user_profile_image = Job::imageValidator($this_user->profile_image);
+        } 
         View::share('this_username',$this_username);
         View::share('this_user_profile_image',$this_user_profile_image);
 
@@ -56,9 +59,9 @@ class PermissionRolesController extends Controller
 
         }
         return view('permission_roles.index')
-            ->with('layout',$this->layout)
-            ->with('output',$output)
-            ->with('roles_array',$roles_array);
+        ->with('layout',$this->layout)
+        ->with('output',$output)
+        ->with('roles_array',$roles_array);
     }
 
     public function getAdd()
@@ -82,11 +85,11 @@ class PermissionRolesController extends Controller
         $permissions = Permission::PerpareAllForSelect();
         $roles = Role::PerpareAllForSelect();
         return view('permission_roles.add')
-	        ->with('layout',$this->layout)
-	        ->with('permissions',$permissions)
-	        ->with('roles',$roles)
-            ->with('output',$output)
-            ->with('roles_array',$roles_array);
+        ->with('layout',$this->layout)
+        ->with('permissions',$permissions)
+        ->with('roles',$roles)
+        ->with('output',$output)
+        ->with('roles_array',$roles_array);
     }
     //PERMISISON ROLE
     public function postAdd()
@@ -94,34 +97,68 @@ class PermissionRolesController extends Controller
         $permission = Input::get('permission_id');
         $role = Input::get('role_id');
         $perm_count = count(PermissionRole::
-                            where('permission_id',$permission)
-                            ->where('role_id',$role)
-                            ->get());
+            where('permission_id',$permission)
+            ->where('role_id',$role)
+            ->get());
         $validator = Validator::make(Input::all(), Admin::$add_permission_role);
         if ($validator->passes()) {
             if ($perm_count == 0) {
-                $permission_role = new PermissionRole;
-                $permission_role->permission_id = $permission;
-                $permission_role->role_id = $role;
-
-                if ($permission_role->save()) {
-                    return Redirect::action('PermissionRolesController@getAdd');
+                if ($permission == "-999") {
+                   $all_permissions = Permission::all();
+                   foreach ($all_permissions as $alkey => $alvalue) {
+                    $all_p_count = count(PermissionRole::where('permission_id',$alvalue->id)
+                        ->where('role_id',$role)
+                        ->get());
+                       if ($all_p_count == 0) {
+                        $permission_role = new PermissionRole;
+                        $permission_role->permission_id = $alvalue->id;
+                        $permission_role->role_id = $role;
+                        $permission_role->save();
+                        }  else {
+                        Flash::error('Duplicate Entry');
+                       }
+                   }
+                } else if ($role == "-999") {//ALL
+                    $all_roles = Role::all();
+                    foreach ($all_roles as $arkey => $arvalue) {
+                        $all_count = count(PermissionRole::
+                            where('permission_id',$permission)
+                            ->where('role_id',$arvalue->id)
+                            ->get());
+                        if ($all_count == 0) {
+                            $permission_role = new PermissionRole;
+                            $permission_role->permission_id = $permission;
+                            $permission_role->role_id = $arvalue->id;
+                            $permission_role->save();
+                        }
+                        else {
+                            Flash::error('Duplicate Entry');
+                        }
+                    }
+                } else {
+                    $permission_role = new PermissionRole;
+                    $permission_role->permission_id = $permission;
+                    $permission_role->role_id = $role;
+                    if ($permission_role->save()) {
+                        return Redirect::action('PermissionRolesController@getAdd');
+                    }  
                 }
+                return Redirect::action('PermissionRolesController@getAdd');
             } else {
+                Flash::error('Duplicate Entry');
                 return Redirect::action('PermissionRolesController@getAdd');
             }
-
         }
         else {
             // validation has failed, display error messages    
             return Redirect::back()
-                ->with('message', 'The following errors occurred')
-                ->with('alert_type','alert-danger')
-                ->withErrors($validator)
-                ->withInput();  
+            ->with('message', 'The following errors occurred')
+            ->with('alert_type','alert-danger')
+            ->withErrors($validator)
+            ->withInput();  
         } 
     }
-        public function getEdit($id = null)
+    public function getEdit($id = null)
     {   
         $p_role = PermissionRole::find($id);
 
@@ -129,10 +166,10 @@ class PermissionRolesController extends Controller
         $roles = Role::PerpareAllForSelect();
 
         return view('permission_roles.edit')
-            ->with('layout',$this->layout)
-            ->with('p_role',$p_role)
-            ->with('permissions',$permissions)
-            ->with('roles',$roles);
+        ->with('layout',$this->layout)
+        ->with('p_role',$p_role)
+        ->with('permissions',$permissions)
+        ->with('roles',$roles);
 
     }
     //PERMISISON ROLE

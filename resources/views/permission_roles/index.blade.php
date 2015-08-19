@@ -23,8 +23,9 @@
     <!-- Tab panes -->
     <div class="tab-content">
       <spc style="margin:10px;"></spc>
+      {{--*/ $num_2 = 1 /*--}}
       @foreach($output as $output_s => $value)
-      <div class="tab-pane fade {{$output_s=='admins'?'active in':''}}" id="{{$output_s}}">
+      <div class="tab-pane fade {{$num_2==1?'active in':''}}" id="{{$output_s}}">
         <table class="table table-bordered">
           <tbody>
             @foreach($value as $kslugs => $slugs)
@@ -40,6 +41,7 @@
           </tbody>
         </table>
       </div>
+      {{--*/ $num_2++ /*--}}
       @endforeach
     </div>
   </div>

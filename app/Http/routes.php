@@ -54,7 +54,15 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 		Route::post('/admins/permission-roles/edit',  ['uses' => 'PermissionRolesController@postEdit']);
 		Route::get('/admins/permission-roles/delete-data/{id}',  ['as'=>'permission_roles_delete', 'uses' => 'PermissionRolesController@getDelete']);
 
-
+		Route::get('/admins/flags/index',  ['as'=>'flags_index', 'uses' => 'FlagsController@getIndex']);
+		Route::get('/admins/flags/view/{id}',  ['as'=>'flag_view', 'uses' => 'FlagsController@getView']);
+		Route::post('/admins/flags/view',  ['uses' => 'FlagsController@postView']);
+		Route::get('/admins/flags/index/approved',  ['as'=>'flags_app', 'uses' => 'FlagsController@getApproved']);
+		Route::get('/admins/flags/index/rejected',  ['as'=>'flags_rej', 'uses' => 'FlagsController@getRejected']);
+		Route::get('/admins/flags/index/re-flagged',  ['as'=>'flags_re', 'uses' => 'FlagsController@getReflagged']);
+		Route::get('/admins/flags/index/final-approved',  ['as'=>'flags_f_app', 'uses' => 'FlagsController@getFinalApproved']);
+		Route::get('/admins/flags/index/final-reject',  ['as'=>'flags_f_rej', 'uses' => 'FlagsController@getFinalRejected']);
+		Route::get('/admins/flags/index/banned',  ['as'=>'flags_banned', 'uses' => 'FlagsController@getBanned']);
 
 		Route::get('/admins/acl/view',  ['as' => 'acl_view','uses' => 'AdminsController@getViewAcl']);
 		Route::get('/admins/categories/view',  ['as'=>'category_view', 'uses' => 'AdminsController@getViewCategory']);
@@ -109,7 +117,7 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 
 	//THREAD ROUTE 
 	Route::controller('threads', 'ThreadsController');
-		Route::get('/threads/view/{$id}', 'ThreadsController@getView');
+		Route::get('/threads/view/{id}',  ['as'=>'thread_view','uses' => 'ThreadsController@getView']);
 		Route::post('/threads/search-query', 'ThreadsController@postSearchQuery');
 		Route::post('/threads/retrive-quotes', 'ThreadsController@postRetriveQuotes');
 		Route::post('/threads/post-answer', 'ThreadsController@postPostAnswer');

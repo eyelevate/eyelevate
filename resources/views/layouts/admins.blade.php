@@ -90,6 +90,12 @@
                                         </li>
                                     </ul>
                                 </li>
+                                <li class="li-menus"><a><i class="fa fa-wrench"></i> Control Panel <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu" style="display: none">
+                                        <li><a href="{!! route('flags_index') !!}">Flags</a>
+                                        </li>
+                                    </ul>
+                                </li>
                                 <li class="li-menus"><a><i class="fa fa-edit"></i> Thread Setting<span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu" style="display: none">
                                         <li><a href="{!! route('category_view') !!}">Category</a>
@@ -176,7 +182,16 @@
                                     <li>
                                         <a href="javascript:;">Help</a>
                                     </li>
-                                    <li><a href="/admins/logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                                    <li>
+                                        @if(Auth::user())
+                                        <a href="/admins/logout">
+                                            <i class="fa fa-sign-out pull-right"></i> Log Out
+                                        </a>
+                                        @else
+                                        <a href="/admins/login">
+                                            <i class="fa fa-sign-out pull-right"></i> Log In
+                                        </a>
+                                        @endif
                                     </li>
                                 </ul>
                             </li>

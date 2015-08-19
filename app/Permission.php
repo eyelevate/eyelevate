@@ -31,6 +31,7 @@ class Permission extends Model
     public static function PerpareAllForSelect() {
         $data = Permission::get();
         $permissions = array(''=>'Select Permission');
+        $permissions['-999'] = 'All';
         if(isset($data)) {
             foreach ($data as $key => $value) {
                 $permissions_id = $value['id'];

@@ -23,6 +23,7 @@ return array(
     'CreateDiscussionsTable' => $baseDir . '/database/migrations/2015_07_14_060107_create_discussions_table.php',
     'CreateDislikesTable' => $baseDir . '/database/migrations/2015_08_07_034409_create_dislikes_table.php',
     'CreateFilterTable' => $baseDir . '/database/migrations/2015_07_14_060244_create_filter_table.php',
+    'CreateFlagLogsTable' => $baseDir . '/database/migrations/2015_08_19_082018_create_flag_logs_table.php',
     'CreateFlagsTable' => $baseDir . '/database/migrations/2015_08_07_022000_create_flags_table.php',
     'CreateLikesTable' => $baseDir . '/database/migrations/2015_08_07_034346_create_likes_table.php',
     'CreatePasswordResetsTable' => $baseDir . '/database/migrations/2015_07_12_100001_create_password_resets_table.php',
