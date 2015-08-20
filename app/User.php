@@ -78,7 +78,6 @@ AuthenticatableContract, CanResetPasswordContract
      */
     protected function checkPermission($perm)
     {
-
         $grant_access = false;
         $permissions = $this->getUserPermission(); // Returns a list of permission slugs for the specified user role
         $permissionArray = is_array($perm) ? $perm : [$perm]; // Returns uri of current page as an array

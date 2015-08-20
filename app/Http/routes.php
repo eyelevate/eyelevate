@@ -19,125 +19,155 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 	/**
 	 * ADMIN SECTION
 	 */
-	$acl_variable = "admins";
 	/** PUBLIC SECTION **/
-		Route::get('/admins/login', 'AdminsController@getLogin');
-		Route::post('/admins/login', 'AdminsController@postLogin');
-		Route::get('/admins/logout', 'AdminsController@getLogout');
 
-		//NO ACL
-		Route::get('/admins',  ['as'=>'admins_index', 'uses' => 'AdminsController@getIndex']);
+	//NO ACL
+	// Route::get('/admins',  ['as'=>'admins_index', 'uses' => 'AdminsController@getIndex']);
+	$prefix = 'admins';
+	Route::group(['prefix' => $prefix], function () {
+		Route::get('login', 'AdminsController@getLogin');
+		Route::post('login', 'AdminsController@postLogin');
+		Route::get('logout', 'AdminsController@getLogout');			
+		// Route::get('roles',  ['as'=>'roles_index', 'uses' => 'RolesController@getIndex']);
+		// Route::get('roles/add',  ['as'=>'roles_add', 'uses' => 'RolesController@getAdd']);
+		// Route::post('roles/add',  ['uses' => 'RolesController@postAdd']);
+		// Route::get('roles/edit/{id}',  ['as'=>'roles_edit', 'uses' => 'RolesController@getEdit']);
+		// Route::post('roles/edit',  ['as'=>'roles_update','uses' => 'RolesController@postEdit']);
+		// Route::get('roles/delete-data/{id}',  ['as'=>'roles_delete', 'uses' => 'RolesController@getDelete']);
 
+		// Route::get('permissions',  ['as'=>'permissions_index', 'uses' => 'PermissionsController@getIndex']);
+		// Route::get('permissions/add',  ['as'=>'permissions_add','uses' => 'PermissionsController@getAdd']);
+		// Route::post('permissions/add',  ['uses' => 'PermissionsController@postAdd']);
+		// Route::get('permissions/edit/{id}',  ['as'=>'permissions_edit','uses' => 'PermissionsController@getEdit']);
+		// Route::post('permissions/edit',  ['uses' => 'PermissionsController@postEdit']);
+		// Route::get('permissions/delete-data/{id}',  ['as'=>'permissions_delete','uses' => 'PermissionsController@getDelete']);
 
-		Route::get('/admins/roles/index',  ['as'=>'roles_index', 'uses' => 'RolesController@getIndex']);
-		Route::get('/admins/roles/add',  ['as'=>'roles_add', 'uses' => 'RolesController@getAdd']);
-		Route::post('/admins/roles/add',  ['uses' => 'RolesController@postAdd']);
-		Route::get('/admins/roles/edit/{id}',  ['as'=>'roles_edit', 'uses' => 'RolesController@getEdit']);
-		Route::post('/admins/roles/edit',  ['as'=>'roles_update','uses' => 'RolesController@postEdit']);
-		Route::get('/admins/roles/delete-data/{id}',  ['as'=>'roles_delete', 'uses' => 'RolesController@getDelete']);
+		// Route::get('permission-roles',  ['as'=>'permission_roles_index', 'uses' => 'PermissionRolesController@getIndex']);
+		// Route::get('permission-roles/add',  ['as'=>'permission_roles_add', 'uses' => 'PermissionRolesController@getAdd']);
+		// Route::post('permission-roles/add',  ['uses' => 'PermissionRolesController@postAdd']);
+		// Route::get('permission-roles/edit/{id}',  ['as'=>'permission_roles_edit', 'uses' => 'PermissionRolesController@getEdit']);
+		// Route::post('permission-roles/edit',  ['uses' => 'PermissionRolesController@postEdit']);
+		// Route::get('permission-roles/delete-data/{id}',  ['as'=>'permission_roles_delete', 'uses' => 'PermissionRolesController@getDelete']);
 
+		// Route::get('flags',  ['as'=>'flags_index', 'uses' => 'FlagsController@getIndex']);
+		// Route::get('flags/view/{id}',  ['as'=>'flag_view', 'uses' => 'FlagsController@getView']);
+		// Route::post('flags/view',  ['uses' => 'FlagsController@postView']);
+		// Route::get('flags/approved',  ['as'=>'flags_app', 'uses' => 'FlagsController@getApproved']);
+		// Route::get('flags/rejected',  ['as'=>'flags_rej', 'uses' => 'FlagsController@getRejected']);
+		// Route::get('flags/re-flagged',  ['as'=>'flags_re', 'uses' => 'FlagsController@getReflagged']);
+		// Route::get('flags/final-approved',  ['as'=>'flags_f_app', 'uses' => 'FlagsController@getFinalApproved']);
+		// Route::get('flags/final-reject',  ['as'=>'flags_f_rej', 'uses' => 'FlagsController@getFinalRejected']);
+		// Route::get('flags/banned',  ['as'=>'flags_banned', 'uses' => 'FlagsController@getBanned']);
 
-
-		Route::get('/admins/permissions/index',  ['as'=>'permissions_index', 'uses' => 'PermissionsController@getIndex']);
-		Route::get('/admins/permissions/add',  ['as'=>'permissions_add','uses' => 'PermissionsController@getAdd']);
-		Route::post('/admins/permissions/add',  ['uses' => 'PermissionsController@postAdd']);
-		Route::get('/admins/permissions/edit/{id}',  ['as'=>'permissions_edit','uses' => 'PermissionsController@getEdit']);
-		Route::post('/admins/permissions/edit',  ['uses' => 'PermissionsController@postEdit']);
-		Route::get('/admins/permissions/delete-data/{id}',  ['as'=>'permissions_delete','uses' => 'PermissionsController@getDelete']);
-
-
-
-		Route::get('/admins/permission-roles/index',  ['as'=>'permission_roles_index', 'uses' => 'PermissionRolesController@getIndex']);
-		Route::get('/admins/permission-roles/add',  ['as'=>'permission_roles_add', 'uses' => 'PermissionRolesController@getAdd']);
-		Route::post('/admins/permission-roles/add',  ['uses' => 'PermissionRolesController@postAdd']);
-		Route::get('/admins/permission-roles/edit/{id}',  ['as'=>'permission_roles_edit', 'uses' => 'PermissionRolesController@getEdit']);
-		Route::post('/admins/permission-roles/edit',  ['uses' => 'PermissionRolesController@postEdit']);
-		Route::get('/admins/permission-roles/delete-data/{id}',  ['as'=>'permission_roles_delete', 'uses' => 'PermissionRolesController@getDelete']);
-
-		Route::get('/admins/flags/index',  ['as'=>'flags_index', 'uses' => 'FlagsController@getIndex']);
-		Route::get('/admins/flags/view/{id}',  ['as'=>'flag_view', 'uses' => 'FlagsController@getView']);
-		Route::post('/admins/flags/view',  ['uses' => 'FlagsController@postView']);
-		Route::get('/admins/flags/index/approved',  ['as'=>'flags_app', 'uses' => 'FlagsController@getApproved']);
-		Route::get('/admins/flags/index/rejected',  ['as'=>'flags_rej', 'uses' => 'FlagsController@getRejected']);
-		Route::get('/admins/flags/index/re-flagged',  ['as'=>'flags_re', 'uses' => 'FlagsController@getReflagged']);
-		Route::get('/admins/flags/index/final-approved',  ['as'=>'flags_f_app', 'uses' => 'FlagsController@getFinalApproved']);
-		Route::get('/admins/flags/index/final-reject',  ['as'=>'flags_f_rej', 'uses' => 'FlagsController@getFinalRejected']);
-		Route::get('/admins/flags/index/banned',  ['as'=>'flags_banned', 'uses' => 'FlagsController@getBanned']);
-
-		Route::get('/admins/acl/view',  ['as' => 'acl_view','uses' => 'AdminsController@getViewAcl']);
-		Route::get('/admins/categories/view',  ['as'=>'category_view', 'uses' => 'AdminsController@getViewCategory']);
-		Route::get('/admins/categories/add',  ['as'=>'category_add', 'uses' => 'CategoriesController@getAdd']);
-		Route::post('/admins/categories/add',  ['uses' => 'CategoriesController@postAdd']);
-		Route::get('/admins/categories/edit',  ['as'=>'category_edit','uses' => 'CategoriesController@getEdit']);
-		Route::post('/admins/categories/edit',  ['uses' => 'CategoriesController@postEdit']);
-
-	/** ADMINS ACL GROUP **/
-	Route::group(['middleware' => ['auth','acl:'.$acl_variable]], function(){
-
-		// Route::get('/admins',  ['as'=>'admins_index', 'uses' => 'AdminsController@getIndex']);
-		// Route::get('/admins/roles/add',  ['as'=>'roles_add', 'uses' => 'RolesController@getAdd']);
-		// Route::post('/admins/roles/add',  ['uses' => 'RolesController@postAdd']);
-		// Route::get('/admins/permissions/add',  ['as'=>'permissions_add','uses' => 'PermissionsController@getAdd']);
-		// Route::post('/admins/permissions/add',  ['uses' => 'PermissionsController@postAdd']);
-		// Route::get('/admins/permission-roles/add',  ['as'=>'permissions_roles_add', 'uses' => 'PermissionRolesController@getAdd']);
-		// Route::post('/admins/permission-roles/add',  ['uses' => 'PermissionRolesController@postAdd']);
-		// Route::get('/admins/acl/view',  ['as' => 'acl_view','uses' => 'AdminsController@getViewAcl']);
-		// Route::get('/admins/categories/view',  ['as'=>'category_view', 'uses' => 'AdminsController@getViewCategory']);
-		// Route::get('/admins/categories/add',  ['as'=>'category_add', 'uses' => 'CategoriesController@getAdd']);
-		// Route::post('/admins/categories/add',  ['uses' => 'CategoriesController@postAdd']);
-		// Route::get('/admins/categories/edit',  ['as'=>'category_edit','uses' => 'CategoriesController@getEdit']);
-		// Route::post('/admins/categories/edit',  ['uses' => 'CategoriesController@postEdit']);
+		// Route::get('acl/view',  ['as' => 'acl_view','uses' => 'AdminsController@getViewAcl']);
+		// Route::get('categories/view',  ['as'=>'category_view', 'uses' => 'AdminsController@getViewCategory']);
+		// Route::get('categories/add',  ['as'=>'category_add', 'uses' => 'CategoriesController@getAdd']);
+		// Route::post('categories/add',  ['uses' => 'CategoriesController@postAdd']);
+		// Route::get('categories/edit',  ['as'=>'category_edit','uses' => 'CategoriesController@getEdit']);
+		// Route::post('categories/edit',  ['uses' => 'CategoriesController@postEdit']);
 	});
 
 
+	/** ADMINS ACL GROUP **/
+	Route::group(['middleware' => ['auth']], function(){
+		Route::get('admins',  ['as'=>'admins_index', 'uses' => 'AdminsController@getIndex', 'middleware' => ['acl:admins']]);
+			
+		Route::group(['prefix' => 'admins'], function () {
+			$prefix = 'admins';	
+			Route::get('roles',  ['as'=>'roles_index', 'uses' => 'RolesController@getIndex', 'middleware' => ['acl:'.$prefix.'/roles']]);
+			Route::get('roles/add',  ['as'=>'roles_add', 'uses' => 'RolesController@getAdd','middleware' => ['acl:'.$prefix.'/roles/add']]);
+			Route::post('roles/add',  ['uses' => 'RolesController@postAdd', 'middleware' => ['acl:'.$prefix.'/roles/add']]);
+			Route::get('roles/edit/{id}',  ['as'=>'roles_edit', 'uses' => 'RolesController@getEdit', 'middleware' => ['acl:'.$prefix.'/roles/edit/{id}'], function ($id) {}]);
+			Route::post('roles/edit',  ['as'=>'roles_update','uses' => 'RolesController@postEdit', 'middleware' => ['acl:'.$prefix.'/roles/edit']]);
+			Route::get('roles/delete-data/{id}',  ['as'=>'roles_delete', 'uses' => 'RolesController@getDelete', 'middleware' => ['acl:'.$prefix.'/roles/delete-data{id}'], function ($id) {}]);
+
+			Route::get('permissions',  ['as'=>'permissions_index', 'uses' => 'PermissionsController@getIndex', 'middleware' => ['acl:'.$prefix.'/permissions']]);
+			Route::get('permissions/add',  ['as'=>'permissions_add','uses' => 'PermissionsController@getAdd', 'middleware' => ['acl:'.$prefix.'/permissions/add']]);
+			Route::post('permissions/add',  ['uses' => 'PermissionsController@postAdd', 'middleware' => ['acl:'.$prefix.'/permissions/add']]);
+			Route::get('permissions/edit/{id}', ['as' => 'permissions_edit', 'uses' => 'PermissionsController@getEdit','middleware' => ['acl:'.$prefix.'/permissions/edit/{id}'], function ($id) {}]);
+			Route::post('permissions/edit',  ['uses' => 'PermissionsController@postEdit', 'middleware' => ['acl:'.$prefix.'/permissions/edit']]);
+			Route::get('permissions/delete-data/{id}',  ['as'=>'permissions_delete','uses' => 'PermissionsController@getDelete', 'middleware' => ['acl:'.$prefix.'/permissions/delete-data{id}'], function ($id) {}]);
+
+			Route::get('permission-roles',  ['as'=>'permission_roles_index', 'uses' => 'PermissionRolesController@getIndex', 'middleware' => ['acl:'.$prefix.'/permission-roles']]);
+			Route::get('permission-roles/add',  ['as'=>'permission_roles_add', 'uses' => 'PermissionRolesController@getAdd', 'middleware' => ['acl:'.$prefix.'/permission-roles/add']]);
+			Route::post('permission-roles/add',  ['uses' => 'PermissionRolesController@postAdd', 'middleware' => ['acl:'.$prefix.'/permission-roles/add']]);
+			Route::get('permission-roles/edit/{id}',  ['as'=>'permission_roles_edit', 'uses' => 'PermissionRolesController@getEdit', 'middleware' => ['acl:'.$prefix.'/permission-roles/edit/{id}'], function ($id) {}]);
+			Route::post('permission-roles/edit',  ['uses' => 'PermissionRolesController@postEdit', 'middleware' => ['acl:'.$prefix.'/permission-roles/edit']]);
+			Route::get('permission-roles/delete-data/{id}',  ['as'=>'permission_roles_delete', 'uses' => 'PermissionRolesController@getDelete', 'middleware' => ['acl:'.$prefix.'/permission-roles/delete-data/{id}'], function ($id) {}]);
+
+			Route::get('flags',  ['as'=>'flags_index', 'uses' => 'FlagsController@getIndex', 'middleware' => ['acl:'.$prefix.'/flags']]);
+			Route::get('flags/view/{id}',  ['as'=>'flag_view', 'uses' => 'FlagsController@getView', 'middleware' => ['acl:'.$prefix.'/flags/view/{id}'], function ($id) {}]);
+			Route::post('flags/view',  ['uses' => 'FlagsController@postView', 'middleware' => ['acl:'.$prefix.'/flags/view']]);
+			Route::get('flags/approved',  ['as'=>'flags_app', 'uses' => 'FlagsController@getApproved', 'middleware' => ['acl:'.$prefix.'/flags/approved']]);
+			Route::get('flags/rejected',  ['as'=>'flags_rej', 'uses' => 'FlagsController@getRejected', 'middleware' => ['acl:'.$prefix.'/flags/rejected']]);
+			Route::get('flags/re-flagged',  ['as'=>'flags_re', 'uses' => 'FlagsController@getReflagged', 'middleware' => ['acl:'.$prefix.'/flags/re-flagged']]);
+			Route::get('flags/final-approved',  ['as'=>'flags_f_app', 'uses' => 'FlagsController@getFinalApproved', 'middleware' => ['acl:'.$prefix.'/flags/final-approved']]);
+			Route::get('flags/final-reject',  ['as'=>'flags_f_rej', 'uses' => 'FlagsController@getFinalRejected', 'middleware' => ['acl:'.$prefix.'/flags/final-rejected']]);
+			Route::get('flags/banned',  ['as'=>'flags_banned', 'uses' => 'FlagsController@getBanned', 'middleware' => ['acl:'.$prefix.'/flags/banned']]);
+
+			Route::get('acl/view',  ['as' => 'acl_view','uses' => 'AdminsController@getViewAcl', 'middleware' => ['acl:'.$prefix.'/acl/view']]);
+			Route::get('categories/view',  ['as'=>'category_view', 'uses' => 'AdminsController@getViewCategory', 'middleware' => ['acl:'.$prefix.'/categories/view']]);
+			Route::get('categories/add',  ['as'=>'category_add', 'uses' => 'CategoriesController@getAdd', 'middleware' => ['acl:'.$prefix.'/categories/add']]);
+			Route::post('categories/add',  ['uses' => 'CategoriesController@postAdd', 'middleware' => ['acl:'.$prefix.'/categories/add']]);
+			Route::get('categories/edit',  ['as'=>'category_edit','uses' => 'CategoriesController@getEdit', 'middleware' => ['acl:'.$prefix.'/categories/edit']]);
+			Route::post('categories/edit',  ['uses' => 'CategoriesController@postEdit', 'middleware' => ['acl:'.$prefix.'/categories/edit']]);
+		});
+	});
 
 	//CATEGORY ROUTE
-	Route::post('/categories/search-cat', 'CategoriesController@postCatSearch');
+	Route::group(['prefix' => 'categories'], function () {
+		Route::post('search-cat', ['uses'=>'CategoriesController@postCatSearch']);
+	});
+	
 
 	// Route::post('/search','HomeController@postIndex');
-	Route::get('/search', 'HomeController@postIndex');
-	Route::post('/search', 'HomeController@postIndex');
+	Route::get('search', ['uses'=>'HomeController@postIndex']);
+	Route::post('search', ['uses'=>'HomeController@postIndex']);
 
 	//USER ROUTE
-	Route::controller('users', 'UsersController');
-		Route::get('/users/login', 'UsersController@getLogin');
-		Route::post('/users/login-modal', 'UsersController@postLoginModal');
-		Route::get('/users/profile/{$username}', 'UsersController@getProfile');
-		Route::get('/registration', 'UsersController@getRegistration');
-		Route::post('/validate', 'UsersController@getValidate');
-		Route::get('/logout', 'UsersController@getLogout');
-		Route::post('/users/user-auth', 'UsersController@postUserAuth');
-		Route::post('/users/send-file', 'UsersController@postSendFile');
-		Route::post('/users/send-file-temp', 'UsersController@postSendFileTemp');
-
-
-	//REMINDERS ROUTE
-	Route::controller('reminders', 'RemindersController');
-		Route::get('/password-reset', 'RemindersController@getForgot');
-
-	//THREAD ROUTE 
-	Route::controller('threads', 'ThreadsController');
-		Route::get('/threads/view/{id}',  ['as'=>'thread_view','uses' => 'ThreadsController@getView']);
-		Route::post('/threads/search-query', 'ThreadsController@postSearchQuery');
-		Route::post('/threads/retrive-quotes', 'ThreadsController@postRetriveQuotes');
-		Route::post('/threads/post-answer', 'ThreadsController@postPostAnswer');
-		Route::post('/threads/post-quote', 'ThreadsController@postPostQuote');
-		Route::post('/threads/submit-flag', 'ThreadsController@postSubmitFlag');
-		Route::post('/threads/remove-flag', 'ThreadsController@postRemoveFlag');
-		Route::post('/threads/check-flag', 'ThreadsController@postCheckFlag');
-		Route::post('/threads/submit-like', 'ThreadsController@postSubmitLike');
-		Route::post('/threads/submit-dislike', 'ThreadsController@postSubmitDislike');
-		Route::post('/threads/inpage-search', 'ThreadsController@postInpageSearch');
-
-	Route::controller('password', 'Auth\PasswordController');
+	Route::get('registration', ['uses'=>'UsersController@getRegistration']);
+	Route::post('validate', ['uses'=>'UsersController@getValidate']);
+	Route::get('logout', ['uses'=>'UsersController@getLogout']);
+	Route::group(['prefix' => 'users'], function () {
+		Route::get('login', ['as'=>'users_login','uses'=>'UsersController@getLogin']);
+		Route::post('login-modal', ['uses'=>'UsersController@postLoginModal']);
+		Route::get('profile/{username}',  ['as'=>'users_profile','uses' => 'UsersController@getProfile', function ($username) {}]);
+		Route::post('user-auth', ['uses'=>'UsersController@postUserAuth']);
+		Route::post('send-file', ['uses'=>'UsersController@postSendFile']);
+		Route::post('send-file-temp', ['uses'=>'UsersController@postSendFileTemp']);
+	});	
 
 	// Password reset link request routes...
-	Route::get('password/email', 'Auth\PasswordController@getEmail');
-		Route::post('password/email', 'Auth\PasswordController@postEmail');
+	Route::group(['prefix' => 'password'], function () {
+		Route::get('email', ['uses'=>'Auth\PasswordController@getEmail']);
+		Route::post('email', ['uses'=>'Auth\PasswordController@postEmail']);
+	});
+
 
 	//PERMISSIONS ROUTE
-	Route::controller('permissions', 'PermissionsController');
-		Route::get('/permissions/auto-update', 'PermissionsController@getAutoUpdate');
+	Route::group(['prefix' => 'permissions'], function () {
+		Route::get('auto-update', ['uses'=>'PermissionsController@getAutoUpdate']);
+	});
+
+	//REMINDERS ROUTE
+	Route::get('password-reset', ['uses'=>'RemindersController@getForgot']);
+
+	//THREAD ROUTE 
+	Route::group(['prefix' => 'threads'], function () {
+		Route::get('view/{id}',  ['as'=>'thread_view','uses' => 'ThreadsController@getView', function ($id) {}]);
+		Route::post('add',  ['uses' => 'ThreadsController@postAdd']);
+		Route::post('search-query',  ['uses' => 'ThreadsController@postSearchQuery']);
+		Route::post('retrieve-quotes',  ['uses' => 'ThreadsController@postRetrieveQuotes']);
+		Route::post('post-answer', ['uses' => 'ThreadsController@postPostAnswer']);
+		Route::post('post-quote', ['uses'=>'ThreadsController@postPostQuote']);
+		Route::post('submit-flag', ['uses'=>'ThreadsController@postSubmitFlag']);
+		Route::post('remove-flag', ['uses'=>'ThreadsController@postRemoveFlag']);
+		Route::post('check-flag',['uses'=>'ThreadsController@postCheckFlag']);
+		Route::post('submit-like', ['uses'=>'ThreadsController@postSubmitLike']);
+		Route::post('submit-dislike', ['uses'=>'ThreadsController@postSubmitDislike']);
+		Route::post('inpage-search', ['uses'=>'ThreadsController@postInpageSearch']);
+	});
+
 	// // Password reset routes...
 	// Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
 	// 	Route::post('password/reset', 'Auth\PasswordController@postReset');

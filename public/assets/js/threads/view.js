@@ -259,12 +259,12 @@ request = {
 			}
 			);
 	},
-	retrive_quotes: function(_this_reply) {
+	retrieve_quotes: function(_this_reply) {
 	var token = $('meta[name=csrf-token]').attr('content');
 	$('#loading-icons-1').removeClass('hide');
 	$('#quote-container').html('');
 	$.post(
-		'/threads/retrive-quotes',
+		'/threads/retrieve-quotes',
 		{
 			"_token": token,
 			"this_reply":_this_reply
@@ -527,14 +527,14 @@ request = {
 	}
 };
 function right_box_expende(_this_reply){
-	request.retrive_quotes(_this_reply);
+	request.retrieve_quotes(_this_reply);
 	$('#left-top-container').attr('state','1');
 	$('#zoom').attr('target','true');
 	$('#new-left-box').addClass('right-box-expand');
 	$('.inner').attr('this-reply',_this_reply);
 } 
 function right_box_renew(_this_reply){
-	request.retrive_quotes(_this_reply);
+	request.retrieve_quotes(_this_reply);
 	$('.inner').attr('this-reply',_this_reply);
 } 
 function right_box_compress(){

@@ -21,7 +21,7 @@
 	<hr>
     <h2>Permission Roles</h2>
   <ul class="list-group">
-    <a class="list-group-item" href="{!! route('permissions_roles_add') !!}">Add</a>
+    <a class="list-group-item" href="">Add</a>
     <a class="list-group-item">Edit*</a>
     <a class="list-group-item">View*</a>
   </ul>
