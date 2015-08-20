@@ -43,6 +43,7 @@ results = {
 
 		$('.ask_q_btn').click(function(){
 			request.user_auth();
+
 		});
 
 		$(document).find('.remove-label').click(function(){
@@ -179,7 +180,6 @@ request = {
 			switch(status) {
 				case 200: // Approved
 					$('#ask_modal').modal('show');
-
 				break;				
 				case 400: // Approved
 					$('#myModal').modal('toggle');

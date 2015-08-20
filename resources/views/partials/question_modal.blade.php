@@ -42,7 +42,7 @@
             name="question[title_2]" id="question-title"
             class="ui-autocomplete-input textarea-title" autocomplete="off" role="textbox"
             aria-autocomplete="list" aria-haspopup="true"></textarea>
-            <textarea placeholder="Description of your question"
+            <textarea autofocus placeholder="Description of your question"
             name="question[description]" id="question-description" cols="40"
             class="ui-autocomplete-input textarea-description" autocomplete="off" role="textbox"
             aria-autocomplete="list" aria-haspopup="true"></textarea>

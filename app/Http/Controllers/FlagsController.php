@@ -120,9 +120,11 @@ class FlagsController extends Controller
           $comment_output['type'] = 'thread';
           $comment = Thread::find($thread_id);
           $comment['date'] = date('n/d/Y g:ia',strtotime($comment->created_at));
+          $comment['username'] = Job::IdToUsername($comment->user_id);
         } else {
           $comment = Reply::find($reply_id);
           $comment['date'] = date('n/d/Y g:ia',strtotime($comment->created_at));
+          $comment['username'] = Job::IdToUsername($comment->user_id);
         }
 
         $all_flags = Flag::where('reply_id',$reply_id)->where('thread_id',$thread_id)->get();

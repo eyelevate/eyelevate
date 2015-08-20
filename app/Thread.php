@@ -188,6 +188,12 @@ class Thread extends Model
 	static public function prepareThreadsAndThreadReply($threads) {
 		$html = '' ;
 		if (isset($threads)) {
+			$ban_flag = false;
+			$count_for_ban = 0;
+			$ban_flag_re = false;
+			$count_for_ban_re = 0;
+
+
 			$this_user = User::find($threads->user_id);
 			$this_main_username = $this_user->username;
 
@@ -201,7 +207,21 @@ class Thread extends Model
 			//FLAGS COUNT
 			$main_flag_count = count(Flag::where('reply_id',0)
 						->where('thread_id',$threads->id)
+						->whereIn('status', array(1,2,4,5,7))
 						->get());
+
+			if (Auth::check()) {
+				$count_for_ban = count(Flag::where('reply_id',0)
+							->where('thread_id',$threads->id)
+							->where('status', 3)
+							->where('flagger_user_id',Auth::user()->id)
+							->get());
+				if ($count_for_ban != 0) {
+					$ban_flag = true;
+				}
+			}
+
+
 
 			$is_owner = false;
 			$setting_icon = '';
@@ -230,11 +250,18 @@ class Thread extends Model
 				                  <div class="thread-info"> <span class="quoter-username">'.$this_main_username.'</span>
 				                    <span class="thread-date">'.$time_ago_main.'</span>
 				                    	'.$setting_icon.'
-		                    			<div class="panel-btn-bg pull-right panel-parent" this_reply="0" this_thread="'.$threads->id.'">
-											<div class="btn-group" role="group" aria-label="...">
-											  <button type="button" class="btn btn-default btn-panel-single flag-it"><i class="glyphicon glyphicon-flag"></i></br><span class="inner-val">'.$main_flag_count.'</span></button>
-											</div>
-					                    </div>
+		                    			<div class="panel-btn-bg pull-right panel-parent" this_reply="0" this_thread="'.$threads->id.'">';
+				
+
+		    if ($ban_flag != true) {
+		    	if ($is_owner != true) {
+					$html .=	'<div class="btn-group" role="group" aria-label="...">
+							  <button type="button" class="btn btn-default btn-panel-single flag-it"><i class="glyphicon glyphicon-flag"></i></br><span class="inner-val">'.$main_flag_count.'</span></button>
+							</div>';
+						}
+		    }
+ 
+             $html .=    '</div>
 				                  </div> 
 				                  <h4 ><a href="/threads/view/'.$threads->id.'">'.$threads->title.'</a></h4>
 				                </br>
@@ -274,7 +301,7 @@ class Thread extends Model
 				->where('quote_id',null)
 				->get();
 			foreach ($all_replies as $arkey => $arvalue) {
-
+				$is_owner_reply = false;
 				$this_replier = User::find($arvalue->user_id);
 				$this_replier_username = $this_replier->username;
 
@@ -291,6 +318,7 @@ class Thread extends Model
 				//FLAGS COUNT
 				$flag_count = count(Flag::where('reply_id',$arvalue->id)
 											->where('thread_id',$threads->id)
+											->whereIn('status', array(1,2,4,5,7))
 											->get());
 
 				// LIKES
@@ -304,47 +332,67 @@ class Thread extends Model
 											->where('thread_id',$threads->id)
 											->get());
 
+				if (Auth::check()) {
+					$count_for_ban_re = count(Flag::where('reply_id',$arvalue->id)
+								->where('thread_id',$threads->id)
+								->where('status', 3)
+								->where('flagger_user_id',Auth::user()->id)
+								->get());
+					if ($count_for_ban_re != 0) {
+						$ban_flag_re = true;
+					}
+				}
 
+				
+			if (Auth::check()) {
+				if ($arvalue->user_id == Auth::user()->id) {
+					$is_owner_reply = true;
+				}
+			}
 				//PREPARE ALL REPLIES
 				$html .= '
-								    <div class="panel-btn-sm pull-right panel-parent reply-sm-'.$arvalue->id.'" this_reply="'.$arvalue->id.'" this_thread="'.$threads->id.'">
-										<div class="btn-group" role="group" aria-label="...">
-										  <button type="button" class="first-btn btn btn-default btn-panel-single show-quote"><i class="fa fa-quote-right"></i></br><span class="inner-val">'.$quote_count.'</span></button>
+					    <div class="panel-btn-sm pull-right panel-parent reply-sm-'.$arvalue->id.'" this_reply="'.$arvalue->id.'" this_thread="'.$threads->id.'">
+							<div class="btn-group" role="group" aria-label="...">
+							  <button type="button" class="first-btn btn btn-default btn-panel-single show-quote"><i class="fa fa-quote-right"></i></br><span class="inner-val">'.$quote_count.'</span></button>
+							  <button type="button" class="btn btn-default btn-panel-single eye-like"><i class="fa fa-thumbs-o-up"></i></br><span class="inner-val">'.$like_count.'</span></button>
+							  <button type="button" class="btn btn-default btn-panel-single dont-like"><i class="fa fa-thumbs-o-down"></i></br><span class="inner-val">'.$dislike_count.'</span></button>
+							  <button type="button" class="last-btn btn btn-default btn-panel-single flag-it"><i class="glyphicon glyphicon-flag"></i></br><span class="inner-val">'.$flag_count.'</span></button>
+							</div>
+	                    </div>
+						<div class="thread-single">
+				            <div class="media">
+				              <div class="media-left">
+				                <a href="#">
+				                  <img class="media-object media-image" data-src="holder.js/64x64" alt="64x64" src="/assets/images/profile-images/perm/'.$replier_profile_image.'" data-holder-rendered="true" style="width: 64px; height: 64px;">
+				                </a>
+				              </div>
+				              <div class="media-body">
+				                <div class="media-inner-left">
+				                  <div class="thread-info"><span class="quoter-username">'.$this_replier_username.' </span>
+				                    <span class="thread-date">'.$time_ago_replies.'</span>
+				                    <div class="panel-btn-bg pull-right panel-parent reply-bg-'.$arvalue->id.'"  this_reply="'.$arvalue->id.'" this_thread="'.$threads->id.'">
+										<div class="btn-group  role="group" aria-label="...">
+										  <button type="button" class="btn btn-default btn-panel-single show-quote"><i class="fa fa-quote-right"></i></br><span class="inner-val">'.$quote_count.'</span></button>
 										  <button type="button" class="btn btn-default btn-panel-single eye-like"><i class="fa fa-thumbs-o-up"></i></br><span class="inner-val">'.$like_count.'</span></button>
-										  <button type="button" class="btn btn-default btn-panel-single dont-like"><i class="fa fa-thumbs-o-down"></i></br><span class="inner-val">'.$dislike_count.'</span></button>
-										  <button type="button" class="last-btn btn btn-default btn-panel-single flag-it"><i class="glyphicon glyphicon-flag"></i></br><span class="inner-val">'.$flag_count.'</span></button>
-										</div>
+										  <button type="button" class="btn btn-default btn-panel-single dont-like"><i class="fa fa-thumbs-o-down"></i></br><span class="inner-val">'.$dislike_count.'</span></button>';
+					if ($ban_flag_re != true) {	
+						if ($is_owner_reply != true) {		 
+							$html .=  '<button type="button" class="btn btn-default btn-panel-single flag-it"><i class="glyphicon glyphicon-flag"></i></br><span class="inner-val">'.$flag_count.'</span></button>';
+						}
+					}
+					$html .= '</div>
 				                    </div>
-									<div class="thread-single">
-							            <div class="media">
-							              <div class="media-left">
-							                <a href="#">
-							                  <img class="media-object media-image" data-src="holder.js/64x64" alt="64x64" src="/assets/images/profile-images/perm/'.$replier_profile_image.'" data-holder-rendered="true" style="width: 64px; height: 64px;">
-							                </a>
-							              </div>
-							              <div class="media-body">
-							                <div class="media-inner-left">
-							                  <div class="thread-info"><span class="quoter-username">'.$this_replier_username.' </span>
-							                    <span class="thread-date">'.$time_ago_replies.'</span>
-							                    <div class="panel-btn-bg pull-right panel-parent reply-bg-'.$arvalue->id.'"  this_reply="'.$arvalue->id.'" this_thread="'.$threads->id.'">
-													<div class="btn-group  role="group" aria-label="...">
-													  <button type="button" class="btn btn-default btn-panel-single show-quote"><i class="fa fa-quote-right"></i></br><span class="inner-val">'.$quote_count.'</span></button>
-													  <button type="button" class="btn btn-default btn-panel-single eye-like"><i class="fa fa-thumbs-o-up"></i></br><span class="inner-val">'.$like_count.'</span></button>
-													  <button type="button" class="btn btn-default btn-panel-single dont-like"><i class="fa fa-thumbs-o-down"></i></br><span class="inner-val">'.$dislike_count.'</span></button>
-													  <button type="button" class="btn btn-default btn-panel-single flag-it"><i class="glyphicon glyphicon-flag"></i></br><span class="inner-val">'.$flag_count.'</span></button>
-													</div>
-							                    </div>
-							                  </div> 
-							                </br>
-							                <div class="thread-description">
-												'.$arvalue->reply.'
-							                  </div>
-							                  <div class="label-container">
-							                  </div>
-							                </div>
-							              </div>
-							            </div>
-							          </div>';
+				                  </div> 
+				                </br>
+				                <div class="thread-description">
+									'.$arvalue->reply.'
+				                  </div>
+				                  <div class="label-container">
+				                  </div>
+				                </div>
+				              </div>
+				            </div>
+				          </div>';
 			}
 
 	

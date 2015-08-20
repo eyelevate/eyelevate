@@ -401,8 +401,6 @@ request = {
 					var total_flag_count = result.total_flag_count;
 					$('.'+this_thread+'-'+this_reply+'-flag').find('.inner-val:first').text(total_flag_count);
 					break;				
-					case 401: // Approved
-					break;
 					default:
 					break;
 				}
@@ -429,6 +427,9 @@ request = {
 						$('#modal_rmv_reply_id').val(this_reply);
 						$('#flag_remove_modal').modal('toggle');
 					break;
+					case 402: // Approved
+						$('#myModal').modal('toggle');
+					break;
 					default:
 					break;
 				}
@@ -445,7 +446,8 @@ request = {
 				"this_thread":this_thread,
 				"reason" : reason,
 				"details" : details
-			},
+			}
+			,
 			function(result){
 				$('#flag_modal').modal('toggle');
 				reset_flag_modal();

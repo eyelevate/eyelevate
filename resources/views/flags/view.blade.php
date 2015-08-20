@@ -17,74 +17,65 @@
 @if($comment_output['type'] == "thread")
 
   <div class="form-group">
-    <label >Thread Id</label>
-  </br>
-    <p style="font-size:16px !important;color:black">{{$comment['id']}}</p>
+    <label class="control-label">Thread Id: &nbsp&nbsp&nbsp&nbsp</label>
+    <p style="font-size:16px; !important;color:black; display:inline;">{{$comment['id']}}</p>
   </div>
 
 
   <div class="form-group">
-    <label >Username</label>
-  </br>
-    <p style="font-size:16px !important;color:black">{{$comment['user_id']}}</p>
+    <label class="control-label">Username: &nbsp&nbsp&nbsp&nbsp</label>
+    <p style="font-size:16px; !important;color:black; display:inline;">{{$comment['username']}}</p>
   </div>
 
 
   <div class="form-group">
-    <label >Title Text</label>
-  </br>
-    <p style="font-size:16px !important;color:black">{{$comment['title']}}</p>
+    <label class="control-label">Title Text: &nbsp&nbsp&nbsp&nbsp</label>
+    <p style="font-size:16px; !important;color:black; display:inline;">{{$comment['title']}}</p>
   </div>
 
 
   <div class="form-group">
-    <label >Description</label>
-  </br>
-    <p style="font-size:16px !important;color:black">{{$comment['description']}}</p>
+    <label class="control-label">Description: &nbsp&nbsp&nbsp&nbsp</label>
+    <p style="font-size:16px; !important;color:black; display:inline;">{{$comment['description']}}</p>
   </div>
 
 
   <div class="form-group">
-    <label >Status</label>
-  </br>
-    <p style="font-size:16px !important;color:black">{{$comment['status']}}</p>
+    <label class="control-label">Status: &nbsp&nbsp&nbsp&nbsp</label>
+    <p style="font-size:16px; !important;color:black; display:inline;">{{$comment['status']}}</p>
   </div>
 
 
   <div class="form-group">
-    <label >Date</label>
-  </br>
-    <p style="font-size:16px !important;color:black">{{$comment['date']}}</p>
+    <label class="control-label">Date: &nbsp&nbsp&nbsp&nbsp</label>
+    <p style="font-size:16px; !important;color:black; display:inline;">{{$comment['date']}}</p>
   </div>
 @else
-  <div class="form-group">
-    <label >Reply Id</label>
-  </br>
-    <p style="font-size:16px !important;color:black">{{$comment['id']}}</p>
+<div class="form-horizontal">
+  <div class="form-group" >
+    <label class="control-label">Reply Id: &nbsp&nbsp&nbsp&nbsp</label>
+    <p style="font-size:16px; !important;color:black; display:inline;">{{$comment['id']}}</p>
   </div>
 
   <div class="form-group">
-    <label >Username</label>
-  </br>
-    <p style="font-size:16px !important;color:black">{{$comment['user_id']}}</p>
+    <label class="control-label">Username: &nbsp&nbsp&nbsp&nbsp</label>
+    <p style="font-size:16px; !important;color:black; display:inline;">{{$comment['username']}}</p>
   </div>
 
   <div class="form-group">
-    <label >Reply Text</label>
-  </br>
-    <p style="font-size:16px !important;color:black">{{$comment['reply']}}</p>
+    <label class="control-label">Reply Text: &nbsp&nbsp&nbsp&nbsp</label>
+    <p style="font-size:16px; !important;color:black; display:inline;">{{$comment['reply']}}</p>
   </div>
 
   <div class="form-group">
-    <label >Status</label>
-  </br>
-    <p style="font-size:16px !important;color:black">{{$comment['status']}}</p>
+    <label class="control-label">Status: &nbsp&nbsp&nbsp&nbsp</label>
+    <p style="font-size:16px; !important;color:black; display:inline;">{{$comment['status']}}</p>
   </div>
 
   <div class="form-group">
-    <label >Date</label>
-  </br>
-    <p style="font-size:16px !important;color:black">{{$comment['date']}}</p>
+    <label class="control-label">Date: &nbsp&nbsp&nbsp&nbsp</label>
+    <p style="font-size:16px; !important;color:black; display:inline;">{{$comment['date']}}</p>
+  </div>
   </div>
 @endif
     
@@ -102,7 +93,6 @@
           <th>Reply Id</th>
           <th>Flagger-User Username</th>
           <th>Flagged-User Username</th>
-          <th>Status</th>
           <th>Reason</th>
           <th>Details</th>
           <th>Date</th>
@@ -116,7 +106,6 @@
           <td>{{$flags['reply_id']}}</td>
           <td>{{$flags['flagger_username']}}</td>
           <td>{{$flags['flagged_username']}}</td>
-          <td>{{$flags['status']}}</td>
           <td>{!!$flags['reason']!!}</td>
           <td>{{$flags['details']}}</td>
           <td>{{$flags['date']}}</td>
