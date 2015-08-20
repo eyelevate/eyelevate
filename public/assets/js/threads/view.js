@@ -55,11 +55,11 @@ results = {
 				$(this).parents('.dialogbox-container:first').find('.reply-media:first').remove();
 		});
 
-		//FLAG UP CLICKED
+		//like CLICKED
 		$(document).on('click','.thumb-up',function(){
 
 		});
-		//FLAG DOWN CLICKED
+		//DISLIKE CLICKED
 		$(document).on('click','.thumb-down',function(){
 
 		});
@@ -105,10 +105,33 @@ results = {
 		});
 		//FLAG IT
 		$(document).on('click','.flag-it',function(){
+			
 			var this_reply = $(this).parents('.panel-parent:first').attr('this_reply');
 			var this_thread = $(this).parents('.panel-parent:first').attr('this_thread');
-			request.submit_flag(this_reply,this_thread,$(this));
+			$('#modal_thread_id').val(this_thread);
+			$('#modal_reply_id').val(this_reply);
+			$(this).addClass(this_thread+'-'+this_reply+'-flag');
+
+			request.check_flag(this_thread,this_reply);
+
 		});
+		$(document).on('click','#modal-flag-it',function(){
+			var this_reply = $('#modal_reply_id').val();
+			var this_thread = $('#modal_thread_id').val();
+			var reason = $('input[name=optionsRadios]:checked').val();
+			var details = $('#modal-flag-reason').val();
+			request.submit_flag(this_reply,this_thread,reason,details);
+		});
+
+		$(document).on('click','#modal-flag-rmv-it',function(){
+			var this_reply = $('#modal_rmv_reply_id').val();
+			var this_thread = $('#modal_rmv_thread_id').val();
+			request.remove_flag(this_thread,this_reply);	
+		});
+
+
+
+
 		//POST A REPLY
 		$(document).on('click','#post-answer',function(){
 			var this_text = $('#answer_text').val();
@@ -361,10 +384,35 @@ request = {
 			}
 			);
 	},
-		submit_flag: function(this_reply,this_thread,_this) {
+	remove_flag: function(this_thread,this_reply) {
 		var token = $('meta[name=csrf-token]').attr('content');
 		$.post(
-			'/threads/submit-flag',
+			'/threads/remove-flag',
+			{
+				"_token": token,
+				"this_reply":this_reply,
+				"this_thread":this_thread
+			},
+			function(result){
+				$('#flag_remove_modal').modal('toggle');
+				var status = result.status;
+				switch(status) {
+					case 200: // Approved
+					var total_flag_count = result.total_flag_count;
+					$('.'+this_thread+'-'+this_reply+'-flag').find('.inner-val:first').text(total_flag_count);
+					break;				
+					case 401: // Approved
+					break;
+					default:
+					break;
+				}
+			}
+			);
+	},
+	check_flag: function(this_thread,this_reply) {
+		var token = $('meta[name=csrf-token]').attr('content');
+		$.post(
+			'/threads/check-flag',
 			{
 				"_token": token,
 				"this_reply":this_reply,
@@ -374,11 +422,41 @@ request = {
 				var status = result.status;
 				switch(status) {
 					case 200: // Approved
-						var total_flag_count = result.total_flag_count;
-						_this.find('.inner-val:first').text(total_flag_count);
+						$('#flag_modal').modal('toggle');
 					break;				
-					case 400: // Approved
-						$('#myModal').modal('toggle');
+					case 401: // Approved
+						$('#modal_rmv_thread_id').val(this_thread);
+						$('#modal_rmv_reply_id').val(this_reply);
+						$('#flag_remove_modal').modal('toggle');
+					break;
+					default:
+					break;
+				}
+			}
+			);
+	},
+		submit_flag: function(this_reply , this_thread ,reason,details) {
+		var token = $('meta[name=csrf-token]').attr('content');
+		$.post(
+			'/threads/submit-flag',
+			{
+				"_token": token,
+				"this_reply":this_reply,
+				"this_thread":this_thread,
+				"reason" : reason,
+				"details" : details
+			},
+			function(result){
+				$('#flag_modal').modal('toggle');
+				reset_flag_modal();
+				var status = result.status;
+				switch(status) {
+					case 200: // Approved
+						var total_flag_count = result.total_flag_count;
+						$('.'+this_thread+'-'+this_reply+'-flag').find('.inner-val:first').text(total_flag_count);
+					break;				
+					case 401: // Approved
+						$('#flag_remove_modal').modal('toggle');
 					break;
 					default:
 					break;
@@ -494,6 +572,12 @@ function toogle_this(_this){
 function close_quote_textarea(){
 	$('#quote-textarea').addClass('hide');
 	$('.quote-btnn').attr('state',0);
+} 
+function reset_flag_modal(){
+	$('#modal_thread_id').val('');
+	$('#modal_reply_id').val('');
+	$('.flag-radio').removeAttr('checked');
+	$('#modal-flag-reason').val('');
 } 
 (function($){
   $.isBlank = function(obj){

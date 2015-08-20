@@ -87,4 +87,6 @@
 
 
 {!! View::make('partials.login_modal') !!}
+{!! View::make('partials.flag_modal') !!}
+{!! View::make('partials.flag_remove_modal') !!}
 @stop

@@ -21,6 +21,7 @@ use App\Job;
 use App\User;
 use App\Admin;
 use App\Flag;
+use App\FlagLog;
 use App\Role;
 use App\Reply;
 use App\Thread;
@@ -105,8 +106,14 @@ class FlagsController extends Controller
         $thread_id = $flags->thread_id;
         $reply_id = $flags->reply_id;
 
-        $comment = null;
+        $flag_log = FlagLog::where('thread_id',$thread_id)->where('reply_id',$reply_id)->get();
+        foreach ($flag_log as $flogkey => $flogvalue) {
+          $flogvalue['username'] = Job::IdToUsername($flogvalue->user_id);
+          $flogvalue['date'] = date('n/d/Y g:ia',strtotime($flogvalue->created_at));
+          $flogvalue['flag_status'] = Flag::PrepareStatus($flogvalue->flag_status);
+        }
 
+        $comment = null;
         $comment_output = [];
         $comment_output['type'] = 'reply';
         if ($reply_id == 0) {
@@ -122,20 +129,23 @@ class FlagsController extends Controller
 
         foreach ($all_flags as $allfkey => $allfvalue) {
             $allfvalue['date'] = date('n/d/Y g:ia',strtotime($allfvalue->created_at));
+            $allfvalue['reason'] = Flag::PrepareReasons($allfvalue->reason);
+            $allfvalue['details'] = $allfvalue->details;
+            $allfvalue['flagger_username'] = Job::IdToUsername($allfvalue->flagger_user_id);
+            $allfvalue['flagged_username'] = Job::IdToUsername($allfvalue->flagged_user_id);
         }
-
         $all_flags_count = count(Flag::where('reply_id',$reply_id)->where('thread_id',$thread_id)->get());
         return view('flags.view')
             ->with('layout',$this->layout)
             ->with('comment',$comment)
             ->with('all_flags',$all_flags)
             ->with('all_flags_count',$all_flags_count)
-            ->with('comment_output',$comment_output);
+            ->with('comment_output',$comment_output)
+            ->with('flag_logs',$flag_log);
     }
 
         public function postView()
     {   
-       
        $thread_id = Input::get('thread_id');
        $reply_id = Input::get('reply_id');
        $action = Input::get('action');
@@ -177,27 +187,39 @@ class FlagsController extends Controller
            case 7://BANNED
                $new_status = 4;
                break;
-           
            default:
                # code...
                break;
        }
+
+       //CHANGING THE MAIN MESSAGE STATUS
        if ($reply_id == 0) {//IT WAS A THREAD
-            $comment = Thread::find($thread_id);
-            $comment->status = 999;
-            $comment->save();
+            $this_thread = Thread::find($thread_id);
+            $this_thread->status = $new_status;
+            $this_thread->save();
        } else { //IT WAS A REPLY
-            $comment = Reply::find($reply_id);
-            $comment->status = 999;
-            $comment->save();
+            $this_reply = Reply::find($reply_id);
+            $this_reply->status = $new_status;
+            $this_reply->save();
        }
 
+       //CHANGE ALL THE FLAGS STATUS
        foreach ($all_flags as $alkey => $alvalue) {
             $alvalue->status = $action;
             $alvalue->save();
        }
 
-
+       //SAVE INTO LOG FILE
+       $flag_log = new FlagLog;
+       $flag_log->thread_id = $thread_id;
+       $flag_log->reply_id = $reply_id;
+       $flag_log->user_id = Auth::user()->id;
+       $flag_log->reason = $reason;
+       $flag_log->flag_status = $action;
+       $flag_log->status = 1;
+       if ($flag_log->save()) {
+          Flash::success('Successfully saved!');
+       }
        return Redirect::action('FlagsController@getIndex');
     }
 }

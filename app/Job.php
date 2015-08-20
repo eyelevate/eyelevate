@@ -19,6 +19,14 @@ class Job extends Model
 		return false;
 	}
 
+	static public function IdToUsername($id) {
+		$username = '';
+		if(isset($id)) {
+			$users = User::find($id);
+			$username = $users->username.' ('.$id.')';
+		}
+		return $username;
+	}
 	static public function validate_data($input_all) {
 		
 		$data_output = [

@@ -31,7 +31,7 @@
 
 
   <div class="form-group">
-    <label >Title</label>
+    <label >Title Text</label>
   </br>
     <p style="font-size:16px !important;color:black">{{$comment['title']}}</p>
   </div>
@@ -70,7 +70,7 @@
   </div>
 
   <div class="form-group">
-    <label >Reply</label>
+    <label >Reply Text</label>
   </br>
     <p style="font-size:16px !important;color:black">{{$comment['reply']}}</p>
   </div>
@@ -100,11 +100,12 @@
           <th>#</th>
           <th>Thread Id</th>
           <th>Reply Id</th>
-          <th>Flagger-User User-Id</th>
-          <th>Flagged-User User-Id</th>
+          <th>Flagger-User Username</th>
+          <th>Flagged-User Username</th>
           <th>Status</th>
+          <th>Reason</th>
+          <th>Details</th>
           <th>Date</th>
-          <th>Action</th>
         </tr>
       </thead>
       <tbody>
@@ -113,11 +114,12 @@
           <th scope="row">{{$flags['id']}}</th>
           <td>{{$flags['thread_id']}}</td>
           <td>{{$flags['reply_id']}}</td>
-          <td>{{$flags['flagger_user_id']}}</td>
-          <td>{{$flags['flagged_user_id']}}</td>
+          <td>{{$flags['flagger_username']}}</td>
+          <td>{{$flags['flagged_username']}}</td>
           <td>{{$flags['status']}}</td>
+          <td>{!!$flags['reason']!!}</td>
+          <td>{{$flags['details']}}</td>
           <td>{{$flags['date']}}</td>
-          <td>edit</td>
         </tr>
       @endforeach
       </tbody>
@@ -160,6 +162,36 @@
         <div class="panel-footer clearfix">
           <button class="btn btn-primary pull-right" type="submit"> Save </button>
       </div>
+</div>
+
+<div class="panel panel-default" style="font-size:18px">
+    <div class="panel-heading" style="font-weight:900">Flag Log</div>
+  <div class="panel-body">
+    @if(isset($flag_logs))
+    <table class="table table-bordered" >
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Username</th>
+              <th>Flag Status</th>
+              <th>Explanation</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+          @foreach ($flag_logs as $flag_log)
+            <tr>
+              <th scope="row">{{$flag_log['id']}}</th>
+              <td>{{$flag_log['username']}}</td>
+              <td>{!!$flag_log['flag_status']!!}</td>
+              <td>{{$flag_log['reason']}}</td>
+              <td>{{$flag_log['date']}}</td>
+            </tr>
+          @endforeach
+          </tbody>
+        </table>
+        @endif
+  </div>
 </div>
 {!! Form::close() !!}
 @stop

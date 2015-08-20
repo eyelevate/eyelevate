@@ -3,28 +3,31 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Flag extends Model
 {
+	use SoftDeletes;
 	static public function PrepareAllFlagsSum($status_op) {
 		$flags = Flag::where('status',$status_op)->get();
 		$output_array = [];
+		$output_array['type']='';
 
 		foreach ($flags as $flkey => $flvalue) {
 			$title = '';
 			$this_count = count(Flag::where('thread_id',$flvalue->thread_id)
 									->where('reply_id',$flvalue->reply_id)->get());
-
 			if ($flvalue->reply_id == 0) {//THREAD
+				$output_array['type']='thread';
 				$threads = Thread::find($flvalue->thread_id);
 				if (isset($threads)) {
 					$title = $threads->title;
 				}
-				
 			} else {//REPLY
+				$output_array['type']='reply';
 				$replies = Reply::find($flvalue->reply_id);
 				if (isset($replies)) {
-					$title = $replies->title;
+					$title = $replies->reply;
 				}
 			}
 			$output_array[$flvalue->thread_id.'_'.$flvalue->reply_id]['thread_id'] = $flvalue->thread_id;
@@ -67,6 +70,29 @@ class Flag extends Model
 				
 				default:
 					$html = '<span class="label label-default">error</span>';
+					break;
+			}
+		}
+		return $html;
+	}
+		static public function PrepareReasons($reason) {
+		$html = '';
+		if (isset($reason)) {
+			switch ($reason) {
+				case 1:
+					$html = '<span class="label label-default">Spam</span>';
+					break;
+				case 2:
+					$html = '<span class="label label-default">Inappropriate Content</span>';
+					break;
+				case 3:
+					$html = '<span class="label label-default">Abusive Behavior</span>';
+					break;
+				case 4:
+					$html = '<span class="label label-default">Violates terms of use</span>';
+					break;
+				default:
+					$html = '<span class="label label-default">none</span>';
 					break;
 			}
 		}

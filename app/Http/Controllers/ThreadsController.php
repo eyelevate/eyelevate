@@ -267,6 +267,8 @@ class ThreadsController extends Controller
             if (Auth::check()) {
                 $this_reply = Input::get('this_reply'); 
                 $this_thread = Input::get('this_thread'); 
+                $reason = Input::get('reason'); 
+                $details = Input::get('details'); 
                 //IT WAS A REPLY
                 if ($this_reply != 0) {
                     $replys = Reply::find($this_reply);
@@ -289,6 +291,8 @@ class ThreadsController extends Controller
                     $flags->thread_id = $this_thread;
                     $flags->flagger_user_id = $this->user_id;
                     $flags->flagged_user_id = $flagged_user;
+                    $flags->reason = $reason;
+                    $flags->details = $details;
                     $flags->status = 1;
                     if ($flags->save()) {
                         $status = 200;
@@ -298,7 +302,6 @@ class ThreadsController extends Controller
                 }
                 $total_flag_count = count(Flag::where('reply_id',$this_reply)
                                 ->where('thread_id',$this_thread)
-                                ->where('status',1)
                                 ->get());
             }
             return Response::json(array(
@@ -308,7 +311,88 @@ class ThreadsController extends Controller
         }
     }
 
+    public function postRemoveFlag()
+    {
+        if(Request::ajax()){
+            $status = 400;
+            $total_flag_count = null;
+            if (Auth::check()) {
+                $this_reply = Input::get('this_reply'); 
+                $this_thread = Input::get('this_thread'); 
+                //IT WAS A REPLY
+                if ($this_reply != 0) {
+                    $replys = Reply::find($this_reply);
+                    $flagged_user = $replys->user_id;
+                } 
+                //THIS WAS A THREAD
+                else{
+                    $threads = Thread::find($this_thread);
+                    $flagged_user = $threads->user_id;
+                }
+                //CHECK IF THIS USER HAS FLAGGED THIS REPLY OR THREAD BEFORE
+                $prev_flags = count(Flag::where('reply_id',$this_reply)
+                                        ->where('thread_id',$this_thread)
+                                        ->where('flagger_user_id',$this->user_id)
+                                        ->where('flagged_user_id',$flagged_user)
+                                        ->get());
+                if ($prev_flags != 0) {
+                    $flagss = Flag::where('reply_id',$this_reply)
+                                        ->where('thread_id',$this_thread)
+                                        ->where('flagger_user_id',$this->user_id)
+                                        ->where('flagged_user_id',$flagged_user)
+                                        ->first();
+                    if ($flagss->delete()) {
+                        $status = 200;
+                    }
+                } else {
+                    $status = 402;
+                }
+                $total_flag_count = count(Flag::where('reply_id',$this_reply)
+                                ->where('thread_id',$this_thread)
+                                ->get());
+            }
+            return Response::json(array(
+                'status' => $status,
+                'total_flag_count' => $total_flag_count
+            ));
+        }
+    }
 
+    public function postCheckFlag()
+    {
+        if(Request::ajax()){
+            $status = 200;
+            $total_flag_count = null;
+            if (Auth::check()) {
+                $this_reply = Input::get('this_reply'); 
+                $this_thread = Input::get('this_thread'); 
+                //IT WAS A REPLY
+                if ($this_reply != 0) {
+                    $replys = Reply::find($this_reply);
+                    $flagged_user = $replys->user_id;
+                } 
+                //THIS WAS A THREAD
+                else{
+                    $threads = Thread::find($this_thread);
+                    $flagged_user = $threads->user_id;
+                }
+                //CHECK IF THIS USER HAS FLAGGED THIS REPLY OR THREAD BEFORE
+                $prev_flags = count(Flag::where('reply_id',$this_reply)
+                                        ->where('thread_id',$this_thread)
+                                        ->where('flagger_user_id',$this->user_id)
+                                        ->where('flagged_user_id',$flagged_user)
+                                        ->get());
+                if ($prev_flags == 0) {
+
+                } else {
+                    $status = 401;
+                }
+            }
+            return Response::json(array(
+                'status' => $status
+            ));
+        }
+    }
         public function postSubmitLike()
     {
         if(Request::ajax()){

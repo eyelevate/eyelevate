@@ -123,6 +123,8 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 		Route::post('/threads/post-answer', 'ThreadsController@postPostAnswer');
 		Route::post('/threads/post-quote', 'ThreadsController@postPostQuote');
 		Route::post('/threads/submit-flag', 'ThreadsController@postSubmitFlag');
+		Route::post('/threads/remove-flag', 'ThreadsController@postRemoveFlag');
+		Route::post('/threads/check-flag', 'ThreadsController@postCheckFlag');
 		Route::post('/threads/submit-like', 'ThreadsController@postSubmitLike');
 		Route::post('/threads/submit-dislike', 'ThreadsController@postSubmitDislike');
 		Route::post('/threads/inpage-search', 'ThreadsController@postInpageSearch');
