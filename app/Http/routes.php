@@ -23,8 +23,7 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 
 	//NO ACL
 	// Route::get('/admins',  ['as'=>'admins_index', 'uses' => 'AdminsController@getIndex']);
-	$prefix = 'admins';
-	Route::group(['prefix' => $prefix], function () {
+	Route::group(['prefix' => 'admins'], function () {
 		Route::get('login', 'AdminsController@getLogin');
 		Route::post('login', 'AdminsController@postLogin');
 		Route::get('logout', 'AdminsController@getLogout');			
