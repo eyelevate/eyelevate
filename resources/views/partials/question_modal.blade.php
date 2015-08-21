@@ -77,6 +77,7 @@
           <div class="cat-wrapper col-md-12"> 
             <h3 id="h3-wrapper">
             </h3>
+            <div class="alert alert-warning hide" id="no-category-alert" style="" role="alert">You must select a category before continuing</div>
           </div>
         </div>
         <!-- STEP 4 END -->
