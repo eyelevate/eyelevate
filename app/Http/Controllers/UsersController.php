@@ -178,12 +178,14 @@ class UsersController extends Controller
                         return Redirect::action('HomeController@postIndex');
                     break;
             }
+        } else {
+            Auth::logout();
+            return Redirect::action('HomeController@getIndex');
         }
     }
     public function postLogout()
     {
         Auth::logout();
-
         return Redirect::action('HomeController@getIndex');
     }
 

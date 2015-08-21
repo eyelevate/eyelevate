@@ -33,11 +33,6 @@ http://www.bootstrapzen.com/item/135/simple-login-form-logo/
 
 body {
 }
-
-.login-form {
-	margin-top: 150px;
-}
-
 form[role=login] {
 	color: #5d5d5d;
 	background: #f2f2f2;

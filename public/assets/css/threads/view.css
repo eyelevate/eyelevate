@@ -97,7 +97,7 @@ textarea {
   -moz-border-left-colors: none;
   -moz-border-right-colors: none;
   -moz-border-top-colors: none;
-  background: none repeat scroll 0 0 rgba(0, 0, 0, 0.07);
+
   border-color: -moz-use-text-color #FFFFFF #FFFFFF -moz-use-text-color;
   border-image: none;
   border:5px solid rgb(214, 214, 214);
@@ -120,7 +120,7 @@ textarea {
   -moz-border-left-colors: none;
   -moz-border-right-colors: none;
   -moz-border-top-colors: none;
-  background: none repeat scroll 0 0 rgba(0, 0, 0, 0.07);
+
   border-color: -moz-use-text-color #FFFFFF #FFFFFF -moz-use-text-color;
   border-image: none;
   border: 2px solid rgb(214, 214, 214);

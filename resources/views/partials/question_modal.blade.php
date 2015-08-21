@@ -18,6 +18,10 @@
           <div class="right-modal-inner col-sm-4">
             <span>Did you search first to make sure your question is unique?</span>
           </div>
+          <div class="col-md-12 col-xs-12">
+           <div class="alert alert-warning hide" id="no-title-alert-step-1" style="" role="alert">You must add title before continuing</div>
+          </div>
+           
         </div>
         <!-- STEP 1 END -->
 
@@ -60,6 +64,10 @@
               </ul>
             </div>
           </div>
+          <div class="col-md-12 col-xs-12"> 
+            <div class="alert alert-warning hide" id="no-description-alert" style="" role="alert">You must add description before continuing</div>
+            <div class="alert alert-warning hide" id="no-title-alert" style="" role="alert">You must add title before continuing</div>
+          </div>        
         </div>
         <!-- STEP 3 END -->
         <!-- STEP 4 -->
@@ -74,7 +82,7 @@
             </span>
           </div>
           <span id="duplicate-error" class="hide">Category has been selected!</span>
-          <div class="cat-wrapper col-md-12"> 
+          <div class="cat-wrapper col-md-12 col-xs-12"> 
             <h3 id="h3-wrapper">
             </h3>
             <div class="alert alert-warning hide" id="no-category-alert" style="" role="alert">You must select a category before continuing</div>

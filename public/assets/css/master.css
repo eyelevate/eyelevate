@@ -11,3 +11,6 @@ li a{
 html, body {
 	height: 100% !important;
 }
+.background-color{
+  background-color: rgb(241, 241, 241);
+}

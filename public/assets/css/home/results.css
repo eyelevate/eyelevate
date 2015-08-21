@@ -479,7 +479,6 @@ a{
   -moz-border-left-colors: none;
   -moz-border-right-colors: none;
   -moz-border-top-colors: none;
-  background: none repeat scroll 0 0 rgba(113, 113, 113, 0.07);
   border-color: -moz-use-text-color #FFFFFF #FFFFFF -moz-use-text-color;
   border-image: none;
   border:5px solid rgb(214, 214, 214);
@@ -501,7 +500,6 @@ a{
   -moz-border-left-colors: none;
   -moz-border-right-colors: none;
   -moz-border-top-colors: none;
-  background: none repeat scroll 0 0 rgba(113, 113, 113, 0.07);
   border-color: -moz-use-text-color #FFFFFF #FFFFFF -moz-use-text-color;
   border-image: none;
   border:5px solid rgb(214, 214, 214);
@@ -524,7 +522,6 @@ textarea {
   -moz-border-left-colors: none;
   -moz-border-right-colors: none;
   -moz-border-top-colors: none;
-  background: none repeat scroll 0 0 rgba(113, 113, 113, 0.07);
   border-color: -moz-use-text-color #FFFFFF #FFFFFF -moz-use-text-color;
   border-image: none;
   border:5px solid rgb(214, 214, 214);
@@ -966,6 +963,9 @@ body {
     -webkit-transition: all .25s ease-out;
          -o-transition: all .25s ease-out;
             transition: all .25s ease-out;
+  }
+  .right-modal-inner{
+   height: 35px;
   }
   
   .row-offcanvas-right {

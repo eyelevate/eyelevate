@@ -22,8 +22,10 @@ question_modal = {
 					if (!$.isBlank(search_text)) {
 						//SEND SEARCH REQUEST TO PHP 
 						request_a.search_query(search_text, _this, current_step,$(this));
+						$('#no-title-alert-step-1').addClass('hide');
 					} else {
 						$('#comment_text').focus();
+						$('#no-title-alert-step-1').removeClass('hide');
 					}
 				} else if(current_step == 3) {
 					var description_text = $('#question-description').val();
@@ -32,6 +34,12 @@ question_modal = {
 					if (!$.isBlank(description_text) && !$.isBlank(title_text)) {
 						$('#nxt-btn').addClass('hide');
 						$('#qst-submit').removeClass('hide');
+
+
+						$('#no-description-alert').addClass('hide');
+						$('#no-title-alert').addClass('hide');
+
+
 						var next_step = current_step + 1;
 						//DEACTIVE THE PREVIOUS STATE AND HIDE IT
 						_this.attr('state',null);
@@ -42,8 +50,12 @@ question_modal = {
 					} else {	
 						if ($.isBlank(description_text)) {
 							$('#question-description').focus();
+							$('#no-description-alert').removeClass('hide');
+							$('#no-title-alert').addClass('hide');
 						} else {
 							$('#question-title').focus();
+							$('#no-title-alert').removeClass('hide');
+							$('#no-description-alert').addClass('hide');
 						}
 					}
 				} else {
@@ -200,6 +212,9 @@ function reset_ask_modal(){
 	$('#nxt-btn').removeClass('hide');
 
 	$('#no-category-alert').addClass('hide');
+	$('#no-description-alert').addClass('hide');
+	$('#no-title-alert').addClass('hide');
+	$('#no-title-alert-step-1').addClass('hide');
 
 	$('.step').attr('state','');
 	$('.step-1').attr('state','active');

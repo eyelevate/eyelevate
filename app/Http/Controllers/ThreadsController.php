@@ -413,6 +413,7 @@ public function postSubmitLike()
         $status = 400;
         $total_like_count = null;
         $prev_dislike = null;
+        $total_dislike_count = null;
         if (Auth::check()) {
             $this_reply = Input::get('this_reply'); 
             $this_thread = Input::get('this_thread'); 
@@ -484,7 +485,7 @@ public function postSubmitDislike()
         $status = 400;
         $total_dislike_count = null;
         $prev_like = null;
-
+        $total_like_count = null;
         if (Auth::check()) {
             $this_reply = Input::get('this_reply'); 
             $this_thread = Input::get('this_thread'); 

@@ -15,7 +15,6 @@ results = {
 	    content:popupTemplate, 
 	    html:true
 	});
-
 	},
 	events: function() {
 
@@ -31,7 +30,6 @@ results = {
 				//SIDE BAR IS ALREAEDY OPEN FILLED THE NEW DATA
 				var _this_reply = parseInt($(this).parents('.panel-parent').attr('this_reply'));
 				right_box_renew(_this_reply);
-
 			}
 		});
 

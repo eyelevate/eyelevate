@@ -10,7 +10,7 @@
   <div class="row-fluid">
       <strong><h2 class="text-center" style="margin-top:100px">Admin Login</h2></strong>
       @if(isset($wrong))
-            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-top:100px">
+            <div class="alert alert-danger alert-dismissible" role="alert">
               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                Wrong username or password
             </div>

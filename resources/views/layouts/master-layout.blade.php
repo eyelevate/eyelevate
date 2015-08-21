@@ -70,9 +70,7 @@
 
 
     <div class="container-fluid background-color max-height">
-
       @yield('content')
-
     </div>
 
     <!-- Load js libs only when the page is loaded. -->
@@ -90,10 +88,5 @@
   </body>
 </html>
     <style>
-    .background-color{
-      background-color: rgb(241, 241, 241);
-    }
-    .navbar{
-      margin-bottom: 0 !important;
-    }
+
     </style>

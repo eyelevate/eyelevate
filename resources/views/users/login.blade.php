@@ -7,23 +7,20 @@
 @stop
 
 @section('content')
-
-
-
 <div class="container">
 
   <div class="row" id="pwd-container">
     <div class="col-md-4"></div>
-    <div class="col-md-4">
+    <div class="col-md-4" style="margin-top:100px">
       @if(isset($unauthorized))
-          	<div class="alert alert-warning alert-dismissible" role="alert" style="margin-top:100px">
+          	<div class="alert alert-warning alert-dismissible" role="alert">
       		    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       		    <strong>Warning!</strong> You are not authorized to view this page. Please Login.
       		  </div>
 
            
       @elseif(isset($wrong))
-            <div class="alert alert-danger alert-dismissible" role="alert" style="margin-top:100px">
+            <div class="alert alert-danger alert-dismissible" role="alert">
               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                Wrong username or password
             </div>

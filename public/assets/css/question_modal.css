@@ -14,7 +14,19 @@ button#qst-submit {
 /*==================================================
 =**************************************************=
 ==================================================*/
+#no-category-alert{
+    margin-bottom: 0 !important;
+}
 
+#no-description-alert{
+    margin-bottom: 0 !important;
+}
+#no-title-alert{
+    margin-bottom: 0 !important;
+}
+#no-title-alert-step-1{
+        margin-bottom: 0 !important;
+}
 
 
 
@@ -101,7 +113,21 @@ width: 47%;
             margin-top: 0;
         }
         #no-category-alert{
-            margin-bottom: 40px;
+            margin-top: 5px !important;
+            margin-bottom: 40px !important;
+        }
+
+        #no-description-alert{
+            margin-top: 5px !important;
+            margin-bottom: 40px !important;
+        }
+        #no-title-alert{
+            margin-top: 5px !important;
+            margin-bottom: 40px !important;
+        }
+        #no-title-alert-step-1{
+            margin-top: 15px !important;
+            margin-bottom: 40px !important;
         }
     }
 
