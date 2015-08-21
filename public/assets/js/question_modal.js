@@ -47,6 +47,7 @@ question_modal = {
 						}
 					}
 				} else {
+
 					$('#nxt-btn').removeClass('hide');
 					$('#qst-submit').addClass('hide');
 					var next_step = current_step + 1;
@@ -104,8 +105,10 @@ question_modal = {
 			var count = $('#h3-wrapper .category-tag').length;
 			if (count != 0) {
 				$('#question_add').submit();
+				$('#no-category-alert').addClass('hide');
 			} else {
 				$('.custom-dropdown__select--white').focus();
+				$('#no-category-alert').removeClass('hide');
 			}
 		});
 	}
@@ -190,6 +193,13 @@ function reset_ask_modal(){
 	$('.step-2').addClass('hide');
 	$('.step-3').addClass('hide');
 	$('.step-4').addClass('hide');
+
+	//BTNS
+	$('#qst-submit').addClass('hide');
+	$('#question-modal-back-btn').addClass('hide');
+	$('#nxt-btn').removeClass('hide');
+
+	$('#no-category-alert').addClass('hide');
 
 	$('.step').attr('state','');
 	$('.step-1').attr('state','active');

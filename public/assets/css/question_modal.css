@@ -100,6 +100,9 @@ width: 47%;
           button#qst-submit {
             margin-top: 0;
         }
+        #no-category-alert{
+            margin-bottom: 40px;
+        }
     }
 
     /* Extra Small Devices, Phones */ 
