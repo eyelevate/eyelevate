@@ -26,6 +26,7 @@ class CheckPermission
 
                 return $next($request);
             }
+
             // Determine the path of where the user came from and redirect accordingly
             $redirect_path = (Session::get('_previous')['url']) ? Session::get('_previous')['url'] : '/';
             Flash::warning('You do not have authorization to view this page');
