@@ -138,7 +138,7 @@ class ThreadsController extends Controller
                 ));
         }
     }
-    public function postRetriveQuotes()
+    public function postRetrieveQuotes()
     {
         if(Request::ajax()){
             $status = 200;

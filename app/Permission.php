@@ -48,21 +48,9 @@ class Permission extends Model
         $name = Route::getRoutes();
         $routeCollection = Route::getRoutes();
         $controller_names = [];
-
         foreach ($routeCollection as $key => $value) {
-                //KEEP THE NAME OF THE ROUTE
-            $new_name = explode("/",$value->getPath());
-            if (sizeof( $new_name) == 1) {
-                $new_name = explode("/",$value->getPath());
-                $controller_names[$key] = $new_name[0];
-            } elseif (sizeof( $new_name) < 3) {
-                $new_name = explode("/",$value->getPath());
-                $controller_names[$key] = $new_name[0].'/'.$new_name[1];
-            } else {
-                $new_name = explode("/",$value->getPath());
-                $controller_names[$key] = $new_name[0].'/'.$new_name[1].'/'.$new_name[2];
-            }
-            // $controller_names[$key] = $new_name[0].'/'.$new_name[1];
+            //KEEP THE NAME OF THE ROUTE
+            $controller_names[$key] = $value->getPath();
         }   
         //TAKE OUT DUPLICATE AND REINDEX
         $new_controller_names = array_values(array_unique($controller_names));
