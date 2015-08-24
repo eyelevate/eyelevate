@@ -22,7 +22,6 @@ class CheckPermission
     {
         if (!app('Illuminate\Contracts\Auth\Guard')->guest()) {
             // If successful continue onto page request
-            Job::dump($request->user()->can($permission));
             if ($request->user()->can($permission)) {
 
                 return $next($request);
@@ -33,7 +32,7 @@ class CheckPermission
             Flash::warning('You do not have authorization to view this page');
 
             // Check for unauthorized ajax requests and return 401, if post then redirect back to login page
-            //return $request->ajax ? response('Unauthorized.', 401) : Redirect::to($redirect_path);
+            return $request->ajax ? response('Unauthorized.', 401) : Redirect::to($redirect_path);
         }
     }
 }

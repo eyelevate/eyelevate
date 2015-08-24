@@ -106,11 +106,9 @@ AuthenticatableContract, CanResetPasswordContract
         //GET USER ID
         $this_user_id = Auth::user()->id;
         //GET USER ROLE
-        Job::dump($this_user_id);
         
         $this_role = RoleUser::find($this_user_id);  
-        Job::dump($this_role->id);
-        $permission_role = PermissionRole::where('role_id',$this_role->id)->get();
+        $permission_role = PermissionRole::where('role_id',$this_role->role_id)->get();
         if($permission_role){
             foreach ($permission_role as $pr_key => $pr_value) {
                 $_permission = Permission::find($pr_value->permission_id);
