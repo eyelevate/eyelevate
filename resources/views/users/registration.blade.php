@@ -2,9 +2,12 @@
 @section('stylesheets')
 <link href='http://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>
 {!! Html::style('assets/css/users/registration.css') !!}
+{!! Html::style('/assets/css/general.css') !!}
+
 @stop
 @section('scripts')
 <script src="assets/js/users/registration.js"></script>
+<script src="/assets/js/login_modal.js"></script>
 @stop
 
 @section('content')

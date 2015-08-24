@@ -10,6 +10,7 @@ use Symfony\Component\Console\Application as ConsoleApplication;
 use Symfony\Component\Debug\ExceptionHandler as SymfonyDisplayer;
 use Illuminate\Contracts\Debug\ExceptionHandler as ExceptionHandlerContract;
 
+use App\Job;
 class Handler implements ExceptionHandlerContract
 {
     /**
@@ -133,7 +134,7 @@ class Handler implements ExceptionHandlerContract
         $status = $e->getStatusCode();
 
         if (view()->exists("errors.{$status}")) {
-            return response()->view("errors.{$status}", ['exception' => $e], $status);
+            return response()->view("errors.{$status}", ['exception' => $e,'layout' => 'layouts.master-layout'], $status);
         } else {
             return $this->convertExceptionToResponse($e);
         }

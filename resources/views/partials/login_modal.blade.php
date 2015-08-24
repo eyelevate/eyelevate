@@ -18,7 +18,7 @@
 	      	<div id="forgot-wrapper pull-left">
 	        	<a href="/password-reset" id="forgot"> I forgot my password</a>
 	        </br>
-	        	<a href="/registration" class="a-style">Sign up</a>
+	        	<a href="{!! route('registration_view') !!}" class="a-style">Sign up</a>
 	        </div>
 	        <button type="submit" id="login-btn-1" class="btn btn-primary pull-right login-btn">Login</button>
 	      </div>

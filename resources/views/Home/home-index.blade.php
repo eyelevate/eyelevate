@@ -25,7 +25,7 @@
 					<li>{!! Html::link('/logout', 'Logout') !!}</li>
 				 @else
 					<li><a class="active" id="login">Login</a></li>
-					<li><a class="active" href="/registration">Sign Up</a></li>
+					<li><a class="active" href="{!! route('registration_view') !!}">Sign Up</a></li>
 				 @endif
 			</ul>
 		</div>
