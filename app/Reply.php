@@ -48,10 +48,9 @@ class Reply extends Model
 	        $html .=  '
 					    <div class="panel-btn-sm pull-right panel-parent reply-sm-'.$reply_id.'">
 							<div class="btn-group" role="group" aria-label="...">
-							  <button type="button" class="first-btn btn btn-default btn-panel-single show-quote"><i class="fa fa-quote-right"></i></br><span class="inner-val">0</span></button>
-							  <button type="button" class="btn btn-default btn-panel-single eye-like"><i class="fa fa-thumbs-o-up"></i></br><span class="inner-val">0</span></button>
-							  <button type="button" class="btn btn-default btn-panel-single dont-like"><i class="fa fa-thumbs-o-down"></i></br><span class="inner-val">0</span></button>
-							  <button type="button" class="last-btn btn btn-default btn-panel-single flag-it"><i class="glyphicon glyphicon-flag"></i></br><span class="inner-val">0</span></button>
+							  <button type="button" class="first-btn btn btn-default btn-panel-single show-quote" style="width: 33.333333333333%"><i class="fa fa-quote-right"></i></br><span class="inner-val">0</span></button>
+							  <button type="button" class="btn btn-default btn-panel-single eye-like" style="width: 33.333333333333%"><i class="fa fa-thumbs-o-up"></i></br><span class="inner-val">0</span></button>
+							  <button type="button" class="btn btn-default btn-panel-single dont-like" style="width: 33.333333333333%"><i class="fa fa-thumbs-o-down"></i></br><span class="inner-val">0</span></button>
 							</div>
 			            </div>
 				        <div class="thread-single">
