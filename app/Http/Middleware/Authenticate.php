@@ -48,7 +48,8 @@ class Authenticate
             Session::put('intended_url',$request->url());
 
             Flash::error('You must be logged in to view the page');
-            return redirect($redirect_path);
+            Job::dump('Not authenticated');
+            // return redirect($redirect_path);
         }
         return $next($request);
     }
