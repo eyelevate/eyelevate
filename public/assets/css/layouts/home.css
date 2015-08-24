@@ -403,7 +403,7 @@ a:hover, a:active { /*color:#fff; text-decoration: underline; */}
     /* Extra Small Devices, Phones */ 
     @media only screen and (max-width : 480px) {
     html { 
-      background: url(/assets/gifs/bulb.gif) no-repeat center center fixed; 
+      background: url(/assets/main-background/frames/2.png) no-repeat center center fixed; 
       -webkit-background-size: cover;
       -moz-background-size: cover;
       -o-background-size: cover;
@@ -420,7 +420,7 @@ a:hover, a:active { /*color:#fff; text-decoration: underline; */}
             font-size: 4.3em;
       }
       html { 
-        background: url(/assets/gifs/bulb.gif) no-repeat center center fixed; 
+        background: url(/assets/main-background/frames/2.png) no-repeat center center fixed; 
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;

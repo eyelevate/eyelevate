@@ -258,7 +258,7 @@ class Thread extends Model
  
              $html .=    '</div>
 				                  </div> 
-				                  <h4 ><a href="/threads/view/'.$threads->id.'">'.$threads->title.'</a></h4>
+				                  <h4>'.$threads->title.'</h4>
 				                </br>
 				                <div class="thread-description">
 									'.$threads->description.'

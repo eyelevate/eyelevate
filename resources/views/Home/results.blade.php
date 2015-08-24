@@ -54,7 +54,6 @@
     <div class="" id="right-box-inner">
 
       <div class="list-group list-group-container">
-        <a href="#" class="list-group-item active " id="list-search-bar">
           <div class="input-group" >
             <input type="text" class="form-control inpage-search" id="list-search-input" placeholder="Search for ...">
             <span class="input-group-btn">
@@ -63,6 +62,8 @@
               </button>
             </span>
           </div><!-- /input-group -->
+        <a href="#" class="list-group-item active " id="list-search-bar">
+
         </a>
         @foreach($categories_for_side as $sbkey => $sbvalue)
           <a href="#" class="list-group-item cat-items" cat-id={{$sbkey}}>{{$sbvalue}}</a>

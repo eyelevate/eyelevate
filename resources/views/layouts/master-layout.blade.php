@@ -43,7 +43,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="/">Home</a></li>
+            <li class="active"><a href="{!! route('home_index') !!}">Home</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
               @if(Auth::user())
@@ -59,8 +59,8 @@
               @else
               <li class="dropdown" id="login">
               <a class="dropdown-toggle" data-toggle="dropdown"> 
-                 <span >Login</span> </a>
-                <li><a class="active" href="/registration">Sign Up</a></li>
+                 <span >Login</span> </a></li>
+                <li><a class="active" href="{!! route('registration_view') !!}">Sign Up</a></li>
               </li>
               @endif
           </ul>
