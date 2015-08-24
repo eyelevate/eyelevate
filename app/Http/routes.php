@@ -126,7 +126,7 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 	//USER ROUTE
 	Route::get('registration', ['uses'=>'UsersController@getRegistration']);
 	Route::post('registration', ['uses'=>'UsersController@postRegistration']);
-	Route::post('validate', ['uses'=>'UsersController@getValidate']);
+	
 	Route::get('logout', ['uses'=>'UsersController@getLogout']);
 	Route::group(['prefix' => 'users'], function () {
 		Route::get('login', ['as'=>'users_login','uses'=>'UsersController@getLogin']);
@@ -135,6 +135,7 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 		Route::get('profile/{username}',  ['as'=>'users_profile','uses' => 'UsersController@getProfile', function ($username) {}]);
 		Route::post('user-auth', ['uses'=>'UsersController@postUserAuth']);
 		Route::post('send-file', ['uses'=>'UsersController@postSendFile']);
+		Route::post('validate', ['uses'=>'UsersController@postValidate']);
 		Route::post('send-file-temp', ['uses'=>'UsersController@postSendFileTemp']);
 	});	
 

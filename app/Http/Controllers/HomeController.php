@@ -43,7 +43,8 @@ class HomeController extends Controller
     {
         $reset_success = (Session::get('reset_success')) ? true : false;
         $username = (Auth::check()) ? Auth::user()->username : null;
-        return view('home.home-index')
+
+        return view('Home.home-index')
             ->with('layout',$this->layout)
             ->with('username',$username)
             ->with('reset_success',$reset_success);
@@ -88,7 +89,7 @@ class HomeController extends Controller
         $categories_for_select = Category::prepareForSelect(Category::where('status',1)->get());
         $categories_for_side = Category::prepareForSide(Category::where('status',1)->get());
 
-        return view('home.results')
+        return view('Home.results')
             ->with('layout',$this->layout)
             ->with('threads',$prepared_thread)
             ->with('prepared_thread_clone',$prepared_thread_clone)

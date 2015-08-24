@@ -65,9 +65,7 @@ trait ResetsPasswords
             throw new NotFoundHttpException;
         }
 
-        return view('auth.reset')
-        ->with('token', $token)
-        ->with('layout','layouts.master-layout');
+        return view('auth.reset')->with('token', $token);
     }
 
     /**
@@ -81,7 +79,7 @@ trait ResetsPasswords
         $this->validate($request, [
             'token' => 'required',
             'email' => 'required|email',
-            'password' => 'required|confirmed',
+            'password' => 'required|confirmed|min:6',
         ]);
 
         $credentials = $request->only(
@@ -130,6 +128,6 @@ trait ResetsPasswords
             return $this->redirectPath;
         }
 
-        return property_exists($this, 'redirectTo') ? $this->redirectTo : '/';
+        return property_exists($this, 'redirectTo') ? $this->redirectTo : '/home';
     }
 }
