@@ -120,11 +120,11 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 	
 
 	// Route::post('/search','HomeController@postIndex');
-	Route::get('search', ['uses'=>'HomeController@postIndex']);
+	Route::get('search', ['as'=>'home_index','uses'=>'HomeController@postIndex']);
 	Route::post('search', ['uses'=>'HomeController@postIndex']);
 
 	//USER ROUTE
-	Route::get('registration', ['uses'=>'UsersController@getRegistration']);
+	Route::get('registration', ['as'=>'registration_view','uses'=>'UsersController@getRegistration']);
 	Route::post('registration', ['uses'=>'UsersController@postRegistration']);
 	
 	Route::get('logout', ['uses'=>'UsersController@getLogout']);
