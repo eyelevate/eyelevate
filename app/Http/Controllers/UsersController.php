@@ -36,7 +36,7 @@ class UsersController extends Controller
         // $this->layout = "layouts.master2";
 
         // // THIRD TEMPLATE
-            $this->layout = 'layouts.master-layout';
+        $this->layout = 'layouts.master-layout';
 
     }
 
@@ -148,12 +148,10 @@ class UsersController extends Controller
     {
         $username = Input::get('username');
         $password = Input::get('password');
-
-
         if (Auth::attempt(array('username'=>$username, 'password'=>$password))) {
-            Flash::success('Welcome back '.$username.'!');
             $redirect = (Session::get('redirect_flash')) ? Session::get('redirect_flash') : null; 
             if(isset($redirect)) {
+                Flash::success('Welcome back '.$username.'!');
                 return Redirect::to($redirect);
             } else { //SESSION DOESN'T EXIST
                 return redirect()->action('HomeController@postIndex');
@@ -166,12 +164,13 @@ class UsersController extends Controller
     }
     public function getLogout()
     {
+       
         if (Session::get('redirect_flash')) {
             $pre_path = Session::get('redirect_flash');
             Auth::logout();
             Session::reflash();
             switch ($pre_path) {
-                case '/':
+                case URL::to('/'):
                        return Redirect::action('HomeController@getIndex');
                     break;
                 default:
@@ -191,25 +190,26 @@ class UsersController extends Controller
 
     public function getProfile($username)
     {
-        // $prepared_thread = Thread::prepareThreadForView(Thread::Where('status',1)
-        //     ->orderBy('created_at', 'ASC')
-        //     ->get());
-        $categories_for_select = Category::prepareForSelect(Category::where('status',1)->get());
-        $categories_for_side = Category::prepareForSide(Category::where('status',1)->get());
-        $current_user = User::find(Auth::user()->id);
-        $profile_image = Job::imageValidator($current_user->profile_image);
-        $email = $current_user->email;
-        $fname = $current_user->firstname;
-        $lname = $current_user->lastname;
-        return view('users.profile')
-        ->with('layout',$this->layout)
-        // ->with('threads',$prepared_thread)
-        ->with('categories_for_select',$categories_for_select)
-        ->with('categories_for_side',$categories_for_side)
-        ->with('profile_image',$profile_image)        
-        ->with('email',$email)
-        ->with('fname',$fname)
-        ->with('lname',$lname);
+        if (Auth::user()->username == $username) {
+            $categories_for_select = Category::prepareForSelect(Category::where('status',1)->get());
+            $categories_for_side = Category::prepareForSide(Category::where('status',1)->get());
+            $current_user = User::find(Auth::user()->id);
+            $profile_image = Job::imageValidator($current_user->profile_image);
+            $email = $current_user->email;
+            $fname = $current_user->firstname;
+            $lname = $current_user->lastname;
+            return view('users.profile')
+            ->with('layout',$this->layout)
+            // ->with('threads',$prepared_thread)
+            ->with('categories_for_select',$categories_for_select)
+            ->with('categories_for_side',$categories_for_side)
+            ->with('profile_image',$profile_image)        
+            ->with('email',$email)
+            ->with('fname',$fname)
+            ->with('lname',$lname);
+        } else {
+            abort(404);
+        }
     }
     public function postProfile()
     {
@@ -219,13 +219,15 @@ class UsersController extends Controller
             $user->firstname = Input::get('fname');
             $user->lastname = Input::get('lname');
             if ($user->save()) {
-                $redirect = (Session::get('redirect')) ? Session::get('redirect') : null; 
-                if(isset($redirect)) {
-                   return Redirect::to(Session::get('redirect'));
-               } else {
-                    //SESION DOESN'T EXIST
-                return Redirect::to('/');
-            }
+                Flash::success('Profile Successfully Updated');
+                return Redirect::action('UsersController@getProfile',$user->username);
+            //     $redirect = (Session::get('redirect')) ? Session::get('redirect') : null; 
+            //     if(isset($redirect)) {
+            //        return Redirect::to(Session::get('redirect'));
+            //    } else {
+            //         //SESION DOESN'T EXIST
+            //     return Redirect::to('/');
+            // }
         }
     } else {
             // validation has failed, display error messages    

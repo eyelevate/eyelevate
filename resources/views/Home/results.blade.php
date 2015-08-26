@@ -1,12 +1,15 @@
 @extends($layout)
 @section('stylesheets')
 {!! Html::style('/assets/css/general.css') !!}
+{!! Html::style('/assets/css/tinymce.css') !!}
 {!! Html::style('/assets/css/question_modal.css') !!}
+{!! Html::style('assets/css/login_modal.css') !!}
 {!! Html::style('/assets/css/home/results.css') !!}
 
 @stop
 @section('scripts')
 <script src="/assets/js/login_modal.js"></script>
+<script src="/packages/tinymce/js/tinymce/tinymce.min.js"></script>
 <script src="/assets/js/home/results.js"></script>
 <script src="/assets/js/question_modal.js"></script>
 @stop
@@ -16,7 +19,6 @@
     <!-- LEFT BOX START -->
     <div class="col-md-9 max-height" id="left-box" target="false">
       <!-- Page Flash messages go here -->
-      @include('flash::message')
       <div class="container" id="left-box-inner">
         <div class="" id="preferences-frame">
           <div class="input-group " id="top-search-bar" >
@@ -62,11 +64,11 @@
               </button>
             </span>
           </div><!-- /input-group -->
-        <a href="#" class="list-group-item active " id="list-search-bar">
+        <a href="" class="list-group-item active " id="list-search-bar">
 
         </a>
         @foreach($categories_for_side as $sbkey => $sbvalue)
-          <a href="#" class="list-group-item cat-items" cat-id={{$sbkey}}>{{$sbvalue}}</a>
+          <a href="" class="list-group-item cat-items" cat-id={{$sbkey}}>{{$sbvalue}}</a>
         @endforeach
 
       </div>
@@ -75,7 +77,6 @@
   <!-- RIGHT BOX END -->
 </div>
 </div>
-
 
 {!! View::make('partials.login_modal') !!}
 

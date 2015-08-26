@@ -43,7 +43,6 @@ class HomeController extends Controller
     {
         $reset_success = (Session::get('reset_success')) ? true : false;
         $username = (Auth::check()) ? Auth::user()->username : null;
-
         return view('Home.home-index')
             ->with('layout',$this->layout)
             ->with('username',$username)
@@ -52,13 +51,10 @@ class HomeController extends Controller
 
     public function postIndex()
     {
-        // $search_array_count = 0;
-        // $paginate_num = 10;
-        // $new_paginate_num = 10;
         //FIND SEARCH RESULTS
-        $search_query = Input::get('searched-content');
+        $search_query = Job::FilterSpecialCharacters(Input::get('searched-content'));
         $searched_results_html = '';
-        if ($search_query) {
+        if (!empty($search_query)) {
             if (strlen($search_query) > 2) {
                 $searched_results_html = '<h4>You searched for : '.$search_query.'</h4> ';
                 $search_results = Search::index_search_function($search_query);

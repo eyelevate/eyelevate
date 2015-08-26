@@ -1,19 +1,20 @@
 @extends($layout)
 @section('stylesheets')
+{!! Html::style('assets/css/login_modal.css') !!}
 <link href='http://fonts.googleapis.com/css?family=Bree+Serif' rel='stylesheet' type='text/css'>
 {!! Html::style('assets/css/users/registration.css') !!}
 {!! Html::style('/assets/css/general.css') !!}
 
 @stop
 @section('scripts')
-<script src="assets/js/users/registration.js"></script>
 <script src="/assets/js/login_modal.js"></script>
+<script src="assets/js/users/registration.js"></script>
 @stop
 
 @section('content')
-<div id="main-frame" class="col-md-7">
+<div id="main-frame" class="col-md-12">
 	{!! Form::open(array('action' => 'UsersController@postRegistration','id'=>'reg-form', 'class'=>'','role'=>"form")) !!}
-	<div class="form-frame col-md-12">
+	<div class="form-frame">
 		<div class="input-section  step1">
 			<h3 class="form-title">Add Photo</h3>
 			<div class="form-group ind-box col-md-12">
@@ -88,6 +89,7 @@
 		
 	</div>
 	{!! Form::close() !!}
+	{!! View::make('partials.login_modal') !!}
 </div>
 
 <style>

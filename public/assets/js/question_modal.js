@@ -10,6 +10,21 @@ question_modal = {
 		$.ajaxSetup({
 			headers: { 'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content') }
 		});
+		tinymce.init({
+            selector: "#question-description",
+            body_id: "question-description",
+            content_css : "/assets/css/tinymce.css",
+            elementpath: false,
+            max_height: 500,
+            height : 125,
+            toolbar: ["undo redo | bold italic | bullist | numlist"],
+            menubar: false,
+            statusbar: false,
+            resize: false,
+            mode: "textareas",
+   			preview_styles: false,
+   			
+        });
 	},
 	modal_stepy: function(){
 		$(document).on('click','.next-btn',function(){
@@ -28,7 +43,7 @@ question_modal = {
 						$('#no-title-alert-step-1').removeClass('hide');
 					}
 				} else if(current_step == 3) {
-					var description_text = $('#question-description').val();
+					var description_text = tinymce.get('question-description').getContent();
 					var title_text = $('#question-title').val();
 					
 					if (!$.isBlank(description_text) && !$.isBlank(title_text)) {

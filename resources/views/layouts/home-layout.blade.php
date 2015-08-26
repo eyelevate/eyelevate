@@ -26,7 +26,6 @@
   <![endif]-->
 </head>
 <body class="theme-invert">
-  @include('flash::message')
   <div id="video-wrap"  class="img-responsive">
   </div>
 

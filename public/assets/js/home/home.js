@@ -39,7 +39,7 @@ home = {
 	events: function() {
 
 		$('#login').click(function(){
-			$('#myModal').modal('toggle');
+			$('#myModal').modal('show');
 		});
 		$('#logout').click(function(){
 			$('#logout-form').submit();

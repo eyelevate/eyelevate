@@ -14,6 +14,10 @@ class Reply extends Model
 		if (isset($reply_id)) {
 			$all_quotes = Reply::where('quote_id',$reply_id)->get();
 			foreach ($all_quotes as $aqkey => $aqvalue) {
+
+				$aqvalue->reply = json_decode($aqvalue->reply);
+
+
 				$expend_icon = '';
 				$this_replier = User::find($aqvalue->user_id);
 				$this_replier_username = $this_replier->username;
@@ -105,8 +109,7 @@ class Reply extends Model
 				              <span class="message-sender" id="">'.$this_username.'</span> <span class="quote-details">- '.$time.'</span>
 				            </br></span>
 				            <span class="message-body">
-
-								<p>'.$this_quote.'</p>
+								'.$this_quote.'
 				              	'.$expend_icon.' 
 				            </span>
 				          </a>';

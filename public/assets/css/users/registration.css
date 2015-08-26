@@ -1,16 +1,23 @@
 #main-frame{
 	/*background-color: rgb(241, 241, 241);*/
-	background-color: #fff;
-    min-height: 795px;
+/*	background-color: #fff;*/
+    /*min-height: 795px;*/
+  height: auto;
 	display: block;
-	margin: 80px auto;
 	float: none;
 	border-radius: 5px;
-	padding-top: 5px;
-	padding-left: 30px;  
-	padding-right: 30px;
+  position: absolute;
+  margin-bottom: 10px;
 }
-
+.form-frame{
+    background-color: #fff;
+    padding: 10px 100px 10px 100px;
+    height: 780px;
+}
+.container-fluid {
+    padding-right: 0;
+    padding-left: 0;
+}
 .background-color{
 	background-color: #fff;
 }
@@ -112,12 +119,7 @@ h3{
 #age{
 	margin-left: 4%;
 }
-.form-frame{
-	left: 0;
-	margin: 0 auto;
-	float: none;
-	position: absolute;
-}
+
 .row-margin-btm{
 	margin-bottom: 10px;
 }

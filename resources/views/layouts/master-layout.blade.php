@@ -23,7 +23,7 @@
   @yield('stylesheets')
 
   <!-- Custom styles -->
-  <link rel="stylesheet" href="/assets/css/master.css">
+  <link rel="stylesheet" href="/assets/css/layouts/master.css">
 
   <!--[if lt IE 9]>
     <script src="//oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -59,7 +59,8 @@
               @else
               <li class="dropdown" id="login">
               <a class="dropdown-toggle" data-toggle="dropdown"> 
-                 <span >Login</span> </a></li>
+                 <span >Login</span> </a>
+               </li>
                 <li><a class="active" href="{!! route('registration_view') !!}">Sign Up</a></li>
               </li>
               @endif
@@ -69,7 +70,8 @@
     </nav>
 
 
-    <div class="container-fluid background-color max-height">
+    <div class="container-fluid background-color max-height" id="wrapper">
+      @include('flash::message')
       @yield('content')
     </div>
 

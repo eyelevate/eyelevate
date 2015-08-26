@@ -1,6 +1,33 @@
 html{
   overflow: hidden;
 }
+
+.mce-tinymce{
+  padding: 1px !important; 
+  -moz-border-bottom-colors: none !important;
+  -moz-border-left-colors: none !important;
+  -moz-border-right-colors: none !important;
+  -moz-border-top-colors: none !important;
+  border-color: -moz-use-text-color #FFFFFF #FFFFFF -moz-use-text-color !important;
+  border-image: none !important;
+  border:3px solid rgb(214, 214, 214) !important;
+  border-radius: 6px 6px 6px 6px !important;
+  margin-bottom: 5px !important;
+}
+
+#quote-textarea .mce-tinymce{
+  padding: 1px !important; 
+  -moz-border-bottom-colors: none !important;
+  -moz-border-left-colors: none !important;
+  -moz-border-right-colors: none !important;
+  -moz-border-top-colors: none !important;
+  border-color: -moz-use-text-color #FFFFFF #FFFFFF -moz-use-text-color !important;
+  border-image: none !important;
+  border:3px solid rgb(214, 214, 214) !important;
+  border-radius: 0 !important;
+  margin-bottom: 5px !important;
+}
+
 /*ADD ANSWER STYLING*/
 #add-answer-title{
   font-size: 22px;
@@ -340,6 +367,7 @@ width: 90%;
   padding-right: 0;
   height: 88%;
   overflow-x: auto;
+
 }
 #right-box{
   /*border:1px solid red;*/
@@ -348,13 +376,25 @@ width: 90%;
   padding-bottom: 20px;
 }
 .inner {
-  padding-right: 0;
+
+    /* margin-top: 65px !important; */
+    float: left;
+    width: 35%;
+    margin-left: 0;
+
+    position: fixed;
+    left: -35%;
+
+
+/*  padding-right: 0;
   margin-top: 65px !important;
   width: 35%;
   position: fixed;
   min-height: 700px;
   left: -35%;
-  top: 0;
+  top: 0;*/
+
+  
   -webkit-transition: all 1s ease;
   -moz-transition: all 1s ease;
   -o-transition: all 1s ease;
@@ -362,7 +402,6 @@ width: 90%;
 }
 
 #zoom[target='false'] {
- margin-top: 65px !important;
   float: right;
  width: 100%;
  right:0;
@@ -370,11 +409,12 @@ width: 90%;
  -moz-transition: width 1s;
  -o-transition: width 1s;
  transition: width 1s;
+ position: fixed;
 }
 
 /* Compliance = IE8+, Firefox 2+, Safari, Chrome, Opera 10+ */
 #zoom[target='true'] {
-  margin-top: 65px !important;
+  /*margin-top: 65px !important;*/
  float: right;
  width: 65%;
  margin-left: 0;
@@ -382,6 +422,8 @@ width: 90%;
  -moz-transition: width 1s;
  -o-transition: width 1s;
  transition: width 1s;
+ position: fixed;
+     right: 0;
 }
 .right-box-expand {
 display: block;
@@ -406,7 +448,7 @@ display: block;
 
 .right-box{
   /*border:1px solid red;*/
-  min-height: 700px;
+  /*min-height: 700px;*/
 }
 
 .right-data{

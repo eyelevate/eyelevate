@@ -13,9 +13,6 @@
 Route::group(['middleware' => 'beforeFilter'], function () {
 	//HOME ROUTE
 	Route::get('/', 'HomeController@getIndex');
-
-
-
 	/**
 	 * ADMIN SECTION
 	 */
@@ -117,7 +114,6 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 	Route::group(['prefix' => 'categories'], function () {
 		Route::post('search-cat', ['uses'=>'CategoriesController@postCatSearch']);
 	});
-	
 
 	// Route::post('/search','HomeController@postIndex');
 	Route::get('search', ['as'=>'home_index','uses'=>'HomeController@postIndex']);
@@ -133,6 +129,7 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 		Route::post('login',['uses'=>'UsersController@postLogin']);
 		Route::post('login-modal', ['uses'=>'UsersController@postLoginModal']);
 		Route::get('profile/{username}',  ['as'=>'users_profile','uses' => 'UsersController@getProfile', function ($username) {}]);
+		Route::post('profile',  ['as'=>'users_profile_post','uses' => 'UsersController@postProfile']);
 		Route::post('user-auth', ['uses'=>'UsersController@postUserAuth']);
 		Route::post('send-file', ['uses'=>'UsersController@postSendFile']);
 		Route::post('validate', ['uses'=>'UsersController@postValidate']);
@@ -144,7 +141,6 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 		Route::get('email', ['uses'=>'Auth\PasswordController@getEmail']);
 		Route::post('email', ['uses'=>'Auth\PasswordController@postEmail']);
 	});
-
 
 	//PERMISSIONS ROUTE
 	Route::group(['prefix' => 'permissions'], function () {
@@ -168,6 +164,7 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 		Route::post('submit-like', ['uses'=>'ThreadsController@postSubmitLike']);
 		Route::post('submit-dislike', ['uses'=>'ThreadsController@postSubmitDislike']);
 		Route::post('inpage-search', ['uses'=>'ThreadsController@postInpageSearch']);
+		Route::post('set-setting', ['uses'=>'ThreadsController@postSetSetting']);
 	});
 
 	// // Password reset routes...

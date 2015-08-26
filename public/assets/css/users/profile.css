@@ -1,12 +1,22 @@
 .site-wrapper{
-  background: rgb(241, 241, 241);
+/*  background: rgb(241, 241, 241);*/
 }
 /*LEFT AND RIGHT WRAPPERS*/
 #left-box{
-  /*border:1px solid red;*/
-  min-height: 650px;
-  padding-top: 75px;
+  height: auto;
   padding-bottom: 20px;
+}
+#left-box-inner{
+  width: 100%;
+  height: auto;
+  /*min-height: 650px;*/
+  /* border:1px solid yellow;*/
+  background-color:#fff;
+  box-shadow: 0 1px 2px rgba(0,0,0,.1);
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border-radius: 5px;
+  padding:50px;
 }
 .ask-li{
   color: rgba(61, 61, 61, 0.8) !important;
@@ -103,42 +113,8 @@ color: #3776AC !important;
 }
 
 
-
-
-#left-box-inner{
-  width: 100%;
-  height: 100%;
-  min-height: 650px;
-
-  /* border:1px solid yellow;*/
-  background-color:#fff;
-  box-shadow: 0 1px 2px rgba(0,0,0,.1);
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  border-radius: 5px;
-}
 /*background: rgb(241, 241, 241);*/
-#right-box{
-  min-height: 650px;
-  position: fixed;
-  right: 0;
-  padding-top: 75px;
-  padding-bottom: 20px;
-}
 
-#right-box-inner{
-  width: 100%;
-  height: 650px;
-  min-height: 650px;
-  /* border:1px solid yellow;*/
-  overflow: auto;
-  background-color:#fff;
-  box-shadow: 0 1px 2px rgba(0,0,0,.1);
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  border-radius: 5px;
-
-}
 #duplicate-error{
   color:#d9534f;
   margin-left: 15px;
@@ -584,38 +560,7 @@ textarea {
   transition: background-color 0.2s ease 0s;
   resize: none;
 }
-#myModal {
-  top: 19%;
-  right: 0%;
-  outline: none;
-}
-#myModal .modal-dialog  {width:45%;}
-.modal-header {
-   border-bottom: none; 
-   padding-left: 20px;
-}
-.modal-footer {
-  border-top: none;
-}
-.form-control-login {
-  height: 43px;
-}
-#forgot{
-  color:  rgb(112, 112, 112);
-  float: left;
-  cursor: pointer;
-}
-.modal-footer {
-  margin-top: -20px;
-}
-.login-btn {
-  color: #fff !important;
-  background-color: #428bca !important;
-  border-color: #357ebd !important;
-}
-  .modal {
-    overflow: hidden;
-  }
+
 textarea:focus {
     border-color: #e8ebed;
     background: none repeat scroll 0 0 #FFFFFF;
@@ -961,22 +906,8 @@ textarea:focus {
 }
 
 
-/*ORDERBOOTH CSS*/
-html,
-body {
-  overflow-x: hidden; /* Prevent scroll on narrow devices */
-}
-
-
-
-
-
 @media (min-width: 768px) {
   
-html,
-body {
-  overflow-x: auto; /* allow scroll */
-}
 .container {
     max-width: 100%;
     width: 100%;

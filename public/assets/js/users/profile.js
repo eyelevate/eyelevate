@@ -202,9 +202,7 @@ results = {
 			window.location = '/threads/view/'+id;
 		});
 		
-		$('#login').click(function(){
-			$('#myModal').modal('toggle');
-		});
+
 		$(document).find('.login-btn').click(function(){
 			$('#login-form').submit();
 		});

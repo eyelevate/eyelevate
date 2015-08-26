@@ -15,6 +15,34 @@ results = {
 	    content:popupTemplate, 
 	    html:true
 	});
+		tinymce.init({
+            selector: "#answer_text",
+            body_id: "editor-body",
+            elementpath: false,
+            max_height: 500,
+            height : 125,
+            toolbar: ["undo redo | bold italic | bullist | numlist"],
+            menubar: false,
+            statusbar: false,
+            resize: false,
+            mode: "textareas",
+   			preview_styles: false,
+   			
+        });
+		tinymce.init({
+            selector: "#quote_text",
+            body_id: "editor-body",
+            elementpath: false,
+            max_height: 500,
+            height : 125,
+            toolbar: ["undo redo | bold italic | bullist | numlist"],
+            menubar: false,
+            statusbar: false,
+            resize: false,
+            mode: "textareas",
+   			preview_styles: false,
+   			
+        });
 	},
 	events: function() {
 
@@ -49,26 +77,30 @@ results = {
 		});
 		//REPLY CANCEL BTN WAS CLICKED
 		$(document).on('click','.left-btn',function(){
-				right_box_compress();
-				$(this).parents('.dialogbox-container:first').find('.reply-media:first').remove();
+			right_box_compress();
+			$(this).parents('.dialogbox-container:first').find('.reply-media:first').remove();
 		});
 
 		//like CLICKED
 		$(document).on('click','.thumb-up',function(){
 
 		});
+
 		//DISLIKE CLICKED
 		$(document).on('click','.thumb-down',function(){
 
 		});
+
 		//SPAM FLAG CLICKED
 		$(document).on('click','.spam-popup',function(){
 
 		});
+
 		//THREAD ICON CLICKED
 		$(document).on('click','.setting-icon',function(){
-			$('#thread_setting').modal('toggle');
+			request.user_auth();
 		});
+
 		//THREAD ICON CLICKED
 		$(document).on('click','#notify_me_checkbox',function(){
 			var notify_me_condition = null;
@@ -132,7 +164,7 @@ results = {
 
 		//POST A REPLY
 		$(document).on('click','#post-answer',function(){
-			var this_text = $('#answer_text').val();
+			var this_text = tinyMCE.get('answer_text').getContent();
 			var this_thread = $(this).attr('this-thread');
 			request.post_answer(this_text,this_thread);
 		});
@@ -140,7 +172,7 @@ results = {
 		//quote-quote
 		$(document).on('click','#quote-reply-btn',function(){
 			//GET TEXT
-			var this_text = $('#quote_text').val();
+			var this_text = tinyMCE.get('quote_text').getContent();
 			//GET QUOTE
 			var this_reply = $(this).parents('.inner').attr('this-reply');
 			// GET THREAD
@@ -236,6 +268,28 @@ results = {
 	}
 }
 request = {
+	user_auth: function() {
+	var token = $('meta[name=csrf-token]').attr('content');
+	$.post(
+		'/users/user-auth',
+		{
+			"_token": token
+		},
+		function(result){
+			var status = result.status;
+			switch(status) {
+				case 200: // Approved
+					$('#thread_setting').modal('show');
+				break;				
+				case 400: // Approved
+					
+				break;
+				default:
+				break;
+			}
+		}
+		);
+	},
 	thread_setting: function(notify_me_condition,this_thread) {
 		var token = $('meta[name=csrf-token]').attr('content');
 		$.post(
@@ -310,7 +364,7 @@ request = {
 					case 200: // Approved
 						$(answer).insertBefore( "#add-answer" )
 						//CLEAROUT TEXTAREA
-						$('textarea#answer_text').val('');
+						tinyMCE.get('answer_text').setContent('');
 
 						var notify_me = result.notify_me;
 						if (notify_me['notify_me'] == 1) {
@@ -371,7 +425,7 @@ request = {
 						$('#quote-container').append(answer);
 						toogle_this($('#quote-btn'));
 						//EMPTY THE TESTAREA
-						$('textarea#quote_text').val('');
+						tinyMCE.get('textarea#quote_text').setContent('');
 					break;				
 					case 400: // Approved
 						$('#myModal').modal('toggle');

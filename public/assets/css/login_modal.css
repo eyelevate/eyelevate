@@ -14,7 +14,6 @@
 .form-control-login {
   height: 43px;
 }
-
 #forgot{
   color:  rgb(112, 112, 112);
   float: left;
@@ -29,22 +28,8 @@
   border-color: #357ebd !important;
 }
 .modal {
-overflow: hidden;
+  overflow: hidden;
 }
-
-.a-style {
-color: rgb(112, 112, 112) !important;
-float: left;
-cursor: pointer;
-margin-top: 5px;
-}
-
-#forgot {
-color: rgb(112, 112, 112) !important;
-float: left;
-cursor: pointer;
-}
-
 
 /*==================================================
 =            Bootstrap 3 Media Queries             =

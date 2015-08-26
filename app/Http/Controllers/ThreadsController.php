@@ -53,11 +53,11 @@ class ThreadsController extends Controller
     }
     public function postAdd()
     {
-        $sanitized_data = Job::sanitize(Input::all());
+
+        $sanitized_data = Input::all();
         $question = $sanitized_data['question'];
         $notify_me = isset($sanitized_data['notify-me'])?$sanitized_data['notify-me']:0;
         $categories = isset($sanitized_data['categories'])?json_encode($sanitized_data['categories']):null;
-
 
         //IE.11 ERROR RESOLVED
         $title = $question['title'];
@@ -71,23 +71,28 @@ class ThreadsController extends Controller
         $thread = new Thread;
         $thread->user_id = Auth::user()->id;
         $thread->title = $title;
-        $thread->description = $description;
+        $thread->description = json_encode($description);
         $thread->categories = $categories;
         $thread->notify_me = $notify_me;
         $thread->status = 1;
 
         if($thread->save()) { // Save the user and redirect to freelancers home
             return Redirect::back();
+        } else {
+            Flash::error('Error');
+            return Redirect::back();
         }
     }
     public function getView($id)
     {
         $threads = Thread::find($id);
-        //ADD TO THE VIEWS
+
+        //ADD TO THE VIEWS Count
         $views_before = $threads->views;
         $views_after = $views_before + 1;
         $threads->views = $views_after;
         $threads->save();
+
         $threads_html = Thread::prepareThreadsAndThreadReply($threads);
         $this_user_profile_image = User::CheckForProfileImage();
 
@@ -171,16 +176,15 @@ class ThreadsController extends Controller
         if(Request::ajax()){
             $status = 400;
             $notify_me = array('notify_me' => 0, 'user_id'=>0);
-
             $answer_html = 'Not Authorized';
             if (Auth::check()) {
-                $this_answer = Job::sanitize(Input::get('this_answer'));
-                $this_thread = Input::get('this_thread');
 
+                $this_answer = Input::get('this_answer');
+                $this_thread = Input::get('this_thread');
                 $reply = new Reply;
                 $reply->thread_id = $this_thread;
                 $reply->user_id = Auth::user()->id;
-                $reply->reply = $this_answer;
+                $reply->reply = json_encode($this_answer);
                 $reply->status = 1;
                 $reply->quote_id = null;
                 if ($reply->save()) {
@@ -235,14 +239,14 @@ public function postPostQuote()
         $quote_html = '';
         $quote_count = null;
         if (Auth::check()) {
-            $this_answer = Job::sanitize(Input::get('this_answer'));
+            $this_answer = Input::get('this_answer');
             $this_quote = Input::get('this_quote');
             $this_thread = Input::get('this_thread');
             $quote_html = Reply::preparePostedQuote($this_answer);
             $quote = new Reply;
             $quote->thread_id = $this_thread;
             $quote->user_id = Auth::user()->id;
-            $quote->reply = $this_answer;
+            $quote->reply = json_encode($this_answer);
             $quote->status = 1;
             $quote->quote_id = $this_quote;
             if ($quote->save()) {
@@ -556,11 +560,11 @@ public function postInpageSearch()
 {
     $status = 200;
         //FIND SEARCH RESULTS
-    $search_query = Input::get('searched_text');
+    $search_query = Job::FilterSpecialCharacters(Input::get('searched_text'));
 
     $searched_results_html = '<h4>You searched for : '.$search_query.'</h4> ';
 
-    if ($search_query) {
+    if (!empty($search_query)) {
         $search_results = Search::index_search_function($search_query);
         if (!empty($search_results)) {
             $searched_results_html = Thread::prepareSearchedResults($search_results);

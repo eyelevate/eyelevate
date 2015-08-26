@@ -9,6 +9,10 @@ login_modal = {
 		});
 	},
 	events: function() {
+		$('#login').click(function(){
+			$('#myModal').modal('show');
+		});
+
 		$(document).find('#login-btn-1').click(function(){
 			$('#myModal').modal('toggle');
 			$('#login-form-1').submit();

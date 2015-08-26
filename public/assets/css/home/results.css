@@ -15,7 +15,7 @@
 #left-box{
   /*border:1px solid red;*/
   min-height: 650px;
-  margin-top: 65px;
+/*  margin-top: 65px;*/
   padding-bottom: 20px;
 }
 .ask-li{
@@ -78,7 +78,7 @@ color: #3776AC !important;
   min-height: 650px;
   position: fixed;
   right: 0;
-  margin-top: 65px;
+  /*margin-top: 65px;*/
   padding-bottom: 20px;
 }
 
@@ -105,11 +105,7 @@ color: #3776AC !important;
   font-weight: 900;
   line-height: 1.42857143;
 }
-a:hover{
-  color: #404040;
-  text-decoration: none;
-  cursor: pointer;
-}
+
 /*LEFT BOX component*/
 #preferences-frame{
   width: 100%;
@@ -537,38 +533,7 @@ textarea {
 
 
 
-#myModal {
-  top: 19%;
-  right: 0%;
-  outline: none;
-}
-#myModal .modal-dialog  {width:45%;}
-.modal-header {
-   border-bottom: none; 
-   padding-left: 20px;
-}
-.modal-footer {
-  border-top: none;
-}
-.form-control-login {
-  height: 43px;
-}
-#forgot{
-  color:  rgb(112, 112, 112);
-  float: left;
-  cursor: pointer;
-}
-.modal-footer {
-  margin-top: -20px;
-}
-.login-btn {
-  color: #fff !important;
-  background-color: #428bca !important;
-  border-color: #357ebd !important;
-}
-.modal {
-  overflow: hidden;
-}
+
 textarea:focus {
   border-color: rgba(51, 122, 183, 0.27);
   background: none repeat scroll 0 0 #FFFFFF;

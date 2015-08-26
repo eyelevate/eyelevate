@@ -111,10 +111,6 @@ class Thread extends Model
 
 
 
-
-
-
-
 	static public function prepareCategories($cat) {
 		$cat_html = '';
 		if (isset($cat)) {
@@ -188,6 +184,11 @@ class Thread extends Model
 	static public function prepareThreadsAndThreadReply($threads) {
 		$html = '' ;
 		if (isset($threads)) {
+
+			if (isset($threads->description)) {
+				$threads->description = json_decode($threads->description);
+			}
+
 			$ban_flag = false;
 			$count_for_ban = 0;
 			$ban_flag_re = false;
@@ -271,24 +272,7 @@ class Thread extends Model
 				          </div>';
 
 				          if ($is_owner == true) {
-				          	$html .= '<div class="modal fade" id="thread_setting">
-								  <div class="modal-dialog">
-								    <div class="modal-content">
-								      <div class="modal-header">
-								        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-								        <h4 class="modal-title">Thread Setting</h4>
-								      </div>
-								      <hr>
-								      <div class="modal-body">
-										  <div class="checkbox">
-										    <label>
-										      <input type="checkbox" id="notify_me_checkbox" '.$checked.'> Notify Me
-										    </label>
-										  </div>
-								      </div>
-								    </div><!-- /.modal-content -->
-								  </div><!-- /.modal-dialog -->
-								</div><!-- /.modal -->';
+				          	$html .= '';
 				          }
 
 			//GET ALL REPLIES
@@ -363,6 +347,13 @@ class Thread extends Model
 						  <button type="button" class="btn btn-default btn-panel-single eye-like" style="width: 33.333333333333%"><i class="fa fa-thumbs-o-up"></i></br><span class="inner-val">'.$like_count.'</span></button>
 						  <button type="button" class="btn btn-default btn-panel-single dont-like" style="width: 33.333333333333%"><i class="fa fa-thumbs-o-down"></i></br><span class="inner-val">'.$dislike_count.'</span></button>';
 					}
+
+
+
+					$arvalue->reply = json_decode($arvalue->reply);
+
+
+
 				$html .='</div>
 		                    </div>
 							<div class="thread-single">

@@ -1,9 +1,11 @@
 @extends($layout)
 @section('stylesheets')
+{!! Html::style('/assets/css/tinymce.css') !!}
 {!! Html::style('/assets/css/threads/view.css') !!}
 {!! Html::style('/assets/css/login_modal.css') !!}
 @stop
 @section('scripts')
+<script src="/packages/tinymce/js/tinymce/tinymce.min.js"></script>
 <script src="/assets/js/login_modal.js"></script>
 <script src="/assets/js/threads/view.js"></script>
 @stop
@@ -28,7 +30,7 @@
           <div id="quote-textarea" class="hide">
             <textarea placeholder="type somthing ..."
             id="quote_text" cols="40"
-            class="ui-autocomplete-input" autocomplete="off" role="textbox"
+            class="ui-autocomplete-input editor" autocomplete="off" role="textbox"
             aria-autocomplete="list" aria-haspopup="true"></textarea>   
             <div class="quote-footer">
               <a class="btn btn-primary pull-left quote-cancel">Cancel</a>
@@ -68,7 +70,7 @@
             <div class="media-body">
               <textarea placeholder="Your Answer..."
               id="answer_text" cols="40"
-              class="ui-autocomplete-input add-answer-textarea" autocomplete="off" role="textbox"
+              class="ui-autocomplete-input add-answer-textarea editor" autocomplete="off" role="textbox"
               aria-autocomplete="list" aria-haspopup="true"></textarea> 
             </div>
           </div>
@@ -86,6 +88,8 @@
 </div>
 
 
+
+{!! View::make('partials.setting_modal') !!}
 {!! View::make('partials.login_modal') !!}
 {!! View::make('partials.flag_modal') !!}
 {!! View::make('partials.flag_remove_modal') !!}
