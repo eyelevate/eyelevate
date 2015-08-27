@@ -20,6 +20,11 @@
   padding-bottom: 20px;
 }
 
+.qut-pnl-bdy{
+  padding:0;
+}
+
+
 .inner {
 
     /* margin-top: 65px !important; */
@@ -29,8 +34,6 @@
 
     position: fixed;
     left: -35%;
-
-
 /*  padding-right: 0;
   margin-top: 65px !important;
   width: 35%;
@@ -70,7 +73,15 @@
  position: fixed;
      right: 0;
 }
+#swipe-icone{
+    position: absolute;
+    /* top: 238px; */
+    bottom: 94.2%;
+    left: 89%;
+    z-index: 10;
+    opacity: 0.8;
 
+}
 
 
 
@@ -451,7 +462,9 @@ display: block;
 /*SIDE MESSAGES*/
 .right-data{
  height: 105px;
-     padding: 10px 16px;
+ padding: 10px 16px;
+color:black;
+border:none;
   -webkit-transition: width 1s;
  -moz-transition: width 1s;
  -o-transition: width 1s;
@@ -467,9 +480,6 @@ display: block;
   /*min-height: 700px;*/
 }
 
-.right-data{
-  color:black;
-}
 body,html{
   color:black;
 }
@@ -737,6 +747,7 @@ textarea{
 
     /* Small Devices, Tablets */
     @media only screen and (max-width : 768px) {
+
       .panel-btn-bg{
         display: none;
       }
@@ -750,6 +761,9 @@ textarea{
       }
       .thread-single{
         margin-top: 30px;
+      }
+      #main-thread{
+        margin-top: 0px;
       }
       .btn-panel-single {
         margin-left: 0 !important;
@@ -785,7 +799,7 @@ textarea{
        float: right;
        width: inherit !important;
        margin-left: 0;
-       right:-90% !important;
+       right:-100% !important;
        -webkit-transition: right 1s;
        -moz-transition: right 1s;
        -o-transition: right 1s;
@@ -797,10 +811,10 @@ textarea{
         padding: 0;
         padding-right: 0;
         margin-top: 65px !important;
-        width: 90% !important;
+        width: 97.7% !important;
         position: fixed;
         min-height: 700px;
-        left: -90% !important;
+        left: -100% !important;
         top: 0;
         -webkit-transition: left 1s;
         -moz-transition: left 1s;
@@ -810,7 +824,8 @@ textarea{
       .right-box-expand {
          padding: 0;
          display: block;
-          width: 90% !important;
+          width: 97.7% !important;
+          margin-left: 5px;
           left: 0% !important;
       }
       .right-box{

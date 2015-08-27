@@ -68,7 +68,7 @@
 
         </a>
         @foreach($categories_for_side as $sbkey => $sbvalue)
-          <a href="" class="list-group-item cat-items" cat-id={{$sbkey}}>{{$sbvalue}}</a>
+          <a  class="list-group-item cat-items" cat-id={{$sbkey}}>{{$sbvalue}}</a>
         @endforeach
 
       </div>

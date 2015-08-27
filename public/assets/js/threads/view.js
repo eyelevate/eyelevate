@@ -43,6 +43,7 @@ results = {
    			preview_styles: false,
    			
         });
+        
 	},
 	events: function() {
 
@@ -55,6 +56,7 @@ results = {
 			if (state == 0) {//CLOSE
 				right_box_expende(_this_reply);
 			} else {
+
 				//SIDE BAR IS ALREAEDY OPEN FILLED THE NEW DATA
 				var _this_reply = parseInt($(this).parents('.panel-parent').attr('this_reply'));
 				right_box_renew(_this_reply);
@@ -220,10 +222,13 @@ results = {
 				swipeStatus:function(event, phase, direction, distance, duration, fingers, fingerData) {
  			  	switch(direction){
 			  		case "left":
-			  			if (distance > 50) {right_box_open()};
+			  			if (distance > 50) {
+			  				$('#swipe-icone').fadeOut();
+			  				right_box_open();
+			  			};
 			  		break;
 			  		case "right":
-			  			if (distance > 50) {right_box_close()};
+			  			// if (distance > 50) {right_box_close()};
 			  		break;
 			  	}
 			  },
@@ -582,6 +587,7 @@ request = {
 	}
 };
 function right_box_expende(_this_reply){
+	$('#swipe-icone').fadeIn();
 	request.retrieve_quotes(_this_reply);
 	$('#left-top-container').attr('state','1');
 	$('#zoom').attr('target','true');
@@ -593,6 +599,7 @@ function right_box_renew(_this_reply){
 	$('.inner').attr('this-reply',_this_reply);
 } 
 function right_box_compress(){
+	// $('#swipe-icone').fadeOut();
 	$('#left-top-container').attr('state','0');
 	$('#zoom').attr('target','false');
 	$('#new-left-box').removeClass('right-box-expand');
@@ -600,12 +607,14 @@ function right_box_compress(){
 
 //SIMILAR TO EXPENDE AND COMPRESS BUT NO AJAX JUST OPEN AND CLOSE
 function right_box_close(_this_reply){
+
 	$('#left-top-container').attr('state','1');
 	$('#zoom').attr('target','true');
 	$('#new-left-box').addClass('right-box-expand');
 } 
 
 function right_box_open(){
+
 	$('#left-top-container').attr('state','0');
 	$('#zoom').attr('target','false');
 	$('#new-left-box').removeClass('right-box-expand');
