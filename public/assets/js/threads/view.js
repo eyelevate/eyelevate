@@ -300,8 +300,11 @@ request = {
 				"this_thread":this_thread
 			},
 			function(result){
+				var status = result.status;
 				switch(status) {
 					case 200: // Approved
+					$('#setting_saved').removeClass('hide');
+					setTimeout(function(){ $('#setting_saved').addClass('hide')}, 2000);
 					break;				
 					case 400: // Approved
 					break;

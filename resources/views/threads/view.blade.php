@@ -89,7 +89,7 @@
 
 
 
-{!! View::make('partials.setting_modal') !!}
+{!! View::make('partials.setting_modal')->with('checked',$checked)->__toString() !!}
 {!! View::make('partials.login_modal') !!}
 {!! View::make('partials.flag_modal') !!}
 {!! View::make('partials.flag_remove_modal') !!}

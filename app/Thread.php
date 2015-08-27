@@ -223,13 +223,9 @@ class Thread extends Model
 			}
 			$is_owner = false;
 			$setting_icon = '';
-			$checked = '';
 			if (Auth::check()) {
 				if ($threads->user_id == Auth::user()->id) {
 					$is_owner = true;
-					if ($threads->notify_me == 1) {
-						$checked = 'checked';
-					}
 					$setting_icon = '<i class="glyphicon glyphicon-cog setting-icon"></i>';
 				}
 			}

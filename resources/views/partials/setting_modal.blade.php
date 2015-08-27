@@ -9,8 +9,9 @@
       <div class="modal-body">
       <div class="checkbox">
         <label>
-          <input type="checkbox" id="notify_me_checkbox" '.$checked.'> Notify Me
+          <input type="checkbox" id="notify_me_checkbox" {{$checked}}> Notify Me
         </label>
+        <span id="setting_saved" class="label label-success hide pull-right">Saved!</span>
       </div>
       </div>
     </div><!-- /.modal-content -->

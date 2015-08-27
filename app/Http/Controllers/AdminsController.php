@@ -20,6 +20,7 @@ use App\Job;
 use App\User;
 use App\Admin;
 use App\Role;
+use App\RoleUser;
 use App\Permission;
 use App\PermissionRole;
 
@@ -99,5 +100,60 @@ class AdminsController extends Controller
                
     }
 
-    
+
+    //USERS SETTING
+        public function getUsersIndex()
+    {
+        $search_by = User::search_by();
+        return view('admins.users_setting.index')
+         ->with('layout',$this->layout)
+         ->with('search_by',$search_by);
+    }
+        public function getUsersAdd()
+    {
+        return view('admins.users_setting.add')
+         ->with('layout',$this->layout);
+    }
+        public function PostUsersAdd()
+    {
+
+    }
+        public function getUsersEdit($id = null)
+    {
+        $users = User::find($id);
+        $roles = Role::PerpareAllForSelect();
+        $user_role_id = RoleUser::GetUserRoleId($users->id);
+        return view('admins.users_setting.edit')
+         ->with('layout',$this->layout)
+         ->with('roles',$roles)
+         ->with('users',$users)
+         ->with('user_role_id',$user_role_id); 
+    }
+        public function PostUsersEdit()
+    {
+
+        $username = Input::get('username');
+        $fname = Input::get('fname');
+        $lname = Input::get('lname');
+        $email = Input::get('email');
+        $role_id = Input::get('role_id');
+        $id = Input::get('id');
+
+        $users = User::find($id);
+        $users->username = $username;
+        $users->firstname = $fname;
+        $users->lastname = $lname;
+        $users->email = $email;
+
+        $role_users = RoleUser::where('user_id',$id)->first();
+        $role_users->role_id = $role_id;
+
+        if ($users->save() && $role_users->save()) {
+            Flash::success('Successfully Updated');
+        } else {
+            Flash::Error('Error');
+        }
+        return Redirect::back();
+    }
+
 }

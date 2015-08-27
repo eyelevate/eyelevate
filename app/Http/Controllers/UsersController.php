@@ -381,4 +381,55 @@ public function postSendFileTemp()
 
     }
 }
+public function postReturnUsers()
+{
+    if(Request::ajax()){
+        $status = 400;
+        if (Auth::check()) {
+            $search = Input::get('search');
+            $users = array();
+            $status = 200;
+            $message = 'Successfully found users!';
+            if($search) {
+                foreach ($search as $key => $value) {
+                    $type = $key;
+                    switch ($type) {
+                        case 'name':
+                        $first_name = $value['first_name'];
+                        $last_name = $value['last_name'];
+                        $users = User::where('firstname','LIKE','%'.$first_name.'%')
+                            ->where('lastname','LIKE','%'.$last_name.'%')
+                            ->get();
+
+                        if(count($users) == 0){
+                            $status = 401;
+                            $message = 'No such name.';
+                        }
+                        break;
+                        default:
+                        foreach ($value as $column_name => $column_value) {
+                            $users = User::where($column_name,'LIKE','%'.$column_value.'%')->get();
+                        }
+
+                        if(count($users) == 0) {
+                            $status = 401;
+                            $message = 'No such user';
+                        }
+                        break;
+                    }
+                }
+            }
+
+            $users_tbody = User::PrepareUsersData($users);
+            return Response::json(array(
+                'status' => $status,
+                'message' => $message,
+                'users_tbody'   => $users_tbody
+                ));
+        }
+    }
+}
+
+
+
 }

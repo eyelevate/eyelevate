@@ -99,13 +99,24 @@ class ThreadsController extends Controller
         $thread_user = User::find($threads->user_id);
         $thread_username = $thread_user->username;
 
+        $checked = '';
+        if (Auth::check()) {
+            if ($threads->user_id == Auth::user()->id) {
+                $is_owner = true;
+                if ($threads->notify_me == 1) {
+                    $checked = 'checked';
+                }
+                $setting_icon = '<i class="glyphicon glyphicon-cog setting-icon"></i>';
+            }
+        }
         
         return view('threads.view')
         ->with('layout',$this->layout)
         ->with('threads',$threads)
         ->with('threads_html',$threads_html)
         ->with('this_user_profile_image',$this_user_profile_image)
-        ->with('thread_username',$thread_username);
+        ->with('thread_username',$thread_username)
+        ->with('checked',$checked);
     }
     public function postSearchQuery()
     {

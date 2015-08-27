@@ -7,6 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Eyelevate Admin</title>
 
@@ -92,6 +93,8 @@
                                 </li>
                                 <li class="li-menus"><a><i class="fa fa-wrench"></i> Control Panel <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu" style="display: none">
+                                        <li><a href="{!! route('users_index') !!}">Users</a>
+                                        </li>
                                         <li><a href="{!! route('flags_index') !!}">Flags</a>
                                         </li>
                                     </ul>

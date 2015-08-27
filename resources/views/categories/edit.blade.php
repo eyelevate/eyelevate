@@ -32,9 +32,6 @@
 				<div class="well clearfix cat-wrapper">
 					{!! $categories_prepared !!}
 				</div>
-
-			
-
 	  </div>
 
 	   <div class="panel-footer clearfix">

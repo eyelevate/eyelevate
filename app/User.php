@@ -162,4 +162,33 @@ AuthenticatableContract, CanResetPasswordContract
             }
             return $data;
         }
+
+
+    public static function search_by() {
+            return array(
+                ''          => 'Search users by',
+                'id'        => 'user id',
+                'username'  => 'username',
+                'email'     => 'email',
+                'name'      => 'full name'
+                );
+        }
+
+    public static function PrepareUsersData($data) {
+        $html = '';
+        if(isset($data)) {
+            foreach ($data as $key => $value) {
+                $html .= '<tr class="table-tr" style="cursor:pointer">';
+                $html .= '<td>'.$value->id.'</td>';
+                $html .= '<td>'.$value->username.'</td>';
+                $html .= '<td>'.$value->firstname.'</td>';
+                $html .= '<td>'.$value->lastname.'</td>';
+                $html .= '<td>'.$value->email.'</td>';
+                $html .= '<td><a href="'.route("users_edit",$value->id).'">Edit</a></td>';
+                $html .= '</tr>';
+            }
+        }
+
+        return $html;
+    }
 }
