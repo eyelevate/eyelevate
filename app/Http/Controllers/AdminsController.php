@@ -43,22 +43,19 @@ class AdminsController extends Controller
 
     }
     
-    public function getIndex()
-    {
+    public function getIndex() {
         return view('admins.index')
         ->with('layout',$this->layout);
     }
 
-    public function getLogin()
-    {
+    public function getLogin() {
 
         $this->layout = 'layouts.master-layout';
         return view('admins.login')
             ->with('layout',$this->layout);
     }
 
-    public function PostLogin()
-    {
+    public function PostLogin() {
         $username = Input::get('email');
         $password = Input::get('password');
         // Session::reflash();
@@ -77,8 +74,7 @@ class AdminsController extends Controller
         }
     }
 
-    public function getLogout()
-    {
+    public function getLogout() {
         Auth::logout();
         Flash::success('You have successfully been logged out');
 
@@ -86,15 +82,13 @@ class AdminsController extends Controller
     
     }
 
-    public function getViewAcl()
-    {   
+    public function getViewAcl() {   
         return view('admins.acl_view')
         ->with('layout',$this->layout);
                
     }
 
-    public function getViewCategory()
-    {   
+    public function getViewCategory() {   
         return view('admins.category_view')
         ->with('layout',$this->layout);
                
@@ -102,26 +96,25 @@ class AdminsController extends Controller
 
 
     //USERS SETTING
-        public function getUsersIndex()
-    {
+    public function getUsersIndex() {
         $search_by = User::search_by();
         return view('admins.users_setting.index')
          ->with('layout',$this->layout)
          ->with('search_by',$search_by);
     }
-        public function getUsersAdd()
-    {
+    
+    public function getUsersAdd() {
         return view('admins.users_setting.add')
          ->with('layout',$this->layout);
     }
-        public function PostUsersAdd()
-    {
+    
+    public function PostUsersAdd() {
 
     }
-        public function getUsersEdit($id = null)
-    {
+    
+    public function getUsersEdit($id = null) {
         $users = User::find($id);
-        $roles = Role::PerpareAllForSelect();
+        $roles = Role::PerpareAdminRoleSelect();
         $user_role_id = RoleUser::GetUserRoleId($users->id);
         return view('admins.users_setting.edit')
          ->with('layout',$this->layout)
@@ -129,8 +122,8 @@ class AdminsController extends Controller
          ->with('users',$users)
          ->with('user_role_id',$user_role_id); 
     }
-        public function PostUsersEdit()
-    {
+    
+    public function PostUsersEdit() {
 
         $username = Input::get('username');
         $fname = Input::get('fname');

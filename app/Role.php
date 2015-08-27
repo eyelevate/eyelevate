@@ -56,4 +56,19 @@ class Role extends Model
         }
         return $roles;
     }
+    public static function PerpareAdminRoleSelect() {
+        $data = Role::get();
+        
+        $roles = [];
+        if(isset($data)) {
+            foreach ($data as $key => $value) {
+                
+                $roles_id = $value['id'];
+                $roles_title = $value['role_title'];
+                $roles[$roles_id] = $roles_title; 
+            }
+
+        }
+        return $roles;
+    }
 }
