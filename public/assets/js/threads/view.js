@@ -168,7 +168,9 @@ results = {
 		$(document).on('click','#post-answer',function(){
 			var this_text = tinyMCE.get('answer_text').getContent();
 			var this_thread = $(this).attr('this-thread');
-			request.post_answer(this_text,this_thread);
+			if (!$.isBlank(this_text)) {
+				request.post_answer(this_text,this_thread);
+			}
 		});
 
 		//quote-quote
