@@ -17,69 +17,70 @@
 
 
 
-    <div class="col-md-3 inner swipeable-both max-height" id="new-left-box" this-reply="" this-thread="{{$threads->id}}">
-      <div class="list-group left-box-inner " id="tread-side-group">
-        <div class="list-group list-group-container">
-          <a href="#" class="list-group-item active " id="list-search-bar">
-            <div class="clearfix" id="left-top-container" state="0">
-  
 
-        <div class="panel panel-default">
-          <div class="panel-heading">
-           <h3 class="panel-title">Quotes</h3>
+
+
+    <div class="col-md-3 inner swipeable-both max-height" id="new-left-box" this-reply="" this-thread="{{$threads->id}}" state="0">
+
+
+
+
+      <div class="panel panel-default" id="panel-wrapper">
+        <div class="panel-heading" id="panel-head">
+          <h3 class="panel-title">Quotes</h3>
+        </div>
+
+        <div class="panel-body" id="panel-data">
+
+        <div class="list-group" id="tread-side-group">
+          <div id="quote-container">
           </div>
-          <div class="panel-body qut-pnl-bdy">
-            
-
-
-            <div id="quote-container">
-
-            </div>
-
-
-
           <div id="loading-container">
             <img id="loading-icons-1" height="30px" width="30px" class="hide" src="/assets/images/icons/gif/loading1.gif" alt="">
           </div>
-
-          </div>
-          <div class="panel-footer">Panel footer</div>
         </div>
 
-
-
-            </div>
-          </a>
-          <div id="quote-textarea" class="hide">
-            <textarea placeholder="type somthing ..."
-            id="quote_text" cols="40"
-            class="ui-autocomplete-input editor" autocomplete="off" role="textbox"
-            aria-autocomplete="list" aria-haspopup="true"></textarea>   
-            <div class="quote-footer">
-              <a class="btn btn-primary pull-left quote-cancel">Cancel</a>
-              <a class="btn btn-primary pull-right quote-quote" id="quote-reply-btn">Reply</a>
-            </div>
-          </div>
-
-
-
-        </div>
       </div>
-    </div>
+
+        <div id="quote-textarea" class="hide">
+          <textarea placeholder="type somthing ..."
+          id="quote_text" cols="40"
+          class="ui-autocomplete-input editor" autocomplete="off" role="textbox"
+          aria-autocomplete="list" aria-haspopup="true"></textarea>   
+        </div>
+
+
+      <button type="button" class="btn btn-primary btn-block quote-btnn panel-foot" state="0">Message</button>
+
+      <div class="btn-group btn-group-md col-md-12 col-sm-12 col-xs-12 panel-foot  hide" role="group" id="btn-group-quote">
+        <button type="button" class="btn btn-danger col-md-6 col-sm-6 col-xs-6 panel-foot" id="btn-cancel">Cancel</button>
+        <button type="button" class="btn btn-success col-md-6 col-sm-6 col-xs-6 panel-foot" id="btn-send">Send</button>
+      </div>
+
+    </div> 
 
 
 
-    <!-- RIGHT BOX START -->
-    <div class="col-md-9 right-box swipeable-both max-height" id="zoom" target="false">
-      <!-- DUMMY DATA START -->
-      <div class="container" id="right-box-inner">
-              <div id="swipe-left">
-              </div>
-        <div id="thread-group">
 
-          {!!$threads_html!!}
+  </div>
 
-          <!-- THREAD SINGLE END -->
+
+
+
+
+
+
+  <!-- RIGHT BOX START -->
+  <div class="col-md-9 right-box swipeable-both max-height" id="zoom" target="false">
+    <!-- DUMMY DATA START -->
+    <div class="container" id="right-box-inner">
+      <div id="swipe-left">
+      </div>
+      <div id="thread-group">
+
+        {!!$threads_html!!}
+
+        <!-- THREAD SINGLE END -->
 
         <div class="" id="add-answer">
           <h4 id="add-answer-title">Add an Answer</h4>
@@ -97,21 +98,21 @@
           </div>
           <a class="btn btn-primary " id="post-answer" this-thread="{{$threads->id}}">Post Answer</a>
         </div>
-        
-        </div>
-        <!-- THREAD GROUP END -->
 
       </div>
-      <!-- DUMMY DATA END -->
+      <!-- THREAD GROUP END -->
+
     </div>
-
-
-
-
-
-
-    <!-- RIGHT BOX START -->
+    <!-- DUMMY DATA END -->
   </div>
+
+
+
+
+
+
+  <!-- RIGHT BOX START -->
+</div>
 </div>
 
 
