@@ -20,18 +20,16 @@
 
 
 
-    <div class="col-md-3 inner swipeable-both max-height" id="new-left-box" this-reply="" this-thread="{{$threads->id}}" state="0">
-
-
-
-
+    <div class="col-md-3 col-sm-3 col-xs-3 inner swipeable-both max-height" id="new-left-box" this-reply="" this-thread="{{$threads->id}}" state="0">
       <div class="panel panel-default" id="panel-wrapper">
         <div class="panel-heading" id="panel-head">
-          <h3 class="panel-title">Quotes</h3>
+
+          <h4 style="text-align:center;">Quotes</h4>
+            <div id="quote-image-wrapper">
+              <img id="quote-title-btn"  class="" src="/assets/images/icons/swipe_left.png" alt="">
+            </div>
         </div>
-
         <div class="panel-body" id="panel-data">
-
         <div class="list-group" id="tread-side-group">
           <div id="quote-container">
           </div>
@@ -39,35 +37,20 @@
             <img id="loading-icons-1" height="30px" width="30px" class="hide" src="/assets/images/icons/gif/loading1.gif" alt="">
           </div>
         </div>
-
       </div>
-
         <div id="quote-textarea" class="hide">
           <textarea placeholder="type somthing ..."
           id="quote_text" cols="40"
           class="ui-autocomplete-input editor" autocomplete="off" role="textbox"
           aria-autocomplete="list" aria-haspopup="true"></textarea>   
         </div>
-
-
       <button type="button" class="btn btn-primary btn-block quote-btnn panel-foot" state="0">Message</button>
-
       <div class="btn-group btn-group-md col-md-12 col-sm-12 col-xs-12 panel-foot  hide" role="group" id="btn-group-quote">
         <button type="button" class="btn btn-danger col-md-6 col-sm-6 col-xs-6 panel-foot" id="btn-cancel">Cancel</button>
         <button type="button" class="btn btn-success col-md-6 col-sm-6 col-xs-6 panel-foot" id="btn-send">Send</button>
       </div>
-
     </div> 
-
-
-
-
   </div>
-
-
-
-
-
 
 
   <!-- RIGHT BOX START -->

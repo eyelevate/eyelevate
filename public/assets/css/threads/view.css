@@ -26,43 +26,37 @@
 
 
 .inner {
-
-    /* margin-top: 65px !important; */
-    float: left;
-    width: 35%;
-    margin-left: 0;
-
-    position: fixed;
-    left: -35%;
-/*  padding-right: 0;
-  margin-top: 65px !important;
+  float: left;
   width: 35%;
+  margin-left: 0;
   position: fixed;
-  min-height: 700px;
   left: -35%;
-  top: 0;*/
+  padding-right: 0 !important;
 
-  
-  -webkit-transition: all 1s ease;
-  -moz-transition: all 1s ease;
-  -o-transition: all 1s ease;
-  transition:  all 1s ease;
+  -webkit-transition: width 1s ease;
+  -moz-transition: width 1s ease;
+  -o-transition: width 1s ease;
+  transition:  width 1s ease;
+
+  -webkit-transition: left 1s ease;
+  -moz-transition: left 1s ease;
+  -o-transition: left 1s ease;
+  transition:  left 1s ease;
 }
 
 #zoom[target='false'] {
   float: right;
- width: 100%;
- right:0;
+  width: 100%;
+  right:0;
   -webkit-transition: width 1s;
- -moz-transition: width 1s;
- -o-transition: width 1s;
- transition: width 1s;
- position: fixed;
+  -moz-transition: width 1s;
+  -o-transition: width 1s;
+  transition: width 1s;
+  position: fixed;
 }
 
 /* Compliance = IE8+, Firefox 2+, Safari, Chrome, Opera 10+ */
 #zoom[target='true'] {
-  /*margin-top: 65px !important;*/
  float: right;
  width: 65%;
  margin-left: 0;
@@ -84,7 +78,6 @@
 }
 
 
-
 /*
 * === LEFT BOX ===
 */
@@ -95,25 +88,22 @@
 }
 
 #panel-head{
-  height: 8%;
   overflow: hidden;
+  padding:0;
 }
 
 #panel-data{
-  height: 84%;
+
   overflow: auto;
   padding: 0;
 }
 
 .panel-foot{
-  height: 8%;
+  position:absolute;
+  bottom:0px;
   overflow: hidden;   
-    padding: 10px 15px;
-/*    background-color: #f5f5f5;
-    border-top: 1px solid #ddd;
-    border-bottom-right-radius: 3px;
-    border-bottom-left-radius: 3px;*/
-    border-radius: 0 0 0 0;
+  padding: 10px 15px;
+  border-radius: 0 0 0 0;
 }
 
 .ind-quotes{
@@ -155,8 +145,32 @@ height: 170px !important;
     height: 100%;
    width: 101%;
 }
-    
+.p-wrapper{
+  width: 12%;
+  float: left;
+    /* margin: 0 !important; */
+    padding: 0 !important;
+}
+#quote-title-title{
+    width: 100%;
+}
+#quote-image-wrapper{
+  position:absolute;
+  width:50px;
+  height:45px;
+  top:0px;
+  right:0px;
+  padding:12px;
+  cursor:pointer;
+  overflow:hidden;
 
+
+}
+#quote-title-btn{
+    height:100%;
+    width:100%;
+
+}
 
 /*
 * ////LEFT BOX////

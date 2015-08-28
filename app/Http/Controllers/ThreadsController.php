@@ -189,25 +189,29 @@ class ThreadsController extends Controller
             $notify_me = array('notify_me' => 0, 'user_id'=>0);
             $answer_html = 'Not Authorized';
             if (Auth::check()) {
-
                 $this_answer = Input::get('this_answer');
                 $this_thread = Input::get('this_thread');
-                $reply = new Reply;
-                $reply->thread_id = $this_thread;
-                $reply->user_id = Auth::user()->id;
-                $reply->reply = json_encode($this_answer);
-                $reply->status = 1;
-                $reply->quote_id = null;
-                if ($reply->save()) {
-                    $answer_html = Reply::preparePostedAnswer($this_answer,$reply->id,$this_thread);
-                    $status = 200;
-                    //CHECK FOR NOTIFICATION STATUS AND EMAIL IF NEEDED
-                    $threads = Thread::find($this_thread);
-                    $notify_me["notify_me"] = $threads->notify_me;
-                    if ($threads->notify_me == 1) {
-                       $notify_me["user_id"] = $threads->user_id;
+                $checke_empty_set = Job::CheckEmptySet($this_answer);
+                if ($checke_empty_set == true) {
+                    $reply = new Reply;
+                    $reply->thread_id = $this_thread;
+                    $reply->user_id = Auth::user()->id;
+                    $reply->reply = json_encode($this_answer);
+                    $reply->status = 1;
+                    $reply->quote_id = null;
+                    if ($reply->save()) {
+                        $answer_html = Reply::preparePostedAnswer($this_answer,$reply->id,$this_thread);
+                        $status = 200;
+                        //CHECK FOR NOTIFICATION STATUS AND EMAIL IF NEEDED
+                        $threads = Thread::find($this_thread);
+                        $notify_me["notify_me"] = $threads->notify_me;
+                        if ($threads->notify_me == 1) {
+                           $notify_me["user_id"] = $threads->user_id;
+                       }
                    }
-               }
+                } else {
+                    $status = 401;
+                }
            }
            return Response::json(array(
             'status' => $status,
@@ -253,19 +257,24 @@ public function postPostQuote()
             $this_answer = Input::get('this_answer');
             $this_quote = Input::get('this_quote');
             $this_thread = Input::get('this_thread');
-            $quote_html = Reply::preparePostedQuote($this_answer);
-            $quote = new Reply;
-            $quote->thread_id = $this_thread;
-            $quote->user_id = Auth::user()->id;
-            $quote->reply = json_encode($this_answer);
-            $quote->status = 1;
-            $quote->quote_id = $this_quote;
-            if ($quote->save()) {
-                $status = 200;
-            }
-            $quote_count = count(Reply::where('quote_id',$this_quote)->get());
-        }
 
+            $checke_empty_set = Job::CheckEmptySet($this_answer);
+            if ($checke_empty_set == true) { 
+                $quote_html = Reply::preparePostedQuote($this_answer);
+                $quote = new Reply;
+                $quote->thread_id = $this_thread;
+                $quote->user_id = Auth::user()->id;
+                $quote->reply = json_encode($this_answer);
+                $quote->status = 1;
+                $quote->quote_id = $this_quote;
+                if ($quote->save()) {
+                    $status = 200;
+                }
+                $quote_count = count(Reply::where('quote_id',$this_quote)->get());
+            } else {
+                $status = 401;
+            }
+        }
         return Response::json(array(
             'status' => $status,
             'quote_html' => $quote_html,

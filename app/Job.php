@@ -32,13 +32,21 @@ class Job extends Model
 
 		$output = '';
 		if (isset($data)) {
-
    			$output = str_replace(' ', '%-%', $data); 
 			$whiteSpace = '\s';
 			$pattern = '/[^A-Za-z0-9\%-%--]/';
 			$output = preg_replace($pattern, '', (string) $output);
 			$output = str_replace('%-%', ' ', $output);
+		}
+		return $output;
+	}
 
+	static public function CheckEmptySet($data) {
+		$output = false;
+		if (isset($data)) {
+			if (!empty($data)) {
+				$output = true;
+			}
 		}
 		return $output;
 	}

@@ -235,6 +235,13 @@ results = {
 
 		});
 
+		//SWIPE BTN
+		$(document).on('click','#quote-title-btn',function(){
+
+			right_box_open();
+
+		});
+
 
 		/*==================================================
 		=                   MOBILE SWIPE                   =
