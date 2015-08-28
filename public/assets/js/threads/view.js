@@ -51,7 +51,7 @@ results = {
 		$(document).on('click','.show-quote',function(){
 			// //DELETE ALL OTHER REPLY BOXES
 			// $(document).find('.reply-media').remove();
-			var state = parseInt($('#left-top-container').attr('state'));
+			var state = parseInt($('#new-left-box').attr('state'));
 			var _this_reply = parseInt($(this).parents('.panel-parent').attr('this_reply'));
 			if (state == 0) {//CLOSE
 				right_box_expende(_this_reply);
@@ -65,7 +65,7 @@ results = {
 
 		//HIDE RIGHT BOX
 		$('#top-left-side').click(function(){
-			var state = parseInt($('#left-top-container').attr('state'));
+			var state = parseInt($('#new-left-box').attr('state'));
 			if (state == 1) {//OPEN
 				right_box_compress();
 			}
@@ -168,7 +168,9 @@ results = {
 		$(document).on('click','#post-answer',function(){
 			var this_text = tinyMCE.get('answer_text').getContent();
 			var this_thread = $(this).attr('this-thread');
-			request.post_answer(this_text,this_thread);
+			if (!$.isBlank(this_text)) {
+				request.post_answer(this_text,this_thread);
+			}
 		});
 
 		//quote-quote
@@ -213,6 +215,33 @@ results = {
 				$(this).removeClass('icon-bottom').addClass('icon-top');
 			}
 		});
+
+		//CANCEL IT
+		$(document).on('click','#btn-cancel',function(){
+			left_box_state_0();
+		});
+		//Send it
+		$(document).on('click','#btn-send',function(){
+
+			//GET TEXT
+			var this_text = tinyMCE.get('quote_text').getContent();
+			//GET QUOTE
+			var this_reply = $(this).parents('.inner').attr('this-reply');
+			// GET THREAD
+			var this_thread = $(this).parents('.inner').attr('this-thread'); 
+			if (!$.isBlank(this_text)) {
+				request.post_quote(this_text,this_reply,this_thread);
+			}
+
+		});
+
+		//SWIPE BTN
+		$(document).on('click','#quote-title-btn',function(){
+
+			right_box_open();
+
+		});
+
 
 		/*==================================================
 		=                   MOBILE SWIPE                   =
@@ -427,13 +456,14 @@ request = {
 
 				switch(status) {
 					case 200: // Approved
-						close_quote_textarea();
+						left_box_state_0();
 						$(document).find('.reply-bg-'+this_reply+ ' .show-quote .inner-val').text(total_quote);
 						$(document).find('.reply-sm-'+this_reply+ ' .show-quote .inner-val').text(total_quote);
 						$('#quote-container').append(answer);
 						toogle_this($('#quote-btn'));
 						//EMPTY THE TESTAREA
-						tinyMCE.get('textarea#quote_text').setContent('');
+						tinyMCE.get('quote_text').setContent('');
+						$("#panel-data").animate({ scrollTop: $('#panel-data')[0].scrollHeight}, 1000);
 					break;				
 					case 400: // Approved
 						$('#myModal').modal('toggle');
@@ -589,7 +619,7 @@ request = {
 function right_box_expende(_this_reply){
 	$('#swipe-icone').fadeIn();
 	request.retrieve_quotes(_this_reply);
-	$('#left-top-container').attr('state','1');
+	$('#new-left-box').attr('state','1');
 	$('#zoom').attr('target','true');
 	$('#new-left-box').addClass('right-box-expand');
 	$('.inner').attr('this-reply',_this_reply);
@@ -600,7 +630,7 @@ function right_box_renew(_this_reply){
 } 
 function right_box_compress(){
 	// $('#swipe-icone').fadeOut();
-	$('#left-top-container').attr('state','0');
+	$('#new-left-box').attr('state','0');
 	$('#zoom').attr('target','false');
 	$('#new-left-box').removeClass('right-box-expand');
 }
@@ -608,14 +638,14 @@ function right_box_compress(){
 //SIMILAR TO EXPENDE AND COMPRESS BUT NO AJAX JUST OPEN AND CLOSE
 function right_box_close(_this_reply){
 
-	$('#left-top-container').attr('state','1');
+	$('#new-left-box').attr('state','1');
 	$('#zoom').attr('target','true');
 	$('#new-left-box').addClass('right-box-expand');
 } 
 
 function right_box_open(){
 
-	$('#left-top-container').attr('state','0');
+	$('#new-left-box').attr('state','0');
 	$('#zoom').attr('target','false');
 	$('#new-left-box').removeClass('right-box-expand');
 }
@@ -625,20 +655,25 @@ function toogle_this(_this){
 	var this_state = parseInt(_this.attr('state'));
 	switch(this_state){
 		case 0:
-			$('#quote-textarea').removeClass('hide');
 			$('.quote-btnn').attr('state',1);
+			$('#quote-textarea').removeClass('hide');
+			$('#btn-group-quote').removeClass('hide');
+			$('.quote-btnn').addClass('hide');
+			tinymce.execCommand('mceFocus',false,'quote_text');
 		break;
 		case 1:
-			$('#quote-textarea').addClass('hide');
-			$('.quote-btnn').attr('state',0);
+			// $('.quote-btnn').attr('state',0);
+			// $('#quote-textarea').removeClass('textarea-expande');
 		break;
 	}
 }
 
-function close_quote_textarea(){
-	$('#quote-textarea').addClass('hide');
+function left_box_state_0(){
+	$('#btn-group-quote').addClass('hide');
+	$('.quote-btnn').removeClass('hide');
 	$('.quote-btnn').attr('state',0);
-} 
+	$('#quote-textarea').addClass('hide');
+}
 function reset_flag_modal(){
 	$('#modal_thread_id').val('');
 	$('#modal_reply_id').val('');

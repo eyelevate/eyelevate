@@ -16,8 +16,6 @@ class Reply extends Model
 			foreach ($all_quotes as $aqkey => $aqvalue) {
 
 				$aqvalue->reply = json_decode($aqvalue->reply);
-
-
 				$expend_icon = '';
 				$this_replier = User::find($aqvalue->user_id);
 				$this_replier_username = $this_replier->username;
@@ -26,7 +24,7 @@ class Reply extends Model
 				if (strlen($aqvalue->reply) > 160) {
 					$expend_icon = '<span class="more fa fa-expand"></span>';
 				}
-		        $html .=  '<a  class="list-group-item right-data" expended="0">
+		        $html .=  '<a  class="list-group-item right-data ind-quotes" expended="0">
 				            <span class="message-header">
 				              <span class="message-sender" id="">'.$this_replier_username.'</span> <span class="quote-details">- '.$quote_data_formated.'</span>
 				            </br></span>
@@ -104,7 +102,7 @@ class Reply extends Model
 				$expend_icon = '<span class="more fa fa-expand"></span>';
 			}
 
-	        $html .=  '<a  class="list-group-item right-data" expended="0">
+	        $html .=  '<a  class="list-group-item right-data ind-quotes" expended="0">
 				            <span class="message-header">
 				              <span class="message-sender" id="">'.$this_username.'</span> <span class="quote-details">- '.$time.'</span>
 				            </br></span>
