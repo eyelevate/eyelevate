@@ -55,7 +55,7 @@ class AdminsController extends Controller
             ->with('layout',$this->layout);
     }
 
-    public function PostLogin() {
+    public function postLogin() {
         $username = Input::get('email');
         $password = Input::get('password');
         // Session::reflash();
@@ -108,7 +108,7 @@ class AdminsController extends Controller
          ->with('layout',$this->layout);
     }
     
-    public function PostUsersAdd() {
+    public function postUsersAdd() {
 
     }
     
@@ -123,7 +123,7 @@ class AdminsController extends Controller
          ->with('user_role_id',$user_role_id); 
     }
     
-    public function PostUsersEdit() {
+    public function postUsersEdit() {
 
         $username = Input::get('username');
         $fname = Input::get('fname');

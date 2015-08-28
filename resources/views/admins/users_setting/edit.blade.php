@@ -10,12 +10,13 @@
 <div class="jumbotron">
 	<h1>Users Edit</h1>
 </div>
+{!! Form::open(array('action' => 'AdminsController@postUsersEdit', 'class'=>'','role'=>"form")) !!}
 <div class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title">Edit</h3>
   </div>
   <div class="panel-body">
-		{!! Form::open(array('action' => 'AdminsController@postUsersEdit', 'class'=>'','role'=>"form")) !!}
+		
 	  	<div class="form-group {{ $errors->has('username') ? 'has-error' : false }}">
 	    	<label class="control-label" for="username">Username</label>
 	    	{!! Form::text('username', $users->username, array('class'=>'form-control', 'placeholder'=>'username')) !!}
@@ -51,10 +52,11 @@
 	            <span class='help-block'>{{ $message }}</span>
 	        @endforeach
 	  	</div>
+  </div>
+  <div class="panel-footer">
 		<button class="btn btn-primary pull-right">Update</button>
 		<input type="hidden" name="id" value="{{$users->id}}">
-		{!! Form::close() !!}
-
   </div>
+  {!! Form::close() !!}
 </div>
 @stop

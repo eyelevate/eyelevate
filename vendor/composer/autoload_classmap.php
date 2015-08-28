@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'AddAgeToUsersTable' => $baseDir . '/database/migrations/2015_07_21_012003_add_age_to_users_table.php',
+    'AddAssignedIdToTasksTable' => $baseDir . '/database/migrations/2015_08_28_062934_add_assigned_id_to_tasks_table.php',
     'AddColumnsRolesTable' => $baseDir . '/database/migrations/2015_08_04_035533_add_columns_roles_table.php',
     'AddColumnsToFlagsTable' => $baseDir . '/database/migrations/2015_08_20_021539_add_columns_to_flags_table.php',
     'AddColumnsToPermissionRoleTable' => $baseDir . '/database/migrations/2015_08_04_062803_add_columns_to_permission_role_table.php',
@@ -36,6 +37,9 @@ return array(
     'CreateRoleUserTable' => $baseDir . '/database/migrations/2015_08_04_002903_create_role_user_table.php',
     'CreateRolesTable' => $baseDir . '/database/migrations/2015_08_04_002703_create_roles_table.php',
     'CreateSearchsTable' => $baseDir . '/database/migrations/2015_07_14_062058_create_searchs_table.php',
+    'CreateTaskCommentsTable' => $baseDir . '/database/migrations/2015_08_28_071614_create_task_comments_table.php',
+    'CreateTaskContributorsTable' => $baseDir . '/database/migrations/2015_08_28_062716_create_task_contributors_table.php',
+    'CreateTasksTable' => $baseDir . '/database/migrations/2015_08_28_052835_create_tasks_table.php',
     'CreateThreadTable' => $baseDir . '/database/migrations/2015_07_14_060212_create_thread_table.php',
     'CreateUsersTable' => $baseDir . '/database/migrations/2015_07_12_000000_create_users_table.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',
