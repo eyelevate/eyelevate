@@ -13,8 +13,9 @@ class Reply extends Model
 		$html = '';
 		if (isset($reply_id)) {
 			$all_quotes = Reply::where('quote_id',$reply_id)->get();
+			$idx = 0;
 			foreach ($all_quotes as $aqkey => $aqvalue) {
-
+				$idx++;
 				$aqvalue->reply = json_decode($aqvalue->reply);
 				$expend_icon = '';
 				$this_replier = User::find($aqvalue->user_id);
@@ -25,8 +26,8 @@ class Reply extends Model
 					$expend_icon = '<span class="more fa fa-expand"></span>';
 				}
 		        $html .=  '<a  class="list-group-item right-data ind-quotes" expended="0">
-				            <span class="message-header">
-				              <span class="message-sender" id="">'.$this_replier_username.'</span> <span class="quote-details">- '.$quote_data_formated.'</span>
+				            <span class="message-header"><span class="badge">'.$idx.'</span>
+				              <span class="message-sender" id="">'.$this_replier_username.'</span> <small><span class="quote-details">- '.$quote_data_formated.'</span></small>
 				            </br></span>
 				            <span class="message-body">
 								<p>'.$aqvalue->reply.'</p>
@@ -38,7 +39,7 @@ class Reply extends Model
 		return $html;
 	}
 
-		static public function 	preparePostedAnswer($this_answer,$reply_id,$thread_id) {
+	static public function 	preparePostedAnswer($this_answer,$reply_id,$thread_id) {
 		$html = '';
 		if (isset($this_answer)) {
 			$this_user = User::find(Auth::user()->id);
@@ -88,7 +89,7 @@ class Reply extends Model
 		return $html;
 	}
 
-		static public function 	preparePostedQuote($this_quote) {
+	static public function 	preparePostedQuote($this_quote) {
 		$html = '';
 		$expend_icon = '';
 		if (isset($this_quote)) {

@@ -1,3 +1,10 @@
+html{
+  overflow: hidden;
+}
+body,html{
+  color:black;
+}
+
 #right-box-inner{
   width: 100%;
   /* border:1px solid yellow;*/
@@ -10,6 +17,7 @@
   padding-left: 0;
   padding-right: 0;
   height: 88%;
+  height: calc(100% - 80px);
   overflow-x: auto;
 
 }
@@ -79,32 +87,38 @@
 
 
 /*
-* === LEFT BOX ===
+* === Sidebar ===
 */
 
 #panel-wrapper{
-  height: 88%;
+  height: 600px; /* fallback if needed */
+  height: calc(100% - 80px);
   overflow: hidden;
 }
 
 #panel-head{
+  height:50px;
   overflow: hidden;
   padding:0;
 }
 
-#panel-data{
+#panel-head h4 {
+  line-height:50px;
+  padding:0px;
+  margin:0px;
+  text-align:center;
+}
 
+#panel-data{
+  height: 320px; /* fallback if needed */
+  height: calc(100% - 280px);
   overflow: auto;
   padding: 0;
 }
-
-.panel-foot{
-  position:absolute;
-  bottom:0px;
-  overflow: hidden;   
-  padding: 10px 15px;
-  border-radius: 0 0 0 0;
-}
+#panel-footer-sidebar {
+  height:230px;
+  overflow:hidden;
+}  
 
 .ind-quotes{
   border: none;
@@ -126,12 +140,8 @@ height: 170px !important;
 }
 #quote-textarea {
     position: absolute;
-    /* top: 100%; */
     bottom: 18.4%;
     width: 100%;
-    /* height: 100px; */
-    /* max-height: 0 !important; */
-    /* position: absolute; */
     -webkit-transition: height 0.8s;
     -moz-transition: height 0.8s;
     transition: height 0.8s;
@@ -176,20 +186,6 @@ height: 170px !important;
 * ////LEFT BOX////
 */
 
-
-
-
-
-
-
-
-
-
-
-
-html{
-  overflow: hidden;
-}
 
 .mce-tinymce{
   padding: 1px !important; 
@@ -546,8 +542,8 @@ width: 90%;
 /*LEFT BOX STYLING END*/
 
 .right-box-expand {
-display: block;
- left: 0;
+  display: block;
+  left: 0;
 }
 #swipe-left{
   display: none;
@@ -572,9 +568,6 @@ color:black;
   /*min-height: 700px;*/
 }
 
-body,html{
-  color:black;
-}
 .list-group-item:first-child {
   border-top-right-radius: 0px;
   border-top-left-radius: 0px;
@@ -792,21 +785,47 @@ textarea{
 
 
     /*==========  Mobile First Method  ==========*/
+    @media only screen and (orientation : landscape) and (max-height : 455px) {
+      .right-box-expand {
+        display: block;
+        left: 0;
+        overflow-x: auto;
+      }
+      #panel-wrapper{
+        height: 435px; /* fallback if needed */
 
-    /* Custom, iPhone Retina */ 
-    @media only screen and (min-width : 320px) {
-        
+        overflow-x: auto;
+      }
+
+      #panel-head{
+        height:50px;
+        overflow: hidden;
+        padding:0;
+      }
+
+      #panel-data{
+        height: 110px; /* fallback if needed */
+        overflow: auto;
+        padding: 0;
+      }
+      #panel-footer-sidebar {
+        height:230px;
+        overflow:hidden;
+      }  
     }
 
-    /* Extra Small Devices, Phones */ 
-    @media only screen and (min-width : 480px) {
+    /* Custom, iPhone 2G, 3G, 4, 4S Media Queries */ 
+    @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+   
+    }
 
+    /* Custom, iPhone 2G, 3G, 4, 4S Landscape mode Media Queries */ 
+    @media only screen and (min-device-width : 320px) and (max-device-width : 480px) and (orientation : landscape) { 
+ 
     }
 
     /* Small Devices, Tablets */
-    @media only screen and (min-width : 768px) {
 
-    }
 
     /* Medium Devices, Desktops */
     @media only screen and (min-width : 992px) {
