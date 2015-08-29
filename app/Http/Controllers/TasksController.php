@@ -53,74 +53,66 @@ class TasksController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function getIndex()
     {
-        //
+        $setup_tasks = Task::getTasksByType(Auth::user()->id);
+        
+        return view('tasks.index')
+        ->with('layout',$this->layout)
+        ->with('tasks',$setup_tasks);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Adds a task 
      *
      * @return Response
      */
-    public function create()
+    public function getAdd()
     {
-        //
-    }
+        $types = Task::getTaskTypes();
+        $approved_administrators = Admin::getApprovedAdmins();
 
+        return view('tasks.add')
+         ->with('layout',$this->layout)
+         ->with('types',$types)
+         ->with('admins',$approved_administrators); 
+    }  
     /**
-     * Store a newly created resource in storage.
+     * Process Task Request
      *
-     * @param  Request  $request
      * @return Response
      */
-    public function store(Request $request)
+    public function postAdd()
     {
-        //
-    }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        //
-    }
+        $task = new Task;
+        $task->title = Input::get('title');
+        $task->description = Input::get('description');
+        $task->created_by = Auth::user()->id;
+        $task->type = Input::get('type');
+        $task->status = 1; // New status
+        $task->assigned_id = Input::get('assigned_id');
 
+        if ($task->save()) {
+            Flash::success('Successfully Updated');
+            return Redirect::route('tasks_index');
+        } else {
+            Flash::Error('Error');
+            return Redirect::back();
+        }
+        
+    }  
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
+     * /admins/tasks/view.
+     * @param $id - task_id
      * @return Response
      */
-    public function edit($id)
+    public function getView($id = null)
     {
-        //
-    }
+        $task = Task::find($id);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  Request  $request
-     * @param  int  $id
-     * @return Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+        return view('tasks.view')
+         ->with('layout',$this->layout); 
+    } 
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }

@@ -13,7 +13,7 @@ class AddAssignedIdToTasksTable extends Migration
     public function up()
     {
         Schema::table('tasks', function(Blueprint $table) {
-            
+            $table->integer('assigned_id')->nullable()->after('description');
         });
     }
 

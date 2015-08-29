@@ -306,12 +306,28 @@ class Job extends Model
 	    }
 
 	}
-		static public function formatTimeAgo($human_time_data) {
-			if ($human_time_data == null) {
-				$human_time_data = 'just now';
-			} else {
-				$human_time_data = $human_time_data.' ago';
-			}
-			return $human_time_data;
+	static public function formatTimeAgo($human_time_data) {
+		if ($human_time_data == null) {
+			$human_time_data = 'just now';
+		} else {
+			$human_time_data = $human_time_data.' ago';
 		}
+		return $human_time_data;
+	}
+
+	/**
+	* Count string and replace remainder of string with ...
+	* @param $limit - length of string needed
+	* @param $string - string to be checked
+	* @param $repl - what to replace remaining string with
+	* @return string
+	**/
+
+	static public function replaceLongTextWithElipses($limit, $string, $repl) {
+		if(strlen($string) > $limit) {
+			return substr($string, 0, $limit) . $repl; 
+		} else {
+			return $string;
+		}
+	}
 }
