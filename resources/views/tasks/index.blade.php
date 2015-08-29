@@ -50,7 +50,12 @@
 								<td>{!! $todo->assigned_username !!}</td>
 								<td>{!! $todo->status !!}</td>
 								<td>{!! $todo->created_date !!}</td>
-								<td><a>View</a></td>
+								<td>
+									<a href="{!! route('tasks_view',[$todo->id]) !!}">View</a>
+									@if($user_id == $todo->created_by)
+									<a href="{!! route('tasks_edit',[$todo->id]) !!}" >Edit</a>
+									@endif
+								</td>
 							</tr>
 							@endforeach
 						@endif
@@ -82,7 +87,12 @@
 								<td>{!! $critical->assigned_username !!}</td>
 								<td>{!! $critical->status !!}</td>
 								<td>{!! $critical->created_date !!}</td>
-								<td><a>View</a></td>
+								<td>
+									<a href="{!! route('tasks_view',[$critical->id]) !!}">View</a>
+									@if($user_id == $critical->created_by)
+									<a href="{!! route('tasks_edit',[$critical->id]) !!}" >Edit</a>
+									@endif
+								</td>
 							</tr>
 							@endforeach
 						@endif
@@ -104,7 +114,25 @@
 							</tr>
 						</thead>
 						<tbody>
-
+						@if(isset($tasks['system']))
+							@foreach($tasks['system'] as $system)
+							<tr>
+								<td>{!! $system->id !!}</td>
+								<td>{!! $system->title !!}</td>
+								<td>{!! $system->description !!}</td>
+								<td>{!! $system->created_username !!}</td>
+								<td>{!! $system->assigned_username !!}</td>
+								<td>{!! $system->status !!}</td>
+								<td>{!! $system->created_date !!}</td>
+								<td>
+									<a href="{!! route('tasks_view',[$system->id]) !!}">View</a>
+									@if($user_id == $system->created_by)
+									<a href="{!! route('tasks_edit',[$system->id]) !!}" >Edit</a>
+									@endif
+								</td>
+							</tr>
+							@endforeach
+						@endif
 						</tbody>
 					</table>
 				</div>
@@ -123,7 +151,25 @@
 							</tr>
 						</thead>
 						<tbody>
-
+						@if(isset($tasks['style']))
+							@foreach($tasks['style'] as $style)
+							<tr>
+								<td>{!! $style->id !!}</td>
+								<td>{!! $style->title !!}</td>
+								<td>{!! $style->description !!}</td>
+								<td>{!! $style->created_username !!}</td>
+								<td>{!! $style->assigned_username !!}</td>
+								<td>{!! $style->status !!}</td>
+								<td>{!! $style->created_date !!}</td>
+								<td>
+									<a href="{!! route('tasks_view',[$style->id]) !!}">View</a>
+									@if($user_id == $style->created_by)
+									<a href="{!! route('tasks_edit',[$style->id]) !!}" >Edit</a>
+									@endif
+								</td>
+							</tr>
+							@endforeach
+						@endif
 						</tbody>
 					</table>
 				</div>

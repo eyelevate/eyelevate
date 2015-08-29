@@ -111,7 +111,9 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 			Route::get('tasks',  ['as' => 'tasks_index','uses' => 'TasksController@getIndex', 'middleware' => ['acl:'.$prefix.'/tasks']]);
 			Route::get('tasks/add',  ['as' => 'tasks_add','uses' => 'TasksController@getAdd', 'middleware' => ['acl:'.$prefix.'/tasks/add']]);
 			Route::post('tasks/add',  ['uses' => 'TasksController@postAdd', 'middleware' => ['acl:'.$prefix.'/tasks/add']]);
-			Route::get('tasks/view/{id}',  ['as' => 'tasks_view','uses' => 'TasksController@getView', 'middleware' => ['acl:'.$prefix.'/tasks/view'], function ($id) {}]);
+			Route::get('tasks/edit/{id}',  ['as' => 'tasks_edit','uses' => 'TasksController@getEdit', 'middleware' => ['acl:'.$prefix.'/tasks/edit'], function ($id) {}]);
+			Route::post('tasks/edit',  ['uses' => 'TasksController@postEdit', 'middleware' => ['acl:'.$prefix.'/tasks/view']]);
+			Route::get('tasks/view/{id}',  ['as' => 'tasks_view','uses' => 'TasksController@getView', 'middleware' => ['acl:'.$prefix.'/tasks/edit'], function ($id) {}]);
 			Route::post('tasks/view',  ['uses' => 'TasksController@postView', 'middleware' => ['acl:'.$prefix.'/tasks/view']]);
 
 			Route::get('users/index',  ['as' => 'users_index','uses' => 'AdminsController@getUsersIndex', 'middleware' => ['acl:'.$prefix.'/acl/view']]);

@@ -56,10 +56,10 @@ class TasksController extends Controller
     public function getIndex()
     {
         $setup_tasks = Task::getTasksByType(Auth::user()->id);
-        
         return view('tasks.index')
         ->with('layout',$this->layout)
-        ->with('tasks',$setup_tasks);
+        ->with('tasks',$setup_tasks)
+        ->with('user_id',Auth::user()->id);
     }
 
     /**
@@ -94,6 +94,46 @@ class TasksController extends Controller
         $task->assigned_id = Input::get('assigned_id');
 
         if ($task->save()) {
+            Flash::success('Successfully Added Task');
+            return Redirect::route('tasks_index');
+        } else {
+            Flash::Error('Error');
+            return Redirect::back();
+        }
+        
+    }  
+    /**
+     * /admins/tasks/edit.
+     * @param $id - task_id
+     * @return Response
+     */
+    public function getEdit($id = null)
+    {
+        $tasks = Task::find($id);
+        $types = Task::getTaskTypes();
+        $approved_administrators = Admin::getApprovedAdmins();
+        return view('tasks.edit')
+         ->with('layout',$this->layout)
+         ->with('tasks',$tasks)
+         ->with('types',$types)
+         ->with('admins',$approved_administrators); 
+    } 
+    /**
+     * Process Task Edit Request
+     *
+     * @return Response
+     */
+    public function postEdit()
+    {
+
+        $task = Task::find(Input::get('id'));
+        $task->title = Input::get('title');
+        $task->description = Input::get('description');
+        $task->created_by = Auth::user()->id;
+        $task->type = Input::get('type');
+        $task->assigned_id = Input::get('assigned_id');
+
+        if ($task->save()) {
             Flash::success('Successfully Updated');
             return Redirect::route('tasks_index');
         } else {
@@ -112,7 +152,28 @@ class TasksController extends Controller
         $task = Task::find($id);
 
         return view('tasks.view')
-         ->with('layout',$this->layout); 
+            ->with('layout',$this->layout)
+            ->with('task',$task); 
     } 
+    /**
+     * Update Task Request
+     *
+     * @return Response
+     */
+    public function postView()
+    {
+
+        $task = Task::find(Input::get('id'));
+        $task->status = Input::get('status');
+
+        if ($task->save()) {
+            Flash::success('Successfully Updated');
+            return Redirect::route('tasks_index');
+        } else {
+            Flash::Error('Error');
+            return Redirect::back();
+        }
+        
+    }  
 
 }
