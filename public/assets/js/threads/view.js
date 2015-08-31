@@ -15,6 +15,7 @@ results = {
 		    content:popupTemplate, 
 		    html:true
 		});
+
 		tinymce.init({
             selector: "#answer_text",
             body_id: "editor-body",
@@ -29,6 +30,8 @@ results = {
    			preview_styles: false,
    			
         });
+
+
 		tinymce.init({
             selector: "#quote_text",
             body_id: "editor-body",
@@ -41,6 +44,22 @@ results = {
             resize: false,
             mode: "textareas",
    			preview_styles: false,
+		    setup: function(editor) {
+		        editor.on('focus', function(e) {
+		            var page_max_width = parseInt($('#phone_detector').css('max-width'));
+		            if (page_max_width < 481) {
+		            	$('#panel-footer-sidebar').css('position','absolute');
+		            	// $('#panel-footer-sidebar').css('top','0');
+		            	$('#panel-footer-sidebar').css('width','calc(100%)');
+		            	// $('#editor-body').click();
+		            };
+		        }),
+		        editor.on('blur', function(e) {
+	        		$('#panel-footer-sidebar').css('position','');
+	            	$('#panel-footer-sidebar').css('top','');
+	            	$('#panel-footer-sidebar').css('width','');
+		        });
+		    }
    			
         });
         
@@ -217,9 +236,24 @@ results = {
 		});
 
 		//CANCEL IT
-		$(document).on('click','#btn-cancel',function(){
-			left_box_state_0();
+		$(document).on('click','#btn-preview',function(){
+			//GET TEXT
+			var this_text = tinyMCE.get('quote_text').getContent();
+			if (!$.isBlank(this_text)) {
+				request.prepare_preview(this_text);
+			}
+
 		});
+
+		$(document).on('click','#preview-btn-thread',function(){
+			//GET TEXT
+			var this_text = tinyMCE.get('answer_text').getContent();
+			if (!$.isBlank(this_text)) {
+				request.prepare_preview(this_text);
+			}
+
+		});
+		
 		//Send it
 		$(document).on('click','#btn-send',function(){
 
@@ -314,6 +348,31 @@ request = {
 			switch(status) {
 				case 200: // Approved
 					$('#thread_setting').modal('show');
+				break;				
+				case 400: // Approved
+					
+				break;
+				default:
+				break;
+			}
+		}
+		);
+	},
+	prepare_preview: function(this_text) {
+	var token = $('meta[name=csrf-token]').attr('content');
+	$.post(
+		'/threads/preview-message',
+		{
+			"_token": token,
+			"this_text":this_text
+		},
+		function(result){
+			var status = result.status;
+			var preview_html = result.preview_html;
+			switch(status) {
+				case 200: // Approved
+					$('#preview-modal-body').html(preview_html);
+					$('#preview_modal').modal('show');
 				break;				
 				case 400: // Approved
 					
@@ -456,12 +515,9 @@ request = {
 
 				switch(status) {
 					case 200: // Approved
-						left_box_state_0();
 						$(document).find('.reply-bg-'+this_reply+ ' .show-quote .inner-val').text(total_quote);
 						$(document).find('.reply-sm-'+this_reply+ ' .show-quote .inner-val').text(total_quote);
 						$('#quote-container').append(answer);
-						toogle_this($('#quote-btn'));
-						//EMPTY THE TESTAREA
 						tinyMCE.get('quote_text').setContent('');
 						$("#panel-data").animate({ scrollTop: $('#panel-data')[0].scrollHeight}, 1000);
 					break;				

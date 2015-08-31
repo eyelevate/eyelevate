@@ -20,18 +20,17 @@ class Reply extends Model
 				$expend_icon = '';
 				$this_replier = User::find($aqvalue->user_id);
 				$this_replier_username = $this_replier->username;
-				$quote_data = strtotime($aqvalue->created_at);
-				$quote_data_formated = date("l, F j, Y, h:i a",$quote_data);
-				if (strlen($aqvalue->reply) > 160) {
-					$expend_icon = '<span class="more fa fa-expand"></span>';
-				}
+
+				//TIME AGO
+				$quote_data = date(strtotime($aqvalue->created_at));
+				$time_ago_replies = Job::formatTimeAgo(Job::humanTiming($quote_data));
+
 		        $html .=  '<a  class="list-group-item right-data ind-quotes" expended="0">
 				            <span class="message-header"><span class="badge">'.$idx.'</span>
-				              <span class="message-sender" id="">'.$this_replier_username.'</span> <small><span class="quote-details">- '.$quote_data_formated.'</span></small>
+				              <span class="message-sender" id="">'.$this_replier_username.'</span> <small><span class="quote-details">- '.$time_ago_replies.'</span></small>
 				            </br></span>
 				            <span class="message-body">
 								<p>'.$aqvalue->reply.'</p>
-				               	'.$expend_icon.'
 				            </span>
 				          </a>';
 			}
@@ -89,29 +88,43 @@ class Reply extends Model
 		return $html;
 	}
 
-	static public function 	preparePostedQuote($this_quote) {
+	static public function 	preparePostedQuote($this_quote,$this_quote_id) {
 		$html = '';
 		$expend_icon = '';
 		if (isset($this_quote)) {
 			$this_user = User::find(Auth::user()->id);
 			$this_username = $this_user->username;
 
-			$time = date('l, F j, Y, h:i a');
-
-
-			if (strlen($this_quote) > 194) {
-				$expend_icon = '<span class="more fa fa-expand"></span>';
-			}
+			//NUMBER OF QUOTES
+			$quote_count = count(Reply::where('quote_id',$this_quote_id)->get());
+			$new_quote_count = $quote_count;
 
 	        $html .=  '<a  class="list-group-item right-data ind-quotes" expended="0">
-				            <span class="message-header">
-				              <span class="message-sender" id="">'.$this_username.'</span> <span class="quote-details">- '.$time.'</span>
-				            </br></span>
-				            <span class="message-body">
-								'.$this_quote.'
-				              	'.$expend_icon.' 
-				            </span>
-				          </a>';
+			            <span class="message-header"><span class="badge">'.$new_quote_count.'</span>
+			              <span class="message-sender" id="">'.$this_username.'</span> <small><span class="quote-details"> - Just now</span></small>
+			            </br></span>
+			            <span class="message-body">
+							<p>'.$this_quote.'</p>
+			            </span>
+			          </a>';
+
+		}
+		return $html;
+	}
+
+	static public function preparePreviewMessage($this_text) {
+		$html = '';
+		if (isset($this_text)) {
+			$this_user = User::find(Auth::user()->id);
+			$this_username = $this_user->username;
+	        $html .=  '<div  class="list-group-item" id="preview-modal-wrapper">
+			            <span class="message-header">
+			              <span class="message-sender">'.$this_username.'</span> <span class="quote-details"> - Just now</span>
+			            </br></span>
+			            <span class="message-body" id="preview-modal-body">
+							'.$this_text.'
+			            </span>
+			          </div>';
 		}
 		return $html;
 	}

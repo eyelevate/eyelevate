@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Password;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
+use Laracasts\Flash\Flash;
+
 trait ResetsPasswords
 {
     /**
@@ -36,10 +38,14 @@ trait ResetsPasswords
 
         switch ($response) {
             case Password::RESET_LINK_SENT:
-                return redirect()->back()->with('status', trans($response));
+            Flash::success('Password reminder successfully sent');
+                return redirect()->back()
+                ->with('status', trans($response));
 
             case Password::INVALID_USER:
-                return redirect()->back()->withErrors(['email' => trans($response)]);
+            Flash::success('Password reminder successfully sent');
+                return redirect()->back()
+                ->withErrors(['email' => trans($response)]);
         }
     }
 
@@ -65,7 +71,9 @@ trait ResetsPasswords
             throw new NotFoundHttpException;
         }
 
-        return view('auth.reset')->with('token', $token);
+        return view('auth.reset')
+        ->with('layout', 'layouts.master-layout')
+        ->with('token', $token);
     }
 
     /**
@@ -128,6 +136,6 @@ trait ResetsPasswords
             return $this->redirectPath;
         }
 
-        return property_exists($this, 'redirectTo') ? $this->redirectTo : '/home';
+        return property_exists($this, 'redirectTo') ? $this->redirectTo : '/';
     }
 }

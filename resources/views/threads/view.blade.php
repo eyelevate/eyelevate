@@ -13,6 +13,7 @@
 @section('content')
 <div class="outer max-height">
   <div class="container-fluid max-height">
+
     <div class="col-md-3 col-sm-3 col-xs-3 inner swipeable-both max-height" id="new-left-box" this-reply="" this-thread="{{$threads->id}}" state="0">
       <div id="panel-wrapper" class="panel panel-default">
         <div class="panel-heading" id="panel-head">
@@ -39,7 +40,7 @@
           
           <div id="panel-footer-sidebar-inner-wrapper" class="cleafix">
             <div class="btn-group btn-group-md col-md-12 col-sm-12 col-xs-12" role="group" id="btn-group-quote">
-              <button type="button" class="btn btn-info col-md-6 col-sm-6 col-xs-6" id="btn-cancel">Preview</button>
+              <button type="button" class="btn btn-info col-md-6 col-sm-6 col-xs-6" id="btn-preview">Preview</button>
               <button type="button" class="btn btn-success col-md-6 col-sm-6 col-xs-6 " id="btn-send">Send</button>
             </div>
           </div>
@@ -75,29 +76,23 @@
               ></textarea> 
             </div>
           </div>
-          <a class="btn btn-primary " id="post-answer" this-thread="{{$threads->id}}">Post Answer</a>
+          <a class="btn btn-info" id="preview-btn-thread" style="color:white">Preview</a>
+          <a class="btn btn-primary" id="post-answer" this-thread="{{$threads->id}}">Post Answer</a>
         </div>
-
       </div>
       <!-- THREAD GROUP END -->
-
     </div>
     <!-- DUMMY DATA END -->
   </div>
-
-
-
-
-
-
   <!-- RIGHT BOX START -->
 </div>
 </div>
 
 
-
+<input type="hidden" id="phone_detector">
 {!! View::make('partials.setting_modal')->with('checked',$checked)->__toString() !!}
 {!! View::make('partials.login_modal') !!}
 {!! View::make('partials.flag_modal') !!}
 {!! View::make('partials.flag_remove_modal') !!}
+{!! View::make('partials.message_preview_modal') !!}
 @stop

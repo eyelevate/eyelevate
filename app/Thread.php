@@ -240,7 +240,7 @@ class Thread extends Model
 				              <div class="media-body">
 				                <div class="media-inner-left">
 				                  <div class="thread-info"> <span class="quoter-username">'.$this_main_username.'</span>
-				                    <span class="thread-date">'.$time_ago_main.'</span>
+				                    <span class="thread-date"> - '.$time_ago_main.'</span>
 				                    	'.$setting_icon.'
 		                    			<div class="panel-btn-bg pull-right panel-parent" this_reply="0" this_thread="'.$threads->id.'">';
 				
@@ -361,8 +361,8 @@ class Thread extends Model
 					              </div>
 					              <div class="media-body">
 					                <div class="media-inner-left">
-					                  <div class="thread-info"><span class="quoter-username">'.$this_replier_username.' </span>
-					                    <span class="thread-date">'.$time_ago_replies.'</span>
+					                  <div class="thread-info"><span class="quoter-username">'.$this_replier_username.'</span>
+					                    <span class="thread-date"> - '.$time_ago_replies.'</span>
 					                    <div class="panel-btn-bg pull-right panel-parent reply-bg-'.$arvalue->id.'"  this_reply="'.$arvalue->id.'" this_thread="'.$threads->id.'">
 											<div class="btn-group  role="group" aria-label="...">
 											  <button type="button" class="btn btn-default btn-panel-single show-quote"><i class="fa fa-quote-right"></i></br><span class="inner-val">'.$quote_count.'</span></button>

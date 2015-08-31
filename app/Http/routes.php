@@ -180,10 +180,11 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 		Route::post('submit-dislike', ['uses'=>'ThreadsController@postSubmitDislike']);
 		Route::post('inpage-search', ['uses'=>'ThreadsController@postInpageSearch']);
 		Route::post('set-setting', ['uses'=>'ThreadsController@postSetSetting']);
+		Route::post('preview-message', ['uses'=>'ThreadsController@postPreviewMessage']);
 	});
 
-	// // Password reset routes...
-	// Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
-	// 	Route::post('password/reset', 'Auth\PasswordController@postReset');
+	// Password reset routes...
+	Route::get('password/reset/{token}', 'Auth\PasswordController@getReset');
+	Route::post('password/reset', 'Auth\PasswordController@postReset');
 
 });

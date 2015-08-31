@@ -257,10 +257,10 @@ public function postPostQuote()
             $this_answer = Input::get('this_answer');
             $this_quote = Input::get('this_quote');
             $this_thread = Input::get('this_thread');
+            $check_empty_set = Job::CheckEmptySet($this_answer);
+            if ($check_empty_set == true) { 
 
-            $checke_empty_set = Job::CheckEmptySet($this_answer);
-            if ($checke_empty_set == true) { 
-                $quote_html = Reply::preparePostedQuote($this_answer);
+                
                 $quote = new Reply;
                 $quote->thread_id = $this_thread;
                 $quote->user_id = Auth::user()->id;
@@ -268,6 +268,7 @@ public function postPostQuote()
                 $quote->status = 1;
                 $quote->quote_id = $this_quote;
                 if ($quote->save()) {
+                    $quote_html = Reply::preparePostedQuote($this_answer,$this_quote);
                     $status = 200;
                 }
                 $quote_count = count(Reply::where('quote_id',$this_quote)->get());
@@ -616,4 +617,23 @@ public function postInpageSearch()
         ));
 
 }
+
+
+public function postPreviewMessage()
+{
+    $status = 400;
+    $this_answer = Input::get('this_text');
+    $check_empty_set = Job::CheckEmptySet($this_answer);
+    if ($check_empty_set == true) { 
+        $status = 200;
+        $preview_html = Reply::preparePreviewMessage($this_answer);
+    }
+
+    return Response::json(array(
+        'status' => $status,
+        'preview_html' => $preview_html
+        ));
+
+}
+
 }

@@ -5,6 +5,7 @@ body,html{
   color:black;
 }
 
+
 #right-box-inner{
   width: 100%;
   /* border:1px solid yellow;*/
@@ -85,6 +86,23 @@ body,html{
 
 }
 
+#preview-btn-thread{
+  color: white !important;
+  font-weight: 900;
+   margin-left: 74px; 
+}
+/*
+* === PREVIEW MODAL ===
+*/
+#preview-modal-wrapper{
+  border: 0 !important;
+}
+#preview-modal-body{
+  padding-top:0 !important;
+}
+#preview-modal-header{
+  padding-bottom:0 !important;
+}
 
 /*
 * === Sidebar ===
@@ -126,6 +144,10 @@ body,html{
   height: 100% !important;
   border-top: none;
   margin-bottom: 2px;
+}
+.ind-quotes:last-child{
+  border: none;
+  border-bottom: 0;
 }
 
 .list-group-item:last-child {
@@ -349,7 +371,7 @@ textarea {
 #post-answer{
   color:white !important;
   font-weight: 900;
-  margin-left: 74px;
+  /*margin-left: 74px;*/
 }
 textarea:focus {
     border-color: #e8ebed;
@@ -777,7 +799,9 @@ textarea{
   margin-right: 10px;
 
 }
-
+#phone_detector{
+  max-width: 99999px;
+}   
 
 /*==================================================
 =            Bootstrap 3 Media Queries             =
@@ -843,17 +867,23 @@ textarea{
 
     /* Large Devices, Wide Screens */
     @media only screen and (max-width : 1200px) {
-
+      #phone_detector{
+        max-width: 1200px;
+      }         
     }
 
     /* Medium Devices, Desktops */
     @media only screen and (max-width : 992px) {
-
+      #phone_detector{
+        max-width: 992px;
+      }   
     }
 
     /* Small Devices, Tablets */
     @media only screen and (max-width : 768px) {
-
+      #phone_detector{
+        max-width: 768px;
+      }
       .panel-btn-bg{
         display: none;
       }
@@ -957,10 +987,14 @@ textarea{
 
     /* Extra Small Devices, Phones */ 
     @media only screen and (max-width : 480px) {
-
+      #phone_detector{
+        max-width: 480px;
+      }
     }
 
     /* Custom, iPhone Retina */ 
     @media only screen and (max-width : 320px) {
-        
+      #phone_detector{
+        max-width: 320px;
+      }
     }
