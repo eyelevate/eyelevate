@@ -34,7 +34,7 @@ results = {
 
 		tinymce.init({
             selector: "#quote_text",
-            body_id: "editor-body",
+            body_id: "editor-body2",
             elementpath: false,
             max_height: 500,
             height : 125,
@@ -45,9 +45,13 @@ results = {
             mode: "textareas",
 			preview_styles: false,
 			setup: function(editor) {
-				editor.on('focus', function(e) {
-					
-		        });
+
+				$('body').on('click', function ( e ) {
+				  if( !($(e.target).is('#quote_text'))){
+						document.activeElement.blur();
+
+				  }
+				});
 		    }
    			
         });

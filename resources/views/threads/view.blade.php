@@ -72,11 +72,15 @@
             </div>
             <div class="media-body">
               <textarea id="answer_text"></textarea> 
+              <span class="bootstrap-error hide" id="answer-empty">&nbspAnswer field cannot be empty</span>
             </div>
           </div>
-            <a class="btn btn-info" id="preview-btn-thread" style="color:white">Preview</a>
-            <a class="btn btn-primary" id="post-answer" this-thread="{{$threads->id}}">Post Answer</a>
-            <span class="bootstrap-error hide" id="answer-empty">&nbspAnswer field cannot be empty</span>
+
+          <div class="row-fluid clearfix">
+            <a class="btn btn-primary pull-right" id="post-answer" this-thread="{{$threads->id}}">Post Answer</a>
+            <a class="btn btn-info pull-right" id="preview-btn-thread" style="color:white">Preview</a>
+            
+          </div>
         </div>
       </div>
       <!-- THREAD GROUP END -->
