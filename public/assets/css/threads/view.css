@@ -683,6 +683,12 @@ color:black;
   font-size: 16px;
   line-height: 1.6;
 }
+.bootstrap-error {
+  color:#d9534f;
+}
+.danger-border{
+  border: 3px solid #d9534f !important;
+}
 .body .message {
   font-size: 16px;
   line-height: 1.6;

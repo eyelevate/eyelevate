@@ -74,10 +74,9 @@
               <textarea id="answer_text"></textarea> 
             </div>
           </div>
-          <div class="row-fluid clearfix">
-            <a class="btn btn-primary pull-right" id="post-answer" this-thread="{{$threads->id}}">Post Answer</a>
-            <a class="btn btn-info pull-right" id="preview-btn-thread" style="color:white">Preview</a>
-          </div>
+            <a class="btn btn-info" id="preview-btn-thread" style="color:white">Preview</a>
+            <a class="btn btn-primary" id="post-answer" this-thread="{{$threads->id}}">Post Answer</a>
+            <span class="bootstrap-error hide" id="answer-empty">&nbspAnswer field cannot be empty</span>
         </div>
       </div>
       <!-- THREAD GROUP END -->
