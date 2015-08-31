@@ -43,21 +43,10 @@ results = {
             statusbar: false,
             resize: false,
             mode: "textareas",
-   			preview_styles: false,
-		    setup: function(editor) {
-		        editor.on('focus', function(e) {
-		            var page_max_width = parseInt($('#phone_detector').css('max-width'));
-		            var page_max_height = parseInt($('#phone_detector').css('max-height'));
-		            if (page_max_width < 641 && page_max_height < 737) {
-		            	setTimeout(function(){ 		            	
-			            	$('#panel-data').addClass('hide');
-			            	$('#panel-head').addClass('hide'); 
-			            }, 100);
-		            };
-		        }),
-		        editor.on('blur', function(e) {
-	            	$('#panel-data').removeClass('hide');
-	            	$('#panel-head').removeClass('hide'); 
+			preview_styles: false,
+			setup: function(editor) {
+				editor.on('focus', function(e) {
+					
 		        });
 		    }
    			
@@ -65,10 +54,7 @@ results = {
         
 	},
 	events: function() {
-				$(document).click(function (e)
-			{
-				
-			});
+
 
 		//WANT TO REPLY
 		$(document).on('click','.show-quote',function(){
