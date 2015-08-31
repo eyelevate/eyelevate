@@ -76,8 +76,12 @@
               ></textarea> 
             </div>
           </div>
-          <a class="btn btn-info" id="preview-btn-thread" style="color:white">Preview</a>
-          <a class="btn btn-primary" id="post-answer" this-thread="{{$threads->id}}">Post Answer</a>
+          
+            <a class="btn btn-info" id="preview-btn-thread" style="color:white">Preview</a>
+            <a class="btn btn-primary" id="post-answer" this-thread="{{$threads->id}}">Post Answer</a>
+            <span class="bootstrap-error hide" id="answer-empty">&nbspAnswer field cannot be empty</span>
+         
+
         </div>
       </div>
       <!-- THREAD GROUP END -->

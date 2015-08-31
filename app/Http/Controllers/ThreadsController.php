@@ -337,41 +337,44 @@ public function postSubmitFlag()
                 $reason = Input::get('reason'); 
                 $details = Input::get('details'); 
                 //IT WAS A REPLY
-                if ($this_reply != 0) {
-                    $replys = Reply::find($this_reply);
-                    $flagged_user = $replys->user_id;
-                } 
-                //THIS WAS A THREAD
-                else{
-                    $threads = Thread::find($this_thread);
-                    $flagged_user = $threads->user_id;
+                $check_empty_set_reply = Job::CheckEmptySet($this_reply);
+                $check_empty_set_thread = Job::CheckEmptySet($this_thread);
+                if ($check_empty_set_reply == true && $check_empty_set_thread == true) {
+                                if ($this_reply != 0) {
+                                    $replys = Reply::find($this_reply);
+                                    $flagged_user = $replys->user_id;
+                                }  else{//THIS WAS A THREAD
+                                    $threads = Thread::find($this_thread);
+                                    $flagged_user = $threads->user_id;
+                                }
+                                //CHECK IF THIS USER HAS FLAGGED THIS REPLY OR THREAD BEFORE
+                                $prev_flags = count(Flag::where('reply_id',$this_reply)
+                                    ->where('thread_id',$this_thread)
+                                    ->where('flagger_user_id',$this->user_id)
+                                    ->where('flagged_user_id',$flagged_user)
+                                    ->whereIn('status', array(1,2,4,5,7))
+                                    ->get());
+                                if ($prev_flags == 0) {
+                                    $flags = new Flag();
+                                    $flags->reply_id = $this_reply;
+                                    $flags->thread_id = $this_thread;
+                                    $flags->flagger_user_id = $this->user_id;
+                                    $flags->flagged_user_id = $flagged_user;
+                                    $flags->reason = $reason;
+                                    $flags->details = $details;
+                                    $flags->status = 1;
+                                    if ($flags->save()) {
+                                        $status = 200;
+                                    }
+                                } else {
+                                    $status = 401;
+                                }
+                                $total_flag_count = count(Flag::where('reply_id',$this_reply)
+                                    ->where('thread_id',$this_thread)
+                                    ->whereIn('status', array(1,2,4,5,7))
+                                    ->get());
                 }
-                //CHECK IF THIS USER HAS FLAGGED THIS REPLY OR THREAD BEFORE
-                $prev_flags = count(Flag::where('reply_id',$this_reply)
-                    ->where('thread_id',$this_thread)
-                    ->where('flagger_user_id',$this->user_id)
-                    ->where('flagged_user_id',$flagged_user)
-                    ->whereIn('status', array(1,2,4,5,7))
-                    ->get());
-                if ($prev_flags == 0) {
-                    $flags = new Flag();
-                    $flags->reply_id = $this_reply;
-                    $flags->thread_id = $this_thread;
-                    $flags->flagger_user_id = $this->user_id;
-                    $flags->flagged_user_id = $flagged_user;
-                    $flags->reason = $reason;
-                    $flags->details = $details;
-                    $flags->status = 1;
-                    if ($flags->save()) {
-                        $status = 200;
-                    }
-                } else {
-                    $status = 401;
-                }
-                $total_flag_count = count(Flag::where('reply_id',$this_reply)
-                    ->where('thread_id',$this_thread)
-                    ->whereIn('status', array(1,2,4,5,7))
-                    ->get());
+
             }
         return Response::json(array(
             'status' => $status,
