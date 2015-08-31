@@ -47,17 +47,17 @@ results = {
 		    setup: function(editor) {
 		        editor.on('focus', function(e) {
 		            var page_max_width = parseInt($('#phone_detector').css('max-width'));
-		            if (page_max_width < 481) {
-		            	$('#panel-footer-sidebar').css('position','absolute');
-		            	// $('#panel-footer-sidebar').css('top','0');
-		            	$('#panel-footer-sidebar').css('width','calc(100%)');
-		            	// $('#editor-body').click();
+		            var page_max_height = parseInt($('#phone_detector').css('max-height'));
+		            if (page_max_width < 641 && page_max_height < 737) {
+		            	setTimeout(function(){ 		            	
+			            	$('#panel-data').addClass('hide');
+			            	$('#panel-head').addClass('hide'); 
+			            }, 100);
 		            };
 		        }),
 		        editor.on('blur', function(e) {
-	        		$('#panel-footer-sidebar').css('position','');
-	            	$('#panel-footer-sidebar').css('top','');
-	            	$('#panel-footer-sidebar').css('width','');
+	            	$('#panel-data').removeClass('hide');
+	            	$('#panel-head').removeClass('hide'); 
 		        });
 		    }
    			
@@ -65,6 +65,10 @@ results = {
         
 	},
 	events: function() {
+				$(document).click(function (e)
+			{
+				
+			});
 
 		//WANT TO REPLY
 		$(document).on('click','.show-quote',function(){
@@ -81,6 +85,8 @@ results = {
 				right_box_renew(_this_reply);
 			}
 		});
+
+
 
 		//HIDE RIGHT BOX
 		$('#top-left-side').click(function(){
