@@ -187,6 +187,9 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 		Route::post('inpage-search', ['uses'=>'ThreadsController@postInpageSearch']);
 		Route::post('set-setting', ['uses'=>'ThreadsController@postSetSetting']);
 		Route::post('preview-message', ['uses'=>'ThreadsController@postPreviewMessage']);
+		Route::post('preview-message', ['uses'=>'ThreadsController@postPreviewMessage']);
+		Route::post('thread-form', ['uses'=>'ThreadsController@postSettingFrom']);
+		
 	});
 
 	// Password reset routes...

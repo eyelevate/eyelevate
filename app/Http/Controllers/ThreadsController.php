@@ -11,7 +11,7 @@ use Request;
 use Response;
 use Auth;
 use Session;
-use Flash;
+use Laracasts\Flash\Flash;
 use Mail;
 
 use App\Http\Requests;
@@ -86,37 +86,48 @@ class ThreadsController extends Controller
     public function getView($id)
     {
         $threads = Thread::find($id);
+        $gd_to_go = Thread::CheckThreadStatus($threads->status);
 
-        //ADD TO THE VIEWS Count
-        $views_before = $threads->views;
-        $views_after = $views_before + 1;
-        $threads->views = $views_after;
-        $threads->save();
+        if ($gd_to_go == true) {
+            //ADD TO THE VIEWS Count
+            $views_before = $threads->views;
+            $views_after = $views_before + 1;
+            $threads->views = $views_after;
+            $threads->save();
 
-        $threads_html = Thread::prepareThreadsAndThreadReply($threads);
-        $this_user_profile_image = User::CheckForProfileImage();
+            $threads_html = Thread::prepareThreadsAndThreadReply($threads);
+            $this_user_profile_image = User::CheckForProfileImage();
+            $thread_user = User::find($threads->user_id);
+            $thread_username = $thread_user->username;
 
-        $thread_user = User::find($threads->user_id);
-        $thread_username = $thread_user->username;
+            $status_prepared = Thread::prepareThreadStatus($threads->status);
 
-        $checked = '';
-        if (Auth::check()) {
-            if ($threads->user_id == Auth::user()->id) {
-                $is_owner = true;
-                if ($threads->notify_me == 1) {
-                    $checked = 'checked';
+            $checked = '';
+            if (Auth::check()) {
+                if ($threads->user_id == Auth::user()->id) {
+                    $is_owner = true;
+                    if ($threads->notify_me == 1) {
+                        $checked = 'checked';
+                    }
+                    $setting_icon = '<i class="glyphicon glyphicon-cog setting-icon"></i>';
                 }
-                $setting_icon = '<i class="glyphicon glyphicon-cog setting-icon"></i>';
             }
+            $selects = Thread::PerpareStatusForInput();
+            
+            return view('threads.view')
+            ->with('layout',$this->layout)
+            ->with('threads',$threads)
+            ->with('threads_html',$threads_html)
+            ->with('this_user_profile_image',$this_user_profile_image)
+            ->with('thread_username',$thread_username)
+            ->with('status_prepared',$status_prepared)
+            ->with('selects',$selects)
+            ->with('checked',$checked);
+        } else {
+            Flash::error('This thread is no longer available');
+            return Redirect::action('HomeController@postIndex');
         }
-        
-        return view('threads.view')
-        ->with('layout',$this->layout)
-        ->with('threads',$threads)
-        ->with('threads_html',$threads_html)
-        ->with('this_user_profile_image',$this_user_profile_image)
-        ->with('thread_username',$thread_username)
-        ->with('checked',$checked);
+
     }
     public function postSearchQuery()
     {
@@ -134,26 +145,7 @@ class ThreadsController extends Controller
         }
     }
 
-    public function postSetSetting()
-    {
-        if(Request::ajax()){
-            $status = 400;
-            $notify_me_condition = Input::get('notify_me_condition');
-            $this_thread = Input::get('this_thread');
-            if (isset($notify_me_condition,$this_thread)) {
-                $threads = Thread::find($this_thread);
-                if (Auth::user()->id == $threads->user_id) {
-                    $threads->notify_me = $notify_me_condition;
-                    if ($threads->save()) {
-                        $status = 200;
-                    }
-                }
-            }
-            return Response::json(array(
-                'status' => $status
-                ));
-        }
-    }
+
     public function postRetrieveQuotes()
     {
         if(Request::ajax()){
@@ -289,9 +281,9 @@ public function postCheckFlag()
         if (Auth::check()) {
             $status = 200;
             $total_flag_count = null;
-            if (Auth::check()) {
                 $this_reply = Input::get('this_reply'); 
                 $this_thread = Input::get('this_thread'); 
+                
                 //IT WAS A REPLY
                 if ($this_reply != 0) {
                     $replys = Reply::find($this_reply);
@@ -314,8 +306,6 @@ public function postCheckFlag()
                 } else {
                     $status = 401;
                 }
-            }
-
         } else {
             $status = 402;
         }
@@ -339,7 +329,7 @@ public function postSubmitFlag()
                 //IT WAS A REPLY
                 $check_empty_set_reply = Job::CheckEmptySet($this_reply);
                 $check_empty_set_thread = Job::CheckEmptySet($this_thread);
-                if ($check_empty_set_reply == true && $check_empty_set_thread == true) {
+                if ($check_empty_set_thread == true) {
                                 if ($this_reply != 0) {
                                     $replys = Reply::find($this_reply);
                                     $flagged_user = $replys->user_id;
@@ -603,10 +593,10 @@ public function postInpageSearch()
         }
     }
         //ALL THREADS
-    $prepared_thread = Thread::prepareThreadForView(Thread::Where('status',1)
+    $prepared_thread = Thread::prepareThreadForView(Thread::whereIn('status', array(1,2,4,5,7))
         ->orderBy('created_at', 'DESC')
         ->paginate(10));
-    $prepared_thread_clone = Thread::Where('status',1)
+    $prepared_thread_clone = Thread::whereIn('status', array(1,2,4,5,7))
     ->orderBy('created_at', 'DESC')
     ->paginate(10);
     $this->layout = 'layouts.master-layout';
@@ -637,6 +627,62 @@ public function postPreviewMessage()
         'preview_html' => $preview_html
         ));
 
+}
+public function postSetSetting()
+{
+    if(Request::ajax()){
+        $status = 400;
+        $notify_me_condition = Input::get('notify_me_condition');
+        $this_thread = Input::get('this_thread');
+        if (isset($notify_me_condition,$this_thread)) {
+            $threads = Thread::find($this_thread);
+            if (Auth::user()->id == $threads->user_id) {
+                $threads->notify_me = $notify_me_condition;
+                if ($threads->save()) {
+                    $status = 200;
+                }
+            }
+        }
+        return Response::json(array(
+            'status' => $status
+            ));
+    }
+}
+public function postSettingFrom()
+{
+    $notify_me_condition = Input::get('notify_me');
+    $thread_status = Input::get('thread_status');
+    $this_thread = Input::get('thread_id');
+
+    if (isset($this_thread)) {
+        $threads = Thread::find($this_thread);
+        if (Auth::user()->id == $threads->user_id) {
+            //NOTIFY_ME
+            if (isset($notify_me_condition)) {
+                $threads->notify_me = $notify_me_condition;
+            } else {
+                $threads->notify_me = 0;
+            } 
+            //THREAD-STATUS
+            if (isset($thread_status)) {
+                switch ($thread_status) {
+                    case '1':
+                            $threads->status = 1;
+                        break;
+                    case '2':
+                            $threads->status = 7;
+                        break;
+                }
+            }
+        }
+        if ($threads->save()) {
+            Flash::success('Successfully Saved');
+            return Redirect::back();
+        }
+    } else {
+        Flash::error('Error');
+        return Redirect::back();
+    }
 }
 
 }

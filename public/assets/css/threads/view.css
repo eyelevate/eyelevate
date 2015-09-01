@@ -4,8 +4,31 @@ html{
 body,html{
   color:black;
 }
+.quote-flags{
+    color: #d9534f;
+    font-size: 14px;
+    border: 1px rgba(217, 83, 79, 0.33) solid;
+    padding: 2px;
+}
+/*FLAGGED*/
+.thread-single-flagged{
+  padding: 0 !important;
+  height: 95px;
+}
+#message-overlay{
+  position: relative;
+}
+.p-flagged{
+margin: 0;
+line-height: 95px;
+font-weight: 900;
+}
 
 
+
+.img-border{
+  border: 3px solid #D5D3D3;
+}
 #right-box-inner{
   width: 100%;
   /* border:1px solid yellow;*/
@@ -21,6 +44,9 @@ body,html{
   height: calc(100% - 80px);
   overflow-x: auto;
 
+}
+.a-style{
+float: left !important;
 }
 #right-box{
   /*border:1px solid red;*/
@@ -914,6 +940,11 @@ textarea{
       }
       .btn-group{
         width: 100%;
+      }
+      .thread-single-flagged{
+        margin: 0 !important;
+        height: 101px;
+        border-bottom: rgba(66, 139, 202, 0.46) solid 6px !important;
       }
       .thread-single{
         margin-top: 30px;

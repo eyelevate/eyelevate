@@ -10,7 +10,7 @@ class Search extends Model
 
    		if (isset($search_str)) {
    			//1ST TIER OF SEARCH |--
-   			$similar_queries_count = count(Thread::where('description','LIKE','%'.$search_str.'%')->get());
+   			$similar_queries_count = count(Thread::where('description','LIKE','%'.$search_str.'%')->whereIn('status', array(1,2,4,5,7))->get());
    			if ($similar_queries_count > 0) {
    				$similar_query = Thread::where('description','LIKE','%'.$search_str.'%')->first();
    				$tier_1_result_id = $similar_query->id;
@@ -23,9 +23,6 @@ class Search extends Model
 					$final_product_tier1[$results_1->id]["title"] .='...';
 				}
    			}
-   			//1ST TIER OF SEARCH END --|
-
-
 
    			//2ST TIER OF SEARCH |--
 
@@ -35,10 +32,6 @@ class Search extends Model
    			$str_lowered = strtolower($trimmed);
    			$search_str_formated = explode(" ",$str_lowered);
 
-
-
-
-
    			//FILTERING
    			$swear_filtered = array_diff($search_str_formated, Job::swear_keywords());
    			$pronouns_filtered = array_diff($swear_filtered, Job::pronouns_keywords());
@@ -46,18 +39,16 @@ class Search extends Model
    			$numeric_filtered = array_values(array_diff($alphabet_filtered, Job::numeric_keywords()));
    			$tier_2_result = $numeric_filtered;
 
-
-
    			//SEARCHING
    			$counted_results = []; // inst new array for counted results
    			// EMPTY FINALL ARRAY
    			$result_array = [];
 			foreach ($tier_2_result as $key => $value) {
-				$result_count = count(Thread::where('description','LIKE','%'.$value.'%')->get());
-				$results_instances = Thread::where('description','LIKE','%'.$value.'%')->get();
+				$result_count = count(Thread::where('description','LIKE','%'.$value.'%')->whereIn('status', array(1,2,4,5,7))->get());
+				$results_instances = Thread::where('description','LIKE','%'.$value.'%')->whereIn('status', array(1,2,4,5,7))->get();
 
-				$result_count_title = count(Thread::where('title','LIKE','%'.$value.'%')->get());
-				$results_instances_title = Thread::where('title','LIKE','%'.$value.'%')->get();
+				$result_count_title = count(Thread::where('title','LIKE','%'.$value.'%')->whereIn('status', array(1,2,4,5,7))->get());
+				$results_instances_title = Thread::where('title','LIKE','%'.$value.'%')->whereIn('status', array(1,2,4,5,7))->get();
 
 
 				$array2 = []; // inst array for ids and search title and desc
@@ -151,9 +142,9 @@ class Search extends Model
    		$search_str = Job::trime_filter($search_str);
     		if (isset($search_str['string'])) {
    			//1ST TIER OF SEARCH |--
-   			$similar_queries_count = count(Thread::where('description','LIKE','%'.$search_str['string'].'%')->get());
+   			$similar_queries_count = count(Thread::where('description','LIKE','%'.$search_str['string'].'%')->whereIn('status', array(1,2,4,5,7))->get());
    			if ($similar_queries_count > 0) {
-   				$similar_query = Thread::where('description','LIKE','%'.$search_str['string'].'%')->get();
+   				$similar_query = Thread::where('description','LIKE','%'.$search_str['string'].'%')->whereIn('status', array(1,2,4,5,7))->get();
    				foreach ($similar_query as $sq1key => $sq1value) {
    					$output_results_1[$sq1value->id] = $sq1value->id;
    				}
@@ -166,10 +157,10 @@ class Search extends Model
    			// EMPTY FINALL ARRAY
    			$result_array = [];
 			foreach ($tier_2_result as $key => $value) {
-				$result_count = count(Thread::where('description','LIKE','%'.$value.'%')->get());
-				$results_instances = Thread::where('description','LIKE','%'.$value.'%')->get();
-				$result_count_title = count(Thread::where('title','LIKE','%'.$value.'%')->get());
-				$results_instances_title = Thread::where('title','LIKE','%'.$value.'%')->get();
+				$result_count = count(Thread::where('description','LIKE','%'.$value.'%')->whereIn('status', array(1,2,4,5,7))->get());
+				$results_instances = Thread::where('description','LIKE','%'.$value.'%')->whereIn('status', array(1,2,4,5,7))->get();
+				$result_count_title = count(Thread::where('title','LIKE','%'.$value.'%')->whereIn('status', array(1,2,4,5,7))->get());
+				$results_instances_title = Thread::where('title','LIKE','%'.$value.'%')->whereIn('status', array(1,2,4,5,7))->get();
 				$array2 = []; // inst array for ids and search title and desc
 				if ($results_instances || $results_instances_title) { //check count or empty
 					if ($results_instances) {
