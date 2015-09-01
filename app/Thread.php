@@ -106,11 +106,6 @@ class Thread extends Model
 		$html .= '<h4 class="other-thread">Other threads:</h4><hr>';
 		return $html;
 	}
-
-
-
-
-
 	static public function prepareCategories($cat) {
 		$cat_html = '';
 		if (isset($cat)) {
@@ -122,6 +117,18 @@ class Thread extends Model
 		}
 		return $cat_html;
 	}
+
+	static public function prepareThreadStatus($status) {
+		if (isset($status)) {
+			switch ($status) {
+				case 7:
+					$status = 2;
+					break;
+			}
+		}
+		return $status;
+	}
+
 	static public function prepareCategoriesForFeedback($cat) {
 		$cat_html = '<h4>You searched for : </h4>';
 		if (isset($cat)) {
@@ -184,24 +191,18 @@ class Thread extends Model
 	static public function prepareThreadsAndThreadReply($threads) {
 		$html = '' ;
 		if (isset($threads)) {
-
 			if (isset($threads->description)) {
 				$threads->description = json_decode($threads->description);
 			}
-
 			$ban_flag = false;
 			$count_for_ban = 0;
 			$ban_flag_re = false;
 			$count_for_ban_re = 0;
-
-
 			$this_user = User::find($threads->user_id);
 			$this_main_username = $this_user->username;
-
 			//TIME AGO
 			$time_s = date(strtotime($threads['created_at']));
 			$time_ago_main = Job::formatTimeAgo(Job::humanTiming($time_s));
-
 			//PROFILE IMAGE
 			$profile_image = Job::imageValidator($this_user->profile_image);
 
@@ -276,6 +277,7 @@ class Thread extends Model
 				->where('quote_id',null)
 				->get();
 			foreach ($all_replies as $arkey => $arvalue) {
+				if ($arvalue->status != 3) {
 				$is_owner_reply = false;
 				$this_replier = User::find($arvalue->user_id);
 				$this_replier_username = $this_replier->username;
@@ -317,81 +319,93 @@ class Thread extends Model
 						$ban_flag_re = true;
 					}
 				}
-
-				
-			if (Auth::check()) {
-				if ($arvalue->user_id == Auth::user()->id) {
-					$is_owner_reply = true;
+				if (Auth::check()) {
+					if ($arvalue->user_id == Auth::user()->id) {
+						$is_owner_reply = true;
+					}
 				}
-			}
-				//PREPARE ALL REPLIES
-				$html .= '<div class="panel-btn-sm pull-right panel-parent reply-sm-'.$arvalue->id.'" this_reply="'.$arvalue->id.'" this_thread="'.$threads->id.'">
-							<div class="btn-group" role="group" aria-label="...">';
-				if ($is_owner_reply != true) {	
-					if ($ban_flag_re != true) {	
-								$html .= '<button type="button" class="btn btn-default btn-panel-single show-quote" style="width: 25%"><i class="fa fa-quote-right"></i></br><span class="inner-val">'.$quote_count.'</span></button>
-					 					 <button type="button" class="btn btn-default btn-panel-single eye-like" style="width: 25%"><i class="fa fa-thumbs-o-up"></i></br><span class="inner-val">'.$like_count.'</span></button>
-										  <button type="button" class="btn btn-default btn-panel-single dont-like" style="width: 25%"><i class="fa fa-thumbs-o-down"></i></br><span class="inner-val">'.$dislike_count.'</span></button>';
-								$html .=  '<button type="button" class="btn btn-default btn-panel-single flag-it" style="width: 25%"><i class="glyphicon glyphicon-flag"></i></br><span class="inner-val">'.$flag_count.'</span></button>';
-							} else {
-								$html .= '<button type="button" class="btn btn-default btn-panel-single show-quote" style="width: 33.333333333333%"><i class="fa fa-quote-right"></i></br><span class="inner-val">'.$quote_count.'</span></button>
-			 					<button type="button" class="btn btn-default btn-panel-single eye-like" style="width: 33.333333333333%"><i class="fa fa-thumbs-o-up"></i></br><span class="inner-val">'.$like_count.'</span></button>
-								<button type="button" class="btn btn-default btn-panel-single dont-like" style="width: 33.333333333333%"><i class="fa fa-thumbs-o-down"></i></br><span class="inner-val">'.$dislike_count.'</span></button>';
-							}
-					} else {
-						$html .= '<button type="button" class="btn btn-default btn-panel-single show-quote" style="width: 33.333333333333%"><i class="fa fa-quote-right"></i></br><span class="inner-val">'.$quote_count.'</span></button>
-						  <button type="button" class="btn btn-default btn-panel-single eye-like" style="width: 33.333333333333%"><i class="fa fa-thumbs-o-up"></i></br><span class="inner-val">'.$like_count.'</span></button>
-						  <button type="button" class="btn btn-default btn-panel-single dont-like" style="width: 33.333333333333%"><i class="fa fa-thumbs-o-down"></i></br><span class="inner-val">'.$dislike_count.'</span></button>';
-					}
-
-
-
-					$arvalue->reply = json_decode($arvalue->reply);
-
-
-
-				$html .='</div>
-		                    </div>
-							<div class="thread-single">
-					            <div class="media">
-					              <div class="media-left">
-					                <a href="#">
-					                  <img class="media-object media-image" data-src="holder.js/64x64" alt="64x64" src="/assets/images/profile-images/perm/'.$replier_profile_image.'" data-holder-rendered="true" style="width: 64px; height: 64px;">
-					                </a>
-					              </div>
-					              <div class="media-body">
-					                <div class="media-inner-left">
-					                  <div class="thread-info"><span class="quoter-username">'.$this_replier_username.'</span>
-					                    <span class="thread-date"> - '.$time_ago_replies.'</span>
-					                    <div class="panel-btn-bg pull-right panel-parent reply-bg-'.$arvalue->id.'"  this_reply="'.$arvalue->id.'" this_thread="'.$threads->id.'">
-											<div class="btn-group  role="group" aria-label="...">
-											  <button type="button" class="btn btn-default btn-panel-single show-quote"><i class="fa fa-quote-right"></i></br><span class="inner-val">'.$quote_count.'</span></button>
-											  <button type="button" class="btn btn-default btn-panel-single eye-like"><i class="fa fa-thumbs-o-up"></i></br><span class="inner-val">'.$like_count.'</span></button>
-											  <button type="button" class="btn btn-default btn-panel-single dont-like"><i class="fa fa-thumbs-o-down"></i></br><span class="inner-val">'.$dislike_count.'</span></button>';
-					if ($ban_flag_re != true) {	
-						if ($is_owner_reply != true) {		 
-							$html .=  '<button type="button" class="btn btn-default btn-panel-single flag-it"><i class="glyphicon glyphicon-flag"></i></br><span class="inner-val">'.$flag_count.'</span></button>';
+					//PREPARE ALL REPLIES
+					$html .= '<div class="panel-btn-sm pull-right panel-parent reply-sm-'.$arvalue->id.'" this_reply="'.$arvalue->id.'" this_thread="'.$threads->id.'">
+								<div class="btn-group" role="group" aria-label="...">';
+					if ($is_owner_reply != true) {	
+						if ($ban_flag_re != true) {	
+									$html .= '<button type="button" class="btn btn-default btn-panel-single show-quote" style="width: 25%"><i class="fa fa-quote-right"></i></br><span class="inner-val">'.$quote_count.'</span></button>
+						 					 <button type="button" class="btn btn-default btn-panel-single eye-like" style="width: 25%"><i class="fa fa-thumbs-o-up"></i></br><span class="inner-val">'.$like_count.'</span></button>
+											  <button type="button" class="btn btn-default btn-panel-single dont-like" style="width: 25%"><i class="fa fa-thumbs-o-down"></i></br><span class="inner-val">'.$dislike_count.'</span></button>';
+									$html .=  '<button type="button" class="btn btn-default btn-panel-single flag-it" style="width: 25%"><i class="glyphicon glyphicon-flag"></i></br><span class="inner-val">'.$flag_count.'</span></button>';
+								} else {
+									$html .= '<button type="button" class="btn btn-default btn-panel-single show-quote" style="width: 33.333333333333%"><i class="fa fa-quote-right"></i></br><span class="inner-val">'.$quote_count.'</span></button>
+				 					<button type="button" class="btn btn-default btn-panel-single eye-like" style="width: 33.333333333333%"><i class="fa fa-thumbs-o-up"></i></br><span class="inner-val">'.$like_count.'</span></button>
+									<button type="button" class="btn btn-default btn-panel-single dont-like" style="width: 33.333333333333%"><i class="fa fa-thumbs-o-down"></i></br><span class="inner-val">'.$dislike_count.'</span></button>';
+								}
+						} else {
+							$html .= '<button type="button" class="btn btn-default btn-panel-single show-quote" style="width: 33.333333333333%"><i class="fa fa-quote-right"></i></br><span class="inner-val">'.$quote_count.'</span></button>
+							  <button type="button" class="btn btn-default btn-panel-single eye-like" style="width: 33.333333333333%"><i class="fa fa-thumbs-o-up"></i></br><span class="inner-val">'.$like_count.'</span></button>
+							  <button type="button" class="btn btn-default btn-panel-single dont-like" style="width: 33.333333333333%"><i class="fa fa-thumbs-o-down"></i></br><span class="inner-val">'.$dislike_count.'</span></button>';
 						}
-					}
-					$html .= '</div>
+						$arvalue->reply = json_decode($arvalue->reply);
+						$html .='</div>
 				                    </div>
-				                  </div> 
-				                </br>
-				                <div class="thread-description">
-									'.$arvalue->reply.'
-				                  </div>
-				                  <div class="label-container">
-				                  </div>
-				                </div>
-				              </div>
-				            </div>
-				          </div>';
-			}
+									<div class="thread-single">
+							            <div class="media">
+							              <div class="media-left">
+							                <a href="#">
+							                  <img class="media-object media-image" data-src="holder.js/64x64" alt="64x64" src="/assets/images/profile-images/perm/'.$replier_profile_image.'" data-holder-rendered="true" style="width: 64px; height: 64px;">
+							                </a>
+							              </div>
+							              <div class="media-body">
+							                <div class="media-inner-left">
+							                  <div class="thread-info"><span class="quoter-username">'.$this_replier_username.'</span>
+							                    <span class="thread-date"> - '.$time_ago_replies.'</span>
+							                    <div class="panel-btn-bg pull-right panel-parent reply-bg-'.$arvalue->id.'"  this_reply="'.$arvalue->id.'" this_thread="'.$threads->id.'">
+													<div class="btn-group  role="group" aria-label="...">
+													  <button type="button" class="btn btn-default btn-panel-single show-quote"><i class="fa fa-quote-right"></i></br><span class="inner-val">'.$quote_count.'</span></button>
+													  <button type="button" class="btn btn-default btn-panel-single eye-like"><i class="fa fa-thumbs-o-up"></i></br><span class="inner-val">'.$like_count.'</span></button>
+													  <button type="button" class="btn btn-default btn-panel-single dont-like"><i class="fa fa-thumbs-o-down"></i></br><span class="inner-val">'.$dislike_count.'</span></button>';
+							if ($ban_flag_re != true) {	
+								if ($is_owner_reply != true) {		 
+									$html .=  '<button type="button" class="btn btn-default btn-panel-single flag-it"><i class="glyphicon glyphicon-flag"></i></br><span class="inner-val">'.$flag_count.'</span></button>';
+								}
+							}
+						$html .= '</div>
+					                    </div>
+					                  </div> 
+					                </br>
+					                <div class="thread-description">
+										'.$arvalue->reply.'
+					                  </div>
+					                  <div class="label-container">
+					                  </div>
+					                </div>
+					              </div>
+					            </div>
+					          </div>';
+					} else {
+						//MESSAGED BEEN FLAGGED
+						$been_removed = Thread::FlaggedMessagePlaceholder();
+						$html .= $been_removed;
+					}
 
-	
+				}
 		}
 		return $html;
 	}
 
+    public static function PerpareStatusForInput() {
+    	$selects = [];
+        $selects['1'] = 'Active';
+        $selects['2'] = 'Cancel';
+        return $selects;
+    }
+
+    public static function FlaggedMessagePlaceholder() {
+    	$p = '<div class="thread-single thread-single-flagged" >
+					<div id="message-overlay" style=""> 
+			    		<p class="bg-danger p-flagged" style="">This Reply Has Been Removed</p>
+			    	</div>
+		   		</div>
+		    ';
+        return $p;
+    }
 
 }

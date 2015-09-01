@@ -12,26 +12,29 @@
 @stop
 
 @section('content')
-<div id="main-frame" class="col-md-12">
+<div id="main-frame" class="col-md-12 col-sm-12 col-xs-12">
 	{!! Form::open(array('action' => 'UsersController@postRegistration','id'=>'reg-form', 'class'=>'','role'=>"form")) !!}
 	<div class="form-frame">
 		<div class="input-section  step1">
 			<h3 class="form-title">Add Photo</h3>
-			<div class="form-group ind-box col-md-12">
-				<div class="col-sm-8">
+			<div class="form-group ind-box col-md-12 col-sm-12 col-xs-12">
+				<div class="col-md-6 col-sm-6 col-xs-6">
 					<a href="#">
 						<img class="media-object profile-picture" data-src="holder.js/64x64" alt="64x64" src="/assets/images/profile-images/perm/blank_male.png" data-holder-rendered="true" style="width: 64px; height: 64px;">
 					</a>
+				</div>
+				<div class="col-md-6 col-sm-6 col-xs-6">
 					<div class="file-container"> 
 						<span class="file-wrapper">
-							<input type="file" id="form-submit-btn" accept="image/*"/>
-							<span class="button" id="sub-btn">Choose File</span>
+						<input type="file" id="form-submit-btn" accept="image/*"/>
+						<span class="button" id="sub-btn">Choose File</span>
 						</span>
 						<div id="loading-container">
-				            <img id="loading-icons-1" height="30px" width="30px" class="hide" src="/assets/images/icons/gif/loading1.gif" alt="">
-				        </div>
+						<img id="loading-icons-1" height="30px" width="30px" class="hide" src="/assets/images/icons/gif/loading1.gif" alt="">
+						</div>
 					</div>
 				</div>
+				
 			</div>
 		</div>
 		<hr>

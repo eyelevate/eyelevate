@@ -8,9 +8,11 @@
 	border-radius: 5px;
   position: absolute;
   margin-bottom: 10px;
+      background-color: #fff;
+
 }
 .form-frame{
-    background-color: #fff;
+    /*background-color: #fff;*/
     padding: 10px 100px 10px 100px;
     height: 780px;
 }
@@ -284,7 +286,7 @@ background-color: #d9534f;
 
   .top-margin{margin-top: 0;}
   .rows{margin-top: 0;}
-  .form-frame{width: 100%;}
+  .form-frame{width: 100%;    padding: 10px 30px 10px 30px;}
   #main-frame {min-height: 955px}
   #first_name{width: 100%;margin-bottom: 30px;}
   #last_name{width: 100%;margin-left: 0;margin-bottom: 30px;}

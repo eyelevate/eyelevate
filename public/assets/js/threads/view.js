@@ -50,6 +50,12 @@ results = {
         });
 	
 		ajax_call = 0;
+
+		var alert_count = $('.alert-message').length;
+		if (alert_count > 0) {
+			setTimeout(function(){ $('.alert-message').remove() }, 3000);			
+		};
+
         
 	},
 	events: function() {
@@ -113,16 +119,16 @@ results = {
 
 		//THREAD ICON CLICKED
 		$(document).on('click','#notify_me_checkbox',function(){
-			var notify_me_condition = null;
-			var this_thread = $('#post-answer').attr('this-thread');
-			if (document.getElementById("notify_me_checkbox").checked) { 
-				notify_me_condition = 1;
+			// var notify_me_condition = null;
+			// var this_thread = $('#post-answer').attr('this-thread');
+			// if (document.getElementById("notify_me_checkbox").checked) { 
+			// 	notify_me_condition = 1;
 
-			} else {
-				notify_me_condition = 0;
-			}
+			// } else {
+			// 	notify_me_condition = 0;
+			// }
 
-			request.thread_setting(notify_me_condition,this_thread);
+			// request.thread_setting(notify_me_condition,this_thread);
 		});
 
 
@@ -403,30 +409,6 @@ request = {
 			}
 		}
 		);
-	},
-	thread_setting: function(notify_me_condition,this_thread) {
-		var token = $('meta[name=csrf-token]').attr('content');
-		$.post(
-			'/threads/set-setting',
-			{
-				"_token": token,
-				"notify_me_condition":notify_me_condition,
-				"this_thread":this_thread
-			},
-			function(result){
-				var status = result.status;
-				switch(status) {
-					case 200: // Approved
-					$('#setting_saved').removeClass('hide');
-					setTimeout(function(){ $('#setting_saved').addClass('hide')}, 2000);
-					break;				
-					case 400: // Approved
-					break;
-					default:
-					break;
-				}
-			}
-			);
 	},
 	retrieve_quotes: function(_this_reply) {
 	var token = $('meta[name=csrf-token]').attr('content');
