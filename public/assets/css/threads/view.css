@@ -89,7 +89,6 @@ body,html{
 #preview-btn-thread{
   color: white !important;
   font-weight: 900;
-   margin-left: 74px; 
 }
 /*
 * === PREVIEW MODAL ===
@@ -371,6 +370,7 @@ textarea {
 #post-answer{
   color:white !important;
   font-weight: 900;
+  margin-left:15px;
   /*margin-left: 74px;*/
 }
 textarea:focus {
@@ -845,13 +845,27 @@ textarea{
     }
 
     /* Custom, iPhone 2G, 3G, 4, 4S Media Queries */ 
-    @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
-   
+    @media only screen and (min-device-width : 320px) and (max-device-width : 480px) and (orientation : portrait) {
+      /* This section is for textarea tinymce sizing issue on iphones */
+      #right-side-media {
+        display:block !important;
+        padding-bottom:15px;
+        width:100%;
+      }
+
+      #preview-btn-thread {
+        float:left !important;
+      }
+      #post-answer {
+        float:right !important;
+      }
+
+      
     }
 
     /* Custom, iPhone 2G, 3G, 4, 4S Landscape mode Media Queries */ 
     @media only screen and (min-device-width : 320px) and (max-device-width : 480px) and (orientation : landscape) { 
- 
+
     }
 
     /* Small Devices, Tablets */
@@ -1008,99 +1022,5 @@ textarea{
 
   }
 
-  /* ----------- Galaxy S3 ----------- */
 
-/* Portrait and Landscape */
-@media screen 
-  and (device-width: 320px) 
-  and (device-height: 640px) 
-  and (-webkit-device-pixel-ratio: 2) {
-      #phone_detector{
-        max-width: 320px;
-        max-height:640px;
-      }
-}
-
-
-
-
-/* ----------- Galaxy S4 ----------- */
-
-/* Portrait and Landscape */
-@media screen 
-  and (device-width: 320px) 
-  and (device-height: 640px) 
-  and (-webkit-device-pixel-ratio: 3) {
-      #phone_detector{
-        max-width: 320px;
-        max-height:640px;
-      }
-}
-
-/* ----------- Galaxy S5 ----------- */
-
-/* Portrait and Landscape */
-@media screen 
-  and (device-width: 360px) 
-  and (device-height: 640px) 
-  and (-webkit-device-pixel-ratio: 3) {
-      #phone_detector{
-        max-width: 320px;
-        max-height:640px;
-      }
-}
-
-/* ----------- iPhone 4 and 4S ----------- */
-
-/* Portrait and Landscape */
-@media only screen 
-  and (min-device-width: 320px) 
-  and (max-device-width: 480px)
-  and (-webkit-min-device-pixel-ratio: 2) {
-      #phone_detector{
-        max-width: 320px;
-        max-height:480px;
-      }
-}
-
-/* ----------- iPhone 5 and 5S ----------- */
-
-/* Portrait and Landscape */
-@media only screen 
-  and (min-device-width: 320px) 
-  and (max-device-width: 568px)
-  and (-webkit-min-device-pixel-ratio: 2) {
-      #phone_detector{
-        max-width: 320px;
-        max-height:568px;
-      }
-}
-
-
-/* ----------- iPhone 6 ----------- */
-
-/* Portrait and Landscape */
-@media only screen 
-  and (min-device-width: 375px) 
-  and (max-device-width: 667px) 
-  and (-webkit-min-device-pixel-ratio: 2) { 
-      #phone_detector{
-        max-width: 375px;
-        max-height:667px;
-      }
-}
-
-
-/* ----------- iPhone 6+ ----------- */
-
-/* Portrait and Landscape */
-@media only screen 
-  and (min-device-width: 414px) 
-  and (max-device-width: 736px) 
-  and (-webkit-min-device-pixel-ratio: 3) { 
-      #phone_detector{
-        max-width: 414px;
-        max-height:736px;
-      }
-}
 

@@ -32,7 +32,7 @@
           </div>
         </div>
 
-        <div id="panel-footer-sidebar" class="panel-footer clearfix">
+        <div id="panel-footer-sidebar" class="panel-footer object-fixed-for-keyboard clearfix">
               <textarea placeholder="add response here ..."
               id="quote_text" cols="1"
               class="ui-autocomplete-input editor col-lg-12" autocomplete="off" role="textbox"
@@ -65,23 +65,22 @@
         <div class="" id="add-answer">
           <h4 id="add-answer-title">Add an Answer</h4>
           <div class="media">
-            <div class="media-left">
+            <div id="right-side-media" class="media-left">
               <a href="#">
                 <img class="media-object right-box-inner" data-src="holder.js/64x64" alt="64x64" src="/assets/images/profile-images/perm/{{$this_user_profile_image}}" data-holder-rendered="true" style="width: 64px; height: 64px;">
               </a>
             </div>
             <div class="media-body">
-              <textarea
-              id="answer_text"
-              ></textarea> 
+              <textarea id="answer_text"></textarea> 
+              <span class="bootstrap-error hide" id="answer-empty">&nbspAnswer field cannot be empty</span>
             </div>
           </div>
-          
-            <a class="btn btn-info" id="preview-btn-thread" style="color:white">Preview</a>
-            <a class="btn btn-primary" id="post-answer" this-thread="{{$threads->id}}">Post Answer</a>
-            <span class="bootstrap-error hide" id="answer-empty">&nbspAnswer field cannot be empty</span>
-         
 
+          <div class="row-fluid clearfix">
+            <a class="btn btn-primary pull-right" id="post-answer" this-thread="{{$threads->id}}">Post Answer</a>
+            <a class="btn btn-info pull-right" id="preview-btn-thread" style="color:white">Preview</a>
+            
+          </div>
         </div>
       </div>
       <!-- THREAD GROUP END -->
