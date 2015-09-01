@@ -193,7 +193,8 @@ return [
         'View'      => Illuminate\Support\Facades\View::class,
         'Html'      => Collective\Html\HtmlFacade::class,
         'Form'      => Collective\Html\FormFacade::class,
-        'Flash'     => 'Laracasts\Flash\Flash'
+        'Flash'     => 'Laracasts\Flash\Flash',
+        'UploadHelper'=> App\Helpers\UploadHelper::class
 
     ],
 
