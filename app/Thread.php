@@ -400,12 +400,32 @@ class Thread extends Model
 
     public static function FlaggedMessagePlaceholder() {
     	$p = '<div class="thread-single thread-single-flagged" >
-					<div id="message-overlay" style=""> 
-			    		<p class="bg-danger p-flagged" style="">This Reply Has Been Removed</p>
+					<div id="message-overlay" > 
+			    		<p class="bg-danger p-flagged" >&nbspThis Reply Has Been Removed</p>
 			    	</div>
 		   		</div>
 		    ';
         return $p;
     }
+
+    public static function CheckThreadStatus($status) {
+    	$condition = true;
+    	switch ($status) {
+    		case 3:
+    			$condition = false;
+    			break;
+    		case 4:
+    			$condition = false;
+    			break;
+    		case 5:
+    			$condition = false;
+    			break;
+    		case 6:
+    			$condition = false;
+    			break;
+    	}
+        return $condition;
+    }
+    
 
 }

@@ -25,9 +25,9 @@ class Reply extends Model
 				$quote_data = date(strtotime($aqvalue->created_at));
 				$time_ago_replies = Job::formatTimeAgo(Job::humanTiming($quote_data));
 
-		        $html .=  '<a  class="list-group-item right-data ind-quotes" expended="0">
+		        $html .=  '<a  class="list-group-item right-data ind-quotes" expended="0" this_tread="'.$aqvalue->thread_id.'" this_reply="'.$reply_id.'" this_quote="'.$aqvalue->id.'">
 				            <span class="message-header"><span class="badge">'.$idx.'</span>
-				              <span class="message-sender" id="">'.$this_replier_username.'</span> <small><span class="quote-details">- '.$time_ago_replies.'</span></small>
+				              <span class="message-sender" id="">'.$this_replier_username.'</span> <small><span class="quote-details">- '.$time_ago_replies.'</span></small> &nbsp<i class=" quote-flags glyphicon glyphicon-flag"></i>
 				            </br></span>
 				            <span class="message-body">
 								<p>'.$aqvalue->reply.'</p>

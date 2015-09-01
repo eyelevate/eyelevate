@@ -31,6 +31,12 @@ results = {
 			    content:popupTemplate, 
 			    html:true
 			});
+
+		var alert_count = $('.alert-message').length;
+		if (alert_count > 0) {
+			setTimeout(function(){ $('.alert-message').remove() }, 3000);			
+		};
+		
 		},
 	events: function() {
 

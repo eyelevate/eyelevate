@@ -4,19 +4,24 @@ html{
 body,html{
   color:black;
 }
-
+.quote-flags{
+    color: #d9534f;
+    font-size: 14px;
+    border: 1px rgba(217, 83, 79, 0.33) solid;
+    padding: 2px;
+}
 /*FLAGGED*/
 .thread-single-flagged{
   padding: 0 !important;
   height: 95px;
 }
 #message-overlay{
-  position: relative;text-align: center;
+  position: relative;
 }
 .p-flagged{
-    margin: 0;
-    line-height: 95px;
-    font-weight: 900;
+margin: 0;
+line-height: 95px;
+font-weight: 900;
 }
 
 

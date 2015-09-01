@@ -165,10 +165,24 @@ results = {
 				$('#modal_thread_id').val(this_thread);
 				$('#modal_reply_id').val(this_reply);
 				$(this).addClass(this_thread+'-'+this_reply+'-flag');
-
-				request.check_flag(this_thread,this_reply);
+				var this_quote = false;
+				request.check_flag(this_thread,this_reply,this_quote);
 			}
 		});
+		$(document).on('click','.quote-flags',function(){
+			if (ajax_call == 0) {
+				ajax_call = 1;
+				var this_reply = $(this).parents('.ind-quotes:first').attr('this_reply');
+				var this_thread = $(this).parents('.ind-quotes:first').attr('this_thread');
+				var this_quote = $(this).parents('.ind-quotes:first').attr('this_quote');
+				$('#modal_thread_id').val(this_thread);
+				$('#modal_reply_id').val(this_reply);
+				$(this).addClass(this_thread+'-'+this_reply+'-flag');
+				request.check_flag(this_thread,this_reply,this_quote);
+			}
+		});
+
+
 		$(document).on('click','#modal-flag-it',function(){
 			if (ajax_call == 0) {
 				ajax_call = 1;
@@ -557,28 +571,29 @@ request = {
 			}
 			);
 	},
-	check_flag: function(this_thread,this_reply) {
+	check_flag: function(this_thread,this_reply,this_quote) {
 		var token = $('meta[name=csrf-token]').attr('content');
 		$.post(
 			'/threads/check-flag',
 			{
 				"_token": token,
 				"this_reply":this_reply,
-				"this_thread":this_thread
+				"this_thread":this_thread,
+				"this_quote":this_quote
 			},
 			function(result){
 				var status = result.status;
 				ajax_call = 0;
 				switch(status) {
-					case 200: // Approved
+					case 200: // LEGIT SHOW FLAG MODAL
 						$('#flag_modal').modal('toggle');
 					break;				
-					case 401: // Approved
+					case 401: //FLAG EXIST SHOW DELETE FLAG MODAL
 						$('#modal_rmv_thread_id').val(this_thread);
 						$('#modal_rmv_reply_id').val(this_reply);
 						$('#flag_remove_modal').modal('toggle');
 					break;
-					case 402: // Approved
+					case 402: //USER NOT LOGGED IN
 						$('#myModal').modal('toggle');
 					break;
 					default:
