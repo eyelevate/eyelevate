@@ -59,7 +59,13 @@ results = {
 		        	//HOWEVER SOMETIMES IT DOESNT WORK
 	            	$('#panel-data').removeClass('hide');
 	            	$('#panel-head').removeClass('hide'); 
-		        });
+		        }),
+				$('body').on('click', function ( e ) {
+				  if( !($(e.target).is('#quote_text'))){
+	            	$('#panel-data').removeClass('hide');
+	            	$('#panel-head').removeClass('hide'); 
+				  }
+				});
 		    }
    			
         });
