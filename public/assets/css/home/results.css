@@ -237,6 +237,7 @@ color: #3776AC !important;
 
 body,html{
   color:black;
+  overflow-y: hidden !important;
 }
 .list-group-item:first-child {
   border-top-right-radius: 0px;

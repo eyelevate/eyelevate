@@ -16,13 +16,20 @@
       <div class="container" id="left-box-inner">
           <form class="form-horizontal" action="{!! route('users_profile_post') !!}" method="post">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+
+
             <div class="form-group ind-box">
-              <label for="inputEmail3" class="col-sm-2 control-label">Photo</label>
-              <div class="col-sm-8 pull-right">
-                  <a href="#">
-                    <img class="media-object profile-picture" data-src="holder.js/64x64" alt="64x64" src="/assets/images/profile-images/perm/{{$profile_image}}" data-holder-rendered="true" style="width: 64px; height: 64px;">
-                  </a>
-                  <div class="file-container"> 
+              <label for="inputEmail3" class="col-md-2 col-sm-2 col-xs-2 control-label">Photo</label>
+              <div class="col-md-8 col-sm-8 col-xs-8 pull-right">
+
+                  <div class="col-md-6 col-sm-6 col-xs-6">
+                    <a href="#">
+                      <img class="media-object profile-picture" data-src="holder.js/64x64" alt="64x64" src="/assets/images/profile-images/perm/{{$profile_image}}" data-holder-rendered="true" style="width: 64px; height: 64px;">
+                    </a>  
+                  </div>
+
+                  <div class="file-container col-md-6 col-sm-6 col-xs-6 pull-right"> 
                       <span class="file-wrapper">
                         <input type="file" id="form-submit-btn" />
                         <span class="button" id="sub-btn">Choose File</span>
@@ -33,6 +40,9 @@
 
               </div>
             </div>
+
+
+
             <hr>
             <div class="form-group">
               <label for="inputEmail3" class="col-sm-2 control-label">First Name</label>

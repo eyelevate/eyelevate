@@ -96,7 +96,7 @@
 
 }
 .file-container{
-    padding-top: 7px;
+    /*padding-top: 7px;*/
 }
 .search-single-first
 {
@@ -938,6 +938,9 @@ textarea:focus {
 
 
 @media screen and (max-width: 767px) {
+/*  .pic-form-wrapper{
+    float: none !important;
+  }*/
  /*
  * Off Canvas
  * --------------------------------------------------

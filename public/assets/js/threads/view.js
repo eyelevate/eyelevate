@@ -15,7 +15,6 @@ results = {
 		    content:popupTemplate, 
 		    html:true
 		});
-
 		tinymce.init({
             selector: "#answer_text",
             body_id: "editor-body",
@@ -30,8 +29,6 @@ results = {
    			preview_styles: false,
    			
         });
-
-
 		tinymce.init({
             selector: "#quote_text",
             body_id: "editor-body-2",
@@ -46,26 +43,8 @@ results = {
    			preview_styles: false,
 		    setup: function(editor) {
 		        editor.on('focus', function(e) {
-		            var page_max_width = parseInt($('#phone_detector').css('max-width'));
-		            var page_max_height = parseInt($('#phone_detector').css('max-height'));
-		            if (page_max_width < 641 && page_max_height < 737) {
-		            	setTimeout(function(){ 		            	
-			            	$('#panel-data').addClass('hide');
-			            	$('#panel-head').addClass('hide'); 
-			            }, 100);
-		            };
-		        }),
-		        editor.on('blur', function(e) {
-		        	//HOWEVER SOMETIMES IT DOESNT WORK
-	            	$('#panel-data').removeClass('hide');
-	            	$('#panel-head').removeClass('hide'); 
-		        }),
-				$('body').on('click', function ( e ) {
-				  if( !($(e.target).is('#quote_text'))){
-	            	$('#panel-data').removeClass('hide');
-	            	$('#panel-head').removeClass('hide'); 
-				  }
-				});
+		        	$(".inner").animate({ scrollTop: $('#panel-data')[0].scrollHeight}, 1000);
+		        });
 		    }
    			
         });
