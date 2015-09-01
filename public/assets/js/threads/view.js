@@ -34,7 +34,7 @@ results = {
 
 		tinymce.init({
             selector: "#quote_text",
-            body_id: "editor-body",
+            body_id: "editor-body-2",
             elementpath: false,
             max_height: 500,
             height : 125,
@@ -56,6 +56,7 @@ results = {
 		            };
 		        }),
 		        editor.on('blur', function(e) {
+		        	//HOWEVER SOMETIMES IT DOESNT WORK
 	            	$('#panel-data').removeClass('hide');
 	            	$('#panel-head').removeClass('hide'); 
 		        });
@@ -303,39 +304,40 @@ results = {
 
 		});
 
-		//SWIPE BTN
 		$(document).on('click','#quote-title-btn',function(){
-
 			right_box_open();
-
 		});
 
 
 		/*==================================================
 		=                   MOBILE SWIPE                   =
 		==================================================*/
-		$(function() {
-			$("html").swipe( {
-				swipeStatus:function(event, phase, direction, distance, duration, fingers, fingerData) {
- 			  	switch(direction){
-			  		case "left":
-			  			if (distance > 50) {
-			  				$('#swipe-icone').fadeOut();
-			  				right_box_open();
-			  			};
-			  		break;
-			  		case "right":
-			  			// if (distance > 50) {right_box_close()};
-			  		break;
-			  	}
-			  },
-			  allowPageScroll:"vertical",
-			  threshold:0,
-			  fingers:1
-			});
+		// $(function() {
+		// 	$("html").swipe( {
+		// 		swipeStatus:function(event, phase, direction, distance, duration, fingers, fingerData) {
+ 	// 		  	switch(direction){
+		// 	  		case "left":
+		// 	  			if (distance > 50) {
+		// 	  				$('#swipe-icone').fadeOut();
+		// 	  				right_box_open();
+		// 	  			};
+		// 	  		break;
+		// 	  		case "right":
+		// 	  			// if (distance > 50) {right_box_close()};
+		// 	  		break;
+		// 	  	}
+		// 	  },
+		// 	  allowPageScroll:"vertical",
+		// 	  threshold:0,
+		// 	  fingers:1
+		// 	});
+		// });
+
+
+		//FLAG WAS CLICKED
+		$('#quote-image-wrapper').click(function(){
+			right_box_open();
 		});
-
-
 
 		//FLAG WAS CLICKED
 		$('.flags').click(function(){
