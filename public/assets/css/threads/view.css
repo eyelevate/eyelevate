@@ -4,11 +4,17 @@ html{
 body,html{
   color:black;
 }
+
+    /*==========  FLAGGED PLACEHOLDER  ==========*/
 .quote-flags{
     color: #d9534f;
     font-size: 14px;
-    border: 1px rgba(217, 83, 79, 0.33) solid;
+    /*border: 1px rgba(217, 83, 79, 0.33) solid;*/
+    border: 1px rgba(217, 83, 79, 0) solid;
     padding: 2px;
+}
+.flag-checked{
+  border: 1px rgba(217, 83, 79, 0.75) solid !important;
 }
 /*FLAGGED*/
 .thread-single-flagged{
@@ -23,6 +29,19 @@ margin: 0;
 line-height: 95px;
 font-weight: 900;
 }
+
+.quote-single-flagged{
+  padding: 0 !important;
+  height: 60px;
+}
+.q-flagged{
+margin: 0;
+line-height: 60px;
+font-weight: 400;
+}
+/*==========  FLAGGED PLACEHOLDER  ==========*/
+
+
 
 
 

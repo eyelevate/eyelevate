@@ -4,6 +4,7 @@ namespace App;
 
 use App\Job;
 use App\User;
+use Auth;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,6 +18,18 @@ class Job extends Model
 		}
 
 		return false;
+	}
+
+	static public function IsThisUser($id) {
+		$output = false;
+		if(Auth::check()) {
+			if (isset($id)) {
+				if (Auth::user()->id == $id) {
+					$output = true;
+				}
+			}
+		}
+		return $output;
 	}
 
 	static public function IdToUsername($id) {

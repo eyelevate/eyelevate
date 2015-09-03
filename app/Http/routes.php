@@ -103,7 +103,7 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 			Route::get('flags/rejected',  ['as'=>'flags_rej', 'uses' => 'FlagsController@getRejected', 'middleware' => ['acl:'.$prefix.'/flags/rejected']]);
 			Route::get('flags/re-flagged',  ['as'=>'flags_re', 'uses' => 'FlagsController@getReflagged', 'middleware' => ['acl:'.$prefix.'/flags/re-flagged']]);
 			Route::get('flags/final-approved',  ['as'=>'flags_f_app', 'uses' => 'FlagsController@getFinalApproved', 'middleware' => ['acl:'.$prefix.'/flags/final-approved']]);
-			Route::get('flags/final-reject',  ['as'=>'flags_f_rej', 'uses' => 'FlagsController@getFinalRejected', 'middleware' => ['acl:'.$prefix.'/flags/final-rejected']]);
+			Route::get('flags/final-reject',  ['as'=>'flags_f_rej', 'uses' => 'FlagsController@getFinalRejected', 'middleware' => ['acl:'.$prefix.'/flags/final-reject']]);
 			Route::get('flags/banned',  ['as'=>'flags_banned', 'uses' => 'FlagsController@getBanned', 'middleware' => ['acl:'.$prefix.'/flags/banned']]);
 
 			Route::get('acl/view',  ['as' => 'acl_view','uses' => 'AdminsController@getViewAcl', 'middleware' => ['acl:'.$prefix.'/acl/view']]);
@@ -189,6 +189,8 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 		Route::post('preview-message', ['uses'=>'ThreadsController@postPreviewMessage']);
 		Route::post('preview-message', ['uses'=>'ThreadsController@postPreviewMessage']);
 		Route::post('thread-form', ['uses'=>'ThreadsController@postSettingFrom']);
+		Route::post('answer-notification', ['uses'=>'ThreadsController@postAnswerNotification']);
+		
 		
 	});
 

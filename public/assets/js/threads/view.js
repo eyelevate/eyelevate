@@ -160,24 +160,26 @@ results = {
 		$(document).on('click','.flag-it',function(){
 			if (ajax_call == 0) {
 				ajax_call = 1;
+				var this_quote = false;
 				var this_reply = $(this).parents('.panel-parent:first').attr('this_reply');
 				var this_thread = $(this).parents('.panel-parent:first').attr('this_thread');
 				$('#modal_thread_id').val(this_thread);
 				$('#modal_reply_id').val(this_reply);
+				$('#modal_quote_id').val(this_quote);
 				$(this).addClass(this_thread+'-'+this_reply+'-flag');
-				var this_quote = false;
 				request.check_flag(this_thread,this_reply,this_quote);
 			}
 		});
 		$(document).on('click','.quote-flags',function(){
 			if (ajax_call == 0) {
 				ajax_call = 1;
-				var this_reply = $(this).parents('.ind-quotes:first').attr('this_reply');
-				var this_thread = $(this).parents('.ind-quotes:first').attr('this_thread');
+				var this_reply = -999;
+				var this_thread = -999;
 				var this_quote = $(this).parents('.ind-quotes:first').attr('this_quote');
 				$('#modal_thread_id').val(this_thread);
 				$('#modal_reply_id').val(this_reply);
-				$(this).addClass(this_thread+'-'+this_reply+'-flag');
+				$('#modal_quote_id').val(this_quote);
+				$(this).addClass(this_quote+'-flag');
 				request.check_flag(this_thread,this_reply,this_quote);
 			}
 		});
@@ -188,9 +190,10 @@ results = {
 				ajax_call = 1;
 				var this_reply = $('#modal_reply_id').val();
 				var this_thread = $('#modal_thread_id').val();
+				var this_quote = $('#modal_quote_id').val();
 				var reason = $('input[name=optionsRadios]:checked').val();
 				var details = $('#modal-flag-reason').val();
-				request.submit_flag(this_reply,this_thread,reason,details);
+				request.submit_flag(this_reply,this_thread,this_quote,reason,details);
 			}
 		});
 
@@ -199,7 +202,8 @@ results = {
 			ajax_call = 1;
 				var this_reply = $('#modal_rmv_reply_id').val();
 				var this_thread = $('#modal_rmv_thread_id').val();
-				request.remove_flag(this_thread,this_reply);	
+				var this_quote = $('#modal_rmv_quote_id').val();
+				request.remove_flag(this_thread,this_reply,this_quote);	
 			}
 		});
 
@@ -547,14 +551,15 @@ request = {
 			}
 			);
 	},
-	remove_flag: function(this_thread,this_reply) {
+	remove_flag: function(this_thread,this_reply,this_quote) {
 		var token = $('meta[name=csrf-token]').attr('content');
 		$.post(
 			'/threads/remove-flag',
 			{
 				"_token": token,
 				"this_reply":this_reply,
-				"this_thread":this_thread
+				"this_thread":this_thread,
+				'this_quote':this_quote
 			},
 			function(result){
 				$('#flag_remove_modal').modal('toggle');
@@ -591,6 +596,7 @@ request = {
 					case 401: //FLAG EXIST SHOW DELETE FLAG MODAL
 						$('#modal_rmv_thread_id').val(this_thread);
 						$('#modal_rmv_reply_id').val(this_reply);
+						$('#modal_rmv_quote_id').val(this_quote);
 						$('#flag_remove_modal').modal('toggle');
 					break;
 					case 402: //USER NOT LOGGED IN
@@ -602,7 +608,7 @@ request = {
 			}
 			);
 	},
-		submit_flag: function(this_reply , this_thread ,reason,details) {
+		submit_flag: function(this_reply , this_thread , this_quote,reason,details) {
 		var token = $('meta[name=csrf-token]').attr('content');
 		$.post(
 			'/threads/submit-flag',
@@ -610,6 +616,7 @@ request = {
 				"_token": token,
 				"this_reply":this_reply,
 				"this_thread":this_thread,
+				"this_quote" :this_quote,
 				"reason" : reason,
 				"details" : details
 			}
@@ -622,10 +629,15 @@ request = {
 				switch(status) {
 					case 200: // Approved
 						var total_flag_count = result.total_flag_count;
-						$('.'+this_thread+'-'+this_reply+'-flag').find('.inner-val:first').text(total_flag_count);
+						if (this_quote == 'false') {
+							$('.'+this_thread+'-'+this_reply+'-flag').find('.inner-val:first').text(total_flag_count);
+						} else {
+							$('.'+this_quote+'-flag').addClass('flag-checked');
+						}
+						
 					break;				
 					case 401: // Approved
-						$('#flag_remove_modal').modal('toggle');
+						// $('#flag_remove_modal').modal('toggle');
 					break;
 					default:
 					break;

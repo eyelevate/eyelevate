@@ -30,27 +30,21 @@
 
   <div class="form-group">
     <label class="control-label">Title Text: &nbsp&nbsp&nbsp&nbsp</label>
-    <p style="font-size:16px; !important;color:black; display:inline;">{{$comment['title']}}</p>
+    <p style="font-size:16px; !important;color:black; display:inline;">{!!$comment['title']!!}</p>
   </div>
-
-
   <div class="form-group">
     <label class="control-label">Description: &nbsp&nbsp&nbsp&nbsp</label>
-    <p style="font-size:16px; !important;color:black; display:inline;">{{$comment['description']}}</p>
+    <p style="font-size:16px; !important;color:black;display:inline;">{!!$comment['description']!!}</p>
   </div>
-
-
   <div class="form-group">
     <label class="control-label">Status: &nbsp&nbsp&nbsp&nbsp</label>
     <p style="font-size:16px; !important;color:black; display:inline;">{{$comment['status']}}</p>
   </div>
-
-
   <div class="form-group">
     <label class="control-label">Date: &nbsp&nbsp&nbsp&nbsp</label>
     <p style="font-size:16px; !important;color:black; display:inline;">{{$comment['date']}}</p>
   </div>
-@else
+@elseif($comment_output['type'] == "reply")
 <div class="form-horizontal">
   <div class="form-group" >
     <label class="control-label">Reply Id: &nbsp&nbsp&nbsp&nbsp</label>
@@ -64,7 +58,36 @@
 
   <div class="form-group">
     <label class="control-label">Reply Text: &nbsp&nbsp&nbsp&nbsp</label>
-    <p style="font-size:16px; !important;color:black; display:inline;">{{$comment['reply']}}</p>
+    <p style="font-size:16px; !important;color:black; display:inline;">{!!$comment['reply']!!}</p>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label">Status: &nbsp&nbsp&nbsp&nbsp</label>
+    <p style="font-size:16px; !important;color:black; display:inline;">{{$comment['status']}}</p>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label">Date: &nbsp&nbsp&nbsp&nbsp</label>
+    <p style="font-size:16px; !important;color:black; display:inline;">{{$comment['date']}}</p>
+  </div>
+  </div>
+
+@elseif($comment_output['type'] == "quote")
+
+<div class="form-horizontal">
+  <div class="form-group" >
+    <label class="control-label">Quote Id: &nbsp&nbsp&nbsp&nbsp</label>
+    <p style="font-size:16px; !important;color:black; display:inline;">{{$comment['id']}}</p>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label">Username: &nbsp&nbsp&nbsp&nbsp</label>
+    <p style="font-size:16px; !important;color:black; display:inline;">{{$comment['username']}}</p>
+  </div>
+
+  <div class="form-group">
+    <label class="control-label">Quote Text: &nbsp&nbsp&nbsp&nbsp</label>
+    <p style="font-size:16px; !important;color:black; display:inline;">{!!$comment['reply']!!}</p>
   </div>
 
   <div class="form-group">
@@ -120,9 +143,13 @@
 @if($comment_output['type'] == "thread")
   <input type="hidden" name="thread_id" value="{{$comment['id']}}">
   <input type="hidden" name="reply_id" value="0">
-@else 
+@elseif($comment_output['type'] == "reply")
   <input type="hidden" name="reply_id" value="{{$comment['id']}}">
   <input type="hidden" name="thread_id" value="{{$comment['thread_id']}}">
+@elseif($comment_output['type'] == "quote")
+<input type="hidden" name="quote_id" value="{{$comment['id']}}">
+<input type="hidden" name="reply_id" value="{{$comment['quote_id']}}">
+<input type="hidden" name="thread_id" value="{{$comment['thread_id']}}">
 @endif
 
 <div class="panel panel-default" style="font-size:18px">
