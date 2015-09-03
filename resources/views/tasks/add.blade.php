@@ -108,7 +108,8 @@
 	<div class="jumbotron">
 		<h1>Add A Task</h1>
 	</div>
-	{!! Form::open(array('action' => 'TasksController@postAdd', 'id'=>'', 'class'=>'','role'=>"form",'files'=> true)) !!}
+	{!! Form::open(array('action' => 'TasksController@postAdd', 'id'=>'fileupload', 'class'=>'','role'=>"form",'files'=> true)) !!}
+	{!! Form::hidden('test','test') !!}
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">Create A Task</h3>
@@ -143,11 +144,15 @@
 		            <span class='help-block'>{{ $message }}</span>
 		        @endforeach
 		  	</div>
+		  	<div class="form-group">
+		    	<label class="control-label" for="">Image Upload</label>
+		  	</div>		  	
+
 			<div class="panel panel-default">
 				
-				<div class="panel-heading"><h4>Image Upload</h4></div>
+				<div class="panel-heading"><h4>Add Images to Task</h4></div>
 		        <!-- The global progress state -->
-		        <div class="col-lg-5 fileupload-progress fade">
+		        <div class="col-lg-12 fileupload-progress fade">
 		            <!-- The global progress bar -->
 		            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
 		                <div class="progress-bar progress-bar-success" style="width:0%;"></div>
@@ -167,20 +172,20 @@
 			                <span class="btn btn-success fileinput-button">
 			                    <i class="glyphicon glyphicon-plus"></i>
 			                    <span>Add files...</span>
-			                    <input type="file" name="files[]" multiple>
+			                    <input type="file" name="files" multiple>
 			                </span>
-			                <button type="submit" class="btn btn-primary start">
+<!-- 			                <button type="submit" class="btn btn-primary start">
 			                    <i class="glyphicon glyphicon-upload"></i>
 			                    <span>Start upload</span>
-			                </button>
+			                </button> -->
 			                <button type="reset" class="btn btn-warning cancel">
 			                    <i class="glyphicon glyphicon-ban-circle"></i>
 			                    <span>Cancel upload</span>
 			                </button>
-			                <button type="button" class="btn btn-danger delete">
+<!-- 			                <button type="button" class="btn btn-danger delete">
 			                    <i class="glyphicon glyphicon-trash"></i>
 			                    <span>Delete</span>
-			                </button>
+			                </button> -->
 			                <input type="checkbox" class="toggle">
 			                <!-- The global file processing state -->
 			                <span class="fileupload-process"></span>
@@ -191,6 +196,7 @@
 
 
 		</div>
+		<div id="imageDiv" class="hide"></div>
 		<div class="panel-footer clearfix">
 			<a href="{!! route('tasks_index') !!}" class="btn btn-default">Back</a>
 			<input type="submit" class="btn btn-primary pull-right" value="Add Task"/>
