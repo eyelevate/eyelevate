@@ -101,10 +101,10 @@ class FlagsController extends Controller
     {   
         //GET ONE OF MAY FLAGS 
         $flags = Flag::find($id);
-
         //GET THREAD_ID AND REPLY_ID
         $thread_id = $flags->thread_id;
         $reply_id = $flags->reply_id;
+        $quote_id = $flags->quote_id;
 
         $flag_log = FlagLog::where('thread_id',$thread_id)->where('reply_id',$reply_id)->get();
         foreach ($flag_log as $flogkey => $flogvalue) {
@@ -116,18 +116,27 @@ class FlagsController extends Controller
         $comment = null;
         $comment_output = [];
         $comment_output['type'] = 'reply';
-        if ($reply_id == 0) {
-          $comment_output['type'] = 'thread';
-          $comment = Thread::find($thread_id);
-          $comment['date'] = date('n/d/Y g:ia',strtotime($comment->created_at));
-          $comment['username'] = Job::IdToUsername($comment->user_id);
+        if (isset($flags->quote_id)) {
+            $quote_id = $flags->quote_id;
+            $comment_output['type'] = 'quote';
+            $comment = Reply::find($flags->quote_id);
+            $comment['date'] = date('n/d/Y g:ia',strtotime($comment->created_at));
+            $comment['username'] = Job::IdToUsername($comment->user_id);
+        } elseif ($reply_id == 0) {
+            $comment_output['type'] = 'thread';
+            $comment = Thread::find($thread_id);
+            $comment['date'] = date('n/d/Y g:ia',strtotime($comment->created_at));
+            $comment['username'] = Job::IdToUsername($comment->user_id);
         } else {
-          $comment = Reply::find($reply_id);
-          $comment['date'] = date('n/d/Y g:ia',strtotime($comment->created_at));
-          $comment['username'] = Job::IdToUsername($comment->user_id);
-        }
+            $comment = Reply::find($reply_id);
+            $comment['date'] = date('n/d/Y g:ia',strtotime($comment->created_at));
+            $comment['username'] = Job::IdToUsername($comment->user_id);
+          } 
 
-        $all_flags = Flag::where('reply_id',$reply_id)->where('thread_id',$thread_id)->get();
+        $all_flags = Flag::where('reply_id',$reply_id)
+          ->where('thread_id',$thread_id)
+          ->where('quote_id',$quote_id)
+          ->get();
 
         foreach ($all_flags as $allfkey => $allfvalue) {
             $allfvalue['date'] = date('n/d/Y g:ia',strtotime($allfvalue->created_at));
@@ -136,7 +145,11 @@ class FlagsController extends Controller
             $allfvalue['flagger_username'] = Job::IdToUsername($allfvalue->flagger_user_id);
             $allfvalue['flagged_username'] = Job::IdToUsername($allfvalue->flagged_user_id);
         }
-        $all_flags_count = count(Flag::where('reply_id',$reply_id)->where('thread_id',$thread_id)->get());
+        $all_flags_count = count(Flag::where('reply_id',$reply_id)
+                                  ->where('thread_id',$thread_id)
+                                  ->where('quote_id',$quote_id)
+                                  ->get());
+
         return view('flags.view')
             ->with('layout',$this->layout)
             ->with('comment',$comment)
@@ -148,14 +161,18 @@ class FlagsController extends Controller
 
         public function postView()
     {   
-       $thread_id = Input::get('thread_id');
-       $reply_id = Input::get('reply_id');
-       $action = Input::get('action');
-       $reason = Input::get('reason');
+        $thread_id = Input::get('thread_id');
+        $reply_id = Input::get('reply_id');
+        $quote_id = Input::get('quote_id');
+        $action = Input::get('action');
+        $reason = Input::get('reason');
 
        $new_status = null;
 
-       $all_flags = Flag::where('reply_id',$reply_id)->where('thread_id',$thread_id)->get();
+       $all_flags = Flag::where('reply_id',$reply_id)
+       ->where('thread_id',$thread_id)
+       ->where('quote_id',$quote_id)
+       ->get();
 
         // flags-status :
         // 1: pending
@@ -195,16 +212,19 @@ class FlagsController extends Controller
        }
 
        //CHANGING THE MAIN MESSAGE STATUS
-       if ($reply_id == 0) {//IT WAS A THREAD
+       if (isset($quote_id)) {
+            $this_quote = Reply::find($quote_id);
+            $this_quote->status = $new_status;
+            $this_quote->save();
+       } elseif ($reply_id == 0) {
             $this_thread = Thread::find($thread_id);
             $this_thread->status = $new_status;
             $this_thread->save();
-       } else { //IT WAS A REPLY
+       } else {
             $this_reply = Reply::find($reply_id);
             $this_reply->status = $new_status;
             $this_reply->save();
        }
-
        //CHANGE ALL THE FLAGS STATUS
        foreach ($all_flags as $alkey => $alvalue) {
             $alvalue->status = $action;
@@ -215,6 +235,7 @@ class FlagsController extends Controller
        $flag_log = new FlagLog;
        $flag_log->thread_id = $thread_id;
        $flag_log->reply_id = $reply_id;
+       $flag_log->quote_id = $quote_id;
        $flag_log->user_id = Auth::user()->id;
        $flag_log->reason = $reason;
        $flag_log->flag_status = $action;

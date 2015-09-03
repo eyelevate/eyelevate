@@ -14,4 +14,5 @@
 	  </div><!-- /.modal-dialog -->
 	    <input type="hidden" name="modal_rmv_thread_id" id="modal_rmv_thread_id">
  		<input type="hidden" name="modal_rmv_reply_id" id="modal_rmv_reply_id">
+ 		<input type="hidden" name="modal_rmv_quote_id" id="modal_rmv_quote_id">
 </div><!-- /.modal -->

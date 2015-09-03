@@ -10,12 +10,12 @@
 <div class="panel panel-default">
   <div class="panel-body">
 <table class="table table-bordered" style="font-size:18px">
-  @if($flags['type'] == 'thread')
       <thead>
         <tr>
           <th>Thread Id</th>
           <th>Reply Id</th>
-          <th>Title</th>
+          <th>Quote Id</th>
+          <th>Text</th>
           <th>Flag Count</th>
           <th>Flag Status</th>
           <th>Date</th>
@@ -28,6 +28,7 @@
           <tr>
             <th scope="row">{{$flag['thread_id']}}</th>
             <td>{{$flag['reply_id']}}</td>
+            <td>{{$flag['quote_id']}}</td>
             <td>{{$flag['title']}}</td>
             <td>{{$flag['count']}}</td>
             <td>{!!$flag['status']!!}</td>
@@ -39,37 +40,6 @@
           @endif
         @endforeach
       </tbody>
-      @else
-      <thead>
-        <tr>
-          <th>Thread Id</th>
-          <th>Reply Id</th>
-          <th>Reply</th>
-          <th>Flag Count</th>
-          <th>Flag Status</th>
-          <th>Date</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        @foreach ($flags as $flagkey => $flag)
-          @if($flagkey != 'type')
-          <tr>
-            <th scope="row">{{$flag['thread_id']}}</th>
-            <td>{{$flag['reply_id']}}</td>
-            <td>{{$flag['title']}}</td>
-            <td>{{$flag['count']}}</td>
-            <td>{!!$flag['status']!!}</td>
-            <td>{{$flag['created_at']}}</td>
-            <td>
-              <a href="{!! route('flag_view',$flag['payload']['id']) !!}">View</a>
-            </td>
-          </tr>
-          @endif
-        @endforeach
-      </tbody>
-
-      @endif
     </table>
   </div>
   <div class="panel-footer clearfix">

@@ -37,7 +37,7 @@ class Thread extends Model
 							          <div class="media-body">
 							            <div class="media-inner-left">
 							              <h4 ><a href="/threads/view/'.$davalue->id.'">'.$davalue->title.'</a></h4>
-							              <div class="thread-info">'.$username.' . 
+							              <div class="thread-info">'.$username.' - 
 							                <span class="thread-date">'.$time_ago.'</span>
 							              	
 							              </div> 
@@ -196,7 +196,7 @@ class Thread extends Model
 			}
 			$ban_flag = false;
 			$count_for_ban = 0;
-			$ban_flag_re = false;
+
 			$count_for_ban_re = 0;
 			$this_user = User::find($threads->user_id);
 			$this_main_username = $this_user->username;
@@ -209,6 +209,7 @@ class Thread extends Model
 			//FLAGS COUNT
 			$main_flag_count = count(Flag::where('reply_id',0)
 						->where('thread_id',$threads->id)
+						->whereNull('quote_id')
 						->whereIn('status', array(1,2,4,5,7))
 						->get());
 
@@ -278,6 +279,7 @@ class Thread extends Model
 				->get();
 			foreach ($all_replies as $arkey => $arvalue) {
 				if ($arvalue->status != 3) {
+				$ban_flag_re = false;
 				$is_owner_reply = false;
 				$this_replier = User::find($arvalue->user_id);
 				$this_replier_username = $this_replier->username;
@@ -295,6 +297,7 @@ class Thread extends Model
 				//FLAGS COUNT
 				$flag_count = count(Flag::where('reply_id',$arvalue->id)
 											->where('thread_id',$threads->id)
+											->whereNull('quote_id')
 											->whereIn('status', array(1,2,4,5,7))
 											->get());
 
@@ -407,6 +410,8 @@ class Thread extends Model
 		    ';
         return $p;
     }
+
+
 
     public static function CheckThreadStatus($status) {
     	$condition = true;

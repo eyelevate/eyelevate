@@ -39,4 +39,5 @@
 	    <input type="hidden" name="modal_thread_id" id="modal_thread_id">
  		<input type="hidden" name="modal_reply_id" id="modal_reply_id">
  		<input type="hidden" name="modal_this_flag" id="modal_this_flag">
+ 		<input type="hidden" name="modal_quote_id" id="modal_quote_id">
 </div><!-- /.modal -->

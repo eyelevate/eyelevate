@@ -12,31 +12,43 @@ class Flag extends Model
 		$flags = Flag::where('status',$status_op)->get();
 		$output_array = [];
 		$output_array['type']='';
+		$quote_id='nothing';
 
 		foreach ($flags as $flkey => $flvalue) {
 			$title = '';
 			$this_count = count(Flag::where('thread_id',$flvalue->thread_id)
 									->where('reply_id',$flvalue->reply_id)->get());
-			if ($flvalue->reply_id == 0) {//THREAD
-				$output_array['type']='thread';
-				$threads = Thread::find($flvalue->thread_id);
-				if (isset($threads)) {
-					$title = $threads->title;
-				}
-			} else {//REPLY
-				$output_array['type']='reply';
-				$replies = Reply::find($flvalue->reply_id);
+
+			if (isset($flvalue->quote_id)) {//ITS A QUOTE
+				$output_array['type']='quote';
+				$replies = Reply::find($flvalue->quote_id);
+				$quote_id = $flvalue->quote_id;
 				if (isset($replies)) {
 					$title = $replies->reply;
 				}
+			} else {
+				if ($flvalue->reply_id == 0) {//THREAD
+					$output_array['type']='thread';
+					$threads = Thread::find($flvalue->thread_id);
+					if (isset($threads)) {
+						$title = $threads->title;
+					}
+				} else {//REPLY
+					$output_array['type']='reply';
+					$replies = Reply::find($flvalue->reply_id);
+					if (isset($replies)) {
+						$title = $replies->reply;
+					}
+				}		
 			}
-			$output_array[$flvalue->thread_id.'_'.$flvalue->reply_id]['thread_id'] = $flvalue->thread_id;
-			$output_array[$flvalue->thread_id.'_'.$flvalue->reply_id]['reply_id'] =  $flvalue->reply_id == 0?'NULL':$flvalue->reply_id;
-			$output_array[$flvalue->thread_id.'_'.$flvalue->reply_id]['payload']  = $flags[$flkey];
-			$output_array[$flvalue->thread_id.'_'.$flvalue->reply_id]['count'] = $this_count;
-			$output_array[$flvalue->thread_id.'_'.$flvalue->reply_id]['title'] = substr($title, 0, 20).'...';
-			$output_array[$flvalue->thread_id.'_'.$flvalue->reply_id]['status'] = Flag::PrepareStatus($flvalue->status);
-			$output_array[$flvalue->thread_id.'_'.$flvalue->reply_id]['created_at'] = date('n/d/Y g:ia',strtotime($flvalue->created_at));
+			$output_array[$flvalue->thread_id.'_'.$flvalue->reply_id.'-'.$quote_id]['thread_id'] = $flvalue->thread_id;
+			$output_array[$flvalue->thread_id.'_'.$flvalue->reply_id.'-'.$quote_id]['reply_id'] =  $flvalue->reply_id == 0?'NULL':$flvalue->reply_id;
+			$output_array[$flvalue->thread_id.'_'.$flvalue->reply_id.'-'.$quote_id]['quote_id'] =  !isset($flvalue->quote_id)?'NULL':$flvalue->quote_id;
+			$output_array[$flvalue->thread_id.'_'.$flvalue->reply_id.'-'.$quote_id]['payload']  = $flags[$flkey];
+			$output_array[$flvalue->thread_id.'_'.$flvalue->reply_id.'-'.$quote_id]['count'] = $this_count;
+			$output_array[$flvalue->thread_id.'_'.$flvalue->reply_id.'-'.$quote_id]['title'] = Job::FilterSpecialCharacters(Job::cleanInput(substr($title, 0, 40).'...'));
+			$output_array[$flvalue->thread_id.'_'.$flvalue->reply_id.'-'.$quote_id]['status'] = Flag::PrepareStatus($flvalue->status);
+			$output_array[$flvalue->thread_id.'_'.$flvalue->reply_id.'-'.$quote_id]['created_at'] = date('n/d/Y g:ia',strtotime($flvalue->created_at));
 		}
 
 		return $output_array;
