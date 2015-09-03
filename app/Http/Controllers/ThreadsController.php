@@ -260,7 +260,7 @@ public function postPostQuote()
                 $quote->status = 1;
                 $quote->quote_id = $this_quote;
                 if ($quote->save()) {
-                    $quote_html = Reply::preparePostedQuote($this_answer,$this_quote);
+                    $quote_html = Reply::preparePostedQuote($this_answer,$this_quote,$this_thread,$quote->id);
                     $status = 200;
                 }
                 $quote_count = count(Reply::where('quote_id',$this_quote)->get());

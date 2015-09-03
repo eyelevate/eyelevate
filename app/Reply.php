@@ -25,7 +25,7 @@ class Reply extends Model
 				$quote_data = date(strtotime($aqvalue->created_at));
 				$time_ago_replies = Job::formatTimeAgo(Job::humanTiming($quote_data));
 
-		        $html .=  '<a  class="list-group-item right-data ind-quotes" expended="0" this_tread="'.$aqvalue->thread_id.'" this_reply="'.$reply_id.'" this_quote="'.$aqvalue->id.'">
+		        $html .=  '<a  class="list-group-item right-data ind-quotes" expended="0" this_quote="'.$aqvalue->id.'">
 				            <span class="message-header"><span class="badge">'.$idx.'</span>
 				              <span class="message-sender" id="">'.$this_replier_username.'</span> <small><span class="quote-details">- '.$time_ago_replies.'</span></small> &nbsp<i class=" quote-flags glyphicon glyphicon-flag"></i>
 				            </br></span>
@@ -88,8 +88,9 @@ class Reply extends Model
 		return $html;
 	}
 
-	static public function 	preparePostedQuote($this_quote,$this_quote_id) {
+	static public function 	preparePostedQuote($this_quote,$this_quote_id,$this_thread,$actual_quote_id) {
 		$html = '';
+		//HERE THIS QUOTE IS ACTUALY REPLY ID
 		$expend_icon = '';
 		if (isset($this_quote)) {
 			$this_user = User::find(Auth::user()->id);
@@ -99,7 +100,7 @@ class Reply extends Model
 			$quote_count = count(Reply::where('quote_id',$this_quote_id)->get());
 			$new_quote_count = $quote_count;
 
-	        $html .=  '<a  class="list-group-item right-data ind-quotes" expended="0">
+	        $html .=  '<a  class="list-group-item right-data ind-quotes" expended="0" this_quote="'.$actual_quote_id.'">
 			            <span class="message-header"><span class="badge">'.$new_quote_count.'</span>
 			              <span class="message-sender" id="">'.$this_username.'</span> <small><span class="quote-details"> - Just now</span></small>
 			            </br></span>
