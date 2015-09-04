@@ -188,16 +188,16 @@
 							</tr>
 						</thead>
 						<tbody>
-						@if(isset($tasks['style']))
-							@foreach($tasks['style'] as $style)
+						@if(isset($tasks['completed']))
+							@foreach($tasks['completed'] as $completed)
 							<tr>
-								<td>{!! $style->id !!}</td>
-								<td>{!! $style->title !!}</td>
-								<td>{!! $style->description !!}</td>
-								<td>{!! $style->created_username !!}</td>
-								<td>{!! $style->assigned_username !!}</td>
-								<td>{!! $style->status !!}</td>
-								<td>{!! $style->created_date !!}</td>
+								<td>{!! $completed->id !!}</td>
+								<td>{!! $completed->title !!}</td>
+								<td>{!! $completed->description !!}</td>
+								<td>{!! $completed->created_username !!}</td>
+								<td>{!! $completed->assigned_username !!}</td>
+								<td>{!! $completed->status !!}</td>
+								<td>{!! $completed->created_date !!}</td>
 								<td>
 									<a href="{!! route('tasks_view',[$style->id]) !!}">View</a>
 									@if($user_id == $style->created_by)
