@@ -44,9 +44,9 @@ class Task extends Model
     		case '2': // In Progress
     			$view = '<span class="label label-info">In Progress</span>';
     		break;
-    		case '3':
-    			$view = '<span class="label label-default">Completed</span>';
-    		break;
+            case '3':
+                $view = '<span class="label label-default">Completed</span>';
+            break;
     	}
     	return $view;
     }

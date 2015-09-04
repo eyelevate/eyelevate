@@ -122,6 +122,7 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 			Route::post('tasks/upload',  ['uses' => 'TasksController@postUpload', 'middleware' => ['acl:'.$prefix.'/tasks/upload']]);
 			Route::get('tasks/view/{id}',  ['as' => 'tasks_view','uses' => 'TasksController@getView', 'middleware' => ['acl:'.$prefix.'/tasks/view'], function ($id) {}]);
 			Route::post('tasks/view',  ['uses' => 'TasksController@postView', 'middleware' => ['acl:'.$prefix.'/tasks/view']]);
+			Route::post('tasks/completed',  ['uses' => 'TasksController@postTaskCompleted', 'middleware' => ['acl:'.$prefix.'/tasks/completed']]);
 
 			Route::get('users/index',  ['as' => 'users_index','uses' => 'AdminsController@getUsersIndex', 'middleware' => ['acl:'.$prefix.'/acl/view']]);
 			Route::get('users/add',  ['as' => 'users_add','uses' => 'AdminsController@getUsersAdd', 'middleware' => ['acl:'.$prefix.'/acl/view']]);

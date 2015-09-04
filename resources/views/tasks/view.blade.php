@@ -3,11 +3,12 @@
 {!! Html::style('/assets/css/tasks/view.css') !!}
 @stop
 @section('scripts')
-<script type="text/javascript" src="/packages/tinymce/js/tinymce/tinymce.min.js"></script>
-<script type="text/javascript" src="/assets/js/tasks/view.js"></script>
+<script src="/packages/tinymce/js/tinymce/tinymce.min.js"></script>
+<script src="/assets/js/tasks/view.js"></script>
 @stop
 
 @section('content')
+	{!! View::make('partials.task_image_modal') !!}
 	<div class="jumbotron">
 		<h1>View Task</h1>
 	</div>
@@ -61,10 +62,9 @@
 						@foreach($task->image_src as $image_src)
 						<div class="col-sm-6 col-md-4">
 							<div class="thumbnail">
-								<img id="imagelightbox" style="max-height:140px; max-width:100%;" src="{!! $image_src->path !!}">
+								<img class="image-url" style="max-height:140px; max-width:100%; " src="{!! $image_src->path !!}">
 								<div class="caption">
-									
-									<button type="button" class="btn btn-default btn-sm">View</button>
+									<button type="button" class="btn btn-default btn-sm view-image">View</button>
 								</div>
 							</div>
 						</div>
@@ -78,14 +78,18 @@
 			<h3 class="panel-title">Task Comments</h3>
 		</div>
 		<ul class="list-group">
+			@if(isset($task_comments))
 
+				{!! $task_comments !!}
+
+			@endif
 			
 		</ul>
 		<div class="panel-body">
 			<hr/>
 		  	<div class="form-group {{ $errors->has('comment') ? 'has-error' : false }}">
 		    	<label class="control-label" for="comment">Add Comment</label>
-		    	{!! Form::textarea('comment', null, array('class'=>'form-control', 'placeholder'=>'Add comment here', 'rows'=>'3','id'=>'comment_textarea')) !!}
+		    	{!! Form::textarea('comment', null, array('class'=>'form-control','id'=>'comment_textarea', 'placeholder'=>'Add comment here', 'rows'=>'3')) !!}
 		        @foreach($errors->get('comment') as $message)
 		            <span class='help-block'>{{ $message }}</span>
 		        @endforeach
@@ -93,8 +97,14 @@
 		</div>
 		<div class="panel-footer clearfix">
 			<a href="{!! route('tasks_index') !!}" class="btn btn-default">Back</a>
-			<input type="submit" class="btn btn-primary pull-right" value="Add Comment"/>
+			<input type="submit" class="btn btn-info pull-right" value="Add Comment"/>
+			{!! Form::close() !!}
+			<a id="task-completed"  class="btn btn-primary " >Task Completed</a>
+			{!! Form::open(array('action' => 'TasksController@postTaskCompleted', 'class'=>'form-horizontal competed-form','role'=>"form")) !!}
+			{!! Form::hidden('task_id2',$task->id) !!}
+			{!! Form::close() !!}
 		</div>
 	</div>
-	{!! Form::close() !!}
+
+	
 @stop
