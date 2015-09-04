@@ -19,24 +19,36 @@ class TaskComment extends Model
     * @return array
     **/
     static public function prepareForView($id) {
-        $task_comments = TaskComment::where('task_id','=',$id)->get();
+        $task_comments = TaskComment::where('task_id',$id)->get();
+        $html = '';
         if($task_comments) {
-        	foreach ($task_comments as $key => $value) {
-	            if(isset($task_comments[$key]['user_id'])) {
-	                $users = User::find($value->user_id);
-	                $task_comments[$key]['username'] = $users->username;
-	            }        		
-				if(isset($task_comments[$key]['comment'])) {
-					$task_comments[$key]['comment'] = json_decode($value->comment);
-				}
-	            if(isset($task_comments['created_at'])) {
-	                $task_comments['created_date'] = date('F n/d/Y g:ia',strtotime($value->created_at));
-	            }
-        	}
+            foreach ($task_comments as $tckey => $tcvalue) {
+                $users = User::find($tcvalue->user_id);
+                $username = $users->username;
 
+                $profile_image = Job::imageValidator($users->profile_image);
 
+                $time_s = date(strtotime($tcvalue['created_at']));
+                $time_ago = Job::formatTimeAgo(Job::humanTiming($time_s));
+
+                
+
+                $html .= '<div class="task-comment-single">
+                            <div class="media">
+                                <div class="media-left">
+                                    <a href="#">
+                                    <img class="media-object" data-src="holder.js/64x64" alt="64x64" src="/assets/images/profile-images/perm/'.$profile_image.'" data-holder-rendered="true" style="width: 64px; height: 64px;">
+                                    </a>
+                                </div>
+                                <div class="media-body">  
+                                    <h5 class="media-heading">'.$username.' - '.$time_ago.'</h5>
+                                    <p class="comment-text">'.json_decode($tcvalue->comment).'</p>
+                                </div>
+                            </div>
+                        </div>';
+            }
         }
-        return $task_comments;
+        return $html;
     }
 
 }

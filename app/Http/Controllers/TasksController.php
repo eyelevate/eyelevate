@@ -166,13 +166,19 @@ class TasksController extends Controller
      */
     public function postView()
     {
+        
+        $task_id = Input::get('task_id');
+        $comment = Input::get('comment');
+        $commenter_id = Auth::user()->id;
 
-        $task = Task::find(Input::get('id'));
-        $task->status = Input::get('status');
+        $task_comment = new TaskComment;
+        $task_comment->task_id = $task_id;
+        $task_comment->comment = json_encode($comment);
+        $task_comment->user_id = $commenter_id;
 
-        if ($task->save()) {
+        if ($task_comment->save()) {
             Flash::success('Successfully Updated');
-            return Redirect::route('tasks_index');
+            return Redirect::back();
         } else {
             Flash::Error('Error');
             return Redirect::back();
