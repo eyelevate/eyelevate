@@ -5,6 +5,7 @@ $(document).ready(function(){
 
 tasks_view = {
     pageLoad: function() {
+
         tinymce.init({
             selector: "#comment_textarea",
             body_id: "editor-body",
