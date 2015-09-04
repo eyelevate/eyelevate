@@ -1,9 +1,7 @@
 $(document).ready(function(){
-	tasks_view.pageLoad();
-	tasks_view.events();
-
+    tasks_view.pageLoad();
+    tasks_view.events();
 });
-tasks_view = {
 
 	pageLoad: function() {
 		$.ajaxSetup({
@@ -21,16 +19,12 @@ tasks_view = {
             statusbar: false,
             resize: false,
             mode: "textareas",
-   			preview_styles: false,
-   			
+            preview_styles: false,
+            
         });
-	},
-	events: function() {
+    },
+    events: function() {
 
-
-	}
-}
-request = {
-
+    }
 };
 

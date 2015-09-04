@@ -1,13 +1,10 @@
 $(document).ready(function(){
-	edit.image_handling();
+	edit.pageLoad();
 	edit.events();
 });
 
 edit = {
-
-	events: function() {
-	},
-	image_handling: function() {
+	pageLoad: function() {
 		$('#fileupload').fileupload({
 			// Uncomment the following to send cross-domain cookies:
 			//xhrFields: {withCredentials: true},
@@ -25,6 +22,8 @@ edit = {
 				}
 			}
 		});
+	},
+	events: function() {
 	}
 };
 

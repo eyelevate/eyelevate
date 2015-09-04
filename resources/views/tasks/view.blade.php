@@ -3,12 +3,9 @@
 {!! Html::style('/assets/css/tasks/view.css') !!}
 @stop
 @section('scripts')
-
-<script src="/packages/ImageLightbox/imagelightbox.min.js"></script>
-<script src="/assets/js/tasks/index.js"></script>
 <script src="/packages/tinymce/js/tinymce/tinymce.min.js"></script>
 <script src="/assets/js/tasks/view.js"></script>
-
+@stop
 
 @section('content')
 	<div class="jumbotron">
@@ -67,7 +64,7 @@
 								<img style="max-height:140px; max-width:100%;" src="{!! $image_src->path !!}">
 								<div class="caption">
 									
-									<button type="button" class="viewImage btn btn-default btn-sm">View</button>
+									<button type="button" class="btn btn-default btn-sm">View</button>
 								</div>
 							</div>
 						</div>
