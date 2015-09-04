@@ -1,6 +1,6 @@
 @extends($layout)
 @section('stylesheets')
-
+  {!! Html::style('/assets/css/admins/flags/view.css') !!}
 @stop
 @section('scripts')
 
@@ -18,7 +18,7 @@
 
   <div class="form-group">
     <label class="control-label">Thread Id: &nbsp&nbsp&nbsp&nbsp</label>
-    <p style="font-size:16px; !important;color:black; display:inline;">{{$comment['id']}}</p>
+    <p style="font-size:16px; !important;color:black; display:inline;" class="cp-p">{{$comment['id']}}</p>
   </div>
 
 
@@ -34,7 +34,7 @@
   </div>
   <div class="form-group">
     <label class="control-label">Description: &nbsp&nbsp&nbsp&nbsp</label>
-    <p style="font-size:16px; !important;color:black;display:inline;">{!!$comment['description']!!}</p>
+    <p style="font-size:16px; !important;color:black;display:inline;">{!!$comment['text']!!}</p>
   </div>
   <div class="form-group">
     <label class="control-label">Status: &nbsp&nbsp&nbsp&nbsp</label>
@@ -58,7 +58,7 @@
 
   <div class="form-group">
     <label class="control-label">Reply Text: &nbsp&nbsp&nbsp&nbsp</label>
-    <p style="font-size:16px; !important;color:black; display:inline;">{!!$comment['reply']!!}</p>
+    <p style="font-size:16px; !important;color:black; display:inline;">{!!$comment['text']!!}</p>
   </div>
 
   <div class="form-group">
@@ -87,7 +87,7 @@
 
   <div class="form-group">
     <label class="control-label">Quote Text: &nbsp&nbsp&nbsp&nbsp</label>
-    <p style="font-size:16px; !important;color:black; display:inline;">{!!$comment['reply']!!}</p>
+    <p style="font-size:16px; !important; display:inline;"class="cp-p">{!!$comment['text']!!}</p>
   </div>
 
   <div class="form-group">
@@ -108,34 +108,36 @@
 <div class="panel panel-default" style="font-size:18px">
     <div class="panel-heading" style="font-weight:900">All Flags (<span style="color:#d9534f">{{$all_flags_count}} flags</span>)</div>
   <div class="panel-body">
-<table class="table table-bordered" >
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Thread Id</th>
-          <th>Reply Id</th>
-          <th>Flagger-User Username</th>
-          <th>Flagged-User Username</th>
-          <th>Reason</th>
-          <th>Details</th>
-          <th>Date</th>
-        </tr>
-      </thead>
-      <tbody>
-      @foreach ($all_flags as $flags)
-        <tr>
-          <th scope="row">{{$flags['id']}}</th>
-          <td>{{$flags['thread_id']}}</td>
-          <td>{{$flags['reply_id']}}</td>
-          <td>{{$flags['flagger_username']}}</td>
-          <td>{{$flags['flagged_username']}}</td>
-          <td>{!!$flags['reason']!!}</td>
-          <td>{{$flags['details']}}</td>
-          <td>{{$flags['date']}}</td>
-        </tr>
-      @endforeach
-      </tbody>
-    </table>
+    <div class="table-responsive">
+      <table class="table table-bordered" >
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Thread Id</th>
+                <th>Reply Id</th>
+                <th>Flagger-User Username</th>
+                <th>Flagged-User Username</th>
+                <th>Reason</th>
+                <th>Details</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+            @foreach ($all_flags as $flags)
+              <tr>
+                <th scope="row">{{$flags['id']}}</th>
+                <td>{{$flags['thread_id']}}</td>
+                <td>{{$flags['reply_id']}}</td>
+                <td>{{$flags['flagger_username']}}</td>
+                <td>{{$flags['flagged_username']}}</td>
+                <td>{!!$flags['reason']!!}</td>
+                <td>{{$flags['details']}}</td>
+                <td>{{$flags['date']}}</td>
+              </tr>
+            @endforeach
+            </tbody>
+          </table>
+           </div>
   </div>
 </div>
 {!! Form::open(array('action' => 'FlagsController@postView', 'class'=>'','permission'=>"form")) !!}
@@ -184,28 +186,30 @@
     <div class="panel-heading" style="font-weight:900">Flag Log</div>
   <div class="panel-body">
     @if(isset($flag_logs))
-    <table class="table table-bordered" >
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Username</th>
-              <th>Flag Status</th>
-              <th>Explanation</th>
-              <th>Date</th>
-            </tr>
-          </thead>
-          <tbody>
-          @foreach ($flag_logs as $flag_log)
-            <tr>
-              <th scope="row">{{$flag_log['id']}}</th>
-              <td>{{$flag_log['username']}}</td>
-              <td>{!!$flag_log['flag_status']!!}</td>
-              <td>{{$flag_log['reason']}}</td>
-              <td>{{$flag_log['date']}}</td>
-            </tr>
-          @endforeach
-          </tbody>
-        </table>
+    <div class="table-responsive">
+      <table class="table table-bordered" >
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Username</th>
+                <th>Flag Status</th>
+                <th>Explanation</th>
+                <th>Date</th>
+              </tr>
+            </thead>
+            <tbody>
+            @foreach ($flag_logs as $flag_log)
+              <tr>
+                <th scope="row">{{$flag_log['id']}}</th>
+                <td>{{$flag_log['username']}}</td>
+                <td>{!!$flag_log['flag_status']!!}</td>
+                <td>{{$flag_log['reason']}}</td>
+                <td>{{$flag_log['date']}}</td>
+              </tr>
+            @endforeach
+            </tbody>
+          </table>
+        </div>
         @endif
   </div>
 </div>

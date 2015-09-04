@@ -55,8 +55,13 @@ class Reply extends Model
 					
 					$is_this_user = Job::IsThisUser($aqvalue->user_id);
 			        $html .=  '<a  class="list-group-item right-data ind-quotes" expended="0" this_quote="'.$aqvalue->id.'">
-					            <span class="message-header"><span class="badge">'.$idx.'</span>
-					            <span class="message-sender" id="">'.$this_replier_username.'</span> <small><span class="quote-details">- '.$time_ago_replies.'</span></small>';
+					            <span class="message-header"><span class="badge">'.$idx.'</span>';
+					            
+					 if ($is_this_user) {
+						$html .= '<span class="message-sender auth-name-color" id="">&nbsp'.$this_replier_username.'</span> <small><span class="quote-details">- '.$time_ago_replies.'</span></small>';
+					 } else {
+						$html .= '<span class="message-sender " id="">&nbsp'.$this_replier_username.'</span> <small><span class="quote-details">- '.$time_ago_replies.'</span></small>';
+					 }
 
 					if ($is_this_user == false) {
 						if ($is_flagging_Banned == false) {
@@ -153,7 +158,7 @@ class Reply extends Model
 
 	        $html .=  '<a  class="list-group-item right-data ind-quotes" expended="0" this_quote="'.$actual_quote_id.'">
 			            <span class="message-header"><span class="badge">'.$new_quote_count.'</span>
-			              <span class="message-sender" id="">'.$this_username.'</span> <small><span class="quote-details"> - Just now</span></small>
+			              <span class="message-sender auth-name-color" id="">'.$this_username.'</span> <small><span class="quote-details"> - Just now</span></small>
 			            </br></span>
 			            <span class="message-body">
 							<p>'.$this_quote.'</p>

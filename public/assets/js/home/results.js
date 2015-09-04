@@ -98,6 +98,18 @@ results = {
 		$(document).on('click','.thumb-up',function(){
 
 		});
+
+		$('#list-search-input').bind('keyup', function(e) {
+		    if (e.which == 13) {
+				var searched_text = $(this).parents('.input-group:first').find('.inpage-search').val();
+				var this_length = searched_text.length;
+				if (!$.isBlank(searched_text) && this_length > 2) {
+					request.inpage_search(searched_text);
+					$('.cat-items').removeClass('act');
+				};
+		    }
+		});
+		
 		//FLAG DOWN CLICKED
 		$(document).on('click','.thumb-down',function(){
 
@@ -108,7 +120,7 @@ results = {
 		});
 		//Reply FLAG CLICKED
 		$(document).on('click','.inpage-search-btn',function(){
-			var searched_text = $(this).parents('.input-group:first').find('.inpage-search').val();
+			var searched_text = $(this).val();
 			var this_length = searched_text.length;
 			if (!$.isBlank(searched_text) && this_length > 2) {
 				request.inpage_search(searched_text);

@@ -20,6 +20,7 @@ use App\Job;
 use App\User;
 use App\Admin;
 use App\Role;
+use App\Flag;
 use App\RoleUser;
 use App\Permission;
 use App\PermissionRole;
@@ -44,8 +45,10 @@ class AdminsController extends Controller
     }
     
     public function getIndex() {
+        $all_flag_count = count(Flag::where('status',1)->get());
         return view('admins.index')
-        ->with('layout',$this->layout);
+        ->with('layout',$this->layout)
+        ->with('all_flag_count',$all_flag_count);
     }
 
     public function getLogin() {

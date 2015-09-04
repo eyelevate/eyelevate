@@ -120,15 +120,18 @@ class FlagsController extends Controller
             $quote_id = $flags->quote_id;
             $comment_output['type'] = 'quote';
             $comment = Reply::find($flags->quote_id);
+            $comment['text'] = Job::cleanInput(json_decode($comment->reply));
             $comment['date'] = date('n/d/Y g:ia',strtotime($comment->created_at));
             $comment['username'] = Job::IdToUsername($comment->user_id);
         } elseif ($reply_id == 0) {
             $comment_output['type'] = 'thread';
             $comment = Thread::find($thread_id);
+            $comment['text'] = Job::cleanInput(json_decode($comment->description));
             $comment['date'] = date('n/d/Y g:ia',strtotime($comment->created_at));
             $comment['username'] = Job::IdToUsername($comment->user_id);
         } else {
             $comment = Reply::find($reply_id);
+            $comment['text'] = Job::cleanInput(json_decode($comment->reply));
             $comment['date'] = date('n/d/Y g:ia',strtotime($comment->created_at));
             $comment['username'] = Job::IdToUsername($comment->user_id);
           } 
