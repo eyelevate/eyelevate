@@ -3,6 +3,7 @@
 
 @stop
 @section('scripts')
+<script src="/packages/ImageLightbox/imagelightbox.min.js"></script>
 <script src="/assets/js/tasks/index.js"></script>
 @stop
 
@@ -63,7 +64,7 @@
 								<img style="max-height:140px; max-width:100%;" src="{!! $image_src->path !!}">
 								<div class="caption">
 									
-									<button type="button" class="btn btn-default btn-sm">View</button>
+									<button type="button" class="viewImage btn btn-default btn-sm">View</button>
 								</div>
 							</div>
 						</div>
