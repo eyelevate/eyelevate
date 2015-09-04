@@ -52,7 +52,7 @@
                 <div class="left_col scroll-view">
 
                     <div class="navbar nav_title" style="border: 0;">
-                        <a href="/search" class="site_title"> <span>Eyelevate - Admin</span></a>
+                        <a href="{!! route('admins_index') !!}" class="site_title"> <span>Eyelevate - Admin</span></a>
                     </div>
                     <div class="clearfix"></div>
 
@@ -93,9 +93,11 @@
                                 </li>
                                 <li class="li-menus"><a><i class="fa fa-wrench"></i> Control Panel <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu" style="display: none">
-                                        <li><a href="{!! route('users_index') !!}">Users</a>
-                                        </li>
                                         <li><a href="{!! route('flags_index') !!}">Flags</a>
+                                        </li>
+                                        <li><a href="{!! route('tasks_index') !!}">Tasks</a>
+                                        </li>
+                                        <li><a href="{!! route('users_index') !!}">Users</a>
                                         </li>
                                     </ul>
                                 </li>
