@@ -9,7 +9,7 @@ tasks_view = {
 		$.ajaxSetup({
 			headers: { 'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content') }
 		});
-		
+
 		tinymce.init({
             selector: "#comment_textarea",
             body_id: "editor-body",
