@@ -1,11 +1,14 @@
 @extends($layout)
 @section('stylesheets')
-
+{!! Html::style('/assets/css/tasks/view.css') !!}
 @stop
 @section('scripts')
+
 <script src="/packages/ImageLightbox/imagelightbox.min.js"></script>
 <script src="/assets/js/tasks/index.js"></script>
-@stop
+<script src="/packages/tinymce/js/tinymce/tinymce.min.js"></script>
+<script src="/assets/js/tasks/view.js"></script>
+
 
 @section('content')
 	<div class="jumbotron">
@@ -79,13 +82,8 @@
 		</div>
 		<ul class="list-group">
 			@if(isset($task_comments))
-				@foreach($task_comments as $tcomment)
-					<li class="list-group-item">
-						<h4>{!! $tcomment->username !!} <small>{!! $tcomment->created_date !!}</small></h4>
-						{!! $tcomment->comment !!}
-					</li>
-				@endforeach
-			@else
+
+				{!! $task_comments !!}
 
 			@endif
 			
@@ -94,7 +92,7 @@
 			<hr/>
 		  	<div class="form-group {{ $errors->has('comment') ? 'has-error' : false }}">
 		    	<label class="control-label" for="comment">Add Comment</label>
-		    	{!! Form::textarea('comment', null, array('class'=>'form-control', 'placeholder'=>'Add comment here', 'rows'=>'3')) !!}
+		    	{!! Form::textarea('comment', null, array('class'=>'form-control','id'=>'comment_textarea', 'placeholder'=>'Add comment here', 'rows'=>'3')) !!}
 		        @foreach($errors->get('comment') as $message)
 		            <span class='help-block'>{{ $message }}</span>
 		        @endforeach
