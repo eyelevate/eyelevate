@@ -54,6 +54,10 @@
                     <i class="glyphicon glyphicon-ban-circle"></i>
                     <span>Cancel</span>
                 </button>
+	            <button type="button" class="btn btn-danger remove hide" imgSrc="">
+	                <i class="glyphicon glyphicon-trash"></i>
+	                <span>Delete</span>
+	            </button>
             {% } %}
         </td>
     </tr>
@@ -162,11 +166,11 @@
 		        </div>
 				<div id="step1_panel" class="panel-body">
 					<!-- The table listing the files available for upload/download -->
-			        <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
+			        <table id="displayImagesTable" role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
 				</div>
 				<div class="panel-footer clearfix">
 					<!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
-			        <div class="row fileupload-buttonbar">
+			        <div class="fileupload-buttonbar">
 			            <div class="col-lg-7">
 			                <!-- The fileinput-button span is used to style the file input field as button -->
 			                <span class="btn btn-success fileinput-button">

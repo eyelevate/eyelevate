@@ -251,29 +251,37 @@ class TasksController extends Controller
             $status = false; // Start status check
             $image_src = Input::get('src');
             $task_id = Input::get('id');
+            $type = Input::get('type');
             $tasks = Task::find($task_id);
-            $imagePath = DIRECTORY_SEPARATOR."assets".DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR."tasks".DIRECTORY_SEPARATOR."*.*";
-            if(isset($tasks->image_src)) {
-                $new_image_src = json_decode($tasks->image_src,true);
-                foreach($new_image_src as $key => $value) {
+            $imagePath = public_path($image_src);
+            switch($type){
+                case 'new_image':
+                @unlink($imagePath);
+                return Response::json(['success'=>true]);
 
-                    if($value['path'] == $image_src) { // Matches in db so remove from the set
-                        unset($new_image_src[$key]); // removes image from array
-                        // remove image from folder
-                        foreach(glob($imagePath) as $file) {
-                            if(is_file($file)) {
-                                @unlink($file);
-                                $status = true; // successfully removed image
-                            }   
-                        }
-                        // update the db with a new 
-                        $tasks->image_src = json_encode($new_image_src);
-                        if($tasks->save()){
-                            return Response::json(['success'=>true]);
+                break;
+
+                default: // Old images already saved in DB
+
+                    if(isset($tasks->image_src)) {
+                        $new_image_src = json_decode($tasks->image_src,true);
+                        foreach($new_image_src as $key => $value) {
+
+                            if($value['path'] == $image_src) { // Matches in db so remove from the set
+                                unset($new_image_src[$key]); // removes image from array
+                                // remove image from folder
+                                 @unlink($imagePath);
+                                // update the db with a new 
+                                $tasks->image_src = json_encode($new_image_src);
+                                if($tasks->save()){
+                                    return Response::json(['success'=>true]);
+                                }
+                            }
                         }
                     }
-                }
+                break;
             }
+
 
             return Response::json(['success'=>false]);
         }
