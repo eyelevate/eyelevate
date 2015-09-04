@@ -11,8 +11,9 @@ blank = {
 		});
 	},
 	events: function() {
-
-
+        $(document).on('click','.blank',function(){
+         
+        });
 	}
 }
 request = {

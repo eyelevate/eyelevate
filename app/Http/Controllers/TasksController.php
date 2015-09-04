@@ -159,6 +159,19 @@ class TasksController extends Controller
             ->with('task',$task)
             ->with('task_comments',$task_comments); 
     } 
+
+
+    public function postTaskCompleted()
+    {
+        $task_id = Input::get('task_id2');
+        $tasks = Task::find($task_id);
+        $tasks->status = 3;
+        $tasks->save();
+
+        return Redirect::route('tasks_index');
+    } 
+
+    
     /**
      * Update Task Request
      *

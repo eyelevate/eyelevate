@@ -8,6 +8,7 @@
 @stop
 
 @section('content')
+	{!! View::make('partials.task_image_modal') !!}
 	<div class="jumbotron">
 		<h1>View Task</h1>
 	</div>
@@ -61,10 +62,9 @@
 						@foreach($task->image_src as $image_src)
 						<div class="col-sm-6 col-md-4">
 							<div class="thumbnail">
-								<img style="max-height:140px; max-width:100%;" src="{!! $image_src->path !!}">
+								<img class="image-url" style="max-height:140px; max-width:100%; " src="{!! $image_src->path !!}">
 								<div class="caption">
-									
-									<button type="button" class="btn btn-default btn-sm">View</button>
+									<button type="button" class="btn btn-default btn-sm view-image">View</button>
 								</div>
 							</div>
 						</div>
@@ -97,8 +97,14 @@
 		</div>
 		<div class="panel-footer clearfix">
 			<a href="{!! route('tasks_index') !!}" class="btn btn-default">Back</a>
-			<input type="submit" class="btn btn-primary pull-right" value="Add Comment"/>
+			<input type="submit" class="btn btn-info pull-right" value="Add Comment"/>
+			{!! Form::close() !!}
+			<a id="task-completed"  class="btn btn-primary " >Task Completed</a>
+			{!! Form::open(array('action' => 'TasksController@postTaskCompleted', 'class'=>'form-horizontal competed-form','role'=>"form")) !!}
+			{!! Form::hidden('task_id2',$task->id) !!}
+			{!! Form::close() !!}
 		</div>
 	</div>
-	{!! Form::close() !!}
+
+	
 @stop

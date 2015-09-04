@@ -14,3 +14,11 @@
 .media-body ol {
 	color:black !important;
 }
+
+.full-screen-modal{
+	    z-index: 10000000;
+	    width: calc(90%);
+}
+#modal-image{
+	width: calc(100%);
+}

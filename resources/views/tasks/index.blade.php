@@ -188,7 +188,25 @@
 							</tr>
 						</thead>
 						<tbody>
-
+						@if(isset($tasks['style']))
+							@foreach($tasks['style'] as $style)
+							<tr>
+								<td>{!! $style->id !!}</td>
+								<td>{!! $style->title !!}</td>
+								<td>{!! $style->description !!}</td>
+								<td>{!! $style->created_username !!}</td>
+								<td>{!! $style->assigned_username !!}</td>
+								<td>{!! $style->status !!}</td>
+								<td>{!! $style->created_date !!}</td>
+								<td>
+									<a href="{!! route('tasks_view',[$style->id]) !!}">View</a>
+									@if($user_id == $style->created_by)
+									<a href="{!! route('tasks_edit',[$style->id]) !!}" >Edit</a>
+									@endif
+								</td>
+							</tr>
+							@endforeach
+						@endif
 						</tbody>
 					</table>
 				</div>
