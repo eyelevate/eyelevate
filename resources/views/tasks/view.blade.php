@@ -3,12 +3,9 @@
 {!! Html::style('/assets/css/tasks/view.css') !!}
 @stop
 @section('scripts')
-
+<script src="/packages/tinymce/js/tinymce/tinymce.min.js"></script>
 <script src="/packages/ImageLightbox/imagelightbox.min.js"></script>
 <script src="/assets/js/tasks/index.js"></script>
-<script src="/packages/tinymce/js/tinymce/tinymce.min.js"></script>
-<script src="/assets/js/tasks/view.js"></script>
-
 
 @section('content')
 	<div class="jumbotron">
