@@ -75,7 +75,7 @@
 
                         <div class="menu_section">
                             <ul class="nav side-menu">
-                                <li class="li-menus"><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
+                                <li class="li-menus"><a class="home-a-tag"><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu" style="display: none">
                                         <li><a href="{!! route('admins_index') !!}">Dashboard</a>
                                         </li>

@@ -280,9 +280,9 @@ results = {
 		});
 	},
 	file_upload: function(){
-		$('#form-submit-btn').change(function () {
-			event.stopPropagation(); // Stop stuff happening
-		    event.preventDefault(); // Totally stop stuff happening
+		$('#form-submit-btn').change(function (e) {
+			e.stopPropagation(); // Stop stuff happening
+		    e.preventDefault(); // Totally stop stuff happening
 
 		    // START A LOADING SPINNER HERE
 

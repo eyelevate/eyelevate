@@ -6,49 +6,54 @@ use App\Thread;
 use App\Reply;
 class Search extends Model
 {
-   	static public function search_function($search_str) {
+	static public function search_function($search_str) {
 
-   		if (isset($search_str)) {
+   		//CLEAR TAGS
+		if (isset($search_str)) {
+			Job::cleanInput($search_str);
+		}
+
+		if (isset($search_str)) {
    			//1ST TIER OF SEARCH |--
-   			$similar_queries_count = count(Thread::where('description','LIKE','%'.$search_str.'%')->whereIn('status', array(1,2,4,5,7))->get());
-   			if ($similar_queries_count > 0) {
-   				$similar_query = Thread::where('description','LIKE','%'.$search_str.'%')->first();
-   				$tier_1_result_id = $similar_query->id;
-   				$results_1 = Thread::find($tier_1_result_id);
-   				$final_product_tier1 = [];
-   				$final_product_tier1[$results_1->id]["id"]=$results_1->id;
-   				$final_product_tier1[$results_1->id]["title"]=implode(' ', array_slice(explode(' ', $results_1->title), 0, 20));
-   				$final_product_tier1[$results_1->id]['reply'] = count(Reply::where('thread_id',$results_1->id)->get());
+			$similar_queries_count = count(Thread::where('description','LIKE','%'.$search_str.'%')->whereIn('status', array(1,2,4,5,7))->get());
+			if ($similar_queries_count > 0) {
+				$similar_query = Thread::where('description','LIKE','%'.$search_str.'%')->first();
+				$tier_1_result_id = $similar_query->id;
+				$results_1 = Thread::find($tier_1_result_id);
+				$final_product_tier1 = [];
+				$final_product_tier1[$results_1->id]["id"]=$results_1->id;
+				$final_product_tier1[$results_1->id]["title"]=implode(' ', array_slice(explode(' ', $results_1->title), 0, 20));
+				$final_product_tier1[$results_1->id]['reply'] = count(Reply::where('thread_id',$results_1->id)->get());
 				if (str_word_count($results_1->title) > 20) {
 					$final_product_tier1[$results_1->id]["title"] .='...';
 				}
-   			}
+			}
 
    			//2ST TIER OF SEARCH |--
 
    			//FORMATING
-   			$search_str_formated =  preg_replace("/[^a-zA-Z0-9]+/", " ", $search_str);
-   			$trimmed = trim($search_str_formated);
-   			$str_lowered = strtolower($trimmed);
-   			$search_str_formated = explode(" ",$str_lowered);
+			$search_str_formated =  preg_replace("/[^a-zA-Z0-9]+/", " ", $search_str);
+			$trimmed = trim($search_str_formated);
+			$str_lowered = strtolower($trimmed);
+			$search_str_formated = explode(" ",$str_lowered);
 
    			//FILTERING
-   			$swear_filtered = array_diff($search_str_formated, Job::swear_keywords());
-   			$pronouns_filtered = array_diff($swear_filtered, Job::pronouns_keywords());
-   			$alphabet_filtered = array_diff($pronouns_filtered, Job::alphabet_keywords());
-   			$numeric_filtered = array_values(array_diff($alphabet_filtered, Job::numeric_keywords()));
-   			$tier_2_result = $numeric_filtered;
+			$swear_filtered = array_diff($search_str_formated, Job::swear_keywords());
+			$pronouns_filtered = array_diff($swear_filtered, Job::pronouns_keywords());
+			$alphabet_filtered = array_diff($pronouns_filtered, Job::alphabet_keywords());
+			$numeric_filtered = array_values(array_diff($alphabet_filtered, Job::numeric_keywords()));
+			$tier_2_result = $numeric_filtered;
 
    			//SEARCHING
    			$counted_results = []; // inst new array for counted results
    			// EMPTY FINALL ARRAY
    			$result_array = [];
-			foreach ($tier_2_result as $key => $value) {
-				$result_count = count(Thread::where('description','LIKE','%'.$value.'%')->whereIn('status', array(1,2,4,5,7))->get());
-				$results_instances = Thread::where('description','LIKE','%'.$value.'%')->whereIn('status', array(1,2,4,5,7))->get();
+   			foreach ($tier_2_result as $key => $value) {
+   				$result_count = count(Thread::where('description','LIKE','%'.$value.'%')->whereIn('status', array(1,2,4,5,7))->get());
+   				$results_instances = Thread::where('description','LIKE','%'.$value.'%')->whereIn('status', array(1,2,4,5,7))->get();
 
-				$result_count_title = count(Thread::where('title','LIKE','%'.$value.'%')->whereIn('status', array(1,2,4,5,7))->get());
-				$results_instances_title = Thread::where('title','LIKE','%'.$value.'%')->whereIn('status', array(1,2,4,5,7))->get();
+   				$result_count_title = count(Thread::where('title','LIKE','%'.$value.'%')->whereIn('status', array(1,2,4,5,7))->get());
+   				$results_instances_title = Thread::where('title','LIKE','%'.$value.'%')->whereIn('status', array(1,2,4,5,7))->get();
 
 
 				$array2 = []; // inst array for ids and search title and desc
@@ -110,57 +115,81 @@ class Search extends Model
 				// Job::dump($final_product_array[$fpkey]->description);
 				$fp_count++;
 			}
-   		}
+		}
    		//TIER 1 SEARCH HAS RESULTS, COMBINE THE ARRAYS
-   		$merge = null;
-   		if (isset($final_product_tier1)) {
-   			$merge = array_replace($final_product_tier1,$final_product);
-   		} elseif(isset($final_product)){
-   			$merge = $final_product;
-   		}
+		$merge = null;
+		if (isset($final_product_tier1)) {
+			$merge = array_replace($final_product_tier1,$final_product);
+		} elseif(isset($final_product)){
+			$merge = $final_product;
+		}
 
-   		$merge_sorted = [];
+		$merge_sorted = [];
    		//SORT MERGE BY NUMBER OF VIEWS
-   		if (!empty($merge)) {
-	   		foreach ($merge as $mekey => $mevalue) {
-	   			$merge_sorted[$mevalue['reply']]['title'] = $mevalue['title'];
-	   			$merge_sorted[$mevalue['reply']]['reply'] = $mevalue['reply'];
-	   			$merge_sorted[$mevalue['reply']]['id'] = $mevalue['id'];
-	   		}
-   		}
-   		krsort($merge_sorted);
+		if (!empty($merge)) {
+			foreach ($merge as $mekey => $mevalue) {
+				$merge_sorted[$mevalue['reply']]['title'] = $mevalue['title'];
+				$merge_sorted[$mevalue['reply']]['reply'] = $mevalue['reply'];
+				$merge_sorted[$mevalue['reply']]['id'] = $mevalue['id'];
+			}
+		}
+		krsort($merge_sorted);
 		return $merge_sorted;
 	}
 
 
 	static public function index_search_function($search_str) {
 
-   		$output_results_1 = [];
-   		$output_results_2 = [];
-   		$output_results_final = [];
+		$output_results_0 = [];
+		$output_results_1 = [];
+		$output_results_2 = [];
+		$output_results_final = [];
+   		//CLEAR TAGS
+		if (isset($search_str)) {
+			Job::cleanInput($search_str);
+		}
+		$search_str = Job::trime_filter($search_str);
+   		//TIER 0 LOOKING IN USERNAMES
+		if (isset($search_str['string'])) {
+			foreach ($search_str['array'] as $ssakey => $ssavalue) {
+				$users_count = count(User::where('username',$ssavalue)->get());
+				if ($users_count > 0) {
+					$users = User::where('username',$ssavalue)->first();
+					$this_users_id = $users->id;
 
-   		$search_str = Job::trime_filter($search_str);
-    		if (isset($search_str['string'])) {
+					//GET THREADS
+					$threads_count = count(Thread::where('user_id',$this_users_id)->get());
+					if ($threads_count > 0) {
+						$this_user_thread = Thread::where('user_id',$this_users_id)->get();
+						foreach ($this_user_thread as $tutkey => $tutvalue) {
+							$output_results_0[$tutvalue->id] = '1';
+						}
+					}
+				}
+			}
+		}
+
+		if (isset($search_str['string'])) {
    			//1ST TIER OF SEARCH |--
-   			$similar_queries_count = count(Thread::where('description','LIKE','%'.$search_str['string'].'%')->whereIn('status', array(1,2,4,5,7))->get());
-   			if ($similar_queries_count > 0) {
-   				$similar_query = Thread::where('description','LIKE','%'.$search_str['string'].'%')->whereIn('status', array(1,2,4,5,7))->get();
-   				foreach ($similar_query as $sq1key => $sq1value) {
-   					$output_results_1[$sq1value->id] = $sq1value->id;
-   				}
-   			}
+			$similar_queries_count = count(Thread::where('description','LIKE','%'.$search_str['string'].'%')->whereIn('status', array(1,2,4,5,7))->get());
+			if ($similar_queries_count > 0) {
+				$similar_query = Thread::where('description','LIKE','%'.$search_str['string'].'%')->whereIn('status', array(1,2,4,5,7))->get();
+				foreach ($similar_query as $sq1key => $sq1value) {
+					$output_results_1[$sq1value->id] = $sq1value->id;
+				}
+			}
    			//1ST TIER OF SEARCH END --|
    			//2ST TIER OF SEARCH |--
-   			$tier_2_result = $search_str['array'];
+			$tier_2_result = $search_str['array'];
    			//SEARCHING
    			$counted_results = []; // inst new array for counted results
    			// EMPTY FINALL ARRAY
    			$result_array = [];
-			foreach ($tier_2_result as $key => $value) {
-				$result_count = count(Thread::where('description','LIKE','%'.$value.'%')->whereIn('status', array(1,2,4,5,7))->get());
-				$results_instances = Thread::where('description','LIKE','%'.$value.'%')->whereIn('status', array(1,2,4,5,7))->get();
-				$result_count_title = count(Thread::where('title','LIKE','%'.$value.'%')->whereIn('status', array(1,2,4,5,7))->get());
-				$results_instances_title = Thread::where('title','LIKE','%'.$value.'%')->whereIn('status', array(1,2,4,5,7))->get();
+   			foreach ($tier_2_result as $key => $value) {
+   				$result_count = count(Thread::where('description','LIKE','%'.$value.'%')->whereIn('status', array(1,2,4,5,7))->get());
+   				$results_instances = Thread::where('description','LIKE','%'.$value.'%')->whereIn('status', array(1,2,4,5,7))->get();
+   				$result_count_title = count(Thread::where('title','LIKE','%'.$value.'%')->whereIn('status', array(1,2,4,5,7))->get());
+   				$results_instances_title = Thread::where('title','LIKE','%'.$value.'%')->whereIn('status', array(1,2,4,5,7))->get();
 				$array2 = []; // inst array for ids and search title and desc
 				if ($results_instances || $results_instances_title) { //check count or empty
 					if ($results_instances) {
@@ -189,18 +218,19 @@ class Search extends Model
 				}
 			}
    		//TIER 1 SEARCH HAS RESULTS, COMBINE THE ARRAYS
-   		$merge = null;
-   		if (!empty($output_results_1)) {
-   			$merge = array_replace($output_results_1,$output_results_2);
-   		} elseif(!empty($output_results_2)){
-   			$merge = $output_results_2;
-   		}
-   		if (isset($merge)) {
-   			arsort($merge);
-   			$merge= array_slice($merge, 0, 4,true);
-   		}
-}
-
+			$merge = null;
+			if (!empty($output_results_0)) {
+				$merge = array_replace($output_results_0,$output_results_1,$output_results_2);
+			} elseif (!empty($output_results_1)) {
+				$merge = array_replace($output_results_1,$output_results_2);
+			} elseif(!empty($output_results_2)){
+				$merge = $output_results_2;
+			}
+			if (isset($merge)) {
+				arsort($merge);
+				$merge= array_slice($merge, 0, 4,true);
+			}
+		}
 		return $merge;
 	}
 }

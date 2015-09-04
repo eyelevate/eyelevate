@@ -9,38 +9,40 @@
 @section('content')
 <div class="panel panel-default">
   <div class="panel-body">
-<table class="table table-bordered" style="font-size:18px">
-      <thead>
-        <tr>
-          <th>Thread Id</th>
-          <th>Reply Id</th>
-          <th>Quote Id</th>
-          <th>Text</th>
-          <th>Flag Count</th>
-          <th>Flag Status</th>
-          <th>Date</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        @foreach ($flags as $flagkey => $flag)
-          @if($flagkey != 'type')
-          <tr>
-            <th scope="row">{{$flag['thread_id']}}</th>
-            <td>{{$flag['reply_id']}}</td>
-            <td>{{$flag['quote_id']}}</td>
-            <td>{{$flag['title']}}</td>
-            <td>{{$flag['count']}}</td>
-            <td>{!!$flag['status']!!}</td>
-            <td>{{$flag['created_at']}}</td>
-            <td>
-              <a href="{!! route('flag_view',$flag['payload']['id']) !!}">View</a>
-            </td>
-          </tr>
-          @endif
-        @endforeach
-      </tbody>
-    </table>
+    <div class="table-responsive">
+      <table class="table table-bordered" style="font-size:18px">
+            <thead>
+              <tr>
+                <th>Thread Id</th>
+                <th>Reply Id</th>
+                <th>Quote Id</th>
+                <th>Text</th>
+                <th>Flag Count</th>
+                <th>Flag Status</th>
+                <th>Date</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              @foreach ($flags as $flagkey => $flag)
+                @if($flagkey != 'type')
+                <tr>
+                  <th scope="row">{{$flag['thread_id']}}</th>
+                  <td>{{$flag['reply_id']}}</td>
+                  <td>{{$flag['quote_id']}}</td>
+                  <td>{{$flag['title']}}</td>
+                  <td>{{$flag['count']}}</td>
+                  <td>{!!$flag['status']!!}</td>
+                  <td>{{$flag['created_at']}}</td>
+                  <td>
+                    <a href="{!! route('flag_view',$flag['payload']['id']) !!}">View</a>
+                  </td>
+                </tr>
+                @endif
+              @endforeach
+            </tbody>
+          </table>
+        </div>
   </div>
   <div class="panel-footer clearfix">
       <a class="btn btn-primary" href="{!! route('flags_index') !!}"> View Flagged </a>

@@ -5,7 +5,14 @@ body.nav-sm .container.body .left_col {
     height: 100%;
     z-index: 200;
 }
-
+.home-a-tag{
+    margin-top: 60px;
+}
+.row{
+    margin-top: 60px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
 body.nav-sm .container.body .right_col {
     padding: 10px 20px;
     margin-left: 70px;

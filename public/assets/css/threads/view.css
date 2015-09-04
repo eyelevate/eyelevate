@@ -41,12 +41,16 @@ font-weight: 400;
 }
 /*==========  FLAGGED PLACEHOLDER  ==========*/
 
-
-
-
-
 .img-border{
-  border: 3px solid #D5D3D3;
+  border: 3px solid rgba(255, 41, 41, 0.4);
+  border-radius: 15px;
+}
+.auth-img-border{
+  border: 3px solid rgba(255, 41, 41, 0.4) !important;
+  border-radius: 15px;
+}
+.auth-name-color{
+   color: #0060B6 !important;
 }
 #right-box-inner{
   width: 100%;
@@ -184,10 +188,10 @@ float: left !important;
 
 .ind-quotes{
   border: none;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #D7D7D7;
   height: 100% !important;
   border-top: none;
-  margin-bottom: 2px;
+  margin-bottom: 0px;
 }
 .ind-quotes:last-child{
   border: none;
