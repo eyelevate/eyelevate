@@ -118,4 +118,32 @@ class Task extends Model
 
     	return $tasks;
     }
+    /**
+    * get prepareForView
+    * @param $id - task id
+    * @return array
+    **/
+    static public function prepareForView($id) {
+        $tasks = Task::find($id);
+        if($tasks) {
+            if(isset($tasks['created_by'])) {
+                $users = User::find($tasks->created_by);
+                $tasks['created_by_username'] = $users->username;
+            }
+            if(isset($tasks['assigned_id'])) {
+                $users = User::find($tasks->assigned_id);
+                $tasks['assigned_username'] = $users->username;
+            }
+            if(isset($tasks['image_src'])) {
+                $tasks['image_src'] = json_decode($tasks->image_src);
+            }
+            if(isset($tasks['status'])) {
+                $tasks['status'] = Task::prepareStatusForView($tasks->status);
+            }
+            if(isset($tasks['created_at'])) {
+                $tasks['created_date'] = date('n/d/Y g:ia',strtotime($tasks->created_at));
+            }
+        }
+        return $tasks;
+    }
 }

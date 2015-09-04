@@ -24,6 +24,7 @@ use App\RoleUser;
 use App\Permission;
 use App\PermissionRole;
 use App\Task;
+use App\TaskComment;
 use App\Helpers\UploadHelper;
 
 
@@ -85,22 +86,22 @@ class TasksController extends Controller
     public function postAdd()
     {
 
-        // $task = new Task;
-        // $task->title = Input::get('title');
-        // $task->description = Input::get('description');
-        // $task->created_by = Auth::user()->id;
-        // $task->type = Input::get('type');
-        // $task->status = 1; // New status
-        // $task->assigned_id = Input::get('assigned_id');
+        $task = new Task;
+        $task->title = Input::get('title');
+        $task->description = Input::get('description');
+        $task->created_by = Auth::user()->id;
+        $task->type = Input::get('type');
+        $task->status = 1; // New status
+        $task->assigned_id = Input::get('assigned_id');
+        $task->image_src = (count(Input::get('files')) > 0) ? json_encode(Input::get('files')) : null;
 
-        // if ($task->save()) {
-        //     Flash::success('Successfully Added Task');
-        //     return Redirect::route('tasks_index');
-        // } else {
-        //     Flash::Error('Error');
-        //     return Redirect::back();
-        // }
-        Job::dump(Input::all());
+        if ($task->save()) {
+            Flash::success('Successfully Added Task');
+            return Redirect::route('tasks_index');
+        } else {
+            Flash::Error('Error');
+            return Redirect::back();
+        }
         
     }  
     /**
@@ -150,11 +151,13 @@ class TasksController extends Controller
      */
     public function getView($id = null)
     {
-        $task = Task::find($id);
+        $task = Task::prepareForView($id);
+        $task_comments = TaskComment::prepareForView($id);
 
         return view('tasks.view')
             ->with('layout',$this->layout)
-            ->with('task',$task); 
+            ->with('task',$task)
+            ->with('task_comments',$task_comments); 
     } 
     /**
      * Update Task Request
@@ -184,25 +187,31 @@ class TasksController extends Controller
     public function postUpload()
     {
 
-        if(Request::ajax()){
-            error_reporting(E_ALL | E_STRICT);
-            $upload_handler = new UploadHandler();
-            $this->layout = '';
-            $path = 'tmp/img';
-            // Loop through the tmp/img folder and move all uploaded images to their respective folders
-            foreach (glob($path.DIRECTORY_SEPARATOR.'*.*') as $file) {
-                $new_dest = 'img/'.$company_id.'/'.strtotime(date('Y-m-d H:i:s')).'-';
-                $new_file_name = str_replace('tmp/img/', $new_dest, $file);
-                if(rename($file, $new_file_name)) {
-                    // Specify the target directory and add forward slash
-                    $thumbs = "tmp/img/thumbnail";
-                    // Loop over all of the files in the folder
-                    foreach(glob($thumbs.DIRECTORY_SEPARATOR."*.*") as $thumb) {
-                        unlink($thumb); // Delete each file through the loop
-                    }                   
-                }
-            }        
-        }
+        error_reporting(E_ALL | E_STRICT);
+        $destinationPath = public_path("assets".DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR."tasks/");
+        $savePath = DIRECTORY_SEPARATOR."assets".DIRECTORY_SEPARATOR."images".DIRECTORY_SEPARATOR."tasks".DIRECTORY_SEPARATOR;
+        // Check if directory is made for this company if not then create a new directory
+        if (!file_exists($destinationPath)) {
+            @mkdir($destinationPath);
+        }    
+        $files = Input::file('files');
+        $fileName = str_random(12).'.jpg';
+
+        // Check image for errors
+
+        // Save image and rename it to new name
+        if(Input::file('files')->move($destinationPath, $fileName)){
+            return Response::json([
+                'success'=>true,
+                'path'=> $savePath.$fileName
+            ]);
+        } else {
+            return Response::json([
+                'success'=>false,
+                'reason'=> 'Error saving image.' 
+            ]);
+        } 
+
         
     }  
 

@@ -14,6 +14,7 @@ return array(
     'AddColumnsToPermissionRoleTable' => $baseDir . '/database/migrations/2015_08_04_062803_add_columns_to_permission_role_table.php',
     'AddColumnsToPermissionsTable' => $baseDir . '/database/migrations/2015_08_04_041353_add_columns_to_permissions_table.php',
     'AddCompanyToUsersTable' => $baseDir . '/database/migrations/2015_07_21_012232_add_company_to_users_table.php',
+    'AddImageSrcToTasksTable' => $baseDir . '/database/migrations/2015_09_03_075402_add_image_src_to_tasks_table.php',
     'AddImgSrcToUsersTable' => $baseDir . '/database/migrations/2015_07_28_080104_add_img_src_to_users_table.php',
     'AddNewColumnToRoleUserTable' => $baseDir . '/database/migrations/2015_08_06_001959_add_new_column_to_role_user_table.php',
     'AddNewColumnsToCategoriesTable' => $baseDir . '/database/migrations/2015_07_28_001334_add_new_columns_to_categories_table.php',
