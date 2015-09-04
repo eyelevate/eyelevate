@@ -3,9 +3,9 @@
 {!! Html::style('/assets/css/tasks/view.css') !!}
 @stop
 @section('scripts')
-<script src="/packages/tinymce/js/tinymce/tinymce.min.js"></script>
-<script src="/packages/ImageLightbox/imagelightbox.min.js"></script>
-<script src="/assets/js/tasks/index.js"></script>
+<script type="text/javascript" src="/packages/tinymce/js/tinymce/tinymce.min.js"></script>
+<script type="text/javascript" src="/assets/js/tasks/view.js"></script>
+@stop
 
 @section('content')
 	<div class="jumbotron">
@@ -61,10 +61,10 @@
 						@foreach($task->image_src as $image_src)
 						<div class="col-sm-6 col-md-4">
 							<div class="thumbnail">
-								<img style="max-height:140px; max-width:100%;" src="{!! $image_src->path !!}">
+								<img id="imagelightbox" style="max-height:140px; max-width:100%;" src="{!! $image_src->path !!}">
 								<div class="caption">
 									
-									<button type="button" class="viewImage btn btn-default btn-sm">View</button>
+									<button type="button" class="btn btn-default btn-sm">View</button>
 								</div>
 							</div>
 						</div>
@@ -78,18 +78,14 @@
 			<h3 class="panel-title">Task Comments</h3>
 		</div>
 		<ul class="list-group">
-			@if(isset($task_comments))
 
-				{!! $task_comments !!}
-
-			@endif
 			
 		</ul>
 		<div class="panel-body">
 			<hr/>
 		  	<div class="form-group {{ $errors->has('comment') ? 'has-error' : false }}">
 		    	<label class="control-label" for="comment">Add Comment</label>
-		    	{!! Form::textarea('comment', null, array('class'=>'form-control','id'=>'comment_textarea', 'placeholder'=>'Add comment here', 'rows'=>'3')) !!}
+		    	{!! Form::textarea('comment', null, array('class'=>'form-control', 'placeholder'=>'Add comment here', 'rows'=>'3','id'=>'comment_textarea')) !!}
 		        @foreach($errors->get('comment') as $message)
 		            <span class='help-block'>{{ $message }}</span>
 		        @endforeach

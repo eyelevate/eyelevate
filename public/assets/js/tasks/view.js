@@ -1,16 +1,11 @@
 $(document).ready(function(){
-	tasks_view.pageLoad();
-	tasks_view.events();
-
+    tasks_view.pageLoad();
+    tasks_view.events();
 });
-tasks_view = {
 
-	pageLoad: function() {
-		$.ajaxSetup({
-			headers: { 'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content') }
-		});
-		
-		tinymce.init({
+tasks_view = {
+    pageLoad: function() {
+        tinymce.init({
             selector: "#comment_textarea",
             body_id: "editor-body",
             elementpath: false,
@@ -21,16 +16,12 @@ tasks_view = {
             statusbar: false,
             resize: false,
             mode: "textareas",
-   			preview_styles: false,
-   			
+            preview_styles: false,
+            
         });
-	},
-	events: function() {
+    },
+    events: function() {
 
-
-	}
-}
-request = {
-
+    }
 };
 
