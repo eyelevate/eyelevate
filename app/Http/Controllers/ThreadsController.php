@@ -46,8 +46,6 @@ class ThreadsController extends Controller
             $this->user_id = Auth::user()->id;
         }
     }
-    
-    
     public function getAdd()
     {
         
@@ -88,6 +86,12 @@ class ThreadsController extends Controller
     {
         $threads  = Thread::find($id);
         $gd_to_go = Thread::CheckThreadStatus($threads->status);
+
+        $session_data = null;
+        if (Session::get('thread_view')) {
+            $session_data = Session::get('thread_view');
+        }
+        Session::forget('thread_view');
         
         if ($gd_to_go == true) {
             //ADD TO THE VIEWS Count
@@ -115,7 +119,16 @@ class ThreadsController extends Controller
             }
             $selects = Thread::PerpareStatusForInput();
             
-            return view('threads.view')->with('layout', $this->layout)->with('threads', $threads)->with('threads_html', $threads_html)->with('this_user_profile_image', $this_user_profile_image)->with('thread_username', $thread_username)->with('status_prepared', $status_prepared)->with('selects', $selects)->with('checked', $checked);
+            return view('threads.view')
+            ->with('layout', $this->layout)
+            ->with('threads', $threads)
+            ->with('session_data', $session_data)
+            ->with('threads_html', $threads_html)
+            ->with('this_user_profile_image', $this_user_profile_image)
+            ->with('thread_username', $thread_username)
+            ->with('status_prepared', $status_prepared)
+            ->with('selects', $selects)
+            ->with('checked', $checked);
         } else {
             Flash::error('This thread is no longer available');
             return Redirect::action('HomeController@postIndex');
@@ -155,8 +168,6 @@ class ThreadsController extends Controller
                     $isself = true;
                 }
             }
-            
-            
             return Response::json(array(
                 'status' => $status,
                 'quotes_html' => $quotes_html,
@@ -177,12 +188,12 @@ class ThreadsController extends Controller
             $this_answer      = Input::get('this_answer');
             $this_thread      = Input::get('this_thread');
             $answer_html = 'Not Authorized';
-            $session_data = ['post_answer'=>$this_answer,'post_quote'=>'','this_thread'=>$this_thread];
 
-            Session::put('thread_view');
+            $session_data = ['post_answer'=>$this_answer,'post_quote'=>'','this_thread'=>$this_thread];
+            Session::put('thread_view',$session_data);
 
             if (Auth::check()) {
-
+                Session::forget('thread_view');
                 $checke_empty_set = Job::CheckEmptySet($this_answer);
                 if ($checke_empty_set == true) {
                     $reply            = new Reply;

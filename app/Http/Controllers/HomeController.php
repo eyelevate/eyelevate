@@ -54,6 +54,7 @@ class HomeController extends Controller
         //FIND SEARCH RESULTS
         $search_query = Job::FilterSpecialCharacters(Input::get('searched-content'));
         $searched_results_html = '';
+        Session::forget('thread_view');
         if (!empty($search_query)) {
             if (strlen($search_query) > 2) {
                 $searched_results_html = '<h4>You searched for : '.$search_query.'</h4> ';

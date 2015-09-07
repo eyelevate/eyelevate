@@ -22,6 +22,7 @@
 @endif
 
 
+
 <div class="outer max-height">
   <div class="container-fluid max-height">
 
@@ -79,10 +80,24 @@
                   <img class="media-object img-border" data-src="holder.js/64x64" alt="64x64" src="/assets/images/profile-images/perm/{{$this_user_profile_image}}" data-holder-rendered="true" style="width: 64px; height: 64px;">
                 </a>
               </div>
-              <div class="media-body">
-                <textarea id="answer_text"></textarea> 
-                <span class="bootstrap-error hide" id="answer-empty">&nbspAnswer field cannot be empty</span>
-              </div>
+
+              @if(isset($session_data))
+               @if(isset($session_data['post_answer']))
+                <div class="media-body">
+                  <textarea id="answer_text">{!!$session_data['post_answer']!!}</textarea> 
+                  <span class="bootstrap-error hide" id="answer-empty">&nbspAnswer field cannot be empty</span>
+                </div>
+               @endif
+              @else
+                <div class="media-body">
+                  <textarea id="answer_text"></textarea> 
+                  <span class="bootstrap-error hide" id="answer-empty">&nbspAnswer field cannot be empty</span>
+                </div>                           
+              @endif
+
+
+
+
             </div>
             <div class="row-fluid clearfix">
               <a class="btn btn-primary pull-right" id="post-answer" this-thread="{{$threads->id}}">Post Answer</a>
