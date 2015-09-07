@@ -26,6 +26,7 @@
 				<li role="presentation"><a href="#tasks-inprocess">In Process</a></li>
 				<li role="presentation"><a href="#tasks-completed">Completed</a></li>
 			</ul>
+			<div id="tasks-wrapper">
 			{!! 
 				View::make('partials.tasks.task_index')
 					->with('type','todo')
@@ -83,7 +84,7 @@
                     ->__toString()
 			!!}
 
-			
+			</div>
 		</div>
 		<div class="panel-footer clearfix">
 			<a href="{!! route('tasks_add') !!}" class="btn btn-primary pull-right">Add Task</a>
