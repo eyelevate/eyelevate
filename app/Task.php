@@ -143,7 +143,9 @@ class Task extends Model
                 $tasks['created_by_username'] = $users->username;
             }
             if(isset($tasks['description'])) {
-                $tasks['description'] = json_decode($tasks['description']);
+                if (json_decode($tasks['description']) == true) {
+                    $tasks['description'] = json_decode($tasks['description']);
+                }
             }
             if(isset($tasks['assigned_id'])) {
                 $users = User::find($tasks->assigned_id);
