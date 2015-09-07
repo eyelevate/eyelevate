@@ -223,10 +223,14 @@
 
 			{!! Form::close() !!}
 			<a id="task-completed"  class="btn btn-primary pull-right" >Task Completed</a>
-			<a class="btn btn-info pull-right" >Task In-Process</a>
+			<a id="task-in-process" class="btn btn-info pull-right" >Task In-Process</a>
 			{!! Form::open(array('action' => 'TasksController@postTaskCompleted', 'class'=>'form-horizontal competed-form','role'=>"form")) !!}
 			{!! Form::hidden('task_id2',$task->id) !!}
 			{!! Form::close() !!}
+			{!! Form::open(array('action' => 'TasksController@postTaskInProcess', 'class'=>'form-horizontal in-process-form','role'=>"form")) !!}
+			{!! Form::hidden('task_id3',$task->id) !!}
+			{!! Form::close() !!}
+
 		</div>
 	</div>
 

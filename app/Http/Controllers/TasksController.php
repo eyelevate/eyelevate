@@ -46,6 +46,9 @@ class TasksController extends Controller
         } 
         View::share('this_username',$this_username);
         View::share('this_user_profile_image',$this_user_profile_image);
+
+        $notif = Job::prepareNotifications();
+        View::share('notif',$notif);
     }    
     /**
      * Display a listing of the resource.
@@ -197,6 +200,15 @@ class TasksController extends Controller
         return Redirect::route('tasks_index');
     } 
 
+    public function postTaskInProcess()
+    {
+        $task_id = Input::get('task_id3');
+        $tasks = Task::find($task_id);
+        $tasks->status = 2;
+        $tasks->save();
+
+        return Redirect::route('tasks_index');
+    } 
     
     /**
      * Update Task Request

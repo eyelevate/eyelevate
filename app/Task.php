@@ -76,9 +76,12 @@ class Task extends Model
     						->where('status','=',1)
     						->orderBy('id', 'desc')
     						->get();
-    	$tasks['completed'] = Task::where('status','=',2)
-    						->orderBy('id', 'desc')
-    						->get();
+        $tasks['completed'] = Task::where('status','=',3)
+                            ->orderBy('id', 'desc')
+                            ->get();
+        $tasks['process'] = Task::where('status','=',2)
+                            ->orderBy('id', 'desc')
+                            ->get();
 
     	// Update array with correct content
 

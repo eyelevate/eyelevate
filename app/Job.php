@@ -32,6 +32,20 @@ class Job extends Model
 		return $output;
 	}
 
+	static public function prepareNotifications() {
+		$notif = [];
+		$notif['isset']=false;
+		$notif['count']=false;
+        $all_t_count = count(Task::where('status',1)
+                        ->where('assigned_id',Auth::user()->id)
+                        ->get());
+        if ($all_t_count > 0) {
+            $notif['isset']=true;
+            $notif['count']=$all_t_count;
+        }
+		return $notif;
+	}
+
 	static public function IdToUsername($id) {
 		$username = '';
 		if(isset($id)) {

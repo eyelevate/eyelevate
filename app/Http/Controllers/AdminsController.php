@@ -21,6 +21,7 @@ use App\User;
 use App\Admin;
 use App\Role;
 use App\Flag;
+use App\Task;
 use App\RoleUser;
 use App\Permission;
 use App\PermissionRole;
@@ -42,13 +43,20 @@ class AdminsController extends Controller
             View::share('this_username',$this_username);
             View::share('this_user_profile_image',$this_user_profile_image);
 
+            $notif = Job::prepareNotifications();
+            View::share('notif',$notif);
+
     }
     
     public function getIndex() {
         $all_flag_count = count(Flag::where('status',1)->get());
+        $all_tasks_count = count(Task::where('status',1)
+                            ->where('assigned_id',Auth::user()->id)
+                            ->get());
         return view('admins.index')
         ->with('layout',$this->layout)
-        ->with('all_flag_count',$all_flag_count);
+        ->with('all_flag_count',$all_flag_count)
+        ->with('all_tasks_count',$all_tasks_count);
     }
 
     public function getLogin() {

@@ -37,7 +37,8 @@ class PermissionsController extends Controller
 
         View::share('this_username',$this_username);
         View::share('this_user_profile_image',$this_user_profile_image);
-
+        $notif = Job::prepareNotifications();
+        View::share('notif',$notif);
     }
 
     public function getIndex()

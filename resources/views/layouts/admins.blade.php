@@ -180,6 +180,9 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    @if($notif['isset'] == true)
+                                        <span class="badge" style="color:#d9534f;background:white">{{$notif['count']}} Task</span>
+                                    @endif
                                     <img src="/assets/images/profile-images/perm/{!!$this_user_profile_image!!}" alt="">{!! $this_username !!}
                                     <span class=" fa fa-angle-down"></span>
                                 </a>

@@ -57,6 +57,9 @@ tasks_view = {
         $(document).on('click','#task-completed',function(){
             $('.competed-form').submit();
         });
+        $(document).on('click','#task-in-process',function(){
+            $('.in-process-form').submit();
+        });
     },
         reindex: function() {
         // next reindex the new incoming images

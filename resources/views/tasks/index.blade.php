@@ -23,6 +23,7 @@
 				<li role="presentation"><a href="#tasks-system">System</a></li>
 				<li role="presentation"><a href="#tasks-style">Style / UX</a></li>
 				<li role="presentation"><a href="#tasks-completed">Completed</a></li>
+				<li role="presentation"><a href="#tasks-process">In Process</a></li>
 			</ul>
 			<div id="tasks-wrapper">
 				<div id="tasks-todo" class="tasks-item table-responsive">
@@ -199,9 +200,46 @@
 								<td>{!! $completed->status !!}</td>
 								<td>{!! $completed->created_date !!}</td>
 								<td>
-									<a href="{!! route('tasks_view',[$style->id]) !!}">View</a>
-									@if($user_id == $style->created_by)
-									<a href="{!! route('tasks_edit',[$style->id]) !!}" >Edit</a>
+									<a href="{!! route('tasks_view',[$completed->id]) !!}">View</a>
+									@if($user_id == $completed->created_by)
+									<a href="{!! route('tasks_edit',[$completed->id]) !!}" >Edit</a>
+									@endif
+								</td>
+							</tr>
+							@endforeach
+						@endif
+						</tbody>
+					</table>
+				</div>
+				<div id="tasks-process" class="tasks-item hide table-responsive">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Id</th>
+								<th>Issue</th>
+								<th>Description</th>
+								<th>Creator</th>
+								<th>Assigned</th>
+								<th>Status</th>
+								<th>Created</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+						@if(isset($tasks['process']))
+							@foreach($tasks['process'] as $process)
+							<tr>
+								<td>{!! $process->id !!}</td>
+								<td>{!! $process->title !!}</td>
+								<td>{!! $process->description !!}</td>
+								<td>{!! $process->created_username !!}</td>
+								<td>{!! $process->assigned_username !!}</td>
+								<td>{!! $process->status !!}</td>
+								<td>{!! $process->created_date !!}</td>
+								<td>
+									<a href="{!! route('tasks_view',[$process->id]) !!}">View</a>
+									@if($user_id == $process->created_by)
+									<a href="{!! route('tasks_edit',[$process->id]) !!}" >Edit</a>
 									@endif
 								</td>
 							</tr>
