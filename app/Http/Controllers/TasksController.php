@@ -102,7 +102,8 @@ class TasksController extends Controller
             if (Mail::send('emails.task_assinged', array(
                 'task_id' => $task->id,
                 'creator' => Auth::user()->username,
-                'title' => $title
+                'title' => $title,
+                'description' => $description,
             ), function($message) use ($user_email)
             {
                 $message->to($user_email);
@@ -204,11 +205,11 @@ class TasksController extends Controller
             'status' => 'Completed',
             'description' => json_decode($tasks->description),
             'creator' => Auth::user()->username,
-            'message1' => 'Task has been completed'
+            'message1' => 'Task has been completed by '.Auth::user()->username.'!'
         ), function($message) use ($user_email)
         {
             $message->to($user_email);
-            $message->subject('Task has been completed by '.Auth::user()->username);
+            $message->subject('Task has been completed by '.Auth::user()->username.'!');
         })) {
             return Redirect::route('tasks_index');
         }
@@ -222,20 +223,17 @@ class TasksController extends Controller
         $tasks->save();
         $users = User::find($tasks->created_by);
         $user_email = $users->email ? $users->email : 'example@example.com';
-
-
-
         if (Mail::send('emails.task_updated', array(
             'task_id' => $task_id,
             'title' => $tasks->title,
             'status' => 'In-Process',
             'description' => json_decode($tasks->description),
             'creator' => Auth::user()->username,
-            'message1' => 'Task was accepted by '.Auth::user()->username.' and is in process'
+            'message1' => 'Task was accepted by '.Auth::user()->username.' and is in process!'
         ), function($message) use ($user_email)
         {
             $message->to($user_email);
-            $message->subject('Task was accepted by '.Auth::user()->username);
+            $message->subject('Task was accepted by '.Auth::user()->username.'!');
         })) {
             return Redirect::route('tasks_index');
         }
