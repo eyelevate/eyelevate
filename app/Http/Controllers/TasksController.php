@@ -137,20 +137,34 @@ class TasksController extends Controller
     public function postEdit()
     {
         $task = Task::find(Input::get('id'));
-        $task->title = Input::get('title');
+        $title = Input::get('title');
+        $task->title = $title;
         $description = Input::get('description');
         $task->description = json_encode($description);
         $task->created_by = Auth::user()->id;
         $task->type = Input::get('type');
-        $task->assigned_id = Input::get('assigned_id');
+        $assigned_id = Input::get('assigned_id');
+        $task->assigned_id = $assigned_id;
         $new_images = Input::get('files');
         if(count($new_images) > 0){
             ksort($new_images);
         }
         $task->image_src = (count($new_images) > 0) ? json_encode($new_images) : null;     
         if ($task->save()) {
-            Flash::success('Successfully Updated Tasks');
-            return Redirect::route('tasks_index');
+            $users = User::find($assigned_id);
+            $user_email = $users->email ? $users->email : 'example@example.com';
+            if (Mail::send('emails.task_assinged', array(
+                'task_id' => $task->id,
+                'creator' => Auth::user()->username,
+                'title' => $title
+            ), function($message) use ($user_email)
+            {
+                $message->to($user_email);
+                $message->subject('Task has been edited '.Auth::user()->username);
+            })) {
+                Flash::success('Successfully Added Task');
+                return Redirect::route('tasks_index');
+            }
         } else {
             Flash::Error('Error');
             return Redirect::back();
