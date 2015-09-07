@@ -196,8 +196,19 @@ class TasksController extends Controller
         $tasks = Task::find($task_id);
         $tasks->status = 3;
         $tasks->save();
-
-        return Redirect::route('tasks_index');
+        $users = User::find($tasks->created_by);
+        $user_email = $users->email ? $users->email : 'example@example.com';
+        if (Mail::send('emails.task_updated', array(
+            'task_id' => $task_id,
+            'creator' => Auth::user()->username,
+            'message1' => 'Task has been completed'
+        ), function($message) use ($user_email)
+        {
+            $message->to($user_email);
+            $message->subject('Task has been completed by '.Auth::user()->username);
+        })) {
+            return Redirect::route('tasks_index');
+        }
     } 
 
     public function postTaskInProcess()
@@ -206,8 +217,19 @@ class TasksController extends Controller
         $tasks = Task::find($task_id);
         $tasks->status = 2;
         $tasks->save();
-
-        return Redirect::route('tasks_index');
+        $users = User::find($tasks->created_by);
+        $user_email = $users->email ? $users->email : 'example@example.com';
+        if (Mail::send('emails.task_updated', array(
+            'task_id' => $task_id,
+            'creator' => Auth::user()->username,
+            'message1' => 'Task was accepted by '.Auth::user()->username.' and is in process'
+        ), function($message) use ($user_email)
+        {
+            $message->to($user_email);
+            $message->subject('Task was accepted by '.Auth::user()->username);
+        })) {
+            return Redirect::route('tasks_index');
+        }
     } 
     
     /**
