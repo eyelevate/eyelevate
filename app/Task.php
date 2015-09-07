@@ -26,7 +26,7 @@ class Task extends Model
     		'1' => 'Critical Bugs',
     		'2' => 'System Related',
     		'3' => 'Style / UX Related',
-    		'4' => 'Improvement',
+    		'4' => 'Improvements',
     		'5' => 'Other'
     	];
     }
@@ -76,10 +76,14 @@ class Task extends Model
     						->where('status','=',1)
     						->orderBy('id', 'desc')
     						->get();
+        $tasks['improvements'] = Task::where('type','=',4)
+                                    ->where('status','=',1)
+                                    ->orderBy('id','desc')
+                                    ->get();
         $tasks['completed'] = Task::where('status','=',3)
                             ->orderBy('id', 'desc')
                             ->get();
-        $tasks['process'] = Task::where('status','=',2)
+        $tasks['inprocess'] = Task::where('status','=',2)
                             ->orderBy('id', 'desc')
                             ->get();
 

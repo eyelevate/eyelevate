@@ -22,233 +22,68 @@
 				<li role="presentation" ><a href="#tasks-critical">Critical Bugs</a></li>
 				<li role="presentation"><a href="#tasks-system">System</a></li>
 				<li role="presentation"><a href="#tasks-style">Style / UX</a></li>
+				<li role="presentation"><a href="#tasks-improvements">Improvements</a></li>
+				<li role="presentation"><a href="#tasks-inprocess">In Process</a></li>
 				<li role="presentation"><a href="#tasks-completed">Completed</a></li>
-				<li role="presentation"><a href="#tasks-process">In Process</a></li>
 			</ul>
-			<div id="tasks-wrapper">
-				<div id="tasks-todo" class="tasks-item table-responsive">
-					<table class="table">
-						<thead>
-							<tr>
-								<th>Id</th>
-								<th>Issue</th>
-								<th>Description</th>
-								<th>Creator</th>
-								<th>Assigned</th>
-								<th>Status</th>
-								<th>Created</th>
-								<th>Action</th>
-							</tr>
-						</thead>
-						<tbody>
-						@if(isset($tasks['todo']))
-							@foreach($tasks['todo'] as $todo)
-							<tr>
-								<td>{!! $todo->id !!}</td>
-								<td>{!! $todo->title !!}</td>
-								<td>{!! $todo->description !!}</td>
-								<td>{!! $todo->created_username !!}</td>
-								<td>{!! $todo->assigned_username !!}</td>
-								<td>{!! $todo->status !!}</td>
-								<td>{!! $todo->created_date !!}</td>
-								<td>
-									<a href="{!! route('tasks_view',[$todo->id]) !!}">View</a>
-									@if($user_id == $todo->created_by)
-									<a href="{!! route('tasks_edit',[$todo->id]) !!}" >Edit</a>
-									@endif
-								</td>
-							</tr>
-							@endforeach
-						@endif
-						</tbody>
-					</table>
-				</div>
-				<div id="tasks-critical" class="tasks-item hide table-responsive">
-					<table class="table">
-						<thead>
-							<tr>
-								<th>Id</th>
-								<th>Issue</th>
-								<th>Description</th>
-								<th>Creator</th>
-								<th>Assigned</th>
-								<th>Status</th>
-								<th>Created</th>
-								<th>Action</th>
-							</tr>
-						</thead>
-						<tbody>
-						@if(isset($tasks['critical']))
-							@foreach($tasks['critical'] as $critical)
-							<tr>
-								<td>{!! $critical->id !!}</td>
-								<td>{!! $critical->title !!}</td>
-								<td>{!! $critical->description !!}</td>
-								<td>{!! $critical->created_username !!}</td>
-								<td>{!! $critical->assigned_username !!}</td>
-								<td>{!! $critical->status !!}</td>
-								<td>{!! $critical->created_date !!}</td>
-								<td>
-									<a href="{!! route('tasks_view',[$critical->id]) !!}">View</a>
-									@if($user_id == $critical->created_by)
-									<a href="{!! route('tasks_edit',[$critical->id]) !!}" >Edit</a>
-									@endif
-								</td>
-							</tr>
-							@endforeach
-						@endif
-						</tbody>
-					</table>
-				</div>
-				<div id="tasks-system" class="tasks-item hide table-responsive">
-					<table class="table">
-						<thead>
-							<tr>
-								<th>Id</th>
-								<th>Issue</th>
-								<th>Description</th>
-								<th>Creator</th>
-								<th>Assigned</th>
-								<th>Status</th>
-								<th>Created</th>
-								<th>Action</th>
-							</tr>
-						</thead>
-						<tbody>
-						@if(isset($tasks['system']))
-							@foreach($tasks['system'] as $system)
-							<tr>
-								<td>{!! $system->id !!}</td>
-								<td>{!! $system->title !!}</td>
-								<td>{!! $system->description !!}</td>
-								<td>{!! $system->created_username !!}</td>
-								<td>{!! $system->assigned_username !!}</td>
-								<td>{!! $system->status !!}</td>
-								<td>{!! $system->created_date !!}</td>
-								<td>
-									<a href="{!! route('tasks_view',[$system->id]) !!}">View</a>
-									@if($user_id == $system->created_by)
-									<a href="{!! route('tasks_edit',[$system->id]) !!}" >Edit</a>
-									@endif
-								</td>
-							</tr>
-							@endforeach
-						@endif
-						</tbody>
-					</table>
-				</div>
-				<div id="tasks-style" class="tasks-item hide table-responsive">
-					<table class="table">
-						<thead>
-							<tr>
-								<th>Id</th>
-								<th>Issue</th>
-								<th>Description</th>
-								<th>Creator</th>
-								<th>Assigned</th>
-								<th>Status</th>
-								<th>Created</th>
-								<th>Action</th>
-							</tr>
-						</thead>
-						<tbody>
-						@if(isset($tasks['style']))
-							@foreach($tasks['style'] as $style)
-							<tr>
-								<td>{!! $style->id !!}</td>
-								<td>{!! $style->title !!}</td>
-								<td>{!! $style->description !!}</td>
-								<td>{!! $style->created_username !!}</td>
-								<td>{!! $style->assigned_username !!}</td>
-								<td>{!! $style->status !!}</td>
-								<td>{!! $style->created_date !!}</td>
-								<td>
-									<a href="{!! route('tasks_view',[$style->id]) !!}">View</a>
-									@if($user_id == $style->created_by)
-									<a href="{!! route('tasks_edit',[$style->id]) !!}" >Edit</a>
-									@endif
-								</td>
-							</tr>
-							@endforeach
-						@endif
-						</tbody>
-					</table>
-				</div>
-				<div id="tasks-completed" class="tasks-item hide table-responsive">
-					<table class="table">
-						<thead>
-							<tr>
-								<th>Id</th>
-								<th>Issue</th>
-								<th>Description</th>
-								<th>Creator</th>
-								<th>Assigned</th>
-								<th>Status</th>
-								<th>Created</th>
-								<th>Action</th>
-							</tr>
-						</thead>
-						<tbody>
-						@if(isset($tasks['completed']))
-							@foreach($tasks['completed'] as $completed)
-							<tr>
-								<td>{!! $completed->id !!}</td>
-								<td>{!! $completed->title !!}</td>
-								<td>{!! $completed->description !!}</td>
-								<td>{!! $completed->created_username !!}</td>
-								<td>{!! $completed->assigned_username !!}</td>
-								<td>{!! $completed->status !!}</td>
-								<td>{!! $completed->created_date !!}</td>
-								<td>
-									<a href="{!! route('tasks_view',[$completed->id]) !!}">View</a>
-									@if($user_id == $completed->created_by)
-									<a href="{!! route('tasks_edit',[$completed->id]) !!}" >Edit</a>
-									@endif
-								</td>
-							</tr>
-							@endforeach
-						@endif
-						</tbody>
-					</table>
-				</div>
-				<div id="tasks-process" class="tasks-item hide table-responsive">
-					<table class="table">
-						<thead>
-							<tr>
-								<th>Id</th>
-								<th>Issue</th>
-								<th>Description</th>
-								<th>Creator</th>
-								<th>Assigned</th>
-								<th>Status</th>
-								<th>Created</th>
-								<th>Action</th>
-							</tr>
-						</thead>
-						<tbody>
-						@if(isset($tasks['process']))
-							@foreach($tasks['process'] as $process)
-							<tr>
-								<td>{!! $process->id !!}</td>
-								<td>{!! $process->title !!}</td>
-								<td>{!! $process->description !!}</td>
-								<td>{!! $process->created_username !!}</td>
-								<td>{!! $process->assigned_username !!}</td>
-								<td>{!! $process->status !!}</td>
-								<td>{!! $process->created_date !!}</td>
-								<td>
-									<a href="{!! route('tasks_view',[$process->id]) !!}">View</a>
-									@if($user_id == $process->created_by)
-									<a href="{!! route('tasks_edit',[$process->id]) !!}" >Edit</a>
-									@endif
-								</td>
-							</tr>
-							@endforeach
-						@endif
-						</tbody>
-					</table>
-				</div>
-			</div>
+			{!! 
+				View::make('partials.tasks.task_index')
+					->with('type','todo')
+					->with('user_id',$user_id)
+					->with('hide','')
+					->with('tasks',$tasks['todo'])
+                    ->__toString()
+            !!}
+            {!! 
+				View::make('partials.tasks.task_index')
+					->with('type','critical')
+					->with('user_id',$user_id)
+					->with('hide','hide')
+					->with('tasks',$tasks['critical'])
+                    ->__toString()
+            !!}
+            {!! 
+				View::make('partials.tasks.task_index')
+					->with('type','system')
+					->with('user_id',$user_id)
+					->with('hide','hide')
+					->with('tasks',$tasks['system'])
+                    ->__toString()
+            !!}
+            {!! 
+				View::make('partials.tasks.task_index')
+					->with('type','style')
+					->with('user_id',$user_id)
+					->with('hide','hide')
+					->with('tasks',$tasks['style'])
+                    ->__toString()
+            !!}
+            {!! 
+				View::make('partials.tasks.task_index')
+					->with('type','improvements')
+					->with('user_id',$user_id)
+					->with('hide','hide')
+					->with('tasks',$tasks['improvements'])
+                    ->__toString()
+            !!}
+            {!! 
+				View::make('partials.tasks.task_index')
+					->with('type','inprocess')
+					->with('user_id',$user_id)
+					->with('hide','hide')
+					->with('tasks',$tasks['inprocess'])
+                    ->__toString()
+            !!}
+            {!! 
+				View::make('partials.tasks.task_index')
+					->with('type','completed')
+					->with('user_id',$user_id)
+					->with('hide','hide')
+					->with('tasks',$tasks['completed'])
+                    ->__toString()
+			!!}
+
+			
 		</div>
 		<div class="panel-footer clearfix">
 			<a href="{!! route('tasks_add') !!}" class="btn btn-primary pull-right">Add Task</a>
