@@ -61,8 +61,7 @@ class Task extends Model
     	// My To DO Tasks
 
     	$tasks['todo'] = Task::where('assigned_id','=',$assigned_id)
-    						->where('status','=',1)
-                            ->where('status','=',4)
+    						->where('status','<=',2)
     						->orderBy('id', 'desc')
     						->get();
     	$tasks['critical'] = Task::where('type','=',1)
