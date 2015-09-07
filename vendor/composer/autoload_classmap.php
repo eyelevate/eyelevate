@@ -9,6 +9,7 @@ return array(
     'AddAgeToUsersTable' => $baseDir . '/database/migrations/2015_07_21_012003_add_age_to_users_table.php',
     'AddAssignedIdToTasksTable' => $baseDir . '/database/migrations/2015_08_28_062934_add_assigned_id_to_tasks_table.php',
     'AddColumnsRolesTable' => $baseDir . '/database/migrations/2015_08_04_035533_add_columns_roles_table.php',
+    'AddColumnsTaskCommentsTable' => $baseDir . '/database/migrations/2015_09_07_023346_add_columns_task_comments_table.php',
     'AddColumnsToFlagLogsTable' => $baseDir . '/database/migrations/2015_09_03_053412_add_columns_to_flag_logs_table.php',
     'AddColumnsToFlagsTable' => $baseDir . '/database/migrations/2015_08_20_021539_add_columns_to_flags_table.php',
     'AddColumnsToPermissionRoleTable' => $baseDir . '/database/migrations/2015_08_04_062803_add_columns_to_permission_role_table.php',

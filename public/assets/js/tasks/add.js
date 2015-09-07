@@ -8,6 +8,23 @@ add = {
 		$.ajaxSetup({
 			headers: { 'X-CSRF-Token' : $('meta[name=csrf-token]').attr('content') }
 		});
+		tinymce.init({
+	            selector: "textarea",
+	            theme: "modern",
+	            plugins: [
+	                "advlist autolink lists link image charmap print preview hr anchor pagebreak",
+	                "searchreplace wordcount visualblocks visualchars code fullscreen",
+	                "insertdatetime media nonbreaking save table contextmenu directionality",
+	                "emoticons template paste textcolor colorpicker textpattern imagetools"
+	            ],
+	            toolbar1: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+	            toolbar2: "print preview media | forecolor backcolor emoticons",
+	            image_advtab: true,
+	            templates: [
+	                {title: 'Test template 1', content: 'Test 1'},
+	                {title: 'Test template 2', content: 'Test 2'}
+	            ]
+	        });
 		$('#fileupload').fileupload({
 			// Uncomment the following to send cross-domain cookies:
 			//xhrFields: {withCredentials: true},
@@ -45,18 +62,14 @@ add = {
 		});
 	},
 	reindex: function() {
-
 		// next reindex the new incoming images
 		$("#imageDiv input").each(function(e) {
 			var image_src = $(this).val();
 			$(this).attr('index',e).attr('name','files['+e+'][path]');
 			$(document).find('#displayImagesTable tbody tr').eq(e).find('.remove').attr('imgSrc',image_src);
 		});
-
 	}
-
 };
-
 requests = {
 	remove_image: function(task_id, src, element, type) {
 		$.post("/admins/tasks/remove",
@@ -71,9 +84,7 @@ requests = {
 			} 
 		});
 	}
-
 }
-
 // Create input
 function create_input(path) {
 	var count = $(document).find('.images').length;

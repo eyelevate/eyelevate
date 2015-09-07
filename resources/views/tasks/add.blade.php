@@ -9,6 +9,7 @@
 <noscript>{!! Html::style('packages/jQuery-File-Upload-9.11.2/css/jquery.fileupload-ui-noscript.css') !!}</noscript>
 @stop
 @section('scripts')
+<script src="/packages/tinymce/js/tinymce/tinymce.min.js"></script>
 <!-- The Templates plugin is included to render the upload/download listings -->
 <script src="//blueimp.github.io/JavaScript-Templates/js/tmpl.min.js"></script>
 <!-- The Load Image plugin is included for the preview images and image resizing functionality -->
@@ -95,7 +96,6 @@
                     <i class="glyphicon glyphicon-trash"></i>
                     <span>Delete</span>
                 </button>
-                <input type="checkbox" name="delete" value="1" class="toggle">
             {% } else { %}
                 <button class="btn btn-warning cancel">
                     <i class="glyphicon glyphicon-ban-circle"></i>
@@ -182,7 +182,6 @@
 			                    <i class="glyphicon glyphicon-ban-circle"></i>
 			                    <span>Cancel upload</span>
 			                </button>
-			                <input type="checkbox" class="toggle">
 			                <!-- The global file processing state -->
 			                <span class="fileupload-process"></span>
 			            </div>

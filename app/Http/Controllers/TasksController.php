@@ -31,9 +31,6 @@ use App\Helpers\UploadHelper;
 
 class TasksController extends Controller
 {
-
-
-
     public function __construct() {
         // Define layout
         $this->layout = 'layouts.admins';
@@ -48,7 +45,6 @@ class TasksController extends Controller
         } 
         View::share('this_username',$this_username);
         View::share('this_user_profile_image',$this_user_profile_image);
-
     }    
     /**
      * Display a listing of the resource.
@@ -63,7 +59,6 @@ class TasksController extends Controller
         ->with('tasks',$setup_tasks)
         ->with('user_id',Auth::user()->id);
     }
-
     /**
      * Adds a task 
      *
@@ -85,16 +80,15 @@ class TasksController extends Controller
      */
     public function postAdd()
     {
-
         $task = new Task;
         $task->title = Input::get('title');
-        $task->description = Input::get('description');
+        $description = Input::get('description');
+        $task->description = json_encode($description);
         $task->created_by = Auth::user()->id;
         $task->type = Input::get('type');
         $task->status = 1; // New status
         $task->assigned_id = Input::get('assigned_id');
         $task->image_src = (count(Input::get('files')) > 0) ? json_encode(Input::get('files')) : null;
-
         if ($task->save()) {
             Flash::success('Successfully Added Task');
             return Redirect::route('tasks_index');
@@ -102,7 +96,6 @@ class TasksController extends Controller
             Flash::Error('Error');
             return Redirect::back();
         }
-        
     }  
     /**
      * /admins/tasks/edit.
@@ -127,10 +120,10 @@ class TasksController extends Controller
      */
     public function postEdit()
     {
-
         $task = Task::find(Input::get('id'));
         $task->title = Input::get('title');
-        $task->description = Input::get('description');
+        $description = Input::get('description');
+        $task->description = json_encode($description);
         $task->created_by = Auth::user()->id;
         $task->type = Input::get('type');
         $task->assigned_id = Input::get('assigned_id');
@@ -138,9 +131,7 @@ class TasksController extends Controller
         if(count($new_images) > 0){
             ksort($new_images);
         }
-        
         $task->image_src = (count($new_images) > 0) ? json_encode($new_images) : null;     
- 
         if ($task->save()) {
             Flash::success('Successfully Updated Tasks');
             return Redirect::route('tasks_index');
@@ -148,7 +139,6 @@ class TasksController extends Controller
             Flash::Error('Error');
             return Redirect::back();
         }
-        
     }  
     /**
      * /admins/tasks/view.
@@ -185,23 +175,32 @@ class TasksController extends Controller
      */
     public function postView()
     {
-        
         $task_id = Input::get('task_id');
         $comment = Input::get('comment');
-        $commenter_id = Auth::user()->id;
+        $images = json_encode(Input::get('files'));
 
-        $task_comment = new TaskComment;
-        $task_comment->task_id = $task_id;
-        $task_comment->comment = json_encode($comment);
-        $task_comment->user_id = $commenter_id;
+        $is_set = Job::CheckEmptySet($comment);
+        if ($is_set == true) {
+            $commenter_id = Auth::user()->id;
+            $task_comment = new TaskComment;
+            $task_comment->task_id = $task_id;
+            $task_comment->comment = json_encode($comment);
+            $task_comment->user_id = $commenter_id;
+            $task_comment->image_src = $images;
 
-        if ($task_comment->save()) {
-            Flash::success('Successfully Updated');
-            return Redirect::back();
+
+            if ($task_comment->save()) {
+                Flash::success('Successfully Updated');
+                return Redirect::back();
+            } else {
+                Flash::Error('Error');
+                return Redirect::back();
+            }
         } else {
-            Flash::Error('Error');
+            Flash::Error('Empty');
             return Redirect::back();
         }
+
         
     } 
     /**
@@ -238,6 +237,11 @@ class TasksController extends Controller
         } 
 
         
+    }  
+    public function postUploadComments()
+    {
+
+   
     }  
 
     /**

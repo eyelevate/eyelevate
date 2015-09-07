@@ -91,8 +91,9 @@ class Task extends Model
 	    				$tasks[$key][$tkey]['title'] = Job::replaceLongTextWithElipses($desired_string_count, $tvalue->title, '...');
 	    			}    			
 	    			if(isset($tasks[$key][$tkey]['description'])) {
-	    				$desired_string_count = 7;
-	    				$tasks[$key][$tkey]['description'] = Job::replaceLongTextWithElipses($desired_string_count, $tvalue->description, '...');
+	    				$desired_string_count = 30;
+                        $text = json_decode($tvalue->description);
+	    				$tasks[$key][$tkey]['description'] = Job::replaceLongTextWithElipses($desired_string_count, $text, '...');
 	    			}
 
 	    			if(isset($tasks[$key][$tkey]['created_by'])) {
@@ -129,6 +130,9 @@ class Task extends Model
             if(isset($tasks['created_by'])) {
                 $users = User::find($tasks->created_by);
                 $tasks['created_by_username'] = $users->username;
+            }
+            if(isset($tasks['description'])) {
+                $tasks['description'] = json_decode($tasks['description']);
             }
             if(isset($tasks['assigned_id'])) {
                 $users = User::find($tasks->assigned_id);

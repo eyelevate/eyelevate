@@ -7,8 +7,10 @@
 {!! Html::style('packages/jQuery-File-Upload-9.11.2/css/jquery.fileupload-ui.css') !!}
 <noscript>{!! Html::style('packages/jQuery-File-Upload-9.11.2/css/jquery.fileupload-noscript.css') !!}</noscript>
 <noscript>{!! Html::style('packages/jQuery-File-Upload-9.11.2/css/jquery.fileupload-ui-noscript.css') !!}</noscript>
+{!! Html::style('/assets/css/tasks/edit.css') !!}
 @stop
 @section('scripts')
+<script src="/packages/tinymce/js/tinymce/tinymce.min.js"></script>
 <!-- The Templates plugin is included to render the upload/download listings -->
 <script src="//blueimp.github.io/JavaScript-Templates/js/tmpl.min.js"></script>
 <!-- The Load Image plugin is included for the preview images and image resizing functionality -->
@@ -182,7 +184,6 @@
 			                    <i class="glyphicon glyphicon-ban-circle"></i>
 			                    <span>Cancel upload</span>
 			                </button>
-			                <input type="checkbox" class="toggle">
 			                <!-- The global file processing state -->
 			                <span class="fileupload-process"></span>
 			            </div>
@@ -203,10 +204,10 @@
 					@foreach($tasks->image_src as $key => $image_src)
 					<div class="existingImagesDiv col-sm-6 col-md-4">
 						<div class="thumbnail">
-							<img style="max-height:140px; max-width:100%;" src="{!! $image_src->path !!}">
+							<img class="image-url" style="max-height:140px; max-width:100%;" src="{!! $image_src->path !!}">
 							<div class="caption clearfix">
-								<button type="button" class="viewImage btn btn-default btn-sm pull-right">View</button>
-								<button type="button" class="removeImage btn btn-danger btn-sm">Delete</button>
+								<button type="button" class="viewImage btn btn-default btn-sm pull-right view-image">View</button>
+								<button type="button" class="removeImage btn btn-danger btn-sm delete-image">Delete</button>
 							</div>
 						</div>
 						{!! Form::hidden('files['.$key.'][path]',$image_src->path, ['class'=>'oldImages','index'=>$key]) !!}
@@ -220,5 +221,6 @@
 			<input type="submit" class="btn btn-primary pull-right" value="Edit Task"/>
 		</div>
 	</div>
+	{!! View::make('partials.task_image_modal') !!}
 	{!! Form::close() !!}
 @stop

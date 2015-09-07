@@ -31,6 +31,9 @@ class TaskComment extends Model
                 $time_s = date(strtotime($tcvalue['created_at']));
                 $time_ago = Job::formatTimeAgo(Job::humanTiming($time_s));
 
+                $images =json_decode($tcvalue->image_src);
+
+
                 
 
                 $html .= '<div class="task-comment-single">
@@ -42,8 +45,21 @@ class TaskComment extends Model
                                 </div>
                                 <div class="media-body">  
                                     <h5 class="media-heading">'.$username.' - '.$time_ago.'</h5>
-                                    <p class="comment-text">'.json_decode($tcvalue->comment).'</p>
-                                </div>
+                                    <p class="comment-text">'.json_decode($tcvalue->comment).'</p>';
+                if (isset($images)) {
+                        foreach ($images as $imkey => $imvalue) {
+                            $html .= '  <div class="col-sm-6 col-md-4">
+                                            <div class="thumbnail">
+                                                <img class="image-url" style="max-height:140px; max-width:100%; " src="'.$imvalue->path.'">
+                                                <div class="caption">
+                                                    <button type="button" class="btn btn-default btn-sm view-image">View</button>
+                                                </div>
+                                            </div>
+                                        </div>';
+                        }
+                    }  
+
+                $html .=     '</div>
                             </div>
                         </div>';
             }
