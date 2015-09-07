@@ -1,5 +1,6 @@
 
 <div id="tasks-{!! $type !!}" class="tasks-item table-responsive {!! $hide !!}">
+	<hr/>
 	<table class="table">
 		<thead>
 			<tr>
