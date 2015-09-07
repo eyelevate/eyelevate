@@ -13,6 +13,7 @@ use URL;
 use Session;
 use Laracasts\Flash\Flash;
 use View;
+use Mail;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -81,17 +82,32 @@ class TasksController extends Controller
     public function postAdd()
     {
         $task = new Task;
+        $title = Input::get('title');
         $task->title = Input::get('title');
-        $description = Input::get('description');
+        $description = $title;
         $task->description = json_encode($description);
         $task->created_by = Auth::user()->id;
         $task->type = Input::get('type');
         $task->status = 1; // New status
-        $task->assigned_id = Input::get('assigned_id');
+        $assigned_id = Input::get('assigned_id');
+        $task->assigned_id = $assigned_id;
         $task->image_src = (count(Input::get('files')) > 0) ? json_encode(Input::get('files')) : null;
+
         if ($task->save()) {
-            Flash::success('Successfully Added Task');
-            return Redirect::route('tasks_index');
+            $users = User::find($assigned_id);
+            $user_email = $users->email ? $users->email : 'example@example.com';
+            if (Mail::send('emails.task_assinged', array(
+                'task_id' => $task->id,
+                'creator' => Auth::user()->username,
+                'title' => $title
+            ), function($message) use ($user_email)
+            {
+                $message->to($user_email);
+                $message->subject('A task has been assigned to you by '.Auth::user()->username);
+            })) {
+                Flash::success('Successfully Added Task');
+                return Redirect::route('tasks_index');
+            }
         } else {
             Flash::Error('Error');
             return Redirect::back();
