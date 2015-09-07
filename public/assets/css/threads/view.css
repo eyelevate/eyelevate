@@ -42,11 +42,11 @@ font-weight: 400;
 /*==========  FLAGGED PLACEHOLDER  ==========*/
 
 .img-border{
-  border: 3px solid rgba(255, 41, 41, 0.4);
+  border: 3px solid rgba(92, 184, 92, 0.77);
   border-radius: 15px;
 }
 .auth-img-border{
-  border: 3px solid rgba(255, 41, 41, 0.4) !important;
+  border: 3px solid rgba(92, 184, 92, 0.77) !important;
   border-radius: 15px;
 }
 .auth-name-color{

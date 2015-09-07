@@ -1,7 +1,7 @@
 
 @extends($layout)
 @section('stylesheets')
-
+{!! Html::style('/assets/css/tasks/index.css') !!}
 @stop
 @section('scripts')
 <script src="/assets/js/tasks/index.js"></script>
@@ -18,13 +18,13 @@
 		</div>
 		<div class="panel-body">
 			<ul id="nav-tasks" class="nav nav-tabs">
-				<li role="presentation" class="active"><a href="#tasks-todo">To Do</a></li>
-				<li role="presentation" ><a href="#tasks-critical">Critical Bugs</a></li>
-				<li role="presentation"><a href="#tasks-system">System</a></li>
-				<li role="presentation"><a href="#tasks-style">Style / UX</a></li>
-				<li role="presentation"><a href="#tasks-improvements">Improvements</a></li>
-				<li role="presentation"><a href="#tasks-inprocess">In Process</a></li>
-				<li role="presentation"><a href="#tasks-completed">Completed</a></li>
+				<li role="presentation" class="active"><a href="#tasks-todo"><span class="badge" style="color: #d9534f">{{$tasks['count']['todo']}}</span> To Do</a></li>
+				<li role="presentation" ><a href="#tasks-critical"><span class="badge" style="color: #d9534f">{{$tasks['count']['critical']}}</span> Critical Bugs</a></li>
+				<li role="presentation"><a href="#tasks-system"><span class="badge" style="color: #d9534f">{{$tasks['count']['system']}}</span> System</a></li>
+				<li role="presentation"><a href="#tasks-style"><span class="badge" style="color: #d9534f">{{$tasks['count']['style']}}</span> Style / UX</a></li>
+				<li role="presentation"><a href="#tasks-improvements"><span class="badge" style="color: #d9534f">{{$tasks['count']['improvements']}}</span> Improvements</a></li>
+				<li role="presentation"><a href="#tasks-inprocess"><span class="badge" style="color: #d9534f">{{$tasks['count']['inprocess']}}</span> In Process</a></li>
+				<li role="presentation"><a href="#tasks-completed"><span class="badge" style="color: #d9534f">{{$tasks['count']['completed']}}</span> Completed</a></li>
 			</ul>
 			<div id="tasks-wrapper">
 			{!! 
