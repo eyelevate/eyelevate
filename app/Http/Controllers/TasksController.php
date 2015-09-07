@@ -87,7 +87,7 @@ class TasksController extends Controller
         $task = new Task;
         $title = Input::get('title');
         $task->title = Input::get('title');
-        $description = $title;
+        $description = Input::get('description');
         $task->description = json_encode($description);
         $task->created_by = Auth::user()->id;
         $task->type = Input::get('type');
@@ -200,6 +200,9 @@ class TasksController extends Controller
         $user_email = $users->email ? $users->email : 'example@example.com';
         if (Mail::send('emails.task_updated', array(
             'task_id' => $task_id,
+            'title' => $tasks->title,
+            'status' => 'Completed',
+            'description' => json_decode($tasks->description),
             'creator' => Auth::user()->username,
             'message1' => 'Task has been completed'
         ), function($message) use ($user_email)
@@ -219,8 +222,14 @@ class TasksController extends Controller
         $tasks->save();
         $users = User::find($tasks->created_by);
         $user_email = $users->email ? $users->email : 'example@example.com';
+
+
+
         if (Mail::send('emails.task_updated', array(
             'task_id' => $task_id,
+            'title' => $tasks->title,
+            'status' => 'In-Process',
+            'description' => json_decode($tasks->description),
             'creator' => Auth::user()->username,
             'message1' => 'Task was accepted by '.Auth::user()->username.' and is in process'
         ), function($message) use ($user_email)
@@ -349,8 +358,6 @@ class TasksController extends Controller
                     }
                 break;
             }
-
-
             return Response::json(['success'=>false]);
         }
     }
