@@ -36,9 +36,13 @@ class Job extends Model
 		$notif = [];
 		$notif['isset']=false;
 		$notif['count']=false;
-        $all_t_count = count(Task::where('status',1)
-                        ->where('assigned_id',Auth::user()->id)
-                        ->get());
+		$all_t_count = 0;
+		
+		if (Auth::check()) {
+	        $all_t_count = count(Task::where('status',1)
+			    ->where('assigned_id',Auth::user()->id)
+			    ->get());
+		}
         if ($all_t_count > 0) {
             $notif['isset']=true;
             $notif['count']=$all_t_count;
