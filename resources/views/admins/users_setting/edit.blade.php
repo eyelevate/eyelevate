@@ -53,7 +53,7 @@
 	        @endforeach
 	  	</div>
   </div>
-  <div class="panel-footer">
+  <div class="panel-footer clearfix">
 		<button class="btn btn-primary pull-right">Update</button>
 		<input type="hidden" name="id" value="{{$users->id}}">
   </div>
