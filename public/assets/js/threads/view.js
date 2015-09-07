@@ -114,6 +114,7 @@ results = {
 
 		//THREAD ICON CLICKED
 		$(document).on('click','.setting-icon',function(){
+
 			request.user_auth();
 		});
 

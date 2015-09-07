@@ -174,10 +174,15 @@ class ThreadsController extends Controller
                 'notify_me' => 0,
                 'user_id' => 0
             );
+            $this_answer      = Input::get('this_answer');
+            $this_thread      = Input::get('this_thread');
             $answer_html = 'Not Authorized';
+            $session_data = ['post_answer'=>$this_answer,'post_quote'=>'','this_thread'=>$this_thread];
+
+            Session::put('thread_view');
+
             if (Auth::check()) {
-                $this_answer      = Input::get('this_answer');
-                $this_thread      = Input::get('this_thread');
+
                 $checke_empty_set = Job::CheckEmptySet($this_answer);
                 if ($checke_empty_set == true) {
                     $reply            = new Reply;
