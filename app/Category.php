@@ -39,6 +39,7 @@ class Category extends Model
 		$count = 0;
 		$new_search_array = [];
 		$eliminate_search = false;
+		$all_empty = true;
 		// $search_results = Search::index_search_function($this_text);
 
 		if (Job::IsEmpty($this_text) == false) {
@@ -60,7 +61,6 @@ class Category extends Model
 
 		if(isset($data) && $eliminate_search == false) {
 			$selected_cat_count = count($data);
-
 			foreach ($threads as $thkey => $thvalue) {
 				$matching_all_cats = false;
 				$compare_count = 0;
@@ -81,6 +81,7 @@ class Category extends Model
 				}
 				if ($compare_count == $selected_cat_count) {
 					$matching_all_cats = true;
+					$all_empty = false;
 				}
 
 				if ($matching_all_cats == true) {
@@ -128,7 +129,7 @@ class Category extends Model
 						    </div>';
 				}
 			}
-			if ($count == 0) {
+			if ($all_empty == true) {
 				$html = Thread::ResultNotFoundFeeback();
 			}
 		} else {
