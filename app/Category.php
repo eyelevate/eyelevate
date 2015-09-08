@@ -57,7 +57,11 @@ class Category extends Model
 		}
 
 		if(isset($data)) {
+			$selected_cat_count = count($data);
+
 			foreach ($threads as $thkey => $thvalue) {
+				$matching_all_cats = false;
+				$compare_count = 0;
 				$matching_items = [];
 				$is_match = false;
 				if (isset($thvalue->categories)) {
@@ -68,12 +72,16 @@ class Category extends Model
 								$is_match = true;
 								$matching_items[$count] = $davalue;
 								$count++;
+								$compare_count++;
 								}
 							}
 						}
 				}
+				if ($compare_count == $selected_cat_count) {
+					$matching_all_cats = true;
+				}
 
-				if ($is_match == true) {
+				if ($matching_all_cats == true) {
 					$this_thread = Thread::find($thvalue->id);
 					$users = User::find($this_thread->user_id);
 					$username = $users->username;
