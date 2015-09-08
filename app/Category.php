@@ -38,6 +38,7 @@ class Category extends Model
 		$html = '';
 		$count = 0;
 		$new_search_array = [];
+		$eliminate_search = false;
 		// $search_results = Search::index_search_function($this_text);
 
 		if (Job::IsEmpty($this_text) == false) {
@@ -50,13 +51,14 @@ class Category extends Model
 					->orderBy($prepare_pre, 'DESC')->whereIn('id', $new_search_array)->get();
 			} else {
 				$html = Thread::ResultNotFoundFeeback();
+				$eliminate_search = true;
 			}
 		} else {
 			$threads = Thread::where('status',1)
 				->orderBy($prepare_pre, 'DESC')->get();
 		}
 
-		if(isset($data)) {
+		if(isset($data) && $eliminate_search == false) {
 			$selected_cat_count = count($data);
 
 			foreach ($threads as $thkey => $thvalue) {
