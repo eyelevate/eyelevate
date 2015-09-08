@@ -15,7 +15,6 @@ class Task extends Model
      * @var string
      */
     protected $table = 'tasks';
-
     /**
     * get TaskTypes
     * @return array
@@ -65,34 +64,42 @@ class Task extends Model
                             ->where('status','<=',2)
                             ->orderBy('id', 'desc')
                             ->get();
+
         $tasks_count['todo'] = count(Task::where('assigned_id','=',$assigned_id)
                             ->where('status','<=',2)
                             ->orderBy('id', 'desc')
                             ->get());
+
         $tasks['critical'] = Task::where('type','=',1)
                             ->where('status','=',1)
                             ->orderBy('id', 'desc')
                             ->get();
+
         $tasks_count['critical'] = count(Task::where('type','=',1)
                             ->where('status','=',1)
                             ->orderBy('id', 'desc')
                             ->get());
+
         $tasks['system'] = Task::where('type','=',2)
                             ->where('status','=',1)
                             ->orderBy('id', 'desc')
                             ->get();
+
         $tasks_count['system'] = count(Task::where('type','=',2)
                             ->where('status','=',1)
                             ->orderBy('id', 'desc')
                             ->get());
+
         $tasks['style'] = Task::where('type','=',3)
                             ->where('status','=',1)
                             ->orderBy('id', 'desc')
                             ->get();
+
         $tasks_count['style'] = count(Task::where('type','=',3)
                             ->where('status','=',1)
                             ->orderBy('id', 'desc')
                             ->get());
+        
         $tasks['improvements'] = Task::where('type','=',4)
                                     ->where('status','=',1)
                                     ->orderBy('id','desc')

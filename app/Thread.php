@@ -162,6 +162,16 @@ class Thread extends Model
 		';
 		return $cat_html;
 	}
+	static public function ResultNotFoundFeeback() {
+		$cat_html = '<h4>Matching query does not exist</h4>';
+		$cat_html .= '<hr><h4>Suggestions:</h4>
+						<ul>
+						  <li>Make sure all categories are chosen correctly</li>
+						  <li>Try Selecting fewer categories</li>
+						</ul> 
+		';
+		return $cat_html;
+	}
 
 	static public function prepareCategoriesAfterSearch($cat,$item_selected) {
 		$cat_html = '';

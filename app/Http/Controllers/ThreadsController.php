@@ -648,23 +648,11 @@ class ThreadsController extends Controller
             }
         }
         //ALL THREADS
-        $prepared_thread       = Thread::prepareThreadForView(Thread::whereIn('status', array(
-            1,
-            2,
-            4,
-            5,
-            7
-        ))->orderBy('created_at', 'DESC')->paginate(10));
-        $prepared_thread_clone = Thread::whereIn('status', array(
-            1,
-            2,
-            4,
-            5,
-            7
-        ))->orderBy('created_at', 'DESC')->paginate(10);
+        $prepared_thread       = Thread::prepareThreadForView(Thread::whereIn('status', array(1,2,4,5,7))
+            ->orderBy('created_at', 'DESC')->paginate(10));
+        $prepared_thread_clone = Thread::whereIn('status', array(1,2,4,5,7))
+        ->orderBy('created_at', 'DESC')->paginate(10);
         $this->layout          = 'layouts.master-layout';
-        $categories_for_select = Category::prepareForSelect(Category::where('status', 1)->get());
-        $categories_for_side   = Category::prepareForSide(Category::where('status', 1)->get());
         
         return Response::json(array(
             'status' => $status,

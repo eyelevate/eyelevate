@@ -76,7 +76,23 @@ class Job extends Model
 		$output = false;
 		if (isset($data)) {
 			if (!empty($data)) {
-				$output = true;
+				if ($data != '') {
+					$output = true;
+				}
+				
+			}
+		}
+		return $output;
+	}
+
+	static public function IsEmpty($data) {
+		$output = true;
+		if (isset($data)) {
+			if (!empty($data)) {
+				if ($data != '') {
+					$output = false;
+				}
+				
 			}
 		}
 		return $output;

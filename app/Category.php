@@ -33,19 +33,30 @@ class Category extends Model
 		}
 		return $categories;
 	}
-	public static function prepareSearchedCat($data,$prepare_pre) {
+	public static function prepareSearchedCat($data,$prepare_pre,$this_text) {
 		$categories = [];
 		$html = '';
 		$count = 0;
-		if(isset($data)) {
-			//ISSUE IS HERE
-			//XXX
-			//WHEN WE SET PAGGINATION NUMBER 
-			//IT ONLY SEARCHES THORUGH FIRS T10 OR 5 DATA FOR SIMMILAR CATEGORIES
-			//WHEREAS IT MUST SEACH THROUGH ALL
-			$threads = Thread::where('status',1)
-			->orderBy($prepare_pre, 'DESC')->get();
+		$new_search_array = [];
+		// $search_results = Search::index_search_function($this_text);
 
+		if (Job::IsEmpty($this_text) == false) {
+			$search_results = Search::index_search_function($this_text);
+			if (Job::IsEmpty($search_results) == false) {
+				foreach ($search_results as $srrkey => $srrvalue) {
+					$new_search_array[$srrkey] = $srrkey;
+				}
+				$threads = Thread::where('status',1)
+					->orderBy($prepare_pre, 'DESC')->whereIn('id', $new_search_array)->get();
+			} else {
+				$html = Thread::ResultNotFoundFeeback();
+			}
+		} else {
+			$threads = Thread::where('status',1)
+				->orderBy($prepare_pre, 'DESC')->get();
+		}
+
+		if(isset($data)) {
 			foreach ($threads as $thkey => $thvalue) {
 				$matching_items = [];
 				$is_match = false;
@@ -107,14 +118,15 @@ class Category extends Model
 						    </div>';
 				}
 			}
+			if ($count == 0) {
+				$html = Thread::ResultNotFoundFeeback();
+			}
 		} else {
-	        $html = Thread::prepareThreadForView(Thread::Where('status',1)
-	            ->orderBy($prepare_pre, 'DESC')
-	            ->paginate(10));
-		}
-		//NO RESULT FOUND
-		if ($html == '') {
-			$html = Thread::prepareCategoriesForFeedback($data);
+			if (isset($threads)) {
+				$html = Thread::prepareThreadForView($threads);
+			} else {
+				$html = Thread::ResultNotFoundFeeback();
+			}
 		}
 		return $html;
 	}

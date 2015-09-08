@@ -23,6 +23,7 @@ use App\Job;
 use App\User;
 use App\Thread;
 use App\Category;
+use App\Search;
 
 class CategoriesController extends Controller
 {
@@ -145,8 +146,13 @@ class CategoriesController extends Controller
             $status = 200;
             $cat_array = Input::get('data');
             $pre = Input::get('pre');
+            $this_text = Input::get('s_text');
             $prepare_pre = Category::preparePre($pre);
-            $prepared_cat_html = Category::prepareSearchedCat($cat_array,$prepare_pre);
+            $isset_text = Job::IsEmpty($this_text);
+
+            $search_results = null;
+            $prepared_cat_html = Category::prepareSearchedCat($cat_array,$prepare_pre,$this_text);
+
             return Response::json(array(
                 'status' => $status,
                 'prepared_cat_html'=>$prepared_cat_html

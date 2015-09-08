@@ -101,22 +101,24 @@ results = {
 
 		$('#list-search-input').bind('keyup', function(e) {
 		    if (e.which == 13) {
-				var searched_text = $(this).parents('.input-group:first').find('.inpage-search').val();
-				var this_length = searched_text.length;
-				if (!$.isBlank(searched_text) && this_length > 2) {
-					request.inpage_search(searched_text);
-					$('.cat-items').removeClass('act');
-				};
+		    	search_selected_group();
+				// var searched_text = $(this).parents('.input-group:first').find('.inpage-search').val();
+				// var this_length = searched_text.length;
+				// if (!$.isBlank(searched_text) && this_length > 2) {
+				// 	request.inpage_search(searched_text);
+				// 	$('.cat-items').removeClass('act');
+				// };
 		    }
 		});
-		//Reply FLAG CLICKED
+
 		$(document).on('click','.inpage-search-btn',function(){
-			var searched_text = $(this).parents('.input-group:first').find('.inpage-search').val();
-			var this_length = searched_text.length;
-			if (!$.isBlank(searched_text) && this_length > 2) {
-				request.inpage_search(searched_text);
-				$('.cat-items').removeClass('act');
-			};
+			search_selected_group();
+			// var searched_text = $(this).parents('.input-group:first').find('.inpage-search').val();
+			// var this_length = searched_text.length;
+			// if (!$.isBlank(searched_text) && this_length > 2) {
+			// 	request.inpage_search(searched_text);
+			// 	$('.cat-items').removeClass('act');
+			// };
 		});
 		
 		//FLAG DOWN CLICKED
@@ -235,14 +237,15 @@ request = {
 		}
 		);
 	},
-	search_cat: function(data,pre) {
+	search_cat: function(data,pre,s_text) {
 	var token = $('meta[name=csrf-token]').attr('content');
 	$.post(
 		'/categories/search-cat',
 		{
 			"_token": token,
 			"data":data,
-			"pre":pre
+			"pre":pre,
+			"s_text":s_text
 		},
 		function(result){
 			var status = result.status;
@@ -319,7 +322,10 @@ function search_selected_group(){
 		});
 		//CHECK THE PREFERENCE
 		var preference = $('.active-li').attr('this-pre');
-		request.search_cat(data,preference);
+
+		//SEARCH TEXT
+		var search_text = $('#list-search-input').val();
+		request.search_cat(data,preference,search_text);
 }
 
 
