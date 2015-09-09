@@ -102,7 +102,7 @@ class TasksController extends Controller
             $users = User::find($assigned_id);
             $user_email = $users->email ? $users->email : 'example@example.com';
             $user_name = $users->username;
-            $w_email = 'pedramkhoshnevis666@yahoo.com';
+            $w_email = 'wondo@eyelevate.com';
 
             if (Mail::send('emails.task_assinged', array(
                 'task_id' => $task->id,
@@ -168,7 +168,7 @@ class TasksController extends Controller
             $users = User::find($assigned_id);
             $user_email = $users->email ? $users->email : 'example@example.com';
             $user_name = $users->username;
-            $w_email = 'pedramkhoshnevis666@yahoo.com';
+            $w_email = 'wondo@eyelevate.com';
             if (Mail::send('emails.task_assinged', array(
                 'task_id' => $task->id,
                 'creator' => Auth::user()->username,
@@ -216,7 +216,7 @@ class TasksController extends Controller
         $users = User::find($tasks->created_by);
         $user_email = $users->email ? $users->email : 'example@example.com';
         $user_name = $users->username;
-        $w_email = 'pedramkhoshnevis666@yahoo.com';
+        $w_email = 'wondo@eyelevate.com';
         if (Mail::send('emails.task_updated', array(
             'task_id' => $task_id,
             'title' => $tasks->title,
@@ -246,7 +246,7 @@ class TasksController extends Controller
         $users = User::find($tasks->created_by);
         $user_email = $users->email ? $users->email : 'example@example.com';
         $user_name = $users->username;
-        $w_email = 'pedramkhoshnevis666@yahoo.com';
+        $w_email = 'wondo@eyelevate.com';
         if (Mail::send('emails.task_updated', array(
             'task_id' => $task_id,
             'title' => $tasks->title,
