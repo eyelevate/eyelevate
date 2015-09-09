@@ -96,18 +96,28 @@ class TasksController extends Controller
         $task->assigned_id = $assigned_id;
         $task->image_src = (count(Input::get('files')) > 0) ? json_encode(Input::get('files')) : null;
 
+        
+
         if ($task->save()) {
             $users = User::find($assigned_id);
             $user_email = $users->email ? $users->email : 'example@example.com';
+            $user_name = $users->username;
+            $w_email = 'wondo@eyelevate.com';
+
             if (Mail::send('emails.task_assinged', array(
                 'task_id' => $task->id,
                 'creator' => Auth::user()->username,
                 'title' => $title,
                 'description' => $description,
-            ), function($message) use ($user_email)
+                'user_name' => $user_name
+            ), function($message) use ($user_email,$w_email,$user_name)
             {
-                $message->to($user_email);
-                $message->subject('A task has been assigned to you by '.Auth::user()->username);
+                if ($user_email==$w_email) {
+                    $message->to($user_email);
+                } else {
+                    $message->to($user_email)->cc($w_email);
+                }
+                $message->subject('A task has been assigned to '.$user_name.' by '.Auth::user()->username);
             })) {
                 Flash::success('Successfully Added Task');
                 return Redirect::route('tasks_index');
@@ -157,13 +167,19 @@ class TasksController extends Controller
         if ($task->save()) {
             $users = User::find($assigned_id);
             $user_email = $users->email ? $users->email : 'example@example.com';
+            $user_name = $users->username;
+            $w_email = 'wondo@eyelevate.com';
             if (Mail::send('emails.task_assinged', array(
                 'task_id' => $task->id,
                 'creator' => Auth::user()->username,
                 'title' => $title
-            ), function($message) use ($user_email)
+            ), function($message) use ($user_email,$user_name,$w_email)
             {
-                $message->to($user_email);
+                if ($user_email==$w_email) {
+                    $message->to($user_email);
+                } else {
+                    $message->to($user_email)->cc($w_email);
+                }
                 $message->subject('Task has been edited '.Auth::user()->username);
             })) {
                 Flash::success('Successfully Added Task');
@@ -199,6 +215,8 @@ class TasksController extends Controller
         $tasks->save();
         $users = User::find($tasks->created_by);
         $user_email = $users->email ? $users->email : 'example@example.com';
+        $user_name = $users->username;
+        $w_email = 'wondo@eyelevate.com';
         if (Mail::send('emails.task_updated', array(
             'task_id' => $task_id,
             'title' => $tasks->title,
@@ -206,9 +224,13 @@ class TasksController extends Controller
             'description' => json_decode($tasks->description),
             'creator' => Auth::user()->username,
             'message1' => 'Task has been completed by '.Auth::user()->username.'!'
-        ), function($message) use ($user_email)
+        ), function($message) use ($user_email,$user_name,$w_email)
         {
-            $message->to($user_email);
+            if ($user_email==$w_email) {
+                $message->to($user_email);
+            } else {
+                $message->to($user_email)->cc($w_email);
+            }
             $message->subject('Task has been completed by '.Auth::user()->username.'!');
         })) {
             return Redirect::route('tasks_index');
@@ -223,6 +245,8 @@ class TasksController extends Controller
         $tasks->save();
         $users = User::find($tasks->created_by);
         $user_email = $users->email ? $users->email : 'example@example.com';
+        $user_name = $users->username;
+        $w_email = 'wondo@eyelevate.com';
         if (Mail::send('emails.task_updated', array(
             'task_id' => $task_id,
             'title' => $tasks->title,
@@ -230,9 +254,13 @@ class TasksController extends Controller
             'description' => json_decode($tasks->description),
             'creator' => Auth::user()->username,
             'message1' => 'Task was accepted by '.Auth::user()->username.' and is in process!'
-        ), function($message) use ($user_email)
+        ), function($message) use ($user_email,$user_name,$w_email)
         {
-            $message->to($user_email);
+            if ($user_email==$w_email) {
+                $message->to($user_email);
+            } else {
+                $message->to($user_email)->cc($w_email);
+            }
             $message->subject('Task was accepted by '.Auth::user()->username.'!');
         })) {
             return Redirect::route('tasks_index');
