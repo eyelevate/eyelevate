@@ -256,10 +256,15 @@ class ThreadsController extends Controller
             $status      = 400;
             $quote_html  = '';
             $quote_count = null;
+
+            $this_answer     = Input::get('this_answer');
+            $this_quote      = Input::get('this_quote');
+            $this_thread     = Input::get('this_thread');
+
+            $session_data = ['post_answer'=>'','post_quote'=>$this_answer,'this_thread'=>$this_thread];
+            Session::put('thread_view',$session_data);
             if (Auth::check()) {
-                $this_answer     = Input::get('this_answer');
-                $this_quote      = Input::get('this_quote');
-                $this_thread     = Input::get('this_thread');
+                Session::forget('thread_view');
                 $check_empty_set = Job::CheckEmptySet($this_answer);
                 if ($check_empty_set == true) {
                     
