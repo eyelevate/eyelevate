@@ -133,7 +133,7 @@ class Task extends Model
 	    			}    			
 	    			if(isset($tasks[$key][$tkey]['description'])) {
 	    				$desired_string_count = 30;
-                        $text = json_decode($tvalue->description);
+                        $text = Job::cleanInput(json_decode($tvalue->description));
                         if ($text == false) {
                             $tasks[$key][$tkey]['description'] = Job::replaceLongTextWithElipses($desired_string_count, $tvalue->description, '...');
                         } else {
