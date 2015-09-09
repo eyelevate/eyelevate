@@ -7,6 +7,7 @@ use Auth;
 use App\Job;
 use App\RoleUser;
 use App\User;
+use App\Project;
 class Task extends Model
 {
     /**
@@ -153,9 +154,12 @@ class Task extends Model
 	    			if(isset($tasks[$key][$tkey]['status'])) {
 	    				$tasks[$key][$tkey]['status'] = Task::prepareStatusForView($tvalue->status);
 	    			}
-	    			if(isset($tasks[$key][$tkey]['created_at'])) {
-	    				$tasks[$key][$tkey]['created_date'] = date('n/d/Y g:ia',strtotime($tvalue->created_at));
-	    			}
+                    if(isset($tasks[$key][$tkey]['created_at'])) {
+                        $tasks[$key][$tkey]['created_date'] = date('n/d/Y g:ia',strtotime($tvalue->created_at));
+                    }
+                    if(isset($tasks[$key][$tkey]['project_id'])) {
+                        $tasks[$key][$tkey]['project_name'] = Project::GetProjectsName($tasks[$key][$tkey]['project_id']);
+                    }
     			}
     			
     		}
@@ -193,6 +197,9 @@ class Task extends Model
             }
             if(isset($tasks['created_at'])) {
                 $tasks['created_date'] = date('n/d/Y g:ia',strtotime($tasks->created_at));
+            }
+            if(isset($tasks['project_id'])) {
+                $tasks['project_name'] = Project::GetProjectsName($tasks['project_id']);
             }
         }
         return $tasks;

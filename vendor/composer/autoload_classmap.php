@@ -22,6 +22,7 @@ return array(
     'AddNewColumnsToFlagsTable' => $baseDir . '/database/migrations/2015_08_20_021424_add_new_columns_to_flags_table.php',
     'AddNewColumnsToRepliesTable' => $baseDir . '/database/migrations/2015_07_30_041940_add_new_columns_to_replies_table.php',
     'AddNotifyFieldsToThreadsTable' => $baseDir . '/database/migrations/2015_07_27_084138_add_notify_fields_to_threads_table.php',
+    'AddProjectidToTasksTable' => $baseDir . '/database/migrations/2015_09_09_040304_add_projectid_to_tasks_table.php',
     'AddTwoFieldsToThreadsTable' => $baseDir . '/database/migrations/2015_07_27_071333_add_two_fields_to_threads_table.php',
     'AddUsernameToUsersTable' => $baseDir . '/database/migrations/2015_07_20_074228_add_username_to_users_table.php',
     'AddViewToThreadsTable' => $baseDir . '/database/migrations/2015_07_27_090914_add_view_to_threads_table.php',

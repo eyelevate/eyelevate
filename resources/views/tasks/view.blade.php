@@ -144,6 +144,12 @@
 				</div>
 			</div>
 			<div class="form-group">
+				<label class="col-sm-2 control-label">Project</label>
+				<div class="col-sm-10">
+					<p class="form-control-static">{!! $task->project_name !!}</p>
+				</div>
+			</div>
+			<div class="form-group">
 				<label class="col-sm-2 control-label">Status</label>
 				<div class="col-sm-10">
 					<p class="form-control-static">{!! $task->status !!}</p>

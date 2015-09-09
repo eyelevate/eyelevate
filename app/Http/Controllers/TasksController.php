@@ -22,6 +22,7 @@ use App\User;
 use App\Admin;
 use App\Role;
 use App\RoleUser;
+use App\Project;
 use App\Permission;
 use App\PermissionRole;
 use App\Task;
@@ -58,6 +59,7 @@ class TasksController extends Controller
     public function getIndex()
     {
         $setup_tasks = Task::getTasksByType(Auth::user()->id);
+
         return view('tasks.index')
         ->with('layout',$this->layout)
         ->with('tasks',$setup_tasks)
@@ -72,10 +74,13 @@ class TasksController extends Controller
     {
         $types = Task::getTaskTypes();
         $approved_administrators = Admin::getApprovedAdmins();
+        $get_projects = Project::PrepareAllProjectForSelect();
+
         return view('tasks.add')
          ->with('layout',$this->layout)
          ->with('types',$types)
-         ->with('admins',$approved_administrators); 
+         ->with('admins',$approved_administrators)
+         ->with('get_projects',$get_projects); 
     }  
     /**
      * Process Task Request
@@ -88,9 +93,12 @@ class TasksController extends Controller
         $title = Input::get('title');
         $task->title = Input::get('title');
         $description = Input::get('description');
+        $project_id = Input::get('project_id');
+
         $task->description = json_encode($description);
         $task->created_by = Auth::user()->id;
         $task->type = Input::get('type');
+        $task->project_id = $project_id;
         $task->status = 1; // New status
         $assigned_id = Input::get('assigned_id');
         $task->assigned_id = $assigned_id;
@@ -137,10 +145,12 @@ class TasksController extends Controller
         $tasks = Task::prepareForView($id);
         $types = Task::getTaskTypes();
         $approved_administrators = Admin::getApprovedAdmins();
+        $get_projects = Project::PrepareAllProjectForSelect();
         return view('tasks.edit')
          ->with('layout',$this->layout)
          ->with('tasks',$tasks)
          ->with('types',$types)
+         ->with('get_projects',$get_projects)
          ->with('admins',$approved_administrators); 
     } 
     /**
@@ -154,9 +164,11 @@ class TasksController extends Controller
         $title = Input::get('title');
         $task->title = $title;
         $description = Input::get('description');
+        $project = Input::get('project_id');
         $task->description = json_encode($description);
         $task->created_by = Auth::user()->id;
         $task->type = Input::get('type');
+        $task->project_id = $project;
         $assigned_id = Input::get('assigned_id');
         $task->assigned_id = $assigned_id;
         $new_images = Input::get('files');
@@ -172,7 +184,9 @@ class TasksController extends Controller
             if (Mail::send('emails.task_assinged', array(
                 'task_id' => $task->id,
                 'creator' => Auth::user()->username,
-                'title' => $title
+                'title' => $title,
+                'description'=>$description,
+                'user_name'=>$user_name
             ), function($message) use ($user_email,$user_name,$w_email)
             {
                 if ($user_email==$w_email) {

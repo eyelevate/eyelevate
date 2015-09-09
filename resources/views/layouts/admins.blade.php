@@ -95,6 +95,8 @@
                                     <ul class="nav child_menu" style="display: none">
                                         <li><a href="{!! route('flags_index') !!}">Flags</a>
                                         </li>
+                                        <li><a href="{!! route('projects_index') !!}">Projects</a>
+                                        </li>
                                         <li><a href="{!! route('tasks_index') !!}">Tasks</a>
                                         </li>
                                         <li><a href="{!! route('users_index') !!}">Users</a>

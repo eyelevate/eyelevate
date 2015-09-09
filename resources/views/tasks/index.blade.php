@@ -14,7 +14,7 @@
 
 	<div class="panel panel-default">
 		<div class="panel-heading">
-			<h3 class="panel-title">Panel title</h3>
+			<h3 class="panel-title">Tasks</h3>
 		</div>
 		<div class="panel-body">
 			<ul id="nav-tasks" class="nav nav-tabs">

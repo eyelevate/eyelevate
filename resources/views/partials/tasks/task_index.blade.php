@@ -9,6 +9,7 @@
 				<th>Description</th>
 				<th>Creator</th>
 				<th>Assigned</th>
+				<th>Project</th>
 				<th>Status</th>
 				<th>Created</th>
 				<th>Action</th>
@@ -23,6 +24,7 @@
 				<td>{!! $t->description !!}</td>
 				<td>{!! $t->created_username !!}</td>
 				<td>{!! $t->assigned_username !!}</td>
+				<td>{!! $t->project_name !!}</td>
 				<td>{!! $t->status !!}</td>
 				<td>{!! $t->created_date !!}</td>
 				<td>

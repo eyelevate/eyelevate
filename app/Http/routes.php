@@ -113,6 +113,17 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 			Route::get('categories/edit',  ['as'=>'category_edit','uses' => 'CategoriesController@getEdit', 'middleware' => ['acl:'.$prefix.'/categories/edit']]);
 			Route::post('categories/edit',  ['uses' => 'CategoriesController@postEdit', 'middleware' => ['acl:'.$prefix.'/categories/edit']]);
 
+			Route::get('projects',  ['as' => 'projects_index','uses' => 'ProjectsController@getIndex', 'middleware' => ['acl:'.$prefix.'/projects']]);
+			Route::get('projects/add',  ['as' => 'projects_add','uses' => 'ProjectsController@getAdd', 'middleware' => ['acl:'.$prefix.'/projects/add']]);
+			Route::post('projects/add',  ['uses' => 'ProjectsController@postAdd', 'middleware' => ['acl:'.$prefix.'/projects/add']]);
+			Route::get('projects/edit/{id}',  ['as' => 'projects_edit','uses' => 'ProjectsController@getEdit', 'middleware' => ['acl:'.$prefix.'/projects/edit'], function ($id) {}]);
+			Route::post('projects/edit',  ['uses' => 'ProjectsController@postEdit', 'middleware' => ['acl:'.$prefix.'/projects/edit']]);
+			Route::get('projects/view/{id}',  ['as' => 'projects_view','uses' => 'ProjectsController@getView', 'middleware' => ['acl:'.$prefix.'/projects/view'], function ($id) {}]);
+			Route::post('projects/view',  ['uses' => 'ProjectsController@postView', 'middleware' => ['acl:'.$prefix.'/projects/view']]);
+
+			Route::post('projects/delete',  ['uses' => 'ProjectsController@postDelete', 'middleware' => ['acl:'.$prefix.'/projects/delete']]);
+
+
 			Route::get('tasks',  ['as' => 'tasks_index','uses' => 'TasksController@getIndex', 'middleware' => ['acl:'.$prefix.'/tasks']]);
 			Route::get('tasks/add',  ['as' => 'tasks_add','uses' => 'TasksController@getAdd', 'middleware' => ['acl:'.$prefix.'/tasks/add']]);
 			Route::post('tasks/add',  ['uses' => 'TasksController@postAdd', 'middleware' => ['acl:'.$prefix.'/tasks/add']]);

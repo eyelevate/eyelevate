@@ -136,6 +136,13 @@
 		            <span class='help-block'>{{ $message }}</span>
 		        @endforeach
 		  	</div>
+	  		<div class="form-group {{ $errors->has('project_id') ? 'has-error' : false }}">
+		    	<label class="control-label" for="role_id">Project Name</label>
+		    	{!! Form::select('project_id', $get_projects, $tasks->project_id ,array('class'=>'form-control')) !!}
+		        @foreach($errors->get('project_id') as $message)
+		            <span class='help-block'>{{ $message }}</span>
+		        @endforeach
+		  	</div>
 	  		<div class="form-group {{ $errors->has('type') ? 'has-error' : false }}">
 		    	<label class="control-label" for="role_id">Task Type</label>
 		    	{!! Form::select('type', $types, $tasks->type ,array('class'=>'form-control')) !!}
