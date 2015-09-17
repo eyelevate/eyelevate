@@ -190,7 +190,7 @@ class Task extends Model
                 $tasks['assigned_username'] = $users->username;
             }
             if(isset($tasks['image_src'])) {
-                $tasks['image_src'] = json_decode($tasks->image_src);
+                $tasks['image_src'] = (isset($tasks->image_src)) ? json_decode($tasks->image_src) : null;
             }
             if(isset($tasks['status'])) {
                 $tasks['status'] = Task::prepareStatusForView($tasks->status);
