@@ -27,6 +27,17 @@ results = {
             resize: false,
             mode: "textareas",
    			preview_styles: false,
+		    setup: function(editor) {
+		        editor.on('focus', function(e) {
+
+		        	var max_width = parseInt($('#phone_detector').css('max-width'));
+
+					if (max_width < 481) {
+						$("#right-box-inner").animate({ scrollTop: $('document').height()}, 1000);
+					};
+		        	
+		        });
+		    }
    			
         });
 		tinymce.init({
@@ -431,7 +442,7 @@ request = {
 	},
 	retrieve_quotes: function(_this_reply) {
 	var token = $('meta[name=csrf-token]').attr('content');
-	$('#loading-icons-1').removeClass('hide');
+	// $('#loading-icons-1').removeClass('hide');
 	$('#quote-container').html('');
 	$.post(
 		'/threads/retrieve-quotes',
@@ -444,7 +455,7 @@ request = {
 			var html = result.quotes_html;
 			var reply_username = result.reply_username;
 			var isself = result.isself;
-			$('#loading-icons-1').addClass('hide');
+			// $('#loading-icons-1').addClass('hide');
 
 			if (isself == true) {
 				$('#quote-text').text('Respond');

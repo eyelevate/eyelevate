@@ -47,10 +47,19 @@
           </div>
           @if($status_prepared != 2)
             <div id="panel-footer-sidebar" class="panel-footer object-fixed-for-keyboard clearfix">
-              <textarea placeholder="add response here ..."
-              id="quote_text" cols="1"
-              class="ui-autocomplete-input editor col-lg-12" autocomplete="off" role="textbox"
-              aria-autocomplete="list" aria-haspopup="true"></textarea>   
+              @if(isset($session_data))
+               @if(isset($session_data['post_quote']))
+                <textarea placeholder="add response here ..."
+                  id="quote_text" cols="1"
+                  class="ui-autocomplete-input editor col-lg-12" autocomplete="off" role="textbox"
+                  aria-autocomplete="list" aria-haspopup="true">{!!$session_data['post_quote']!!}</textarea> 
+               @endif
+              @else
+                <textarea placeholder="add response here ..."
+                id="quote_text" cols="1"
+                class="ui-autocomplete-input editor col-lg-12" autocomplete="off" role="textbox"
+                aria-autocomplete="list" aria-haspopup="true"></textarea>           
+              @endif
               <div id="panel-footer-sidebar-inner-wrapper" class="cleafix">
                 <div class="btn-group btn-group-md col-md-12 col-sm-12 col-xs-12" role="group" id="btn-group-quote">
                   <button type="button" class="btn btn-info col-md-6 col-sm-6 col-xs-6" id="btn-preview">Preview</button>

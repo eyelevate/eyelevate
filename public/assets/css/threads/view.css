@@ -50,7 +50,7 @@ font-weight: 400;
   border-radius: 15px;
 }
 .auth-name-color{
-   color: #0060B6 !important;
+   color: rgb(57, 151, 57) !important;
 }
 #right-box-inner{
   width: 100%;
@@ -1064,6 +1064,12 @@ textarea{
       #phone_detector{
         max-width: 480px;
       }
+      #wrapper {
+          margin-top: 48px !important;
+      }
+      #right-box-inner { 
+        height: calc(100%);
+
     }
 
     /* Custom, iPhone Retina */ 
@@ -1071,7 +1077,7 @@ textarea{
       #phone_detector{
         max-width: 320px;
       }
-    }
+    }      
 
 @media only screen and (max-width : 480px) and (max-height: 736px){
 
