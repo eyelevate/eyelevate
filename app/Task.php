@@ -189,8 +189,8 @@ class Task extends Model
                 }
             }
             if(isset($tasks['assigned_id'])) {
-                $users = User::find($tasks->assigned_id);
-                $tasks['assigned_username'] = ($users->username) ? $users->username : null;
+                $users = (isset($tasks['assigned_id'])) ? User::find($tasks->assigned_id) : false;
+                $tasks['assigned_username'] = ($users) ? $users->username : null;
             }
             if(isset($tasks['image_src'])) {
                 $tasks['image_src'] = (json_decode($tasks->image_src)) ? json_decode($tasks->image_src) : $tasks->image_src;
