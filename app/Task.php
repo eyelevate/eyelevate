@@ -201,6 +201,7 @@ class Task extends Model
             if(isset($tasks['project_id'])) {
                 $tasks['project_name'] = Project::GetProjectsName($tasks['project_id']);
             }
+            Job::dump($tasks['image_src']);
         }
         return $tasks;
     }
