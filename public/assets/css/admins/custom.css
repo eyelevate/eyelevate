@@ -701,7 +701,7 @@ a:focus {
     padding-left: 36px
 }
 
-body.nav-md ul.nav.child_menu li:before {
+body.nav-md ul.nav.child_menu .navLi:before {
     background: #425668;
     bottom: auto;
     content: "";

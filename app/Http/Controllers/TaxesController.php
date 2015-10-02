@@ -57,7 +57,7 @@ class TaxesController extends Controller
      */
     public function getIndex()
     {
-        $taxes = Tax::PrepareTaxesForIndex(Tax::all());
+        $taxes = Tax::PrepareTaxesForIndex(Tax::orderBy('id','desc')->get());
         return view('taxes.index')
             ->with('layout',$this->layout)
             ->with('taxes',$taxes);
@@ -69,14 +69,11 @@ class TaxesController extends Controller
      */
     public function getAdd()
     {
-        $kr_cities = Job::StatesOfKoreaForSelect();
         $country_code = Job::country_code();
-
 
         return view('taxes.add')
             ->with('layout',$this->layout)
-            ->with('country_code',$country_code)
-            ->with('kr_cities',$kr_cities);
+            ->with('country_code',$country_code);
     }  
     /**
      * Process Task Request
@@ -90,14 +87,12 @@ class TaxesController extends Controller
         if ($validator->passes()) {
             $title = Input::get('title');
             $description = Input::get('description');
-            $city = Input::get('city');
             $country = Input::get('country');
-            $rate = Input::get('rate');
+            $rate = Tax::formatRateIn(Input::get('rate'));
 
             $taxes_data = new Tax;
             $taxes_data->title = $title;
             $taxes_data->description = $description;
-            $taxes_data->city = $city;
             $taxes_data->country = $country;
             $taxes_data->rate = $rate;
             $taxes_data->status = 1;
@@ -124,14 +119,12 @@ class TaxesController extends Controller
     public function getEdit($id = null)
     {
         if (isset($id)) {
-            $kr_cities = Job::StatesOfKoreaForSelect();
             $country_code = Job::country_code();
             $taxes = Tax::find($id);
             $status = Tax::PrepareStatusForSelect();
                 return view('taxes.edit')
                 ->with('layout',$this->layout)
                 ->with('country_code',$country_code)
-                ->with('kr_cities',$kr_cities)
                 ->with('status',$status)
                 ->with('taxes',$taxes);
         } else {
@@ -149,21 +142,19 @@ class TaxesController extends Controller
         if ($validator->passes()) {
             $title = Input::get('title');
             $description = Input::get('description');
-            $city = Input::get('city');
             $country = Input::get('country');
-            $rate = Input::get('rate');
+            $rate = Tax::formatRateIn(Input::get('rate'));
             $id = Input::get('id');
             $status = Input::get('status');
 
             $taxes_data = Tax::find($id);
             $taxes_data->title = $title;
             $taxes_data->description = $description;
-            $taxes_data->city = $city;
             $taxes_data->country = $country;
             $taxes_data->rate = $rate;
             $taxes_data->status = $status;
             if ($taxes_data->save()) {
-                 Flash::success('Successfully added!');
+                 Flash::success('Successfully updated tax!');
                  return Redirect::route('taxes_index');
             }
         }

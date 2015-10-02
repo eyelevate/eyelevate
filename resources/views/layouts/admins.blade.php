@@ -57,7 +57,7 @@
                     <div class="clearfix"></div>
 
                     <!-- menu prile quick info -->
-                    <div class="profile">
+                    <div class="profile clearfix">
                         <div class="profile_pic">
                             <img src="/assets/images/profile-images/perm/{!!$this_user_profile_image!!}" alt="..." class="img-circle profile_img">
                         </div>
@@ -71,54 +71,37 @@
                     <br />
 
                     <!-- sidebar menu -->
-                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu clearfix">
 
                         <div class="menu_section">
-                            <ul class="nav side-menu">
-                                <li class="li-menus"><a class="home-a-tag"><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu" style="display: none">
-                                        <li><a href="{!! route('admins_index') !!}">Dashboard</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="li-menus"><a><i class="fa fa-edit"></i> Access Control List <span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu" style="display: none">
-                                        <li><a href="{!! route('roles_index') !!}">Roles</a>
-                                        </li>
-                                        <li><a href="{!! route('permissions_index') !!}">Permissions</a>
-                                        </li>
-                                        <li><a href="{!! route('permission_roles_index') !!}">Permision Roles</a>
-                                        </li>
-                                    </ul>
-                                </li>
+                            <ul class="nav side-menu clearfix">
+
                                 <li class="li-menus"><a><i class="fa fa-wrench"></i> Control Panel <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu" style="display: none">
-                                        <li><a href="{!! route('flags_index') !!}">Flags</a>
-                                        </li>
-                                        <li><a href="{!! route('projects_index') !!}">Projects</a>
-                                        </li>
-                                        <li><a href="{!! route('tasks_index') !!}">Tasks</a>
-                                        </li>
-                                        <li><a href="{!! route('users_index') !!}">Users</a>
-                                        </li>
+                                        <li>Categories</li>
+                                        <li class="navLi"><a href="{!! route('category_view') !!}">Category</a></li>
+                                        <li>Flags</li>
+                                        <li class="navLi"><a href="{!! route('flags_index') !!}">Flags</a></li>
+                                        <li>Projects</li>
+                                        <li class="navLi"><a href="{!! route('projects_index') !!}">Projects</a></li>
+                                        <li>Tasks</li>
+                                        <li class="navLi"><a href="{!! route('tasks_index') !!}">Tasks</a></li>
+                                        <li>Users</li>
+                                        <li class="navLi"><a href="{!! route('users_index') !!}">Users</a></li>
                                     </ul>
                                 </li>
-                                <li class="li-menus"><a><i class="fa fa-edit"></i> Thread Setting<span class="fa fa-chevron-down"></span></a>
+                                <li class="li-menus"><a><i class="fa fa-edit"></i> Utilities<span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu" style="display: none">
-                                        <li><a href="{!! route('category_view') !!}">Category</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="li-menus"><a><i class="fa fa-edit"></i> Tax Setting<span class="fa fa-chevron-down"></span></a>
-                                    <ul class="nav child_menu" style="display: none">
-                                        <li><a href="{!! route('taxes_index') !!}">Index</a>
-                                        </li>
-                                        <li><a href="{!! route('taxes_add') !!}">Add</a>
-                                        </li>
-                                        <li><a href="{!! route('category_view') !!}">Edit</a>
-                                        </li>
-                                        <li><a href="{!! route('category_view') !!}">View</a>
-                                        </li>
+                                        <li>Access Control</li>
+                                        <li class="navLi"><a href="{!! route('roles_index') !!}">Roles</a></li>
+                                        <li class="navLi"><a href="{!! route('permissions_index') !!}">Permissions</a></li>
+                                        <li class="navLi"><a href="{!! route('permission_roles_index') !!}">Permision Roles</a></li>
+                                        <li>Taxes</li>
+                                        <li class="navLi"><a href="{!! route('taxes_index') !!}">Index</a></li>
+                                        <li class="navLi"><a href="{!! route('taxes_add') !!}">Add</a></li>
+                                        <li>Invoices</li>
+                                        <li class="navLi"><a href="{!! route('invoices_index') !!}">Index</a></li>
+                                        <li class="navLi"><a href="{!! route('invoices_add') !!}">Add</a></li>
                                     </ul>
                                 </li>
                             </ul>

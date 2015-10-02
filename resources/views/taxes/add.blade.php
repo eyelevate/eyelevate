@@ -3,8 +3,8 @@
 
 @stop
 @section('scripts')
+  <script type="text/javascript" src="/packages/priceformat/priceformat.min.js"></script>
   <script type="text/javascript" src="/assets/js/taxes/add.js"></script>
-  <script type="text/javascript" src="/packages/numeric/jquery.numeric.js"></script>
 @stop
 
 @section('content')
@@ -32,14 +32,6 @@
         @endforeach
     </div>
 
-    <div class="form-group {{ $errors->has('city') ? 'has-error' : false }}">
-      <label class="control-label" for="kr_cities">City</label>
-      {!! Form::select('city',$kr_cities ,null, ['class'=>'form-control','status'=>false]) !!}
-        @foreach($errors->get('city') as $message)
-            <span class='help-block'>{{ $message }}</span>
-        @endforeach
-    </div>   
-
     <div class="form-group {{ $errors->has('country') ? 'has-error' : false }}">
       <label class="control-label" for="kr_cities">Country</label>
       {!! Form::select('country',$country_code ,'KR', ['class'=>'form-control','status'=>false]) !!}
@@ -51,12 +43,12 @@
     <div class="form-group {{ $errors->has('rate') ? 'has-error' : false }}">
       <label class="control-label" >Rate</label>
       <div class="input-group">
-        <div class="input-group-addon">$</div>
-        <input type="text" name="rate" class="form-control" id="rate" placeholder="Amount">
+        <input id="rate" type="text" name="rate" class="form-control" id="rate" placeholder="0.0000">
+        <div class="input-group-addon"><span id="rateSpan">0</span>%</div>
       </div>
-        @foreach($errors->get('rate') as $message)
-            <span class='help-block'>{{ $message }}</span>
-        @endforeach
+      @foreach($errors->get('rate') as $message)
+          <span class='help-block'>{{ $message }}</span>
+      @endforeach
     </div> 
 
   </div>

@@ -8,13 +8,16 @@
 
 @section('content')
 <div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Tax Index</h3>
+  </div>
   <div class="panel-body">
     <div class="table-responsive">
       <table class="table table-bordered" style="font-size:18px">
             <thead>
               <tr>
                 <th>Title</th>
-                <th>City</th>
+                <th>Description</th>
                 <th>Country</th>
                 <th>Rate</th>
                 <th>Status</th>
@@ -23,21 +26,18 @@
               </tr>
             </thead>
             <tbody>
-              @foreach ($taxes as $taxkey => $tax)
-                @if($taxkey != 'type')
+              @foreach ($taxes as $tax)
                 <tr>
-                  <th scope="row">{{$tax['title']}}</th>
-                  <td>{{$tax['city_txt']}}</td>
-                  <td>{{$tax['country']}}</td>
-                  <td>{{$tax['rate']}}</td>
-                  <td>{!!$tax['status_message']!!}</td>
-                  <td>{{$tax['created_at_html']}}</td>
+                  <td scope="row">{!! $tax->title !!}</td>
+                  <td>{!! $tax->description !!}</td>
+                  <td>{!! $tax->country !!}</td>
+                  <td>{!! $tax->rate !!}</td>
+                  <td>{!! $tax->status_message !!}</td>
+                  <td>{!! $tax->created_at_html !!}</td>
                   <td>
-                    <a href="">View</a> / 
-                    <a href="{!! route('taxes_edit',$tax['id']) !!}">Edit</a>
+                    <a href="{!! route('taxes_edit',$tax->id) !!}">Edit</a>
                   </td>
                 </tr>
-                @endif
               @endforeach
             </tbody>
           </table>

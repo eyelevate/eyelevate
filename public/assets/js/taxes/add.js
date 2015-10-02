@@ -11,14 +11,23 @@ tadd = {
 		});
 	},
 	events: function() {
-		$("#rate").numeric();
+		$("#rate").priceFormat({
+			'prefix':'',
+			'thousandsSeparator':',',
+			'centsLimit': 4,
+			'allowNegative':true,
+			'limit': 5
+		}).keyup(function(){
+			var rate = parseFloat($(this).val());
+			if(rate > 1) {
+				$(this).val('1.0000');
+				$("#rateSpan").html('100');
+			} else {
+				$("#rateSpan").html((Math.round(rate * 10000) / 100));
+			}
+		});
 
-        $(document).on('click','.tadd',function(){
-         
-        });
 	}
-}
-rrequest = {
-
 };
+
 
