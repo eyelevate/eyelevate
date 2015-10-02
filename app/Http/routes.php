@@ -135,6 +135,15 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 			Route::post('tasks/view',  ['uses' => 'TasksController@postView', 'middleware' => ['acl:'.$prefix.'/tasks/view']]);
 			Route::post('tasks/completed',  ['uses' => 'TasksController@postTaskCompleted', 'middleware' => ['acl:'.$prefix.'/tasks/completed']]);
 			Route::post('tasks/in-process',  ['uses' => 'TasksController@postTaskInProcess', 'middleware' => ['acl:'.$prefix.'/tasks/in-process']]);
+			
+			Route::get('taxes',  ['as' => 'taxes_index','uses' => 'TaxesController@getIndex', 'middleware' => ['acl:'.$prefix.'/taxes']]);
+			Route::get('taxes/add',  ['as' => 'taxes_add','uses' => 'TaxesController@getAdd', 'middleware' => ['acl:'.$prefix.'/taxes/add']]);
+			Route::post('taxes/add',  ['uses' => 'TaxesController@postAdd', 'middleware' => ['acl:'.$prefix.'/taxes/add']]);
+			Route::get('taxes/edit/{id}',  ['as' => 'taxes_edit','uses' => 'TaxesController@getEdit', 'middleware' => ['acl:'.$prefix.'/taxes/edit'], function ($id) {}]);
+			Route::post('taxes/edit',  ['uses' => 'TaxesController@postEdit', 'middleware' => ['acl:'.$prefix.'/taxes/edit']]);
+			Route::post('taxes/remove',  ['uses' => 'TaxesController@postRemove', 'middleware' => ['acl:'.$prefix.'/taxes/remove']]);
+			Route::get('taxes/view/{id}',  ['as' => 'taxes_view','uses' => 'TaxesController@getView', 'middleware' => ['acl:'.$prefix.'/taxes/view'], function ($id) {}]);
+			Route::post('taxes/view',  ['uses' => 'TaxesController@postView', 'middleware' => ['acl:'.$prefix.'/taxes/view']]);
 
 			Route::get('users/index',  ['as' => 'users_index','uses' => 'AdminsController@getUsersIndex', 'middleware' => ['acl:'.$prefix.'/acl/view']]);
 			Route::get('users/add',  ['as' => 'users_add','uses' => 'AdminsController@getUsersAdd', 'middleware' => ['acl:'.$prefix.'/acl/view']]);

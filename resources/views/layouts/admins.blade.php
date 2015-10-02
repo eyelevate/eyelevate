@@ -109,6 +109,18 @@
                                         </li>
                                     </ul>
                                 </li>
+                                <li class="li-menus"><a><i class="fa fa-edit"></i> Tax Setting<span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu" style="display: none">
+                                        <li><a href="{!! route('taxes_index') !!}">Index</a>
+                                        </li>
+                                        <li><a href="{!! route('taxes_add') !!}">Add</a>
+                                        </li>
+                                        <li><a href="{!! route('category_view') !!}">Edit</a>
+                                        </li>
+                                        <li><a href="{!! route('category_view') !!}">View</a>
+                                        </li>
+                                    </ul>
+                                </li>
                             </ul>
                         </div>
 <!--                         <div class="menu_section">
