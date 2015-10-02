@@ -73,7 +73,7 @@ class Project extends Model
 
     static public function PrepareTypesForSelect() {
         return [
-            ''  => 'Select Project Type',
+            ''  => 'Select Project',
             '1' => 'Web Application'
         ];
     }
@@ -81,10 +81,13 @@ class Project extends Model
     static public function PrepareAllProjectForSelect() {
         $all_p = Project::get();
 
-        $projects = ['name' => 'Select Project Type'];
-        foreach ($all_p as $alkey => $alvalue) {
-            $projects[$alvalue->id] =  $alvalue->title;
+        $projects = ['name' => 'Select Project'];
+        if($all_p) {
+            foreach ($all_p as $alkey => $alvalue) {
+                $projects[$alvalue->id] =  $alvalue->title;
+            }
         }
+
 
         return $projects;
     }

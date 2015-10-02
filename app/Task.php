@@ -126,6 +126,7 @@ class Task extends Model
 
     	if(isset($tasks)) {
     		foreach($tasks as $key => $value) {
+                
     			foreach($tasks[$key] as $tkey => $tvalue) {
 
 	    			if(isset($tasks[$key][$tkey]['title'])) {
@@ -147,8 +148,10 @@ class Task extends Model
 	    				$tasks[$key][$tkey]['created_username'] = $users->username;
 	    			}
 	    			if(isset($tasks[$key][$tkey]['assigned_id'])) {
-	    				$users = User::find($tvalue->assigned_id);
-	    				$tasks[$key][$tkey]['assigned_username'] = $users->username;
+	    				$userss = User::find($tasks[$key][$tkey]['assigned_id']);
+                        if (isset($userss->username)) {
+                            $tasks[$key][$tkey]['assigned_username'] = $userss->username;
+                        }
 	    			}
 
 	    			if(isset($tasks[$key][$tkey]['status'])) {
@@ -186,11 +189,11 @@ class Task extends Model
                 }
             }
             if(isset($tasks['assigned_id'])) {
-                $users = User::find($tasks->assigned_id);
-                $tasks['assigned_username'] = $users->username;
+                $users = (isset($tasks['assigned_id'])) ? User::find($tasks->assigned_id) : false;
+                $tasks['assigned_username'] = ($users) ? $users->username : null;
             }
             if(isset($tasks['image_src'])) {
-                $tasks['image_src'] = json_decode($tasks->image_src);
+                $tasks['image_src'] = (json_decode($tasks->image_src)) ? json_decode($tasks->image_src) : $tasks->image_src;
             }
             if(isset($tasks['status'])) {
                 $tasks['status'] = Task::prepareStatusForView($tasks->status);

@@ -75,12 +75,49 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 			
 		Route::group(['prefix' => 'admins'], function () {
 			$prefix = 'admins';	
-			Route::get('roles',  ['as'=>'roles_index', 'uses' => 'RolesController@getIndex', 'middleware' => ['acl:'.$prefix.'/roles']]);
-			Route::get('roles/add',  ['as'=>'roles_add', 'uses' => 'RolesController@getAdd','middleware' => ['acl:'.$prefix.'/roles/add']]);
-			Route::post('roles/add',  ['uses' => 'RolesController@postAdd', 'middleware' => ['acl:'.$prefix.'/roles/add']]);
-			Route::get('roles/edit/{id}',  ['as'=>'roles_edit', 'uses' => 'RolesController@getEdit', 'middleware' => ['acl:'.$prefix.'/roles/edit/{id}'], function ($id) {}]);
-			Route::post('roles/edit',  ['as'=>'roles_update','uses' => 'RolesController@postEdit', 'middleware' => ['acl:'.$prefix.'/roles/edit']]);
-			Route::get('roles/delete-data/{id}',  ['as'=>'roles_delete', 'uses' => 'RolesController@getDelete', 'middleware' => ['acl:'.$prefix.'/roles/delete-data{id}'], function ($id) {}]);
+			Route::get('acl/view',  ['as' => 'acl_view','uses' => 'AdminsController@getViewAcl', 'middleware' => ['acl:'.$prefix.'/acl/view']]);
+			Route::get('categories/view',  ['as'=>'category_view', 'uses' => 'AdminsController@getViewCategory', 'middleware' => ['acl:'.$prefix.'/categories/view']]);
+			Route::get('categories/add',  ['as'=>'category_add', 'uses' => 'CategoriesController@getAdd', 'middleware' => ['acl:'.$prefix.'/categories/add']]);
+			Route::post('categories/add',  ['uses' => 'CategoriesController@postAdd', 'middleware' => ['acl:'.$prefix.'/categories/add']]);
+			Route::get('categories/edit',  ['as'=>'category_edit','uses' => 'CategoriesController@getEdit', 'middleware' => ['acl:'.$prefix.'/categories/edit']]);
+			Route::post('categories/edit',  ['uses' => 'CategoriesController@postEdit', 'middleware' => ['acl:'.$prefix.'/categories/edit']]);
+
+			Route::get('flags',  ['as'=>'flags_index', 'uses' => 'FlagsController@getIndex', 'middleware' => ['acl:'.$prefix.'/flags']]);
+			Route::get('flags/view/{id}',  ['as'=>'flag_view', 'uses' => 'FlagsController@getView', 'middleware' => ['acl:'.$prefix.'/flags/view/{id}'], function ($id) {}]);
+			Route::post('flags/view',  ['uses' => 'FlagsController@postView', 'middleware' => ['acl:'.$prefix.'/flags/view']]);
+			Route::get('flags/approved',  ['as'=>'flags_app', 'uses' => 'FlagsController@getApproved', 'middleware' => ['acl:'.$prefix.'/flags/approved']]);
+			Route::get('flags/rejected',  ['as'=>'flags_rej', 'uses' => 'FlagsController@getRejected', 'middleware' => ['acl:'.$prefix.'/flags/rejected']]);
+			Route::get('flags/re-flagged',  ['as'=>'flags_re', 'uses' => 'FlagsController@getReflagged', 'middleware' => ['acl:'.$prefix.'/flags/re-flagged']]);
+			Route::get('flags/final-approved',  ['as'=>'flags_f_app', 'uses' => 'FlagsController@getFinalApproved', 'middleware' => ['acl:'.$prefix.'/flags/final-approved']]);
+			Route::get('flags/final-reject',  ['as'=>'flags_f_rej', 'uses' => 'FlagsController@getFinalRejected', 'middleware' => ['acl:'.$prefix.'/flags/final-reject']]);
+			Route::get('flags/banned',  ['as'=>'flags_banned', 'uses' => 'FlagsController@getBanned', 'middleware' => ['acl:'.$prefix.'/flags/banned']]);
+
+			Route::get('invoices',  ['as' => 'invoices_index','uses' => 'InvoicesController@getIndex', 'middleware' => ['acl:'.$prefix.'/invoices']]);
+			Route::get('invoices/add',  ['as' => 'invoices_add','uses' => 'InvoicesController@getAdd', 'middleware' => ['acl:'.$prefix.'/invoices/add']]);
+			Route::post('invoices/add',  ['uses' => 'InvoicesController@postAdd', 'middleware' => ['acl:'.$prefix.'/invoices/add']]);
+			Route::get('invoices/edit/{id}',  ['as' => 'invoices_edit','uses' => 'InvoicesController@getEdit', 'middleware' => ['acl:'.$prefix.'/invoices/edit'], function ($id) {}]);
+			Route::post('invoices/edit',  ['uses' => 'InvoicesController@postEdit', 'middleware' => ['acl:'.$prefix.'/invoices/edit']]);
+			Route::get('invoices/view/{id}',  ['as' => 'invoices_view','uses' => 'InvoicesController@getView', 'middleware' => ['acl:'.$prefix.'/invoices/view'], function ($id) {}]);
+			Route::post('invoices/view',  ['uses' => 'InvoicesController@postView', 'middleware' => ['acl:'.$prefix.'/invoices/view']]);
+			Route::post('invoices/delete',  ['uses' => 'InvoicesController@postDelete', 'middleware' => ['acl:'.$prefix.'/invoices/delete']]);
+
+			Route::get('invoice-items',  ['as' => 'invoice-items_index','uses' => 'InvoiceItemsController@getIndex', 'middleware' => ['acl:'.$prefix.'/invoice-items']]);
+			Route::get('invoices-items/add',  ['as' => 'invoice-items_add','uses' => 'InvoiceItemsController@getAdd', 'middleware' => ['acl:'.$prefix.'/invoice-items/add']]);
+			Route::post('invoice-items/add',  ['uses' => 'InvoiceItemsController@postAdd', 'middleware' => ['acl:'.$prefix.'/invoice-items/add']]);
+			Route::get('invoice-items/edit/{id}',  ['as' => 'invoice-items_edit','uses' => 'InvoiceItemsController@getEdit', 'middleware' => ['acl:'.$prefix.'/invoice-items/edit'], function ($id) {}]);
+			Route::post('invoice-items/edit',  ['uses' => 'InvoiceItemsController@postEdit', 'middleware' => ['acl:'.$prefix.'/invoice-items/edit']]);
+			Route::get('invoice-items/view/{id}',  ['as' => 'invoice-items_view','uses' => 'InvoiceItemsController@getView', 'middleware' => ['acl:'.$prefix.'/invoice-items/view'], function ($id) {}]);
+			Route::post('invoice-items/view',  ['uses' => 'InvoiceItemsController@postView', 'middleware' => ['acl:'.$prefix.'/invoice-items/view']]);
+			Route::post('invoice-items/delete',  ['uses' => 'InvoiceItemsController@postDelete', 'middleware' => ['acl:'.$prefix.'/invoice-items/delete']]);
+
+			Route::get('projects',  ['as' => 'projects_index','uses' => 'ProjectsController@getIndex', 'middleware' => ['acl:'.$prefix.'/projects']]);
+			Route::get('projects/add',  ['as' => 'projects_add','uses' => 'ProjectsController@getAdd', 'middleware' => ['acl:'.$prefix.'/projects/add']]);
+			Route::post('projects/add',  ['uses' => 'ProjectsController@postAdd', 'middleware' => ['acl:'.$prefix.'/projects/add']]);
+			Route::get('projects/edit/{id}',  ['as' => 'projects_edit','uses' => 'ProjectsController@getEdit', 'middleware' => ['acl:'.$prefix.'/projects/edit'], function ($id) {}]);
+			Route::post('projects/edit',  ['uses' => 'ProjectsController@postEdit', 'middleware' => ['acl:'.$prefix.'/projects/edit']]);
+			Route::get('projects/view/{id}',  ['as' => 'projects_view','uses' => 'ProjectsController@getView', 'middleware' => ['acl:'.$prefix.'/projects/view'], function ($id) {}]);
+			Route::post('projects/view',  ['uses' => 'ProjectsController@postView', 'middleware' => ['acl:'.$prefix.'/projects/view']]);
+			Route::post('projects/delete',  ['uses' => 'ProjectsController@postDelete', 'middleware' => ['acl:'.$prefix.'/projects/delete']]);
 
 			Route::get('permissions',  ['as'=>'permissions_index', 'uses' => 'PermissionsController@getIndex', 'middleware' => ['acl:'.$prefix.'/permissions']]);
 			Route::get('permissions/add',  ['as'=>'permissions_add','uses' => 'PermissionsController@getAdd', 'middleware' => ['acl:'.$prefix.'/permissions/add']]);
@@ -96,33 +133,12 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 			Route::post('permission-roles/edit',  ['uses' => 'PermissionRolesController@postEdit', 'middleware' => ['acl:'.$prefix.'/permission-roles/edit']]);
 			Route::get('permission-roles/delete-data/{id}',  ['as'=>'permission_roles_delete', 'uses' => 'PermissionRolesController@getDelete', 'middleware' => ['acl:'.$prefix.'/permission-roles/delete-data/{id}'], function ($id) {}]);
 
-			Route::get('flags',  ['as'=>'flags_index', 'uses' => 'FlagsController@getIndex', 'middleware' => ['acl:'.$prefix.'/flags']]);
-			Route::get('flags/view/{id}',  ['as'=>'flag_view', 'uses' => 'FlagsController@getView', 'middleware' => ['acl:'.$prefix.'/flags/view/{id}'], function ($id) {}]);
-			Route::post('flags/view',  ['uses' => 'FlagsController@postView', 'middleware' => ['acl:'.$prefix.'/flags/view']]);
-			Route::get('flags/approved',  ['as'=>'flags_app', 'uses' => 'FlagsController@getApproved', 'middleware' => ['acl:'.$prefix.'/flags/approved']]);
-			Route::get('flags/rejected',  ['as'=>'flags_rej', 'uses' => 'FlagsController@getRejected', 'middleware' => ['acl:'.$prefix.'/flags/rejected']]);
-			Route::get('flags/re-flagged',  ['as'=>'flags_re', 'uses' => 'FlagsController@getReflagged', 'middleware' => ['acl:'.$prefix.'/flags/re-flagged']]);
-			Route::get('flags/final-approved',  ['as'=>'flags_f_app', 'uses' => 'FlagsController@getFinalApproved', 'middleware' => ['acl:'.$prefix.'/flags/final-approved']]);
-			Route::get('flags/final-reject',  ['as'=>'flags_f_rej', 'uses' => 'FlagsController@getFinalRejected', 'middleware' => ['acl:'.$prefix.'/flags/final-reject']]);
-			Route::get('flags/banned',  ['as'=>'flags_banned', 'uses' => 'FlagsController@getBanned', 'middleware' => ['acl:'.$prefix.'/flags/banned']]);
-
-			Route::get('acl/view',  ['as' => 'acl_view','uses' => 'AdminsController@getViewAcl', 'middleware' => ['acl:'.$prefix.'/acl/view']]);
-			Route::get('categories/view',  ['as'=>'category_view', 'uses' => 'AdminsController@getViewCategory', 'middleware' => ['acl:'.$prefix.'/categories/view']]);
-			Route::get('categories/add',  ['as'=>'category_add', 'uses' => 'CategoriesController@getAdd', 'middleware' => ['acl:'.$prefix.'/categories/add']]);
-			Route::post('categories/add',  ['uses' => 'CategoriesController@postAdd', 'middleware' => ['acl:'.$prefix.'/categories/add']]);
-			Route::get('categories/edit',  ['as'=>'category_edit','uses' => 'CategoriesController@getEdit', 'middleware' => ['acl:'.$prefix.'/categories/edit']]);
-			Route::post('categories/edit',  ['uses' => 'CategoriesController@postEdit', 'middleware' => ['acl:'.$prefix.'/categories/edit']]);
-
-			Route::get('projects',  ['as' => 'projects_index','uses' => 'ProjectsController@getIndex', 'middleware' => ['acl:'.$prefix.'/projects']]);
-			Route::get('projects/add',  ['as' => 'projects_add','uses' => 'ProjectsController@getAdd', 'middleware' => ['acl:'.$prefix.'/projects/add']]);
-			Route::post('projects/add',  ['uses' => 'ProjectsController@postAdd', 'middleware' => ['acl:'.$prefix.'/projects/add']]);
-			Route::get('projects/edit/{id}',  ['as' => 'projects_edit','uses' => 'ProjectsController@getEdit', 'middleware' => ['acl:'.$prefix.'/projects/edit'], function ($id) {}]);
-			Route::post('projects/edit',  ['uses' => 'ProjectsController@postEdit', 'middleware' => ['acl:'.$prefix.'/projects/edit']]);
-			Route::get('projects/view/{id}',  ['as' => 'projects_view','uses' => 'ProjectsController@getView', 'middleware' => ['acl:'.$prefix.'/projects/view'], function ($id) {}]);
-			Route::post('projects/view',  ['uses' => 'ProjectsController@postView', 'middleware' => ['acl:'.$prefix.'/projects/view']]);
-
-			Route::post('projects/delete',  ['uses' => 'ProjectsController@postDelete', 'middleware' => ['acl:'.$prefix.'/projects/delete']]);
-
+			Route::get('roles',  ['as'=>'roles_index', 'uses' => 'RolesController@getIndex', 'middleware' => ['acl:'.$prefix.'/roles']]);
+			Route::get('roles/add',  ['as'=>'roles_add', 'uses' => 'RolesController@getAdd','middleware' => ['acl:'.$prefix.'/roles/add']]);
+			Route::post('roles/add',  ['uses' => 'RolesController@postAdd', 'middleware' => ['acl:'.$prefix.'/roles/add']]);
+			Route::get('roles/edit/{id}',  ['as'=>'roles_edit', 'uses' => 'RolesController@getEdit', 'middleware' => ['acl:'.$prefix.'/roles/edit/{id}'], function ($id) {}]);
+			Route::post('roles/edit',  ['as'=>'roles_update','uses' => 'RolesController@postEdit', 'middleware' => ['acl:'.$prefix.'/roles/edit']]);
+			Route::get('roles/delete-data/{id}',  ['as'=>'roles_delete', 'uses' => 'RolesController@getDelete', 'middleware' => ['acl:'.$prefix.'/roles/delete-data{id}'], function ($id) {}]);
 
 			Route::get('tasks',  ['as' => 'tasks_index','uses' => 'TasksController@getIndex', 'middleware' => ['acl:'.$prefix.'/tasks']]);
 			Route::get('tasks/add',  ['as' => 'tasks_add','uses' => 'TasksController@getAdd', 'middleware' => ['acl:'.$prefix.'/tasks/add']]);
