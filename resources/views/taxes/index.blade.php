@@ -44,7 +44,7 @@
         </div>
   </div>
   <div class="panel-footer clearfix">
-      <a class="btn btn-primary" href=""> Next Step</a>
+      <a class="btn btn-primary pull-right" href="{!! route('taxes_add') !!}"> Add Tax</a>
   </div>
 </div>
 @stop

@@ -17,7 +17,7 @@
   </div>
   <div class="panel-body">
   {!! Form::open(array('action' => 'TaxesController@postEdit', 'class'=>'','role'=>"form")) !!}
-
+    {!! Form::hidden('id',$taxes->id) !!}
     <div class="form-group {{ $errors->has('title') ? 'has-error' : false }}">
       <label class="control-label" for="title">Title</label>
       {!! Form::text('title', $taxes['title'], array('class'=>'form-control', 'placeholder'=>'Title')) !!}
@@ -67,7 +67,6 @@
     <button class="btn btn-primary pull-right">Edit</button>
   </div>
 
-  <input type="hidden" name="id" value="{{$taxes['id']}}">
     {!! Form::close() !!}
 </div>
 @stop

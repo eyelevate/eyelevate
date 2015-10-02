@@ -75,7 +75,16 @@
 
                         <div class="menu_section">
                             <ul class="nav side-menu clearfix">
-
+                                <li class="li-menus"><a><i class="fa fa-wrench"></i> Billing <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu" style="display: none">
+                                        <li>Taxes</li>
+                                        <li class="navLi"><a href="{!! route('taxes_index') !!}">Index</a></li>
+                                        <li class="navLi"><a href="{!! route('taxes_add') !!}">Add</a></li>
+                                        <li>Invoices</li>
+                                        <li class="navLi"><a href="{!! route('invoices_index') !!}">Index</a></li>
+                                        <li class="navLi"><a href="{!! route('invoices_add') !!}">Add</a></li>
+                                    </ul>
+                                </li>                                    
                                 <li class="li-menus"><a><i class="fa fa-wrench"></i> Control Panel <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu" style="display: none">
                                         <li>Categories</li>
@@ -96,12 +105,6 @@
                                         <li class="navLi"><a href="{!! route('roles_index') !!}">Roles</a></li>
                                         <li class="navLi"><a href="{!! route('permissions_index') !!}">Permissions</a></li>
                                         <li class="navLi"><a href="{!! route('permission_roles_index') !!}">Permision Roles</a></li>
-                                        <li>Taxes</li>
-                                        <li class="navLi"><a href="{!! route('taxes_index') !!}">Index</a></li>
-                                        <li class="navLi"><a href="{!! route('taxes_add') !!}">Add</a></li>
-                                        <li>Invoices</li>
-                                        <li class="navLi"><a href="{!! route('invoices_index') !!}">Index</a></li>
-                                        <li class="navLi"><a href="{!! route('invoices_add') !!}">Add</a></li>
                                     </ul>
                                 </li>
                             </ul>
