@@ -109,6 +109,7 @@ Route::group(['middleware' => 'beforeFilter'], function () {
 			Route::get('invoice-items/view/{id}',  ['as' => 'invoice-items_view','uses' => 'InvoiceItemsController@getView', 'middleware' => ['acl:'.$prefix.'/invoice-items/view'], function ($id) {}]);
 			Route::post('invoice-items/view',  ['uses' => 'InvoiceItemsController@postView', 'middleware' => ['acl:'.$prefix.'/invoice-items/view']]);
 			Route::post('invoice-items/delete',  ['uses' => 'InvoiceItemsController@postDelete', 'middleware' => ['acl:'.$prefix.'/invoice-items/delete']]);
+			Route::post('invoice-items/make-invoice-item',  ['uses' => 'InvoiceItemsController@postMakeInvoiceItem', 'middleware' => ['acl:'.$prefix.'/invoice-items/make-invoice-item']]);
 
 			Route::get('projects',  ['as' => 'projects_index','uses' => 'ProjectsController@getIndex', 'middleware' => ['acl:'.$prefix.'/projects']]);
 			Route::get('projects/add',  ['as' => 'projects_add','uses' => 'ProjectsController@getAdd', 'middleware' => ['acl:'.$prefix.'/projects/add']]);

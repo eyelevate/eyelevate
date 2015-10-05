@@ -77,6 +77,8 @@
                             <ul class="nav side-menu clearfix">
                                 <li class="li-menus"><a><i class="fa fa-wrench"></i> Billing <span class="fa fa-chevron-down"></span></a>
                                     <ul class="nav child_menu" style="display: none">
+                                        <li>Projects</li>
+                                        <li class="navLi"><a href="{!! route('projects_index') !!}">Projects</a></li>
                                         <li>Taxes</li>
                                         <li class="navLi"><a href="{!! route('taxes_index') !!}">Index</a></li>
                                         <li class="navLi"><a href="{!! route('taxes_add') !!}">Add</a></li>
@@ -91,8 +93,6 @@
                                         <li class="navLi"><a href="{!! route('category_view') !!}">Category</a></li>
                                         <li>Flags</li>
                                         <li class="navLi"><a href="{!! route('flags_index') !!}">Flags</a></li>
-                                        <li>Projects</li>
-                                        <li class="navLi"><a href="{!! route('projects_index') !!}">Projects</a></li>
                                         <li>Tasks</li>
                                         <li class="navLi"><a href="{!! route('tasks_index') !!}">Tasks</a></li>
                                         <li>Users</li>

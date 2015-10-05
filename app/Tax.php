@@ -53,6 +53,25 @@ class Tax extends Model
     	];
     }
 
+    static public function prepareForTaxesSelect($taxes){
+        $tax_select = [''=>'Select tax rate'];
+
+        if($taxes) {
+            foreach ($taxes as $key => $value) {
+                $rate = Tax::formatRateForSelect($value->rate);
+                $tax_select[$value->id] = '['.$value->id.'] - '.$value->title.' || '.$rate.' || '.date('n/d/Y g:ia',strtotime($value->created_at));
+            }
+        }
+
+        return $tax_select;
+
+    }
+
+    static private function formatRateForSelect($rate) {
+        return (isset($rate) && $rate > 0) ? ($rate * 100).'%' : '0%';
+
+    }
+
     static public function formatRateIn($rate) {
 
     	return (isset($rate) && $rate > 0) ? $rate : 0;

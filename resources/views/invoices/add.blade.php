@@ -3,7 +3,7 @@
 
 @stop
 @section('scripts')
-
+<script type="text/javascript" src="/assets/js/invoices/add.js"></script>
 @stop
 @section('content')
 	<div class="jumbotron">
@@ -42,45 +42,45 @@
 			<h3 class="panel-title">Invoice Item Details</h3>
 		</div>		
 		<div class="panel-body">
-			<div class="row-fluid clearfix">
+			<div id="invoiceItem-div" class="row-fluid clearfix">
 			  	<div class="form-group {{ $errors->has('invoice_item.title') ? 'has-error' : false }}">
-			    	<label class="control-label" for="title">Summary</label>
-			    	{!! Form::text('invoice_item.title', null, array('class'=>'form-control', 'placeholder'=>'Invoice Item Summary')) !!}
+			    	<label class="control-label" for="title">Item Title</label>
+			    	{!! Form::text('invoice_item.title', null, array('id'=>'invoiceItemTitle','class'=>'form-control', 'placeholder'=>'Invoice Item Summary')) !!}
 			        @foreach($errors->get('invoice_item.title') as $message)
 			            <span class='help-block'>{{ $message }}</span>
 			        @endforeach
 			  	</div>	
 			  	<div class="form-group {{ $errors->has('invoice_item.description') ? 'has-error' : false }}">
-			    	<label class="control-label" for="title">Short Description</label>
-			    	{!! Form::text('invoice_item.description', null, array('class'=>'form-control', 'placeholder'=>'Invoice Item Description')) !!}
+			    	<label class="control-label" for="title">Item Description</label>
+			    	{!! Form::text('invoice_item.description', null, array('id'=>'invoiceItemDescription','class'=>'form-control', 'placeholder'=>'Invoice Item Description')) !!}
 			        @foreach($errors->get('invoice_item.description') as $message)
 			            <span class='help-block'>{{ $message }}</span>
 			        @endforeach
 			  	</div>	
 			  	<div class="form-group {{ $errors->has('invoice_item.quantity') ? 'has-error' : false }}">
 			    	<label class="control-label" for="invoice_item.quantity">Quantity</label>
-			    	{!! Form::text('invoice_item.quantity', null, array('class'=>'form-control', 'placeholder'=>'Quantity')) !!}
+			    	{!! Form::text('invoice_item.quantity', null, array('id'=>'invoiceItemQuantity','class'=>'form-control', 'placeholder'=>'Quantity')) !!}
 			        @foreach($errors->get('invoice_item.quantity') as $message)
 			            <span class='help-block'>{{ $message }}</span>
 			        @endforeach
 			  	</div>
 			  	<div class="form-group {{ $errors->has('invoice_item.subtotal') ? 'has-error' : false }}">
 			    	<label class="control-label" for="invoice_item.subtotal">Subtotal</label>
-			    	{!! Form::text('invoice_item.subtotal', null, array('class'=>'form-control', 'placeholder'=>'Sutbtotal')) !!}
+			    	{!! Form::text('invoice_item.subtotal', null, array('id'=>'invoiceItemSubtotal','class'=>'form-control', 'placeholder'=>'Sutbtotal')) !!}
 			        @foreach($errors->get('invoice_item.subtotal') as $message)
 			            <span class='help-block'>{{ $message }}</span>
 			        @endforeach
 			  	</div>		
 		  		<div class="form-group {{ $errors->has('invoice_item.tax') ? 'has-error' : false }}">
 			    	<label class="control-label" for="role_id">Tax</label>
-			    	{!! Form::select('invoice_item.tax', $projects, null ,array('class'=>'form-control')) !!}
+			    	{!! Form::select('invoice_item.tax', $taxes, null ,array('id'=>'invoiceItemTax','class'=>'form-control')) !!}
 			        @foreach($errors->get('invoice_item.tax') as $message)
 			            <span class='help-block'>{{ $message }}</span>
 			        @endforeach
 			  	</div>	
 			</div>
 			<div class="row-fluid clearfix">
-				<button type="button" class="btn btn-info">Add Invoice Item</button>
+				<button id="addInvoiceItem" type="button" class="btn btn-info">Add Invoice Item</button>
 			</div>
 			
 		</div>
@@ -101,34 +101,22 @@
 							<th>Action</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr class="hide">
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td></td>
-							<td>
-								<button type="button" class="btn btn-sm btn-danger">Remove</button>
-							</td>
-						</tr>
-					</tbody>
+					<tbody id="invoiceItemTableTbody"></tbody>
 					<tfoot>
 						<tr style="">
-							<th colspan="5" style="border-bottom:none;"></th>
+							<th colspan="5"></th>
 							<th style="text-align:right;">Total Subtotal</th>
-							<th></th>
+							<th id="totalSubtotal"></th>
 						</tr>
 						<tr>
 							<th colspan="5"></th>
 							<th style="text-align:right;">Total Tax</th>
-							<th></th>
+							<th id="totalTax"></th>
 						</tr>
 						<tr>
 							<th colspan="5"></th>
 							<th style="text-align:right;">Total Due</th>
-							<th></th>
+							<th id="totalDue"></th>
 						</tr>
 					</tfoot>
 				</table>

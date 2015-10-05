@@ -12,6 +12,9 @@
   <h1>Taxes Add</h1>
 </div>
 <div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Add Tax</h3> 
+  </div>
 
   <div class="panel-body">
   {!! Form::open(array('action' => 'TaxesController@postAdd', 'class'=>'','role'=>"form")) !!}
@@ -50,6 +53,19 @@
           <span class='help-block'>{{ $message }}</span>
       @endforeach
     </div> 
+    <div class="form-group">
+      <label>Set Previous Tax Status(es)</label>
+      <div class="radio">
+        <label>
+          <input type="radio" name="previous"  value="false" checked> Keep previous status(es) the same.
+        </label>
+      </div>
+      <div class="radio">
+        <label>
+          <input type="radio" name="previous" value="true"> Set all previous status(es) to in-active.
+        </label>
+      </div>
+    </div>
 
   </div>
   <div class="panel-footer clearfix">

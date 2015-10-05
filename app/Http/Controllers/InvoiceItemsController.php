@@ -21,6 +21,7 @@ use App\User;
 use App\Admin;
 use App\Role;
 use App\Flag;
+use App\InvoiceItem;
 use App\Task;
 use App\RoleUser;
 use App\Permission;
@@ -47,6 +48,26 @@ class InvoiceItemsController extends Controller
         $notif = Job::prepareNotifications();
         View::share('notif',$notif);
 
+    }
+
+    public function postMakeInvoiceItem() {
+        if(Request::ajax()){
+            $title = Input::get('title');
+            $description = Input::get('description');
+            $quantity = Input::get('quantity');
+            $subtotal = Input::get('subtotal');
+            $tax_id = Input::get('tax_id');
+
+            // validate errors
+            $status = 200;
+
+            // make table row
+            $invoice_item_row = InvoiceItem::makeTableRow($title,$description,$quantity,$subtotal,$tax_id);
+
+            // send response
+
+            return Response::json(['status'=>$status,'row'=>$invoice_item_row]);
+        }
     }
     
 

@@ -89,6 +89,8 @@ class TaxesController extends Controller
             $description = Input::get('description');
             $country = Input::get('country');
             $rate = Tax::formatRateIn(Input::get('rate'));
+            // Check if user wants to make all previous taxes in this country set to in-active before saving a new tax
+            $previous = (Input::get('previous') == 'true') ? Tax::where('country',$country)->update(['status'=>2]) : null;
 
             $taxes_data = new Tax;
             $taxes_data->title = $title;
@@ -96,6 +98,8 @@ class TaxesController extends Controller
             $taxes_data->country = $country;
             $taxes_data->rate = $rate;
             $taxes_data->status = 1;
+
+            // Save the new tax rate
             if ($taxes_data->save()) {
                  Flash::success('Successfully added!');
                  return Redirect::route('taxes_index');

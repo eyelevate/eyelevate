@@ -26,6 +26,7 @@ use App\Project;
 use App\RoleUser;
 use App\Permission;
 use App\PermissionRole;
+use App\Tax;
 
 class InvoicesController extends Controller
 {
@@ -57,9 +58,11 @@ class InvoicesController extends Controller
 
     public function getAdd() {
         $projects = Project::PrepareAllProjectForSelect();
+        $taxes = Tax::prepareForTaxesSelect(Tax::where('status',1)->get());
         return view('invoices.add')
         	->with('layout',$this->layout)
-        	->with('projects',$projects);
+        	->with('projects',$projects)
+            ->with('taxes',$taxes);
     }
 
     public function postAdd() {
