@@ -29,12 +29,12 @@ class InvoiceItem extends Model
     	$row .= '<td>'.$title.' <input name="" class="invoiceItem-title" type="hidden" value="'.$title.'"/></td>';
     	$row .= '<td>'.$description.' <input name="" class="invoiceItem-description" type="hidden" value="'.$description.'"/></td>';
     	$row .= '<td>'.$quantity.'<input name="" class="invoiceItem-quantity" type="hidden" value="'.$quantity.'"/></td>';
-    	$row .= '<td>$'.$total_subtotal.' <input name="" class="invoiceItem-subtotal" type="hidden" value="'.$subtotal.'"/></td>';
-    	$row .= '<td>$'.$total_tax.' <input name="" class="invoiceItem-tax" type="hidden" value="'.InvoiceItem::calculateTax($subtotal, $tax_rate).'"/> <input name="" class="invoiceItem-taxId" type="hidden" value="'.$tax_id.'"/></td>';
-    	$row .= '<td>$'.$total_due.' <input name="" class="invoiceItem-due" type="hidden" value="'.InvoiceItem::calculateTotalDue($subtotal, $tax_rate).'"/></td>';
+    	$row .= '<td>'.$total_subtotal.' <input name="" class="invoiceItem-subtotal" type="hidden" value="'.$subtotal.'"/></td>';
+    	$row .= '<td>'.$total_tax.' <input name="" class="invoiceItem-tax" type="hidden" value="'.InvoiceItem::calculateTax($subtotal, $tax_rate).'"/> <input name="" class="invoiceItem-taxId" type="hidden" value="'.$tax_id.'"/></td>';
+    	$row .= '<td>'.$total_due.' <input name="" class="invoiceItem-due" type="hidden" value="'.InvoiceItem::calculateTotalDue($subtotal, $tax_rate).'"/></td>';
     	$row .= '<td><button type="button" class="removeRow btn btn-sm btn-danger">remove</button></td>';
     	$row .= '</tr>';
-    	
+
     	return $row;
     }
 
@@ -47,9 +47,10 @@ class InvoiceItem extends Model
     }
 
     private static function currencyFormat($tax_country,$amount) {
-    	$country_code = 'en_'.strtoupper($tax_country);
+    	$country_code = Job::country_code_locale($tax_country);
+    	Job::dump($country_code);
     	setlocale(LC_MONETARY, $country_code);
 
-    	return sprintf('%.2f',money_format('%i', $amount));
+    	return money_format('%n', $amount);
     }
 }
